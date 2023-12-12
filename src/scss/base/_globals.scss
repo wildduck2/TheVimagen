@@ -1,0 +1,68 @@
+/*
+
+    This code is writen by Ahmed Ayob
+
+*/
+
+@use '../utils' as *;
+@use './typography' as *;
+
+/*
+
+    Globals
+
+*/
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+  border-color: color(other, border);
+  font-family: 'Poppins', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+
+  color: color(black, 200);
+  background-color: color(primary, black);
+
+  font-family: 'Poppins', sans-serif;
+  font-size: size(md);
+  font-weight: 500;
+
+  overflow-y: hidden;
+}
+
+ul {
+  list-style: none;
+}
+
+button,
+input,
+textarea {
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+input:focus,
+input:active {
+  outline: none;
+  border: none;
+}
+
+#root {
+  display: flex;
+}

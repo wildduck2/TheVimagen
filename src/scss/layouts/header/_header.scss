@@ -1,0 +1,212 @@
+/*
+
+    This code is writen by Ahmed Ayob
+
+*/
+
+@use '../../base' as *;
+@use '../../utils' as u;
+
+/*
+
+    Header
+
+*/
+
+.header {
+  overflow: hidden;
+  transition: 0.3s ease;
+
+  @include u.breakpoint(medium) {
+    @include u.flex(grid, start, flex-start);
+    border-right: 2px solid u.color(black, 500);
+    flex-direction: column;
+    width: 75px;
+    height: 100vh;
+    padding-inline: 1rem;
+    padding-block: 1.5rem 1rem;
+  }
+
+  @include u.breakpoint-down(small) {
+    @include u.bottom;
+
+    & > nav {
+      @include u.flex(flex);
+    }
+  }
+
+  #{&}__logo {
+    display: none;
+    gap: 1rem;
+    width: 45px;
+    height: 45px;
+    color: u.color(black, 200);
+    font-size: size(3xl);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    margin-left: -0.3rem;
+    border-radius: 50%;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .name {
+      opacity: 0;
+      font-size: size(na);
+      transition: 0.2s ease;
+    }
+
+    @include u.breakpoint(medium) {
+      @include u.flex(flex, center);
+    }
+  }
+
+  #{&}__list {
+    @include u.flex(flex);
+    gap: 0.3rem;
+    padding-left: 0.2rem;
+
+    @include u.breakpoint-down(small) {
+      padding: 0 0.5rem;
+      background-color: u.color(black, 700);
+      border-radius: 50rem;
+
+      .header__link {
+        padding: 0.5rem;
+
+        &--active {
+          svg {
+            fill: black;
+            stroke: black;
+          }
+        }
+      }
+    }
+
+    .header__link {
+      position: relative;
+      @include u.flex(flex, center, flex-start);
+      gap: 1rem;
+      z-index: 3;
+
+      border-radius: 0.6rem;
+      transition: 0.2s ease;
+
+      &::after {
+        @include u.position;
+        content: '';
+        width: 35px;
+        height: 35px;
+        left: clamp(1.1rem, 1.084rem + 0.07999999999999985vw, 1.18rem);
+        border-radius: 50rem;
+        background-color: u.color(primary, white);
+
+        opacity: 0;
+        z-index: -1;
+        transition: 0.2s ease;
+      }
+
+      & > svg {
+        width: 1.2rem;
+      }
+
+      & > span {
+        display: none;
+        opacity: 0;
+        transition: 0.2s ease;
+        transition-delay: 0.01s;
+      }
+
+      &--active {
+        color: u.color(primary, white);
+
+        &::after {
+          opacity: 1;
+        }
+      }
+    }
+
+    @include u.breakpoint(medium) {
+      @include u.flex(grid, center, center);
+
+      .header__link {
+        height: 50px;
+
+        & > span {
+          display: block;
+          font-size: size(na);
+        }
+
+        svg {
+          width: clamp(1.5rem, 1.0416666666666667rem + 1.0416666666666665vw, 1.875rem);
+        }
+
+        &::after {
+          width: 3px;
+          height: 40%;
+          left: -12px;
+          border-radius: 1rem;
+          transition: 0.1s ease-out;
+        }
+      }
+    }
+  }
+
+  #{&}__btn {
+    display: none;
+    place-content: center;
+    border-radius: 50%;
+    align-self: end;
+    justify-self: start;
+    padding: 0.3rem;
+    cursor: pointer;
+    transition: 0.3s ease;
+
+    svg {
+      transition: 0.2s ease;
+    }
+
+    &:hover {
+      svg {
+        fill: u.color(primary, white);
+      }
+    }
+
+    &--active {
+      background-color: u.color(primary, white);
+      svg {
+        fill: u.color(primary, black);
+      }
+
+      &:hover {
+        svg {
+          fill: initial;
+        }
+      }
+    }
+
+    @include u.breakpoint(medium) {
+      @include u.flex(grid);
+    }
+  }
+
+  &--active {
+    width: 240px;
+
+    .header__logo {
+      .name {
+        opacity: 1;
+      }
+    }
+
+    .header__list {
+      .header__link {
+        & > span {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,93 @@
+/*
+
+    This code is writen by Ahmed Ayob
+
+*/
+@use './functions' as f;
+
+/*
+
+    Mixins
+
+*/
+
+@mixin flex(
+  $display,
+  $alignItems: initial,
+  $justifyContent: initial,
+  $alignContent: initial,
+  $justifyItems: initial,
+  $felxDirection: initial
+) {
+  display: $display;
+  align-items: $alignItems;
+  align-content: $alignContent;
+  justify-content: $justifyContent;
+  justify-items: $justifyItems;
+  flex-direction: $felxDirection;
+}
+
+@mixin position {
+  position: absolute;
+  top: 50%;
+  // left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin bottom($bottom: 1rem) {
+  position: absolute;
+  bottom: $bottom;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@mixin top($top: 1rem) {
+  position: absolute;
+  top: $top;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@mixin right($right: 1rem) {
+  position: absolute;
+  right: $right;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/*
+
+Container mixin
+
+*/
+
+@mixin container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 2rem /* 32px */;
+  padding-left: 2rem /* 32px */;
+
+  @media (min-width: 1400px) {
+    max-width: 1400px;
+  }
+}
+
+@mixin section {
+  padding-inline: 1.3rem;
+  padding-block: 1.3rem;
+}
+
+@mixin mainSection {
+  padding: 2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
