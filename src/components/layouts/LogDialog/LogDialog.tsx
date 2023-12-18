@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from '../../ui'
 import { Link } from 'react-router-dom'
-import { Separator } from '../../ui/separator'
+import { Separator } from '../../ui/'
 import { DiVim } from 'react-icons/di'
 
 const LogDialog = () => {

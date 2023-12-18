@@ -95,10 +95,8 @@
       transition: 0.2s ease;
 
       &::after {
-        @include u.position;
+        @include u.left(0);
         content: '';
-        width: 35px;
-        height: 35px;
         left: clamp(1.1rem, 1.084rem + 0.07999999999999985vw, 1.18rem);
         border-radius: 50rem;
         background-color: u.color(primary, white);
