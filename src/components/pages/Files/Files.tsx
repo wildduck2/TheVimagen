@@ -1,5 +1,5 @@
 import React from 'react';
-import { LogDialog, MainErea, TaskBarTree } from '../../layouts';
+import { LogDialog, FileMainErea, TaskBarTree } from '../../layouts';
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../context/redux/store'
 
@@ -10,7 +10,7 @@ const Files = () => {
         store.logged ? (
             <>
                 <TaskBarTree />
-                <MainErea />
+                <FileMainErea />
             </>)
             : <LogDialog />
     );

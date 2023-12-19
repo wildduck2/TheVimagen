@@ -1,0 +1,185 @@
+/*
+                    (
+
+    This code is writen by Ahmed Ayob
+
+*/
+
+@use '../../../../base' as *;
+@use '../../../../utils' as u;
+
+/*
+
+    Main Erea Kanban Column task
+    
+*/
+
+
+.file-mainerea__body__kanban__colmun__task__list {
+    @include u.flex(grid, center);
+    background: u.color(black, 100);
+    gap: 0.5rem;
+
+    &__item {
+        @include u.flex(grid, center);
+        border: 1px solid transparent;
+        gap: 0.9rem;
+        border-radius: .5rem;
+        background: hsl(var(--accent));
+        padding: 1.2rem;
+        overflow: hidden;
+
+
+        &__header {
+            @include u.flex(flex, center, space-between);
+
+
+            &>div {
+                @include u.flex(flex, center);
+                gap: .5rem;
+
+                &>div {
+                    padding: .4rem .9rem;
+                    font-size: calc(size(na) - .1rem);
+                    transition: all .3s ease-in-out;
+
+                    &.blue {
+                        background: u.color(blue, 100);
+                    }
+
+                    &.red {
+                        background: u.color(red, 400);
+                    }
+
+                    &.yellow {
+                        background: u.color(other, yellow);
+                    }
+
+                    &.mophe {
+                        background: u.color(other, mophe);
+                    }
+                }
+            }
+
+            &>svg {
+                margin-right: -0.4rem;
+            }
+        }
+
+
+        &__info {
+            @include u.flex(flex, flex-start);
+            flex-direction: column;
+            gap: .2rem;
+
+
+            &>h5 {
+                font-size: calc(size(lg) - .05rem);
+                font-weight: 600;
+                color: u.color(primary, white-80);
+            }
+
+            &>p {
+                font-size: size(na);
+            }
+        }
+
+
+        &__subtasks {
+            @include u.flex(grid, center);
+            gap: .5rem;
+
+
+            &>h5 {
+                font-size: calc(size(na));
+                font-weight: 500;
+                color: u.color(primary, white-80);
+            }
+
+            &>li {
+                @include u.flex(flex, center);
+                gap: .2rem;
+
+                &>button {
+                    @include u.flex(flex, center, center);
+                    width: 1.2rem;
+                    height: 1.2rem;
+                    border-radius: 5rem;
+                    border: 1px solid u.color(black, 300) !important;
+                    scale: .9;
+                    padding: .2rem;
+
+
+                    &.data-\[state\=checked\]\:text-primary-foreground[data-state="checked"] {
+                        border-color: transparent !important;
+                    }
+
+                }
+
+                &>label {
+                    font-size: calc(size(lg) - .19rem);
+                    font-weight: 500;
+                    line-height: 1.5;
+
+
+                    &:disabled {
+                        cursor: not-allowed;
+                        opacity: .75;
+                    }
+
+
+                }
+            }
+
+            &>.separator {
+                background: u.color(black, 300) !important;
+                margin-block: .5rem;
+                height: 2px;
+            }
+
+            &>button {
+                @include u.flex(flex, center, center);
+                gap: .5rem;
+                background: u.color(black, 400);
+                color: u.color(primary, white-80);
+                border: 1px solid u.color(black, 400) !important;
+                margin-bottom: 1rem;
+                transition: 0.2s ease-in-out;
+
+
+                &:hover {
+                    background: u.color(black, 350);
+                }
+            }
+        }
+
+
+        &__footer {
+            position: relative;
+            @include u.usersRelated;
+            @include u.flex(flex, center, space-between);
+            margin-left: .8rem;
+
+            &::after {
+                @include u.top(-1rem);
+                content: '';
+                width: 150%;
+                height: 3px;
+                background: u.color(black, 600);
+                z-index: 2;
+            }
+
+
+            &>div:first-child {
+                button {
+                    background: u.color(black, 400);
+                }
+            }
+
+            &>div:last-child {
+                @include u.flex(flex, center);
+                gap: .7rem;
+            }
+        }
+    }
+}

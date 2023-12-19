@@ -87,7 +87,7 @@ profile_img
 */
 
 
-@mixin profile_img($w:2.5rem,$h:2.5rem) {
+@mixin profile_img($w: 2.5rem, $h: 2.5rem) {
     display: inline-block;
     position: relative;
     object-fit: cover;
@@ -95,8 +95,57 @@ profile_img
     height: $h;
     border-radius: 50%;
     margin-left: -0.8rem;
-    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-    --tw-ring-color: hsl(var(--border));
+    border: 2px solid f.color(black, 500);
+}
+
+
+
+@mixin usersRelated {
+    @include flex(flex, center);
+    gap: 1rem;
+
+    &>div {
+        @include flex(flex);
+
+        &>img {
+            @include profile_img;
+        }
+
+        &>button {
+            @include flex(flex, center, center);
+            place-content: center;
+            @include profile_img;
+            font-weight: bold;
+            color: f.color(primary, white-80);
+            background: f.color(other, border);
+            transition: 0.2s ease;
+
+        }
+    }
+
+    &>.sperator {
+        height: 40px;
+        width: 2px;
+    }
+
+    &>button {
+        @include flex(flex, center, center);
+        @include profile_img;
+        margin-left: 0;
+        background: f.color(black, 700);
+        font-size: size(lg);
+        font-weight: semibold;
+        color: f.color(primary, white-80);
+        transition: 0.2s ease;
+
+        &:hover {
+            background: f.color(other, border);
+        }
+
+        &>svg {
+            display: inline-flex;
+            margin-bottom: 0.2rem;
+        }
+
+    }
 }

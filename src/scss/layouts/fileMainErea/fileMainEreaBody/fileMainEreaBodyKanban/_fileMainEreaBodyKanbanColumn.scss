@@ -1,0 +1,151 @@
+/*
+
+    This code is writen by Ahmed Ayob
+
+*/
+
+@use '../../../../base' as *;
+@use '../../../../utils' as u;
+
+/*
+
+    Main Erea Kanban Column 
+    
+*/
+
+
+.file-mainerea__body__kanban {
+    @include u.flex(flex, center);
+    gap: 1.5rem;
+
+    &__colmun {
+        @include u.flex(grid, center);
+        width: 100vw;
+        max-width: 350px;
+
+        &__header {
+            @include u.flex(flex, center, space-between);
+            width: 100%;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+
+            &>div {
+                @include u.flex(flex, center);
+                position: relative;
+                gap: 0.7rem;
+                padding-left: 1rem;
+
+                &.red::after {
+                    background: u.color(red, 400);
+                }
+
+                &.white::after {
+                    background: u.color(other, green);
+                }
+
+                &.blue::after {
+                    background: u.color(blue, 600);
+                }
+
+                &.yellow::after {
+                    background: u.color(other, yellow);
+                }
+
+                &.mophe::after {
+                    background: u.color(other, mophe);
+                }
+
+                &.purpule::after {
+                    background: u.color(other, purpule);
+                }
+
+                &.pink::after {
+                    background: u.color(other, pink);
+                }
+
+                &.orange::after {
+                    background: u.color(other, orange);
+                }
+
+                &.white::after {
+                    background: u.color(primary, white);
+                }
+
+                &::after {
+                    @include u.left(0);
+                    content: "";
+                    width: 9px;
+                    height: 9px;
+                    border-radius: 5rem;
+                    // background: u.color(red, 400);
+                }
+
+
+                &>h4 {
+                    font-size: calc(size(lg) - .03rem);
+                    color: u.color(primary, white-80);
+                }
+
+
+                &>span {
+                    font-size: size(na);
+                    color: u.color(black, 200);
+                }
+            }
+
+        }
+
+
+        &__add-button {
+            &>button {
+                background-color: hsl(var(--accent));
+                width: 100%;
+                padding: 1.9rem 1.5;
+                border-radius: 0.5rem;
+                margin-bottom: .5rem;
+                transition: all 0.3s ease-in-out;
+
+                &:hover {
+                    background: u.color(black, 400);
+                }
+            }
+
+
+        }
+
+    }
+}
+
+.dialog-content {
+    @include u.breakpoint("small") {
+        max-width: 725px;
+    }
+
+    &__form {
+        @include u.flex(grid, center);
+        gap: 1rem;
+
+        &__group {
+            @include u.flex(grid, center, space-between);
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+
+            &__input {}
+
+            & button {
+                width: 100% !important;
+            }
+
+            input,
+            textarea,
+            button {
+                margin-top: 0.3rem;
+                border: 1px solid u.color(other, border);
+            }
+        }
+
+        &>.solid-one {
+            grid-template-columns: 1fr;
+        }
+    }
+}
