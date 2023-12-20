@@ -15,7 +15,7 @@
 
 
 .file-mainerea__body__kanban {
-    @include u.flex(flex, center);
+    @include u.flex(flex,flex-start);
     gap: 1.5rem;
 
     &__colmun {
@@ -117,35 +117,61 @@
 }
 
 .dialog-content {
+    padding-top: 3rem;
+    @include u.flex(grid);
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+
     @include u.breakpoint("small") {
-        max-width: 725px;
+        max-width: 670px !important;
+    }
+
+    & h2 {
+        font-size: size(2xl);
+        font-weight: 600;
+        color: u.color(primary, white-80);
+        margin-bottom: 1rem;
     }
 
     &__form {
         @include u.flex(grid, center);
-        gap: 1rem;
+        gap: 1.7rem;
 
         &__group {
-            @include u.flex(grid, center, space-between);
+            @include u.flex(grid, center);
             grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
+            gap: 1rem;
 
-            &__input {}
 
-            & button {
-                width: 100% !important;
+            &__input {
+                @include u.flex(grid, center);
+                gap: .5rem;
             }
 
             input,
             textarea,
             button {
-                margin-top: 0.3rem;
+                margin-top: 0.4rem;
                 border: 1px solid u.color(other, border);
+            }
+
+            textarea {
+                resize: none;
+                height: 130px;
+            }
+
+            &.solid-one {
+                grid-template-columns: 1fr
             }
         }
 
-        &>.solid-one {
-            grid-template-columns: 1fr;
-        }
+
     }
+
+    &__footer {
+
+        place-self: end;
+    }
+
+
 }

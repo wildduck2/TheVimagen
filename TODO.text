@@ -21,3 +21,20 @@ Todo
 - everyone should be have a time table
 - everyone should have a todo list  
 
+
+
+
+/*
+
+    Style
+
+    - change the badge font family
+    - add to the comment and file number to show the n
+    - make statement when you have no value do not render it 
+    - adjust the font size of the subtasks and make it suitable for the card
+    - remove the subtasks title
+    - change the icon for the more info button make it xias dir
+    - get the colors for the badges from the theme
+    - add in the file scss file the colors for the badges
+    - change the plus dir on more to the right 
+*/

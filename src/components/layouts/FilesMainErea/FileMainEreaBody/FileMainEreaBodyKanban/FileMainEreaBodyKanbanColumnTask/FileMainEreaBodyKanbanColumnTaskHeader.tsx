@@ -1,25 +1,22 @@
 import React from 'react'
 import { Badge } from '../../../../../ui'
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { FileMainEreaBodyKanbanColumnTaskHeaderProps } from './'
-import { MdCategory } from 'react-icons/md';
+import { FileMainEreaBodyKanbanColumnTaskHeaderProps } from './FileMainEreaBodyKanbanColumnTask.types';
 
-const FileMainEreaBodyKanbanColumnTaskHeader: React.FC<FileMainEreaBodyKanbanColumnTaskHeaderProps> = ({ catagory }) => {
+const FileMainEreaBodyKanbanColumnTaskHeader: React.FC<FileMainEreaBodyKanbanColumnTaskHeaderProps> = ({ catagory, priority }) => {
 
     return (
         <>
             <div className='file-mainerea__body__kanban__colmun__task__list__item__header'>
                 <div>
-                    {
-                        catagory.map((catagory) => {
-                            return (MdCategory.length < 4 && <Badge key={catagory.id} className={`${catagory.color}`}>
-                                {catagory.name}
-                            </Badge>
-                            )
-                        })
-                    }
+                    <Badge className={priority}>
+                        {priority}
+                    </Badge>
+                    <Badge className={catagory}>
+                        {catagory}
+                    </Badge>
                 </div>
-                <BsThreeDotsVertical size={21}/>
+                <BsThreeDotsVertical size={21} />
             </div >
         </>
     )

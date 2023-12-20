@@ -1,13 +1,8 @@
 import { TaskType } from "../FileMainEreaBodyKanban.types"
 
-export interface categoryType {
-    id: number
-    name: string
-    color: string
-}
-
 export interface FileMainEreaBodyKanbanColumnTaskHeaderProps {
-    catagory: categoryType[]
+    catagory: string 
+    priority: string
 }
 
 export interface FileMainEreaBodyKanbanColumnTaskProps {

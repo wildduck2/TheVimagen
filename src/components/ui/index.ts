@@ -204,8 +204,8 @@ export { Badge, badgeVariants } from './Badge/Badge';
 
 export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from './Card/Card'
 
-export {default as FilterWrapper} from './FilterWrapper/FilterWrapper';
+export { default as FilterWrapper } from './FilterWrapper/FilterWrapper';
 
 
 
-
+export { DatePickerWithRange } from './DatePickerInRange/DatePickerInRange';

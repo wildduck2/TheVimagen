@@ -74,13 +74,15 @@
 
 
             &>h5 {
-                font-size: calc(size(lg) - .05rem);
-                font-weight: 600;
+                font-size: calc(size(2xl) - .05rem);
+                font-weight: 500;
                 color: u.color(primary, white-80);
             }
 
             &>p {
-                font-size: size(na);
+                color: u.color(black, 200);
+                    opacity: .6;
+                font-size: calc(size(na) - .03rem);
             }
         }
 
@@ -136,21 +138,6 @@
                 margin-block: .5rem;
                 height: 2px;
             }
-
-            &>button {
-                @include u.flex(flex, center, center);
-                gap: .5rem;
-                background: u.color(black, 400);
-                color: u.color(primary, white-80);
-                border: 1px solid u.color(black, 400) !important;
-                margin-bottom: 1rem;
-                transition: 0.2s ease-in-out;
-
-
-                &:hover {
-                    background: u.color(black, 350);
-                }
-            }
         }
 
 
@@ -159,16 +146,6 @@
             @include u.usersRelated;
             @include u.flex(flex, center, space-between);
             margin-left: .8rem;
-
-            &::after {
-                @include u.top(-1rem);
-                content: '';
-                width: 150%;
-                height: 3px;
-                background: u.color(black, 600);
-                z-index: 2;
-            }
-
 
             &>div:first-child {
                 button {

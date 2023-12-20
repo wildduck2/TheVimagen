@@ -10,7 +10,7 @@ const FileMainEeaBodyKanbanColmunTaskFooter = () => {
             <div>
                 {
                     users.map((user) => (
-                        user.id < 4 && <img
+                        user.id < 3 && <img
                             key={user.id}
                             src={user.image}
                             alt={user.name + "profile-img"}
@@ -19,7 +19,7 @@ const FileMainEeaBodyKanbanColmunTaskFooter = () => {
                 }
 
                 {
-                    users.length > 3 && <button>+32</button>}
+                    users.length > 2 && <button>+{users.length - 2}</button>}
             </div>
             <div>
                 <FaRegCommentAlt size={22} />
