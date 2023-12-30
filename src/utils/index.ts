@@ -6,3 +6,4 @@ export * from './zod/zod.types';
 export * from './zod/inputOnChage';
 export * from './zod/passowrdShow';
 export * from './signupPopup/signupPopup';
+export * from './tableHandler/tableHandler';

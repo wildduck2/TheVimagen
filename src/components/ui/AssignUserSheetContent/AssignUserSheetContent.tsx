@@ -1,10 +1,9 @@
 import React from 'react';
-
 import {
   Badge,
   Checkbox,
-  DroppedMenuWrapper,
   Input,
+  ShowMoreBadges,
   ShowMoreOptions,
   Table,
   TableBody,
@@ -15,80 +14,113 @@ import {
   User,
 } from '..';
 
-import { AssignUserSheetContentProps, userDataAssigned } from './AssignUserSheetContent.types';
-import { ActionType } from '../DroppedMenuWrapper/DroppedMenuWrapper.types';
-import { MoreHorizontal } from 'lucide-react';
+import { AssignUserSheetContentProps, Users } from './AssignUserSheetContent.types';
+import { searchUsersHandler, slectUserHandler, toggleSelectAllUsersHandler } from '../../../utils';
+import { actions } from '../../../constants';
 
-export type AssignUsersHandlerProps = {
-  data: userDataAssigned[] | [];
-  assigneduser: userDataAssigned;
-};
-
-const users = [
+export const users: Users[] = [
   {
     id: '1',
     name: 'Jhon Doe',
     type: ['UI Designer'],
+    selected: false,
   },
   {
     id: '2',
     name: 'Marly kane',
-    type: ['Ux Designer', 'UI Designer'],
+    type: ['Ux Designer', 'UI Designer', 'Frontend Developer'],
+    selected: false,
+  },
+  {
+    id: '3',
+    name: 'Marly kane',
+    type: ['Ux Designer', 'UI Designer', 'Frontend Developer'],
+    selected: false,
   },
 ];
 
-const actions: ActionType[] = [
-  {
-    id: '1',
-    label: 'copy user info',
-    action: () => {},
-  },
-  {
-    id: '2',
-    label: 'view user profile',
-    action: () => {},
-  },
-];
 const AssignUserSheetContent: React.FC<AssignUserSheetContentProps> = () => {
+  const [numberOfSelectedUsers, setNumberOfSelectedUsers] = React.useState<number>(0);
+  const [selectedUsers, setSelectedUsers] = React.useState<Users[]>([]);
+  const [searchInput, setSearchInput] = React.useState<string>('');
+  const [filteredData, setFilteredData] = React.useState<Users[]>(users);
+
+  console.log(selectedUsers);
+
   return (
     <>
-      <div className="w-full">
-        <div className="flex items-center py-4">
-          <Input placeholder="Filter emails..." className="max-w-sm border" />
+      <div className="assign-user">
+        <div className="assign-user__header">
+          <Input
+            placeholder="Filter emails..."
+            onChange={(e) => searchUsersHandler(users, e, setSearchInput, setFilteredData, searchInput)}
+            value={searchInput}
+          />
         </div>
-        <Table>
+        <Table className="assign-user__table">
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px]">
-                <Checkbox id="terms" />
-                Select
+              <TableHead className="assign-user__table__head">
+                <Checkbox
+                  id="terms"
+                  onClick={() =>
+                    toggleSelectAllUsersHandler(
+                      users,
+                      setNumberOfSelectedUsers,
+                      setSelectedUsers,
+                      numberOfSelectedUsers,
+                    )
+                  }
+                  checked={
+                    numberOfSelectedUsers === users.length
+                      ? true
+                      : numberOfSelectedUsers > 0 && numberOfSelectedUsers < users.length
+                        ? 'indeterminate'
+                        : false
+                  }
+                />
               </TableHead>
-              <TableHead>Name</TableHead>
-              <TableHead>Status</TableHead>
+              <TableHead className="assign-user__table__head">Name</TableHead>
+              <TableHead className="assign-user__table__head">Status</TableHead>
+              <TableHead className="assign-user__table__head">Options</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
-            {users.map((user) => (
-              <TableRow key={user.id}>
-                <TableCell className="flex">
-                  <Checkbox id={user.id} className="w-4 h-4 border border-slate-300" />
-                </TableCell>
-                <TableCell>
-                  <User img="" name={user.name} />
-                </TableCell>
-                <TableCell className="flex  h-[61px] place-items-center">
-                  <div className="flex gap-2">
-                    {user.type.map((type, index) => (
-                      <Badge key={index}>{type}</Badge>
-                    ))}
-                    {user.type.length > 1 && <ShowMoreOptions name="Open Options" title="Options" actions={actions} />}
-                  </div>
-                </TableCell>
-                <TableCell className="text-right">
-                  <ShowMoreOptions name="Open Options" title="Options" actions={actions} />
+          <TableBody className="assign-user__table__body">
+            {filteredData.length > 0 ? (
+              filteredData.map((user, index) => (
+                <TableRow
+                  key={user.id}
+                  className="assign-user__table__body__row"
+                  data-slected={users[index].selected ? 'selected' : ''}
+                >
+                  <TableCell className="assign-user__table__body__row__cell">
+                    <Checkbox
+                      id={user.id}
+                      onClick={() => slectUserHandler(index, users, setNumberOfSelectedUsers, setSelectedUsers)}
+                      checked={users[index].selected ? true : false}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <User img="" name={user.name} />
+                  </TableCell>
+                  <TableCell className="assign-user__table__body__row__cell">
+                    <div>
+                      {user.type.map((type, index) => index < 2 && <Badge key={index}>{type}</Badge>)}
+                      {user.type.length > 2 && <ShowMoreBadges name="Badges" title="Badges" actions={user.type} />}
+                    </div>
+                  </TableCell>
+                  <TableCell className="assign-user__table__body__row__cell">
+                    <ShowMoreOptions name="Open Options" title="Options" actions={actions} />
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={4} className="assign-user__table__body__row__cell">
+                  No users found
                 </TableCell>
               </TableRow>
-            ))}
+            )}
           </TableBody>
         </Table>
       </div>

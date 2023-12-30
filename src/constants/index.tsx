@@ -7,6 +7,8 @@ import { IoSettingsOutline } from 'react-icons/io5';
 import { CiGrid31 } from 'react-icons/ci';
 import { z } from 'zod';
 import React from 'react';
+import { ActionType } from '../components/ui/DroppedMenuWrapper/DroppedMenuWrapper.types';
+import { Users } from '../components/ui/AssignUserSheetContent/AssignUserSheetContent.types';
 const size = 30;
 
 export const HeaderLinks = [
@@ -118,5 +120,18 @@ export const passwordrules = [
   {
     id: 5,
     name: 'Minimum 8 characters',
+  },
+];
+
+export const actions: ActionType[] = [
+  {
+    id: '1',
+    label: 'copy user info',
+    action: (user: Users) => navigator.clipboard.writeText(user.id),
+  },
+  {
+    id: '2',
+    label: 'view user profile',
+    action: () => {},
   },
 ];

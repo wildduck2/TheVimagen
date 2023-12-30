@@ -67,23 +67,28 @@ const FileMainEreaBodyKenbanCloumnAddButton = () => {
             </div>
 
             <div className="dialog-content__form__group">
-              <div className="dialog-content__form__group__input">
-                <Label htmlFor="username">Add Subtask</Label>
-                <Button type="button" variant="ghost">
-                  <FaPlus size={19} />
-                </Button>
-              </div>
+              <AddButtonWrapper
+                title="Add Subtask"
+                data={[]}
+                disc="User-friendly interface, nested organization, and progress tracking for enhanced task management."
+                buttonActionText="Add Subtask"
+              />
 
-              <div className="dialog-content__form__group__input">
-                <Label htmlFor="username">Add Attachment</Label>
-                <Button type="button" variant="ghost">
-                  <FaPlus size={19} />
-                </Button>
-              </div>
+              <AddButtonWrapper
+                title="Add Attachment"
+                data={[]}
+                disc="Elegant dining theme, 120mm diameter. Logo, highlights, contact. Pocket for offers, QR code."
+                buttonActionText="Add Attachment"
+              />
             </div>
 
             <div className="dialog-content__form__group">
-              <AddButtonWrapper title="Users Assigned" data={[]} />
+              <AddButtonWrapper
+                title="Users Assigned"
+                data={[]}
+                disc="Assign tasks based on skills, interests; balance workload; communicate effectively."
+                buttonActionText="Add Users"
+              />
 
               <div className="dialog-content__form__group__input">
                 <Label htmlFor="username">Users Assigned</Label>

@@ -210,3 +210,9 @@ export { default as AssignUserSheetContent } from './AssignUserSheetContent/Assi
 export { default as User } from './User/User.tsx';
 
 export * from './DroppedMenuWrapper/DroppedMenuWrapper.tsx';
+
+export { default as AssignUsersHandler } from './AssignUserSheetContent/AssignUserSheetContent.tsx';
+
+export { default as AddAttachmentSheetWrapper } from './AddAttachmentSheetWrapper/AddAttachmentSheetWrapper.tsx';
+
+export { Progress } from './Progress/Progress.tsx';

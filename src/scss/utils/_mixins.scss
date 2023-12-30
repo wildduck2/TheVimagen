@@ -3,12 +3,15 @@
 @use './colors' as c;
 
 /* Mixins */
-@mixin flex($display, $alignItems: initial, $justifyContent: initial, $alignContent: initial, $justifyItems: initial, $felxDirection: initial) {
+@mixin flex($display,
+    $alignItems: initial,
+    $justifyContent: initial,
+    $alignContent: initial,
+    $justifyItems: initial,
+    $felxDirection: initial) {
     display: $display;
     align-items: $alignItems;
-    align-content: $alignContent;
     justify-content: $justifyContent;
-    justify-items: $justifyItems;
     flex-direction: $felxDirection;
 }
 
@@ -79,13 +82,11 @@ Container mixin
     flex-direction: column;
 }
 
-
 /*
 
 profile_img
 
 */
-
 
 @mixin profile_img($w: 2.5rem, $h: 2.5rem) {
     display: inline-block;
@@ -97,8 +98,6 @@ profile_img
     margin-left: -0.8rem;
     border: 2px solid f.color(black, 500);
 }
-
-
 
 @mixin usersRelated {
     @include flex(flex, center);
@@ -119,7 +118,6 @@ profile_img
             color: f.color(primary, white-80);
             background: f.color(other, border);
             transition: 0.2s ease;
-
         }
     }
 
@@ -146,6 +144,5 @@ profile_img
             display: inline-flex;
             margin-bottom: 0.2rem;
         }
-
     }
 }

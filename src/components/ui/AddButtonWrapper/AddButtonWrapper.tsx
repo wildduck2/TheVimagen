@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  AddAttachmentSheetWrapper,
   AssignUserSheetContent,
   Button,
   Label,
@@ -53,7 +54,7 @@ const frameworks: userDataAssigned[] = [
   },
 ];
 
-const AddButtonWrapper: React.FC<AddButtonWrapperProps> = ({ title, data }) => {
+const AddButtonWrapper: React.FC<AddButtonWrapperProps> = ({ title, data, disc, buttonActionText }) => {
   return (
     <div className="dialog-content__form__group__input">
       <Label htmlFor="username">{title}</Label>
@@ -61,22 +62,26 @@ const AddButtonWrapper: React.FC<AddButtonWrapperProps> = ({ title, data }) => {
         <SheetTrigger asChild>
           <Button type="button" variant="ghost" className="gap-2">
             <FaPlus size={19} />
-            <span>Assign Users</span>
+            <span>{title}</span>
           </Button>
         </SheetTrigger>
-        <SheetContent className="dialog-content !w-[630px] !block">
+        <SheetContent className="dialog-content !w-[630px] grid h-full justify-center">
           <SheetHeader>
-            <SheetTitle>Assign Users</SheetTitle>
-            <SheetDescription>
-              Assign tasks based on skills, interests; balance workload; communicate effectively.
-            </SheetDescription>
+            <SheetTitle>{title}</SheetTitle>
+            <SheetDescription>{disc}</SheetDescription>
           </SheetHeader>
 
-          <AssignUserSheetContent data={frameworks} />
+          {title === 'Add Attachment' ? (
+            <AddAttachmentSheetWrapper />
+          ) : title === 'Users Assigned' ? (
+            <AssignUserSheetContent data={frameworks} />
+          ) : title === 'Add Subtask' ? (
+            <span>subtaskwrapper should be here </span>
+          ) : null}
 
           <SheetFooter>
             <SheetClose asChild>
-              <Button type="submit">Save changes</Button>
+              <Button type="submit">{buttonActionText}</Button>
             </SheetClose>
           </SheetFooter>
         </SheetContent>

@@ -1,13 +1,19 @@
 export interface ActionType {
   id: string;
   label: string;
-  action: () => void;
+  action?: (...args) => void;
 }
 
 export type ShowMoreOptionsProps = {
   name: string;
   title: string;
   actions: ActionType[];
+};
+
+export type ShowMoreBadgesProps = {
+  name: string;
+  title: string;
+  actions: string[];
 };
 
 export type DroppedMenuWrapperProps = {
