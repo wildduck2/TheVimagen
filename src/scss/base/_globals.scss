@@ -13,10 +13,6 @@
 
 */
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 *,
 *::after,
 *::before {
@@ -33,11 +29,6 @@ html {
 }
 
 body {
-  min-height: 100vh;
-
-  color: color(black, 200);
-  background-color: color(primary, black);
-
   font-family: 'Poppins', sans-serif;
   font-size: size(md);
   font-weight: 500;

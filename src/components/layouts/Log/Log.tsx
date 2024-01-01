@@ -1,4 +1,4 @@
-// import { createClient } from '@supabase/supabase-js';
+import React from 'react';
 import { cn } from '../../../utils';
 import { buttonVariants } from '../../ui';
 import { DiVim } from 'react-icons/di';
@@ -6,15 +6,10 @@ import Signup from './Signup';
 import { Link } from 'react-router-dom';
 import Login from './Login';
 
-// const NEXT_PUBLIC_SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
-// const NEXT_PUBLIC_SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-// const supabase = createClient(NEXT_PUBLIC_SUPABASE_URL!, NEXT_PUBLIC_SUPABASE_ANON_KEY!);
-
 const Log = ({ type }: { type: string }) => {
   return (
     <>
-      <div className="auth hidden">
+      <div className="auth">
         {type !== 'signin' ? (
           <Link to="/auth/signin" className={cn(buttonVariants({ variant: 'ghost' }), 'auth__link')}>
             Signin

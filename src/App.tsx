@@ -7,30 +7,25 @@ import { RootState } from './context/redux/store';
 import { useSelector } from 'react-redux';
 
 function App() {
-    const navigation = useLocation().pathname;
-    const store = useSelector((state: RootState) => state.data);
-    const [session] = useUser({ signedout: true });
-    console.log(session);
+  const navigation = useLocation().pathname;
+  const store = useSelector((state: RootState) => state.data);
+  const [session] = useUser({ signedout: true });
 
-
-
-    return (
-        <>
-            {navigation !== '/auth/signup/' &&
-                navigation !== '/auth/signup' &&
-                navigation !== '/auth/signin/' &&
-                navigation !== '/auth/signin' && store.logged && <Header />}
-
-            <Routes>
-                <Route path="/auth">
-                    <Route path="signin" element={<Log type="signin" />} />
-                    <Route path="signup" element={<Log type="signup" />} />
-                </Route>
-                <Route path="/files/tasks" element={<Files />} />
-                <Route path="/" element={<Home />} />
-            </Routes>
-        </>
-    );
+  return (
+    <>
+      <Routes>
+        <Route path="/auth">
+          <Route path="signin" element={<Log type="signin" />} />
+          <Route path="signup" element={<Log type="signup" />} />
+        </Route>
+        <Route path="/" element={<Header />}>
+          <Route index element={<Home />} />
+          <Route path="Files" element={<Files />} />
+          <Route path="/Inbox" element={<Files />} />
+        </Route>
+      </Routes>
+    </>
+  );
 }
 
 export default App;

@@ -7,15 +7,18 @@ import { store } from './context/redux/store.ts';
 
 import './scss/style.scss';
 import { ThemeProvider } from './components/ui/ThemeProvider/ThemeProfider.tsx';
-import { Toaster } from 'sonner';
+// import { Toaster } from 'sonner';
+import { Toaster, TooltipProvider } from './components/ui';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-          <Toaster position="bottom-right" expand={true} richColors />
-          <App />
+          <TooltipProvider delayDuration={0}>
+            <Toaster />
+            <App />
+          </TooltipProvider>
         </ThemeProvider>
       </Provider>
     </BrowserRouter>
