@@ -6,9 +6,10 @@ import { LogDialog } from '../../layouts';
 import { signout } from '../../../context/Data/Data';
 
 const Home = () => {
-  const store = useSelector((state: RootState) => state.data);
+  const logged = useSelector((state: RootState) => state.data.logged);
   const dispatch = useDispatch();
-  return store.logged ? (
+  
+  return logged ? (
     <div className="w-full">
       <button
         onClick={() => {

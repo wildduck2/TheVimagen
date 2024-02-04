@@ -31,6 +31,12 @@ const Signin = ({ ...props }: UserAuthFormProps) => {
   const [passwordShow, setPasswordShow] = useState<boolean>(false);
   const [passwordShowMenu, setPasswordShowMenu] = useState<boolean>(false);
 
+  const [passwordHasLowercase, setPasswordHasLowercase] = useState<boolean>(false);
+  const [passwordHasUppercase, setPasswordHasUppercase] = useState<boolean>(false);
+  const [passwordHasNumber, setPasswordHasNumber] = useState<boolean>(false);
+  const [passwordHasSpecialCharacter, setPasswordHasSpecialCharacter] = useState<boolean>(false);
+  const [passwordInRange, setPasswordInRange] = useState<boolean>(false);
+
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
@@ -54,7 +60,9 @@ const Signin = ({ ...props }: UserAuthFormProps) => {
 
   useEffect(() => {
     setNotValid(utils.inputsValid.email && utils.inputsValid.password ? true : false);
-  }, [dispatch, emailValid, passwordValid, passwordShowMenu, creditValidEmail, creditValidGithub]);
+  }, [dispatch, emailValid, passwordValid, passwordShowMenu, creditValidEmail, creditValidGithub, utils]);
+
+  console.log(creditValidEmail, creditValidGithub);
 
   return (
     <div className="signup" {...props}>
@@ -110,6 +118,11 @@ const Signin = ({ ...props }: UserAuthFormProps) => {
                   type: 'password',
                   utils,
                   dispatch,
+                  setPasswordHasLowercase,
+                  setPasswordHasUppercase,
+                  setPasswordHasNumber,
+                  setPasswordHasSpecialCharacter,
+                  setPasswordInRange,
                 });
               }}
               disabled={isLoading}
@@ -135,11 +148,11 @@ const Signin = ({ ...props }: UserAuthFormProps) => {
                 <li key={rule.id}>
                   <GiPlainCircle
                     className={`${passwordValid && 'red'}  
-                     ${utils.passwordHasUppercase && rule.id === 1 && 'green'}
-                     ${utils.passwordHasLowercase && rule.id === 2 && 'green'}
-                     ${utils.passwordHasNumber && rule.id === 3 && 'green'}
-                     ${utils.passwordHasSpecialCharacter && rule.id === 4 && 'green'}
-                     ${utils.passwordInRange && rule.id === 5 && 'green'}
+                     ${passwordHasLowercase && rule.id === 1 && 'green'}
+                     ${passwordHasUppercase && rule.id === 2 && 'green'}
+                     ${passwordHasNumber && rule.id === 3 && 'green'}
+                     ${passwordHasSpecialCharacter && rule.id === 4 && 'green'}
+                     ${passwordInRange && rule.id === 5 && 'green'}
                      `}
                   />
                   <span>{rule.name}</span>

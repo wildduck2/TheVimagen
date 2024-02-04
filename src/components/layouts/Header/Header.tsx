@@ -6,6 +6,8 @@ import Logo from './Logo';
 import { User, ChevronRight } from 'lucide-react';
 import { link } from './Header.types';
 import { Outlet } from 'react-router';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../context/redux/store';
 
 const toggleheaderLinkData: link = {
   title: 'Menu',
@@ -22,29 +24,33 @@ const profileLinkData: link = {
 const Header = () => {
   const [isCollapsed, setIsCollapsed] = React.useState(true);
 
+  const logged = useSelector((state: RootState) => state.data.logged);
+
   const toggleHeaderHandler = () => {
     setIsCollapsed(!isCollapsed);
   };
 
   return (
     <>
-      <header data-collapsed={isCollapsed} className={`header ${isCollapsed && 'collapsed'}`}>
-        <Logo isCollapsed={isCollapsed} />
-        <Separator />
-        <Nav isCollapsed={isCollapsed} links={headerLinks.first} />
-        <Separator />
-        <Nav isCollapsed={isCollapsed} links={headerLinks.second} />
+      {logged && (
+        <header data-collapsed={isCollapsed} className={`header ${isCollapsed && 'collapsed'}`}>
+          <Logo isCollapsed={isCollapsed} />
+          <Separator />
+          <Nav isCollapsed={isCollapsed} links={headerLinks.first} />
+          <Separator />
+          <Nav isCollapsed={isCollapsed} links={headerLinks.second} />
 
-        <div className="header__toggle">
-          <DropDownMenuWrapper data={profileLinkData} isCollapsed={isCollapsed} />
-          <TooltipButton
-            key={1}
-            button={toggleheaderLinkData}
-            isCollapsed={isCollapsed}
-            onClick={toggleHeaderHandler}
-          />
-        </div>
-      </header>
+          <div className="header__toggle">
+            <DropDownMenuWrapper data={profileLinkData} isCollapsed={isCollapsed} />
+            <TooltipButton
+              key={1}
+              button={toggleheaderLinkData}
+              isCollapsed={isCollapsed}
+              onClick={toggleHeaderHandler}
+            />
+          </div>
+        </header>
+      )}
       <Outlet />
     </>
   );

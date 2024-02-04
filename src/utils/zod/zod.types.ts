@@ -12,11 +12,15 @@ export interface validInput {
   setvalid: setvalid;
   setvalidcomf?: setValidFunc;
   setPasswordShowMenu?: setvalid;
+  setPasswordHasLowercase?: setValidFunc;
+  setPasswordHasUppercase?: setValidFunc;
+  setPasswordHasNumber?: setValidFunc;
+  setPasswordHasSpecialCharacter?: setValidFunc;
+  setPasswordInRange?: setValidFunc;
   type: string;
   utils: initialStateTypes;
   dispatch: Dispatch<AnyAction>;
 }
-
 
 export interface onPasswordShowProps {
   setFunc: setValidFunc;
@@ -32,6 +36,11 @@ export interface onChangeInputProps {
   setvalid: setValidFunc;
   setvalidcomf?: setValidFunc;
   setPasswordShowMenu?: setValidFunc;
+  setPasswordHasLowercase?: setValidFunc;
+  setPasswordHasUppercase?: setValidFunc;
+  setPasswordHasNumber?: setValidFunc;
+  setPasswordHasSpecialCharacter?: setValidFunc;
+  setPasswordInRange?: setValidFunc;
   type?: string;
   utils: initialStateTypes;
   dispatch: Dispatch<AnyAction>;

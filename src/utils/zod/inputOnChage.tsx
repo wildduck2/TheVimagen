@@ -6,6 +6,11 @@ export const onChangeInput = async ({
   setvalid,
   setvalidcomf,
   setPasswordShowMenu,
+  setPasswordHasLowercase,
+  setPasswordHasNumber,
+  setPasswordHasSpecialCharacter,
+  setPasswordHasUppercase,
+  setPasswordInRange,
   type,
   password,
   passwordconf,
@@ -20,11 +25,35 @@ export const onChangeInput = async ({
   }
 
   if (type === 'password') {
-    validateInput({ inputValue: e.target.value, passwordconf, password, setvalidcomf, setvalid, type, dispatch, utils, setPasswordShowMenu });
+    validateInput({
+      inputValue: e.target.value,
+      passwordconf,
+      password,
+      setvalidcomf,
+      setvalid,
+      type,
+      dispatch,
+      utils,
+      setPasswordShowMenu,
+      setPasswordHasLowercase,
+      setPasswordHasNumber,
+      setPasswordHasSpecialCharacter,
+      setPasswordHasUppercase,
+      setPasswordInRange,
+    });
   }
 
   if (type === 'passwordcomfirmation') {
-    validateInput({ inputValue: e.target.value, passwordconf, password, setvalidcomf, setvalid, type, dispatch, utils, setPasswordShowMenu });
+    validateInput({
+      inputValue: e.target.value,
+      passwordconf,
+      password,
+      setvalidcomf,
+      setvalid,
+      type,
+      dispatch,
+      utils,
+      setPasswordShowMenu,
+    });
   }
-
 };
