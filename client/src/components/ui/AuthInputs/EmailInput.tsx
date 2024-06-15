@@ -3,13 +3,15 @@ import { Input } from '../Input'
 import { Label } from '../Label'
 import { BsPatchExclamation } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '@/context'
+import { EmailValidation } from '@/utils'
 
 export interface EmailInputPorps {
     isLoading: boolean
 }
 
 export const EmailInput = ({ isLoading }: EmailInputPorps) => {
-    const utils = useSelector((state: RootState) => state.utils)
+    const inputsValid = useSelector((state: RootState) => state.utils.inputsValid)
     const dispatch = useDispatch()
 
     const [emailValid, setEmailValid] = useState<boolean>(false)
@@ -33,14 +35,12 @@ export const EmailInput = ({ isLoading }: EmailInputPorps) => {
                     disabled={isLoading}
                     onChange={({ currentTarget }) => {
                         setEmail(currentTarget.value)
-                        // onChangeInput({
-                        //     e,
-                        //     setFunc: setEmail,
-                        //     setvalid: setEmailValid,
-                        //     type: 'email',
-                        //     utils,
-                        //     dispatch,
-                        // })
+                        EmailValidation({
+                            inputValue: currentTarget.value,
+                            setvalid: setEmailValid,
+                            inputsValid,
+                            dispatch,
+                        })
                     }}
                     required
                     ref={emailRef}

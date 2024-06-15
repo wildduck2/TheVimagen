@@ -1,4 +1,3 @@
-import { emailisnotvalid } from '../../context/Utils/Utils'
 import { supabase } from '../../supabase/supabase'
 import { useAuthEmailProps, useAuthGithubProps } from '..'
 import { toast } from 'sonner'
@@ -25,7 +24,6 @@ export const useSigninWithEmail = ({
 
       if (error) {
         toast.error(`Credentials didn't pass authentication check.`)
-        dispatch(emailisnotvalid(false))
         setEmailValid(true)
         setPasswordValid(true)
         setCreditValidEmail(false)
@@ -35,7 +33,6 @@ export const useSigninWithEmail = ({
       if (!error && data) {
         dispatch(signin())
         toast.success('Access granted, authentication successful.')
-        dispatch(emailisnotvalid(true))
         setCreditValidEmail(true)
         setIsLoading(false)
       }
@@ -77,7 +74,6 @@ export const useSigninwithGithub = ({
       })
 
       if (error) {
-        dispatch(emailisnotvalid(false))
         setEmailValid(true)
         setPasswordValid(true)
         setCreditValidGithub(false)
@@ -86,7 +82,6 @@ export const useSigninwithGithub = ({
 
       if (!error && promise) {
         dispatch(signin())
-        dispatch(emailisnotvalid(true))
         setCreditValidGithub(true)
         setIsLoading(false)
       }
@@ -124,7 +119,6 @@ export const useSignupWithEmail = ({
 
       if (error) {
         toast.error(`Credentials didn't pass authentication check.`)
-        dispatch(emailisnotvalid(false))
         setEmailValid(true)
         setPasswordValid(true)
         setCreditValidEmail(false)
@@ -134,7 +128,6 @@ export const useSignupWithEmail = ({
       if (!error && data) {
         dispatch(signin())
         toast.success('Access granted, authentication successful.')
-        dispatch(emailisnotvalid(true))
         setCreditValidEmail(true)
         setIsLoading(false)
       }

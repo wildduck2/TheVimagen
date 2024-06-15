@@ -1,4 +1,4 @@
-import { Users } from '../../components/ui/AssignUserSheetContent/AssignUserSheetContent'
+import { Users } from "@/components/ui"
 
 export const howManyUsersSelected = (data: Users[]) => {
   return data.filter((user: Users) => user.selected).length

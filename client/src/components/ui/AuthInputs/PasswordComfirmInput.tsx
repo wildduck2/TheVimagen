@@ -1,28 +1,34 @@
 import { useRef, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+
 import { Input } from "../Input"
 import { Label } from "../Label"
 import { BsPatchExclamation } from "react-icons/bs"
 import { RiEyeLine, RiEyeOffLine } from "react-icons/ri"
+import { RootState } from "@/context"
+import { PasswordInput } from "./PasswordInput"
+import { PasswordComfirmValidation, onPasswordShow } from "@/utils"
 
 
-export type PasowordComirmInputProps = { isLoading: boolean }
+export type PasswordComfirmInputProps = { isLoading: boolean }
 
 
 export const PasowordComirmInput = ({ isLoading }: PasswordComfirmInputProps) => {
-    const utils = useSelector((state: RootState) => state.utils)
+    const inputsValid = useSelector((state: RootState) => state.utils.inputsValid)
     const dispatch = useDispatch()
 
+    const [password, setPassword] = useState<string>('')
     const [passwordcomfirmValid, setPasswordcomfirmValid] = useState<boolean>(false)
     const [passwordcomfirm, setPasswordcomfirm] = useState<string>('')
     const [passwordcomfirmShow, setPasswordcomfirmationShow] = useState<boolean>(false)
 
     const passwordcomfirmRef = useRef<HTMLInputElement>(null)
     return (<>
-
+        <PasswordInput isLoading={isLoading} password={password} setPassword={setPassword} passwordComfirmValue={passwordcomfirm} setPasswordcomfirmationValid={setPasswordcomfirmValid} />
         <div>
             <Label htmlFor="password">Password Comfirmation</Label>
             <Input
-                id="password"
+                id="password-comform"
                 className={`${passwordcomfirmValid && 'input-notvalid'}`}
                 placeholder="••••••••"
                 type="password"
@@ -34,23 +40,16 @@ export const PasowordComirmInput = ({ isLoading }: PasswordComfirmInputProps) =>
                 onChange={({ currentTarget }) => {
 
                     setPasswordcomfirm(currentTarget.value)
-                    // onChangeInput({
-                    //     e,
-                    //     password,
-                    //     passwordconf: passwordcomfirmation,
-                    //     setFunc: setPasswordcomfirmation,
-                    //     setvalid: "rules": {
-                    "react/jsx-uses-react": "off",
-            "react/react-in-jsx-scope": "off"
-  }setPasswordcomfirmationValid,
-                    //     setvalidcomf: setPasswordValid,
-                    //     type: 'passwordcomfirmation',
-                    //     utils,
-                    //     dispatch,
-                    // })
+                    PasswordComfirmValidation({
+                        inputsValid,
+                        dispatch,
+                        setvalid: setPasswordcomfirmValid,
+                        inputValue: currentTarget.value,
+                        passwordValue: password,
+                    })
                 }}
-            disabled={isLoading}
-            ref={passwordcomfirmRef}
+                disabled={isLoading}
+                ref={passwordcomfirmRef}
             />
             <div>
                 {passwordcomfirmValid && <BsPatchExclamation className="text-red-700" />}

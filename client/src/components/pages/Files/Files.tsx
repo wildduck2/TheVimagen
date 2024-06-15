@@ -1,9 +1,9 @@
-import React from 'react'
-import { LogDialog, FileMainErea, TaskBarTree } from '../../layouts'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../../context/redux/store'
+import { useSelector } from "react-redux"
 
-const Files = () => {
+import { FileMainErea, LogDialog, TaskBarTree } from "@/components/layouts"
+import { RootState } from "@/context"
+
+export const Files = () => {
   const store = useSelector((state: RootState) => state.data)
 
   return store.logged ? (
@@ -16,4 +16,3 @@ const Files = () => {
   )
 }
 
-export default Files

@@ -1,11 +1,11 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../../context/redux/store'
-import { supabase } from '../../../supabase/supabase'
-import { LogDialog } from '../../layouts'
-import { signout } from '../../../context/Data/Data'
+import { useDispatch, useSelector } from "react-redux"
 
-const Home = () => {
+import { LogDialog } from "@/components/layouts"
+import { signout } from "@/context/Data"
+import { supabase } from "@/supabase/supabase"
+import { RootState } from "@/context"
+
+export const Home = () => {
   const logged = useSelector((state: RootState) => state.data.logged)
   const dispatch = useDispatch()
 
@@ -26,4 +26,3 @@ const Home = () => {
   )
 }
 
-export default Home

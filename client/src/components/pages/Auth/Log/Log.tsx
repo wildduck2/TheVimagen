@@ -1,12 +1,11 @@
-import React from 'react'
-import { cn } from '../../../utils'
-import { buttonVariants } from '../../ui'
-import { DiVim } from 'react-icons/di'
-import Signup from './Signup'
-import { Link } from 'react-router-dom'
-import Login from './Login'
+import { buttonVariants } from "@/components/ui"
+import { cn } from "@/utils"
+import { DiVim } from "react-icons/di"
+import { Link } from "react-router-dom"
+import Signup from "../Signup/Signup"
+import Login from "../Signin/Login"
 
-const Log = ({ type }: { type: string }) => {
+export const Log = ({ type }: { type: string }) => {
   return (
     <>
       <div className="auth">
@@ -66,7 +65,6 @@ const Log = ({ type }: { type: string }) => {
                 <h1>Welcome back</h1>
                 <p>Enter your data below to signin your account</p>
               </div>
-              <Login />
               <p>
                 By clicking continue, you agree to our <Link to="/terms">Terms of Service</Link> and
                 <Link to="/privacy">Privacy Policy</Link>.
@@ -79,4 +77,4 @@ const Log = ({ type }: { type: string }) => {
   )
 }
 
-export default Log
+        // <Login />

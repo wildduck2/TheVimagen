@@ -1,2 +1,3 @@
-export { default as Home } from './Home/Home'
-export { default as Files } from './Files/Files'
+export * from './Auth'
+export * from './Home'
+export * from './Files'
