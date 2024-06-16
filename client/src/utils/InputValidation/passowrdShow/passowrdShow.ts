@@ -1,4 +1,4 @@
-import { onPasswordShowProps } from "./passwordShow.types"
+import { onPasswordShowProps } from './passwordShow.types'
 
 export const onPasswordShow = ({ setFunc, passwordRef, passwordShow }: onPasswordShowProps) => {
   setFunc(!passwordShow)

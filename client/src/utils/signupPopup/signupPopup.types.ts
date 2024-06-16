@@ -1,4 +1,3 @@
-
 export interface SignupPopupProps {
-    url: string
+  url: string
 }

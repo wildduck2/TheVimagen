@@ -1,4 +1,4 @@
-import { setValidFunc } from "../inputValidation"
+import { setValidFunc } from '../inputValidation'
 
 export interface onPasswordShowProps {
   setFunc: setValidFunc

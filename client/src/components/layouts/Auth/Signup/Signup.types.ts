@@ -1,3 +1,3 @@
 export type SignupProps = {
-    hi: string
+  hi: string
 }

@@ -1,7 +1,7 @@
-import { useSelector } from "react-redux"
+import { useSelector } from 'react-redux'
 
-import { FileMainErea, LogDialog, TaskBarTree } from "@/components/layouts"
-import { RootState } from "@/context"
+import { FileMainErea, LogDialog, TaskBarTree } from '@/components/layouts'
+import { RootState } from '@/context'
 
 export const Files = () => {
   const store = useSelector((state: RootState) => state.data)
@@ -15,4 +15,3 @@ export const Files = () => {
     <LogDialog />
   )
 }
-

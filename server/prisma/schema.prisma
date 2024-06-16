@@ -15,9 +15,9 @@ datasource db {
 
 model User {
     id                           String      @id @default(uuid()) @db.Char(36)
-    firstName                    String
-    lastName                     String
-    userName                     String
+    firstName                    String?
+    lastName                     String?
+    userName                     String      @unique
     email                        String      @unique
     address                      Json?
     lastLoginIp                  String?
@@ -27,7 +27,8 @@ model User {
     created_at                   DateTime    @default(now())
     updated_at                   DateTime    @updatedAt
     OAuthToken                   OAuthToken?
-    EmailLog                     EmailLog[]
+    EmailLog                     EmailLog?
+    sessions                     Session[]
 }
 
 model OAuthToken {
@@ -50,4 +51,13 @@ model EmailLog {
     status          String
     created_at      DateTime @default(now())
     User            User     @relation(fields: [user_id], references: [id])
+}
+
+model Session {
+    id        String   @id @default(uuid()) @db.Char(36)
+    sid       String   @unique
+    userId    String?
+    user      User?    @relation(fields: [userId], references: [id])
+    expiresAt DateTime
+    data      Json
 }

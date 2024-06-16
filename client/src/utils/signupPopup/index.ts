@@ -1,3 +1,2 @@
-export * from'./signupPopup'
-export * from'./signupPopup.types'
-
+export * from './signupPopup'
+export * from './signupPopup.types'

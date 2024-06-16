@@ -1,9 +1,10 @@
-import { buttonVariants } from "@/components/ui"
-import { cn } from "@/utils"
-import { DiVim } from "react-icons/di"
-import { Link } from "react-router-dom"
-import Signup from "../Signup/Signup"
-import Login from "../Signin/Login"
+import { Link, Outlet } from 'react-router-dom'
+
+import { buttonVariants } from '@/components/ui'
+import { Signup } from '@/components/layouts'
+import { cn } from '@/utils'
+
+import { DiVim } from 'react-icons/di'
 
 export const Log = ({ type }: { type: string }) => {
   return (
@@ -72,9 +73,9 @@ export const Log = ({ type }: { type: string }) => {
             </div>
           )}
         </div>
-      </div>
+      </div><Outlet />
     </>
   )
 }
 
-        // <Login />
+// <Login />

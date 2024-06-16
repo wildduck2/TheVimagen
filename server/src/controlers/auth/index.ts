@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-// import { prisma } from '../../prismaClient'
+import { prisma } from '../../prismaClient';
 
 export async function getUserData(access_token: string) {
 
@@ -10,25 +10,28 @@ export async function getUserData(access_token: string) {
     console.log('data', data);
 }
 
+export const postSignupAuthHandler: RequestHandler = async (req, res) => {
+    const { password, email, userName } = req.body
+
+    try {
+        const user = await prisma.user.create({
+            data: {
+                userName,
+                password,
+                email,
+            }
+        })
+
+        if (!user) return res.json({ user })
 
 
-export const postSignupAuthHandler: RequestHandler = (req, res) => {
+        return res.json({ user })
 
-    res.json({ hi: 'sdfkl' })
-    // const { firstName, lastName, userName, password, email } = res.body
-    //
-    //
-    // const user = prisma.user.create({
-    //     data: {
-    //         firstName,
-    //         lastName,
-    //         userName,
-    //         password,
-    //         email
-    //     }
-    // })
+    } catch (error) {
+        console.log(error)
+        return res.json({ error: error })
+    }
 }
 
-export const postSignupAuthStep1Handler: RequestHandler = (req, res) => {
-    res.json({ hi: 'welcom' })
-}
+export * from './postSignupAuthStep1Handler'
+export * from './postSigninAuthHandler'

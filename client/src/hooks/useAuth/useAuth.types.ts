@@ -10,7 +10,5 @@ export interface useAuthEmailProps extends useAuthGithubProps {
 export interface useAuthGithubProps {
   dispatch: Dispatch<AnyAction>
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
-  setEmailValid: React.Dispatch<React.SetStateAction<boolean>>
-  setPasswordValid: React.Dispatch<React.SetStateAction<boolean>>
   route: NavigateFunction
 }

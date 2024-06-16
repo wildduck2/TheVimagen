@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Separator } from '../../ui/'
 import { DiVim } from 'react-icons/di'
 
-const LogDialog = () => {
+export const LogDialog = () => {
   return (
     <div>
       <div
@@ -61,5 +61,3 @@ const LogDialog = () => {
     </div>
   )
 }
-
-export default LogDialog

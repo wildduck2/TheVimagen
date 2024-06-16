@@ -5,15 +5,7 @@ import { useEffect, useState } from 'react'
 import { signin } from '../../context/Data/Data'
 import { signupPopup } from '../../utils'
 
-export const useSigninWithEmail = ({
-  email,
-  password,
-  dispatch,
-  setIsLoading,
-  setEmailValid,
-  setPasswordValid,
-  route,
-}: useAuthEmailProps) => {
+export const useSigninWithEmaila = ({ email, password, dispatch, setIsLoading, route }: useAuthEmailProps) => {
   const [creditValidEmail, setCreditValidEmail] = useState<boolean>(false)
   const authEmail = async (e: React.SyntheticEvent) => {
     e.preventDefault()
@@ -24,8 +16,6 @@ export const useSigninWithEmail = ({
 
       if (error) {
         toast.error(`Credentials didn't pass authentication check.`)
-        setEmailValid(true)
-        setPasswordValid(true)
         setCreditValidEmail(false)
         setIsLoading(false)
       }
@@ -100,7 +90,7 @@ export const useSigninwithGithub = ({
   return { creditValidGithub, authGithub } as const
 }
 
-export const useSignupWithEmail = ({
+export const useSignupWithEmailss = ({
   email,
   password,
   dispatch,

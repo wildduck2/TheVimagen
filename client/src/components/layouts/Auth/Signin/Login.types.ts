@@ -1,3 +1,3 @@
 export type Login = {
-    hi: string
+  hi: string
 }

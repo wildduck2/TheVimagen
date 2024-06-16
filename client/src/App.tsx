@@ -1,11 +1,10 @@
 import { useSelector } from 'react-redux'
-import { Route, Routes, useLocation } from 'react-router-dom'
+import { Link, Outlet, Route, Routes, useLocation } from 'react-router-dom'
 
 import { Home, Files, Log } from '@/components/pages'
-import { Header } from '@/components/layouts'
+import { Header, SignupEmailState } from '@/components/layouts'
 import { RootState } from '@/context'
 import { useUser } from '@/hooks'
-
 
 function App() {
     // const navigation = useLocation().pathname
@@ -17,7 +16,9 @@ function App() {
             <Routes>
                 <Route path="/auth">
                     <Route path="signin" element={<Log type="signin" />} />
-                    <Route path="signup" element={<Log type="signup" />} />
+                    <Route path="signup" element={<Log type="signup" />}  >
+                        <Route path="signup-email-step2" element={<SignupEmailState />} />
+                    </Route>
                 </Route>
                 <Route path="/" element={<Header />}>
                     <Route index element={<Home />} />

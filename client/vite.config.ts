@@ -8,6 +8,7 @@ export default defineConfig(({ mode }) => {
     define: {
       'process.env.NEXT_PUBLIC_SUPABASE_URL': JSON.stringify(env.NEXT_PUBLIC_SUPABASE_URL),
       'process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY': JSON.stringify(env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
+      'process.env.ROOT_URL': JSON.stringify(env.ROOT_URL),
     },
     plugins: [react()],
     resolve: {
