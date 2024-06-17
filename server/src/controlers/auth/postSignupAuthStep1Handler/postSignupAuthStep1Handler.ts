@@ -2,18 +2,22 @@ import { RequestHandler } from "express"
 import bcrypt from 'bcrypt'
 import { prisma } from "../../../prismaClient"
 import { KoalaWelcomeEmail, renderEmail } from "../../../veiws"
-import { generateOTP } from "../../../utils"
+import { generateOTP, zodCredentialsValidation } from "../../../utils"
+import { z } from "zod"
 
 export const postSignupAuthStep1Handler: RequestHandler = async (req, res) => {
 
     try {
         const { password, email, userName } = req.body
-        console.log(req.body)
+
+        //NOTE: Zod data validation
+        const { validEmail, validPassword } = await zodCredentialsValidation({ email, password })
+
         //NOTE: checking for the user existence in out DB
         const userDoExist = await prisma.user.findFirst({
             where: {
                 AND: [
-                    { email: email },
+                    { email: validEmail },
                     { userName: userName }
                 ]
             }
@@ -26,7 +30,7 @@ export const postSignupAuthStep1Handler: RequestHandler = async (req, res) => {
         }
 
         //NOTE: Hash the password before saving it to the database
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(validPassword, 10);
 
         // NOTE: Create a new user in the database
         const user = await prisma.user.create({
@@ -67,6 +71,9 @@ export const postSignupAuthStep1Handler: RequestHandler = async (req, res) => {
         // });
 
     } catch (error) {
+        if (error instanceof z.ZodError) {
+            return res.status(401).json({ error: "Unvalid Credintial (email 0r password)!", user: null })
+        }
         console.log(error)
         return res.json({ error: error })
     }

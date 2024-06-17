@@ -110,6 +110,9 @@ importers:
       uuidv7:
         specifier: ^1.0.0
         version: 1.0.0
+      zod:
+        specifier: 3.24.0-canary.20240523T174819
+        version: 3.24.0-canary.20240523T174819
     devDependencies:
       '@eslint/compat':
         specifier: ^1.1.0
@@ -3740,6 +3743,9 @@ packages:
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  zod@3.24.0-canary.20240523T174819:
+    resolution: {integrity: sha512-yRmms4cxDboI6CMHnY9DJRTPTAh5+RmYTpONAhZN3/0AK3AhJrkyjFFEMEyEK3Z+JWRBz3s728sw95Qnqegy2Q==}
 
 snapshots:
 
@@ -8012,3 +8018,5 @@ snapshots:
   yn@3.1.1: {}
 
   yocto-queue@0.1.0: {}
+
+  zod@3.24.0-canary.20240523T174819: {}

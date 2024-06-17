@@ -5,6 +5,5 @@ export const sessionVerify: RequestHandler = (req, res, next) => {
         return res.json({ error: "you're not signed in" })
     }
 
-    // return res.json({hi:'you are logged in'})
     return next()
 }

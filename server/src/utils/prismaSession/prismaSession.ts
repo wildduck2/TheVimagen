@@ -5,7 +5,7 @@ import { IPrisma } from "@quixo3/prisma-session-store/dist/@types"
 
 export const prismaSession = expressSession({
     cookie: {
-        maxAge: 2 * 60 * 1000, // 7 days
+        maxAge: 70 * 60 * 1000, // 7 days
         // sameSite: 'lax'
         //  secure: process.env.NODE_ENV === 'production' ? true : false,
         httpOnly: true,

@@ -1,6 +1,7 @@
 import { prisma } from "../../prismaClient";
 
 
+
 export const verifyOTP = async (userId: string, otp: string) => {
     const otpRecord = await prisma.otp.findFirst({
         where: {
@@ -13,8 +14,9 @@ export const verifyOTP = async (userId: string, otp: string) => {
     });
 
     if (!otpRecord) {
-        throw new Error('Invalid OTP or expired.');
+        return otpRecord
     }
+
 
     //NOTE: Delete the OTP record after successful verification
     const deleteResult = await prisma.otp.delete({
