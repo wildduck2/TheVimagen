@@ -1,10 +1,3 @@
-import { RiChat3Line } from 'react-icons/ri'
-import { MdOutlineFolder } from 'react-icons/md'
-import { WiTime8 } from 'react-icons/wi'
-import { IoNotificationsOutline } from 'react-icons/io5'
-import { AiOutlineUsergroupDelete } from 'react-icons/ai'
-import { IoSettingsOutline } from 'react-icons/io5'
-import { CiGrid31 } from 'react-icons/ci'
 import { z } from 'zod'
 import React from 'react'
 import { ActionType } from '../components/ui/DroppedMenuWrapper/DroppedMenuWrapper.types'
@@ -14,14 +7,12 @@ import {
   Archive,
   ArchiveX,
   Bell,
-  File,
   GalleryVerticalEnd,
   Inbox,
   LucideIcon,
   MessagesSquare,
   Send,
   Settings,
-  ShoppingCart,
   Trash2,
   Users2,
 } from 'lucide-react'

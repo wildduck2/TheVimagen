@@ -2,4 +2,5 @@
 // export * from './useToast'
 // export * from './useUser'
 export * from './useSignupWithEmail'
+export * from './useSigninWithEmail'
 export * from './useGetCSRFToken'

@@ -7,7 +7,7 @@ import {
     InputOTPSlot,
 } from "@/components/ui"
 import { Icons } from "@/constants"
-import { useSignupIWthEmailStep2 } from "@/hooks/useSignupWithEmailStep2/useSignupWithEmailStep2"
+import { useSignupIWthEmailStep2 } from "@/hooks"
 import { useRef, useState } from "react"
 
 export const SignupEmailState = () => {

@@ -3,11 +3,16 @@ import { toast } from 'sonner'
 import { useAuthEmailProps } from '../useAuth/useAuth.types'
 import { useDispatch } from 'react-redux'
 import { getUserData } from '@/context'
-import { zodCreditValidation } from '@/utils'
 import { z } from 'zod'
+import { useSigninWithEmailProps } from './userSigninWithEmail.types'
+import { useNavigate } from 'react-router-dom'
+import { Toaster } from '@/components/ui'
+import { zodCreditValidation } from '@/utils'
 
-export const useSignupWithEmail = ({ email, password, setIsLoading, route }: useAuthEmailProps) => {
+export const useSigninWithEmail = ({ email, password, setIsLoading }: useSigninWithEmailProps) => {
     const dispatch = useDispatch()
+    const route = useNavigate()
+
     const authEmail = async (e: React.SyntheticEvent) => {
         e.preventDefault()
         setIsLoading(true)
@@ -19,17 +24,19 @@ export const useSignupWithEmail = ({ email, password, setIsLoading, route }: use
             if (validEmail || validPassword) {
 
                 //NOTE: Making the req to the server with the credentials 
-                const { data, statusText } = await axios.post(`${process.env.ROOT_URL}/auth/signup-email-step1`, {
+                const { data, statusText } = await axios.post(`${process.env.ROOT_URL}/auth/signin-email`, {
                     email,
                     password,
-                    userName: 'ahmedyssdfsdfdfaosdfb234'
                 }, { withCredentials: true })
+
+
 
                 if (statusText !== 'OK' && !data) {
                     //TODO: [ ]-- The dispatch and the next step
                     toast.error(`Credentials didn't pass authentication check.`)
                     return setIsLoading(false)
                 }
+
 
                 dispatch(getUserData(data))
                 localStorage.setItem("email", email)
@@ -43,6 +50,7 @@ export const useSignupWithEmail = ({ email, password, setIsLoading, route }: use
                 console.log('Validation errors:', error.errors);
                 return toast.error("Wrong Email or Password! enter valid credentials")
             }
+            console.log('AUTH errors', error)
             toast.error(`Credentials didn't pass authentication check.`)
         }
     }
