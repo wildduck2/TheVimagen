@@ -2,7 +2,7 @@ import { RequestHandler } from "express"
 import bcrypt from 'bcrypt'
 import { prisma } from "../../../prismaClient"
 import { KoalaWelcomeEmail, renderEmail } from "../../../veiws"
-import { generateOTP, mailOptions, transporter } from "../../../utils"
+import { generateOTP } from "../../../utils"
 
 export const postSignupAuthStep1Handler: RequestHandler = async (req, res) => {
 
@@ -34,22 +34,16 @@ export const postSignupAuthStep1Handler: RequestHandler = async (req, res) => {
                 userName,
                 password: hashedPassword,
                 email,
+                sessions: {
+                    create: {
+                        sid: req.sessionID,
+                        expiresAt: req.session.cookie.expires!,
+                        data: JSON.stringify(req.session)
+                    }
+                }
             }
         })
         if (!user) return res.json({ error: "user hasn't created" })
-
-        //NOTE: updating theSession to the user
-        const existingSession = await prisma.session.findUnique({
-            where: { sid: req.sessionID },
-        });
-
-        if (existingSession) {
-            await prisma.session.update({
-                where: { sid: req.sessionID },
-                data: { userId: user.id },
-            });
-        }
-
 
         //NOTE: genrating the OTP and create DB field with it
         const { otp } = await generateOTP(user.id)
@@ -61,6 +55,8 @@ export const postSignupAuthStep1Handler: RequestHandler = async (req, res) => {
 
         req.session.otp = otp
         req.session.user = user
+
+
 
         // transporter.sendMail(mailOptions(email, 'Welcome to TheVimeagen', emailHtml), (error, info) => {
         //     if (error) {

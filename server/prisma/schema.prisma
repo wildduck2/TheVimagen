@@ -28,8 +28,8 @@ model User {
     updated_at                   DateTime    @updatedAt
     OAuthToken                   OAuthToken?
     EmailLog                     EmailLog?
-    sessions                     Session[]
-    Otp                          Otp[]
+    sessions                     Session?
+    Otp                          Otp?
 }
 
 model OAuthToken {
@@ -57,15 +57,17 @@ model EmailLog {
 model Session {
     id        String   @id @default(uuid()) @db.Char(36)
     sid       String   @unique
-    userId    String?
+    userId    String?  @unique
     user      User?    @relation(fields: [userId], references: [id])
-    expiresAt DateTime
-    data      Json
+    expiresAt DateTime @db.Timestamp(6)
+    data      Json     @db.Json
+
+    @@index([expiresAt], map: "IDX_session_expire")
 }
 
 model Otp {
     id         String   @id @default(uuid()) @db.Char(36)
-    userId     String
+    userId     String   @unique
     otp        String
     created_at DateTime @default(now())
     expiresAt  DateTime
