@@ -4,12 +4,14 @@ import { Link, Outlet, Route, Routes, useLocation } from 'react-router-dom'
 import { Home, Files, Log } from '@/components/pages'
 import { Header, SignupEmailState } from '@/components/layouts'
 import { RootState } from '@/context'
-import { useUser } from '@/hooks'
+import { useGetCSRFToken, useUser } from '@/hooks'
 
 function App() {
     // const navigation = useLocation().pathname
     // const store = useSelector((state: RootState) => state.data)
     // const [session] = useUser({ signedout: true })
+    
+    // useGetCSRFToken()
 
     return (
         <>

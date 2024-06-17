@@ -57,3 +57,7 @@ input:active {
 #root {
   display: flex;
 }
+
+.spin {
+  animation: spin 1s linear infinite;
+}

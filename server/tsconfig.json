@@ -9,13 +9,17 @@
         "outDir": "./dist",
         "rootDir": "./src",
         "typeRoots": [
-            "./node_modules/@types",
-            "./src/index.d.ts"
+            "./types",
+            "./node_modules/@types"
         ],
-        "jsx": "react"
+        "jsx": "react",
+        "types": [
+            "node",
+            "express-session"
+        ]
     },
     "include": [
-        "src/**/*.ts"
+        "src","types"
     ],
     "exclude": [
         "node_modules"

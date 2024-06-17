@@ -29,6 +29,7 @@ model User {
     OAuthToken                   OAuthToken?
     EmailLog                     EmailLog?
     sessions                     Session[]
+    Otp                          Otp[]
 }
 
 model OAuthToken {
@@ -39,7 +40,7 @@ model OAuthToken {
     expire_in     Int
     created_at    DateTime @default(now())
     updated_at    DateTime @updatedAt
-    User          User?    @relation(fields: [user_id], references: [id])
+    user          User?    @relation(fields: [user_id], references: [id])
 }
 
 model EmailLog {
@@ -50,7 +51,7 @@ model EmailLog {
     body            String?
     status          String
     created_at      DateTime @default(now())
-    User            User     @relation(fields: [user_id], references: [id])
+    user            User     @relation(fields: [user_id], references: [id])
 }
 
 model Session {
@@ -60,4 +61,13 @@ model Session {
     user      User?    @relation(fields: [userId], references: [id])
     expiresAt DateTime
     data      Json
+}
+
+model Otp {
+    id         String   @id @default(uuid()) @db.Char(36)
+    userId     String
+    otp        String
+    created_at DateTime @default(now())
+    expiresAt  DateTime
+    user       User?    @relation(fields: [userId], references: [id])
 }

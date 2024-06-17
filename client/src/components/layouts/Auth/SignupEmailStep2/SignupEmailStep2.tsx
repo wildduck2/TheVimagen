@@ -6,10 +6,17 @@ import {
     InputOTPSeparator,
     InputOTPSlot,
 } from "@/components/ui"
-import { useState } from "react"
+import { Icons } from "@/constants"
+import { useSignupIWthEmailStep2 } from "@/hooks/useSignupWithEmailStep2/useSignupWithEmailStep2"
+import { useRef, useState } from "react"
 
 export const SignupEmailState = () => {
-    const [open, setOpen] = useState(true)
+    const [otp, setOtp] = useState<string>('');
+
+    const inputOTPRef = useRef<HTMLInputElement>(null)
+
+    const { open, isLoading, formSubmitionInvoke } = useSignupIWthEmailStep2({ otp })
+
     return (
         <>
             <Dialog open={open}>
@@ -21,10 +28,11 @@ export const SignupEmailState = () => {
                             Enter The 6-digit code sent to {localStorage.getItem("email") ?? "your email"} to continue.
                         </DialogDescription>
                     </DialogHeader>
+
                     <div className="grid gap-7 py-4 place-items-center">
 
-                        <InputOTP maxLength={6}>
-                            <InputOTPGroup>
+                        <InputOTP maxLength={6} ref={inputOTPRef} onChange={(e) => { setOtp(e as string) }}>
+                            <InputOTPGroup >
                                 <InputOTPSlot index={0} />
                                 <InputOTPSlot index={1} />
                             </InputOTPGroup>
@@ -39,10 +47,16 @@ export const SignupEmailState = () => {
                                 <InputOTPSlot index={5} />
                             </InputOTPGroup>
                         </InputOTP>
-
                     </div>
+
                     <DialogFooter className="place-self-center" >
-                        <Button onClick={() => setOpen(false)} type="submit">Confirm your Email</Button>
+                        <Button
+                            disabled={isLoading}
+                            className="flex gap-2"
+                            onClick={formSubmitionInvoke} type="submit">
+                            {isLoading && <Icons.spinner className="spin" />}
+                            Confirm your Email
+                        </Button>
                     </DialogFooter>
                 </DialogContentNoCloseButton>
             </Dialog ></>

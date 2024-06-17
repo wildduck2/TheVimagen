@@ -2,40 +2,28 @@ import express from 'express';
 import dotEnv from 'dotenv'
 import { authRouter, oauthRouter } from './routes';
 import cors from 'cors';
-import expressSession from 'express-session';
-import { PrismaSessionStore } from '@quixo3/prisma-session-store';
-import { IPrisma } from '@quixo3/prisma-session-store/dist/@types';
-import { prisma } from './prismaClient';
 import bodyParser from 'body-parser'
+import { doubleCsrfProtection, prismaSession } from './utils';
+import cookieParser from 'cookie-parser'
+import { csrfToken } from './middlewares';
+// import { corsOptions } from './constants';
 
 const app = express();
+dotEnv.config()
 
-dotEnv.config({
-    path: "http://localhost:5173/*"
-})
-
-app.use(cors())
-
+//NOTE: some configs for the routes
+app.use(cors({
+    origin: 'http://localhost:5173', // Specify the origin allowed to access the resource
+    credentials: true, // Reflect CORS headers in the response
+}))
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(prismaSession);
 app.use(bodyParser.json())
+app.use(cookieParser());
+// app.use(doubleCsrfProtection);
 
-
-
-app.use(
-    expressSession({
-        cookie: {
-            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-        },
-        secret: 'your_secret_key',
-        resave: true,
-        saveUninitialized: true,
-        store: new PrismaSessionStore(prisma as unknown as IPrisma<"session">, {
-            checkPeriod: 2 * 60 * 1000, 
-            dbRecordIdIsSessionId: true,
-        }),
-    })
-);
-
+// app.use(csrfToken)
 app.use(oauthRouter)
 app.use(authRouter)
 

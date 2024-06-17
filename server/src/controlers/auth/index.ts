@@ -33,5 +33,6 @@ export const postSignupAuthHandler: RequestHandler = async (req, res) => {
     }
 }
 
-export * from './postSignupAuthStep1Handler'
 export * from './postSigninAuthHandler'
+export * from './postSignupAuthStep1Handler'
+export * from './postSignupAuthStep2Handler'

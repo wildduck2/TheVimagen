@@ -1,6 +1,4 @@
-import { Dispatch } from 'react'
 import { NavigateFunction } from 'react-router-dom'
-import { AnyAction } from 'redux'
 
 export interface useAuthEmailProps extends useAuthGithubProps {
   email: string
@@ -8,7 +6,6 @@ export interface useAuthEmailProps extends useAuthGithubProps {
 }
 
 export interface useAuthGithubProps {
-  dispatch: Dispatch<AnyAction>
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
   route: NavigateFunction
 }
