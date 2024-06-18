@@ -1,3 +1,4 @@
 export * from './EmailInput'
 export * from './PasswordInput'
-export * from './PasswordComfirmInput'
+export * from './PasswordConfirmInput'
+export * from './UserNameInput'

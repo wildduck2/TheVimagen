@@ -4,22 +4,22 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Input } from '../Input'
 import { Label } from '../Label'
 import { RootState } from '@/context'
-import { PasswordComfirmValidation, onPasswordShow } from '@/utils'
+import { PasswordConfirmValidation, onPasswordShow } from '@/utils'
 import { PasswordInput } from './PasswordInput'
 
 import { BsPatchExclamation } from 'react-icons/bs'
 import { RiEyeLine, RiEyeOffLine } from 'react-icons/ri'
 
-export type PasswordComfirmInputProps = { isLoading: boolean; passwordRef: React.RefObject<HTMLInputElement> }
+export type PasswordConfirmInputProps = { isLoading: boolean; passwordRef: React.RefObject<HTMLInputElement> }
 
-export const PasowordComirmInput = ({ isLoading, passwordRef }: PasswordComfirmInputProps) => {
+export const PasowordConirmInput = ({ isLoading, passwordRef }: PasswordConfirmInputProps) => {
   const inputsValid = useSelector((state: RootState) => state.utils.inputsValid)
   const dispatch = useDispatch()
 
   const [password, setPassword] = useState<string>('')
-  const [passwordcomfirmValid, setPasswordcomfirmValid] = useState<boolean>(false)
-  const [passwordcomfirm, setPasswordcomfirm] = useState<string>('')
-  const [passwordcomfirmShow, setPasswordcomfirmationShow] = useState<boolean>(false)
+  const [passwordcomfirmValid, setPasswordconfirmValid] = useState<boolean>(false)
+  const [passwordconfirm, setPasswordconfirm] = useState<string>('')
+  const [passwordconfirmShow, setPasswordconfirmationShow] = useState<boolean>(false)
 
   const passwordcomfirmRef = useRef<HTMLInputElement>(null)
   return (
@@ -28,12 +28,12 @@ export const PasowordComirmInput = ({ isLoading, passwordRef }: PasswordComfirmI
         isLoading={isLoading}
         password={password}
         setPassword={setPassword}
-        passwordComfirmValue={passwordcomfirm}
-        setPasswordcomfirmationValid={setPasswordcomfirmValid}
+        passwordConfirmValue={passwordconfirm}
+        setPasswordconfirmationValid={setPasswordconfirmValid}
         passwordRef={passwordRef}
       />
       <div>
-        <Label htmlFor="password">Password Comfirmation</Label>
+        <Label htmlFor="password">Password Confirmation</Label>
         <Input
           id="password-comform"
           className={`${passwordcomfirmValid && 'input-notvalid'}`}
@@ -43,13 +43,13 @@ export const PasowordComirmInput = ({ isLoading, passwordRef }: PasswordComfirmI
           autoComplete="password"
           autoCorrect="off"
           required
-          value={passwordcomfirm}
+          value={passwordconfirm}
           onChange={({ currentTarget }) => {
-            setPasswordcomfirm(currentTarget.value)
-            PasswordComfirmValidation({
+            setPasswordconfirm(currentTarget.value)
+            PasswordConfirmValidation({
               inputsValid,
               dispatch,
-              setvalid: setPasswordcomfirmValid,
+              setvalid: setPasswordconfirmValid,
               inputValue: currentTarget.value,
               passwordValue: password,
             })
@@ -63,13 +63,13 @@ export const PasowordComirmInput = ({ isLoading, passwordRef }: PasswordComfirmI
             type="button"
             onClick={() =>
               onPasswordShow({
-                setFunc: setPasswordcomfirmationShow,
+                setFunc: setPasswordconfirmationShow,
                 passwordRef: passwordcomfirmRef,
-                passwordShow: passwordcomfirmShow,
+                passwordShow: passwordconfirmShow,
               })
             }
           >
-            {!passwordcomfirmShow ? <RiEyeLine /> : <RiEyeOffLine />}
+            { passwordconfirmShow ? <RiEyeLine /> : <RiEyeOffLine />}
           </button>
         </div>
       </div>

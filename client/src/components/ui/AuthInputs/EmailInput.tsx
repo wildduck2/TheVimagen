@@ -27,7 +27,7 @@ export const EmailInput = ({ isLoading, emailRef }: EmailInputPorps) => {
         <Input
           id="email"
           className={`${emailValid && 'input-notvalid'}`}
-          placeholder="name@example.com"
+          placeholder="wild@duck.com"
           type="email"
           autoCapitalize="none"
           autoComplete="email"

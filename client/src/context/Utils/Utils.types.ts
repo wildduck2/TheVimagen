@@ -9,9 +9,10 @@ export interface initialStateTypes {
 }
 
 export interface InputsValid {
+  userName: boolean
   email: boolean
   password: boolean
-  passwordComfirm: boolean
+  passwordConfirm: boolean
 }
 
 export interface InputsValidState {

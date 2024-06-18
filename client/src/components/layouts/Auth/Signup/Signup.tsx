@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { EmailInput, Button, PasowordComirmInput } from '@/components/ui'
+import { EmailInput, Button, PasowordConirmInput, UserNameInput } from '@/components/ui'
 import { Icons } from '@/constants'
 import { RootState } from '@/context'
 import { UserAuthFormProps } from '@/components/pages'
@@ -18,6 +18,7 @@ export const Signup = ({ ...props }: UserAuthFormProps) => {
 
     const emailRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
+    const userNameRef = useRef<HTMLInputElement>(null)
 
     const { authEmail } = useSignupWithEmail({
         email: emailRef.current?.value as string,
@@ -28,7 +29,7 @@ export const Signup = ({ ...props }: UserAuthFormProps) => {
     })
 
     useEffect(() => {
-        setNotValid(inputsValid.email && inputsValid.password && inputsValid.passwordComfirm ? true : false)
+        setNotValid(inputsValid.email && inputsValid.password && inputsValid.passwordConfirm ? true : false)
     }, [dispatch, inputsValid])
 
     return (
@@ -36,8 +37,9 @@ export const Signup = ({ ...props }: UserAuthFormProps) => {
             <div className="signup" {...props}>
                 <form onSubmit={authEmail}>
                     <div>
+                        <UserNameInput isLoading={isLoading} userNameRef={userNameRef} />
                         <EmailInput isLoading={isLoading} emailRef={emailRef} />
-                        <PasowordComirmInput isLoading={isLoading} passwordRef={passwordRef} />
+                        <PasowordConirmInput isLoading={isLoading} passwordRef={passwordRef} />
 
                         <Button disabled={isLoading || !notValid}>
                             {isLoading && <Icons.spinner />}

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Button, Input, Label } from '@/components/ui'
 import { UserAuthFormProps } from '@/components/pages'
 import { RootState } from '@/context'
-import { Icons, } from '@/constants'
+import { Icons, emailSchema } from '@/constants'
 import { onPasswordShow } from '@/utils'
 import { useSigninWithEmail } from '@/hooks'
 
@@ -33,9 +33,9 @@ export const Signin = ({ ...props }: UserAuthFormProps) => {
     const { authEmail } = useSigninWithEmail({
         email: emailRef.current?.value as string,
         password: passwordRef.current?.value as string,
-        dispatch,
         setIsLoading,
-        route,
+        setEmailValid,
+        setPasswordValid,
     })
 
     // const { creditValidGithub, authGithub } = useSigninwithGithub({
@@ -45,11 +45,11 @@ export const Signin = ({ ...props }: UserAuthFormProps) => {
     //     setPasswordValid,
     //     route,
     // })
+    console.log(emailValid, passwordValid)
 
     useEffect(() => {
         setNotValid(utils.inputsValid.email && utils.inputsValid.password ? true : false)
     }, [dispatch, emailValid, passwordValid, utils])
-
 
     return (
         <div className="signup" {...props}>
@@ -67,13 +67,15 @@ export const Signin = ({ ...props }: UserAuthFormProps) => {
                             autoCorrect="off"
                             value={email}
                             disabled={isLoading}
-                            onChange={({ currentTarget }) => { setEmail(currentTarget.value) }}
+                            onChange={({ currentTarget }) => {
+                                setEmail(currentTarget.value)
+                            }}
                             required
                             ref={emailRef}
                         />
                         <div>{emailValid && <BsPatchExclamation className="h-4 w-4 text-red-700" />}</div>
                     </div>
-                    <p className={!emailValid ? 'hide' : 'active'}>Email address not recognized, invalid.</p>
+                    <p className={`invalid__msg ${!emailValid ? 'hide' : 'active'}`}>Email address not recognized, invalid.</p>
                     <div>
                         <Label htmlFor="password">Email</Label>
                         <Input
@@ -86,7 +88,9 @@ export const Signin = ({ ...props }: UserAuthFormProps) => {
                             autoCorrect="off"
                             required
                             value={password}
-                            onChange={({ currentTarget }) => { setPassword(currentTarget.value) }}
+                            onChange={({ currentTarget }) => {
+                                setPassword(currentTarget.value)
+                            }}
                             disabled={isLoading}
                             ref={passwordRef}
                         />
@@ -100,14 +104,15 @@ export const Signin = ({ ...props }: UserAuthFormProps) => {
                             </button>
                         </div>
                     </div>
-                    <p className={!passwordValid ? 'hide' : 'active'}> Invalid password, access denied.</p>
+                    <p className={`invalid__msg ${!passwordValid ? 'hide' : 'active'}`}> Invalid password, access denied.</p>
+                    <Button variant={'link'} className='forget__password'>Forget Password</Button>
                     <Button disabled={isLoading || notValid}>
                         {isLoading && <Icons.spinner />}
                         Sign In with Email
                     </Button>
                 </div>
             </form>
-            <div>
+            <div className='Oauth__buttons' >
                 <div>
                     <span />
                 </div>
@@ -121,4 +126,3 @@ export const Signin = ({ ...props }: UserAuthFormProps) => {
         </div>
     )
 }
-

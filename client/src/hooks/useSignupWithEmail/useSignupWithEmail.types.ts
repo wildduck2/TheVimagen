@@ -1,9 +1,7 @@
 import { setValidType } from '@/utils'
 
-export type useSigninWithEmailProps = {
+export type useSignupWithEmailType = {
   email: string
   password: string
   setIsLoading: setValidType
-  setEmailValid: setValidType
-  setPasswordValid: setValidType
 }

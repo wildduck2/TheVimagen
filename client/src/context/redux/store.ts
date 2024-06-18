@@ -6,15 +6,15 @@ import userReducer from '../User/User'
 export type RootState = ReturnType<typeof rootReducer>
 
 const rootReducer = combineReducers({
-    user: userReducer,
-    data: dataReducer,
-    utils: utilsReducer,
+  user: userReducer,
+  data: dataReducer,
+  utils: utilsReducer,
 })
 
 export const store = configureStore({
-    reducer: {
-        user: userReducer,
-        data: dataReducer,
-        utils: utilsReducer,
-    },
+  reducer: {
+    user: userReducer,
+    data: dataReducer,
+    utils: utilsReducer,
+  },
 })
