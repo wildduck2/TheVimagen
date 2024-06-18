@@ -1,1 +1,1 @@
-export * from'./prismaSession'
+export * from './prismaSession';

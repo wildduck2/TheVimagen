@@ -1,1 +1,1 @@
-export * from './doubleCSRF'
+export * from './doubleCSRF';
