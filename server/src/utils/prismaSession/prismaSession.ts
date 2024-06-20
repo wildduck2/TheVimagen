@@ -10,6 +10,7 @@ export const prismaSession = expressSession({
     // sameSite: 'lax'
     //  secure: process.env.NODE_ENV === 'production' ? true : false,
     httpOnly: true,
+    secure: true,
     // sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
   },
   secret: 'your_secret_key',
@@ -20,4 +21,3 @@ export const prismaSession = expressSession({
     dbRecordIdIsSessionId: true,
   }),
 });
-
