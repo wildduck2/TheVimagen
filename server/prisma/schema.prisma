@@ -14,22 +14,39 @@ datasource db {
 }
 
 model User {
-    id                           String      @id @default(uuid()) @db.Char(36)
+    id                           String        @id @default(uuid()) @db.Char(36)
     firstName                    String?
     lastName                     String?
-    userName                     String      @unique
-    email                        String      @unique
+    userName                     String        @unique
+    email                        String        @unique
     address                      Json?
+    age                          Int?
+    bio                          String?
+    pronounce                    String?
+    yearsOfExprience             Int?
+    profession                   String?
     lastLoginIp                  String?
     password                     String
     passwordResetToken           String?
     passwordResetTokenExpiration DateTime?
-    created_at                   DateTime    @default(now())
-    updated_at                   DateTime    @updatedAt
+    created_at                   DateTime      @default(now())
+    updated_at                   DateTime      @updatedAt
     OAuthToken                   OAuthToken?
     EmailLog                     EmailLog?
     sessions                     Session?
     Otp                          Otp?
+    recoveryData                 RecoveryData?
+    isVerified                   Boolean?
+
+    @@index([userName, email], map: "_IDX_UESR")
+}
+
+model RecoveryData {
+    id      String @id @default(uuid()) @db.Char(36)
+    user_id String @unique @db.Char(36)
+    email   String
+    number  String
+    User    User   @relation(fields: [user_id], references: [id])
 }
 
 model OAuthToken {
