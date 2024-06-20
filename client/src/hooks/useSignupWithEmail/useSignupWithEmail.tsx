@@ -32,6 +32,11 @@ export const useSignupWithEmail = ({ email, password, setIsLoading }: useSignupW
           { withCredentials: true },
         )
 
+        if (data.error) {
+          toast.error(data.error)
+          return setIsLoading(false)
+        }
+
         if (statusText !== 'OK' && !data) {
           //TODO: [ ]-- The dispatch and the next step
           toast.error(`Credentials didn't pass authentication check.`)

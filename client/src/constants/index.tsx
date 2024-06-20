@@ -412,3 +412,121 @@ export const Icons = {
     </svg>
   ),
 }
+
+export const companyProfessions = [
+  // Management
+  'CEO',
+  'COO',
+  'CFO',
+  'CTO',
+  'CMO',
+  'Managing Director',
+  'General Manager',
+  'Operations Manager',
+  'Project Manager',
+  'Office Manager',
+
+  // Finance
+  'Accountant',
+  'Financial Analyst',
+  'Controller',
+  'Treasurer',
+  'Auditor',
+  'Payroll Specialist',
+
+  // Human Resources
+  'HR Manager',
+  'HR Specialist',
+  'Recruiter',
+  'Training and Development Manager',
+  'Compensation and Benefits Manager',
+
+  // IT
+  'IT Manager',
+  'Network Administrator',
+  'Systems Administrator',
+  'Database Administrator',
+  'Software Developer',
+  'Web Developer',
+  'IT Support Specialist',
+  'Information Security Analyst',
+
+  // Marketing
+  'Marketing Manager',
+  'Marketing Specialist',
+  'Brand Manager',
+  'Content Creator',
+  'Copywriter',
+  'SEO Specialist',
+  'Social Media Manager',
+  'Product Manager',
+
+  // Sales
+  'Sales Manager',
+  'Sales Representative',
+  'Account Manager',
+  'Business Development Manager',
+  'Sales Engineer',
+
+  // Customer Service
+  'Customer Service Manager',
+  'Customer Service Representative',
+  'Technical Support Specialist',
+
+  // Production/Operations
+  'Production Manager',
+  'Quality Control Inspector',
+  'Maintenance Technician',
+  'Manufacturing Engineer',
+  'Production Worker',
+
+  // Research and Development (R&D)
+  'R&D Manager',
+  'Research Scientist',
+  'Lab Technician',
+
+  // Legal
+  'Legal Counsel',
+  'Paralegal',
+
+  // Administrative
+  'Administrative Assistant',
+  'Executive Assistant',
+  'Receptionist',
+
+  // Supply Chain and Logistics
+  'Supply Chain Manager',
+  'Logistics Coordinator',
+  'Procurement Manager',
+  'Warehouse Manager',
+  'Inventory Specialist',
+
+  // Design
+  'Graphic Designer',
+  'UI/UX Designer',
+  'Product Designer',
+  'Interior Designer',
+
+  // Facilities
+  'Facilities Manager',
+  'Janitor',
+  'Security Officer',
+
+  // Communications
+  'Communications Manager',
+  'Public Relations Specialist',
+  'Corporate Trainer',
+
+  // Healthcare (for companies with healthcare services)
+  'Occupational Health and Safety Specialist',
+  'Company Nurse',
+  'Medical Director',
+
+  // Others
+  'Data Analyst',
+  'Business Analyst',
+  'Strategy Manager',
+  'Consultant',
+  'Event Coordinator',
+  'Training Coordinator',
+]

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Input } from '../Input'
@@ -6,6 +6,7 @@ import { Label } from '../Label'
 import { RootState } from '@/context'
 import { PasswordConfirmValidation, onPasswordShow } from '@/utils'
 import { PasswordInput } from './PasswordInput'
+import { useDebounce } from '@/hooks'
 
 import { BsPatchExclamation } from 'react-icons/bs'
 import { RiEyeLine, RiEyeOffLine } from 'react-icons/ri'
@@ -17,11 +18,26 @@ export const PasowordConirmInput = ({ isLoading, passwordRef }: PasswordConfirmI
   const dispatch = useDispatch()
 
   const [password, setPassword] = useState<string>('')
-  const [passwordcomfirmValid, setPasswordconfirmValid] = useState<boolean>(false)
+  const [passwordValid, setPasswordValid] = useState<boolean>(false)
+  const [passwordconfirmValid, setPasswordconfirmValid] = useState<boolean>(false)
   const [passwordconfirm, setPasswordconfirm] = useState<string>('')
   const [passwordconfirmShow, setPasswordconfirmationShow] = useState<boolean>(false)
 
   const passwordcomfirmRef = useRef<HTMLInputElement>(null)
+
+  const debounceValue = useDebounce(passwordconfirm)
+
+  useEffect(() => {
+    //NOTE: debouncing the input on change
+    PasswordConfirmValidation({
+      inputsValid,
+      dispatch,
+      setvalid: setPasswordconfirmValid,
+      inputValue: debounceValue,
+      passwordValue: password,
+    })
+  }, [debounceValue])
+
   return (
     <>
       <PasswordInput
@@ -31,12 +47,15 @@ export const PasowordConirmInput = ({ isLoading, passwordRef }: PasswordConfirmI
         passwordConfirmValue={passwordconfirm}
         setPasswordconfirmationValid={setPasswordconfirmValid}
         passwordRef={passwordRef}
+        setPasswordValid={setPasswordValid}
+        passwordValid={passwordValid}
+        login={false}
       />
       <div>
         <Label htmlFor="password">Password Confirmation</Label>
         <Input
           id="password-comform"
-          className={`${passwordcomfirmValid && 'input-notvalid'}`}
+          className={`${passwordconfirmValid && 'input-notvalid'}`}
           placeholder="••••••••"
           type="password"
           autoCapitalize="none"
@@ -45,20 +64,13 @@ export const PasowordConirmInput = ({ isLoading, passwordRef }: PasswordConfirmI
           required
           value={passwordconfirm}
           onChange={({ currentTarget }) => {
-            setPasswordconfirm(currentTarget.value)
-            PasswordConfirmValidation({
-              inputsValid,
-              dispatch,
-              setvalid: setPasswordconfirmValid,
-              inputValue: currentTarget.value,
-              passwordValue: password,
-            })
+            setPasswordconfirm(() => currentTarget.value)
           }}
           disabled={isLoading}
           ref={passwordcomfirmRef}
         />
         <div>
-          {passwordcomfirmValid && <BsPatchExclamation className="text-red-700" />}
+          {passwordconfirmValid && <BsPatchExclamation className="text-red-700" />}
           <button
             type="button"
             onClick={() =>
@@ -69,10 +81,11 @@ export const PasowordConirmInput = ({ isLoading, passwordRef }: PasswordConfirmI
               })
             }
           >
-            { passwordconfirmShow ? <RiEyeLine /> : <RiEyeOffLine />}
+            {passwordconfirmShow ? <RiEyeLine /> : <RiEyeOffLine />}
           </button>
         </div>
       </div>
+      <p className={!passwordconfirmValid ? 'hide' : 'active'}> Password confirm is not valid</p>
     </>
   )
 }

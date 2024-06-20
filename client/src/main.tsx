@@ -7,7 +7,6 @@ import { store } from './context/redux/store.ts'
 
 import './scss/style.scss'
 import { ThemeProvider } from './components/ui/ThemeProvider/ThemeProfider.tsx'
-// import { Toaster } from 'sonner';
 import { Toaster, TooltipProvider } from './components/ui'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

@@ -23,16 +23,13 @@
 
     & input {
       max-width: 24rem;
-      border: 1px solid hsl(var(--border));
     }
 
     & button {
-      border: 1px solid hsl(var(--border));
     }
 
     & ~ div {
       border-radius: calc(var(--radius) - 2px);
-      border: 1px solid hsl(var(--border));
       height: 600px;
       overflow: scroll;
     }
@@ -49,7 +46,6 @@
         width: 50px;
 
         & button {
-          border: 1px solid hsl(var(--border));
         }
       }
 
@@ -78,7 +74,6 @@
           &:first-child button {
             @include u.flex(flex, center);
             gap: 0.5rem;
-            border: 1px solid hsl(var(--border));
             width: 1rem;
             height: 1rem;
           }

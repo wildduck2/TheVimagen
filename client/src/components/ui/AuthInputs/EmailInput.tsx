@@ -1,24 +1,38 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Input } from '../Input'
 import { Label } from '../Label'
-import { EmailValidation } from '@/utils'
+import { EmailValidation, setValidType, setValueFunc } from '@/utils'
 import { RootState } from '@/context'
 
 import { BsPatchExclamation } from 'react-icons/bs'
+import { useDebounce } from '@/hooks'
 
 export interface EmailInputPorps {
   isLoading: boolean
   emailRef: React.RefObject<HTMLInputElement>
+  emailValid: boolean
+  setEmailValid: setValidType
+  email: string
+  setEmail: setValueFunc
 }
 
-export const EmailInput = ({ isLoading, emailRef }: EmailInputPorps) => {
+export const EmailInput = ({ isLoading, emailRef, emailValid, setEmailValid, email, setEmail }: EmailInputPorps) => {
   const inputsValid = useSelector((state: RootState) => state.utils.inputsValid)
   const dispatch = useDispatch()
 
-  const [emailValid, setEmailValid] = useState<boolean>(false)
-  const [email, setEmail] = useState<string>('')
+  const debounceValue = useDebounce(email)
+
+  useEffect(() => {
+    //NOTE: debouncing the input on change
+    EmailValidation({
+      inputValue: debounceValue,
+      setvalid: setEmailValid,
+      inputsValid,
+      dispatch,
+    })
+  }, [debounceValue])
 
   return (
     <>
@@ -35,13 +49,7 @@ export const EmailInput = ({ isLoading, emailRef }: EmailInputPorps) => {
           value={email}
           disabled={isLoading}
           onChange={({ currentTarget }) => {
-            setEmail(currentTarget.value)
-            EmailValidation({
-              inputValue: currentTarget.value,
-              setvalid: setEmailValid,
-              inputsValid,
-              dispatch,
-            })
+            setEmail(() => currentTarget.value)
           }}
           required
           ref={emailRef}

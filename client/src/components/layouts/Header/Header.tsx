@@ -32,7 +32,7 @@ const Header = () => {
 
   return (
     <>
-      {logged && (
+      {!logged && (
         <header data-collapsed={isCollapsed} className={`header ${isCollapsed && 'collapsed'}`}>
           <Logo isCollapsed={isCollapsed} />
           <Separator />

@@ -9,7 +9,7 @@ export const Home = () => {
   const logged = useSelector((state: RootState) => state.data.logged)
   const dispatch = useDispatch()
 
-  return logged ? (
+  return !logged ? (
     <div className="w-full">
       <button
         onClick={() => {

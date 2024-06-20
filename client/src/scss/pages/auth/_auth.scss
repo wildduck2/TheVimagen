@@ -35,7 +35,6 @@
     position: absolute;
     right: size(na) /* 16px */;
     top: size(na) /* 16px */;
-    border: 1px solid u.color(black, 500);
 
     @include u.breakpoint(xsmall) {
       right: size(4xl) /* 32px */;
@@ -158,4 +157,11 @@
 
 :is(.dark .auth__aside) {
   border-right-width: 1px;
+}
+
+.signup__step {
+  @include u.flex(grid, center, cetner);
+  place-content: center;
+  height: 100vh;
+  width: 100vw;
 }

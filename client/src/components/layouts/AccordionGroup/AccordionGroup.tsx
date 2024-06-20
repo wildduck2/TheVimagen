@@ -75,31 +75,31 @@ export default AccordionGroup
 
 {
   /* <div className="files-tree__accordion">
-        <div className="files-tree__accordion__title" onClick={showAccordionHandler}>
-          <IoIosArrowUp />
-          <span>FAVORITES</span>
-        </div>
-        <div className="files-tree__accordion__list h-[0px] accordion-up" ref={accordionRef}>
-          {data.map((item) => {
-            return (
-              <div key={item.id} className="files-tree__accordion__item">
-                <div className="files-tree__accordion__item__title">
-                  {defaultIcons[item.icon]}
-                  <span>{item.name}</span>
+          <div className="files-tree__accordion__title" onClick={showAccordionHandler}>
+            <IoIosArrowUp />
+            <span>FAVORITES</span>
+          </div>
+          <div className="files-tree__accordion__list h-[0px] accordion-up" ref={accordionRef}>
+            {data.map((item) => {
+              return (
+                <div key={item.id} className="files-tree__accordion__item">
+                  <div className="files-tree__accordion__item__title">
+                    {defaultIcons[item.icon]}
+                    <span>{item.name}</span>
+                  </div>
+                  {/* <div>
+                    {item.children.map((child) => {
+                    return (
+                      <div key={child.id}>
+                        {React.createElement(defaultIcons[child.icon])}
+                        <span>{child.name}</span>
+                      </div>
+                    );
+                  })} 
                 </div>
-                {/* <div>
-                  {item.children.map((child) => {
-                  return (
-                    <div key={child.id}>
-                      {React.createElement(defaultIcons[child.icon])}
-                      <span>{child.name}</span>
-                    </div>
-                  );
-                })} 
-              </div>
-              </div>
-            );
-          })}
-        </div>
-      </div> */
+                </div>
+              );
+            })}
+          </div>
+        </div> */
 }

@@ -1,4 +1,6 @@
 export * from './AuthSide'
 export * from './Signin'
 export * from './Signup'
-export * from './SignupEmailStep2'
+export * from './ForgetPassword'
+export * from './SignupEmailSetep2'
+export * from './SignupEmailSetup3'

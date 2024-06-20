@@ -19,7 +19,7 @@ export type PasswordValidationType = {
   setPasswordHasUppercase: setValidType
   setPasswordHasNumber: setValidType
   setPasswordHasSpecialCharacter: setValidType
-  passwordConfirmValue: string
+  passwordConfirmValue?: string
 } & EmailValidationType
 
 export type PasswordConfirmValidationType = {

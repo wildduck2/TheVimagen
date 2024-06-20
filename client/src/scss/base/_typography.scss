@@ -50,7 +50,9 @@ $size: (
 @function size($size-name) {
   @if map-has-key($size, $size-name) {
     @return map-get($size, $size-name);
-  } @else {
+  }
+
+  @else {
     @error "Size not found: #{$size-name}";
   }
 }

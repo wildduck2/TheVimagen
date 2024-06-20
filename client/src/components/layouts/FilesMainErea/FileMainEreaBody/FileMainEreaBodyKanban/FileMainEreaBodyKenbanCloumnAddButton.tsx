@@ -56,12 +56,18 @@ const FileMainEreaBodyKenbanCloumnAddButton = () => {
                 <DatePickerWithRange />
               </div>
 
-              <SelectedWrapper data={categoryData} title="Category" slectedValuePLaceHolder="Select a category" />
+              <div className="dialog-content__form__group__input">
+                <SelectedWrapper data={categoryData} title="Category" slectedValuePLaceHolder="Select a category" />
+              </div>
             </div>
 
             <div className="dialog-content__form__group">
-              <SelectedWrapper data={statusData} title="Status" slectedValuePLaceHolder="Select a status" />
-              <SelectedWrapper data={priorityData} title="Priority" slectedValuePLaceHolder="Select a priority" />
+              <div className="dialog-content__form__group__input">
+                <SelectedWrapper data={statusData} title="Status" slectedValuePLaceHolder="Select a status" />
+              </div>
+              <div className="dialog-content__form__group__input">
+                <SelectedWrapper data={priorityData} title="Priority" slectedValuePLaceHolder="Select a priority" />
+              </div>
             </div>
 
             <div className="dialog-content__form__group">

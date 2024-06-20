@@ -14,6 +14,7 @@
 
 // 700px, 900px, 1440px
 $breakpoints-up: (
+  'tiny-small': f.em(270),
   'small': f.em(450),
   'xsmall': f.em(640),
   'medium': f.em(700),
