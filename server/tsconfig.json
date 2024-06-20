@@ -1,20 +1,37 @@
 {
-  "compilerOptions": {
-    "target": "ES2020",
-    "module": "commonjs",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "typeRoots": ["./types", "./node_modules/@types"],
-    "jsx": "react",
-    "types": ["node", "express-session"]
-  },
-  "include": ["src", "types"],
-  "exclude": ["node_modules"],
-  "paths": {
-    "@/*": ["./src/*"]
-  }
+    "compilerOptions": {
+        "target": "ES2020",
+        "module": "commonjs",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "moduleResolution": "node",
+        "baseUrl": "./src",
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "typeRoots": [
+            "./types",
+            "./node_modules/@types"
+        ],
+        "jsx": "react",
+        "types": [
+            "node",
+            "jest",
+            "express-session"
+        ]
+    },
+    "include": [
+        "src",
+        "types"
+    ],
+    "exclude": [
+        "node_modules"
+    ],
+    "paths": {
+        "@/*": [
+            "./src/*",
+            "**/*.test.ts"
+        ]
+    }
 }

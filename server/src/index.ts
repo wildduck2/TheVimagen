@@ -20,9 +20,9 @@ app.use(
 );
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(prismaSession);
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(prismaSession);
 // app.use(doubleCsrfProtection);
 
 // app.use(csrfToken)
