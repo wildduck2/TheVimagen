@@ -1,8 +1,6 @@
-import { z } from 'zod'
 import bcrypt from 'bcrypt'
 import type {
   CheckUserExistInDbType,
-  ZodCredentialsValidationType,
   GenerateOTPType,
   SendEmailType,
   CreateNewUserType,
@@ -12,96 +10,76 @@ import type {
 import otpGenerator from 'otp-generator'
 import { WelcomeEmail, renderEmail } from '../../veiws'
 import { mailOptions, prisma, transporter } from '../../utils'
-import { Prisma } from '@prisma/client'
-import { warn } from 'console'
 
 export class User {
   constructor() {}
 
-  static zodCredentialsValidation = async ({
-    email,
-    password
-  }: ZodCredentialsValidationType) => {
-    const emailSchema = z.string().email()
-    const passwordSchema = z
-      .string()
-      .min(8, { message: 'Password must be at least 8 characters long' })
-      .max(32, { message: 'Password cannot be longer than 32 characters' })
-      .regex(/[A-Z]/, {
-        message: 'Password must contain at least one uppercase letter'
-      })
-      .regex(/[a-z]/, {
-        message: 'Password must contain at least one lowercase letter'
-      })
-      .regex(/[0-9]/, { message: 'Password must contain at least one number' })
-      .regex(/[\W_]/, {
-        message: 'Password must contain at least one special character'
-      })
-
-    const validEmail = emailSchema.parse(email)
-    const validPassword = passwordSchema.parse(password)
-
-    return { validEmail, validPassword } as const
-  }
-
   static async checkUserExistInDb({
-    validEmail,
+    email,
     userName,
     userID
   }: CheckUserExistInDbType) {
-    if (userName && validEmail) {
-      return await prisma.user.findFirst({
-        where: {
-          AND: [{ email: validEmail }, { userName: userName }]
-        }
-      })
-    }
+    try {
+      if (userName && email) {
+        return await prisma.user.findFirst({
+          where: {
+            AND: [{ email: email }, { userName: userName }]
+          }
+        })
+      }
 
-    if (userID) {
-      return await prisma.user.findUnique({
-        where: { id: userID }
-      })
-    }
+      if (userID) {
+        return await prisma.user.findUnique({
+          where: { id: userID }
+        })
+      }
 
-    if (validEmail) {
-      return await prisma.user.findUnique({
-        where: { email: validEmail }
-      })
+      if (email) {
+        return await prisma.user.findUnique({
+          where: { email: email }
+        })
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
 
   static async createNewUser({
-    validPassword,
+    password,
     sessionId,
     session,
     expiresAt,
     userName,
-    validEmail
+    email
   }: CreateNewUserType) {
-    const hashedPassword = await bcrypt.hash(validPassword, 10)
+    try {
+      const hashedPassword = await bcrypt.hash(password, 10)
 
-    // NOTE: Create a new user in the database
-    const user = await prisma.user.create({
-      data: {
-        userName,
-        password: hashedPassword,
-        email: validEmail,
-        sessions: {
-          create: {
-            sid: sessionId,
-            expiresAt: expiresAt,
-            data: JSON.stringify(session)
+      // NOTE: Create a new user in the database
+      const user = await prisma.user.create({
+        data: {
+          userName,
+          password: hashedPassword,
+          email: email,
+          sessions: {
+            create: {
+              sid: sessionId,
+              expiresAt: expiresAt,
+              data: JSON.stringify(session)
+            }
           }
         }
-      }
-    })
+      })
 
-    return user
+      return user
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   static async generateOTP({
     userId
-  }: GenerateOTPType): Promise<{ otp: string; expiresAt: Date }> {
+  }: GenerateOTPType): Promise<{ otp: string | null }> {
     try {
       const OTP = otpGenerator.generate(6, {
         upperCaseAlphabets: false,
@@ -118,25 +96,29 @@ export class User {
         }
       })
 
-      if (!tp) return { otp: OTP, expiresAt }
+      if (!tp) return { otp: null }
 
-      return { otp: OTP, expiresAt }
+      return { otp: OTP }
     } catch (error) {
-      console.error(error)
-      throw new Error('Error occurred during OTP generation.')
+      console.log(error)
+      return { otp: null }
     }
   }
 
   static async sendEmail({ email, otp, cb }: SendEmailType) {
-    const emailHtml = renderEmail(WelcomeEmail, {
-      code: otp,
-      type: 'comfirmEmail'
-    })
+    try {
+      const emailHtml = renderEmail(WelcomeEmail, {
+        code: otp,
+        type: 'comfirmEmail'
+      })
 
-    transporter.sendMail(
-      mailOptions(email, 'Welcome to TheVimeagen', emailHtml),
-      cb
-    )
+      transporter.sendMail(
+        mailOptions(email, 'Welcome to TheVimeagen', emailHtml),
+        cb
+      )
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   static async findSesssionIfNotCreateOne({
@@ -145,48 +127,54 @@ export class User {
     expiresAt,
     session
   }: FindSesssionIfNotCreateOneType) {
-    const sessionDoExist = await prisma.session.findUnique({
-      where: { sid: sessionId }
-    })
-
-    console.log(sessionId, sessionDoExist)
-
-    if (sessionDoExist !== null) {
-      await prisma.session.create({
-        data: {
-          sid: sessionId,
-          userId: userId,
-          expiresAt: expiresAt,
-          data: JSON.stringify(session)
-        }
+    try {
+      const sessionDoExist = await prisma.session.findUnique({
+        where: { sid: sessionId }
       })
+
+      if (sessionDoExist !== null) {
+        await prisma.session.create({
+          data: {
+            sid: sessionId,
+            userId: userId,
+            expiresAt: expiresAt,
+            data: JSON.stringify(session)
+          }
+        })
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
 
   static async verifyOTP(userId: string, otp: string) {
-    const otpRecord = await prisma.otp.findFirst({
-      where: {
-        userId: userId,
-        otp: otp,
-        expiresAt: {
-          gt: new Date()
+    try {
+      const otpRecord = await prisma.otp.findFirst({
+        where: {
+          userId: userId,
+          otp: otp,
+          expiresAt: {
+            gt: new Date()
+          }
         }
-      }
-    })
+      })
 
-    if (!otpRecord) {
-      return otpRecord
+      if (!otpRecord) {
+        return otpRecord
+      }
+
+      //NOTE: Delete the OTP record after successful verification
+      const deleteResult = await prisma.otp.delete({
+        where: {
+          id: otpRecord.id,
+          otp
+        }
+      })
+
+      return deleteResult
+    } catch (error) {
+      console.log(error)
     }
-
-    //NOTE: Delete the OTP record after successful verification
-    const deleteResult = await prisma.otp.delete({
-      where: {
-        id: otpRecord.id,
-        otp
-      }
-    })
-
-    return deleteResult
   }
 
   static async completeUserInfoSignupStep3({

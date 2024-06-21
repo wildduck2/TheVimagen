@@ -17,7 +17,7 @@
         "jsx": "react",
         "types": [
             "node",
-            "jest",
+            "vitest",
             "express-session"
         ]
     },
@@ -27,11 +27,5 @@
     ],
     "exclude": [
         "node_modules"
-    ],
-    "paths": {
-        "@/*": [
-            "./src/*",
-            "**/*.test.ts"
-        ]
-    }
+    ]
 }

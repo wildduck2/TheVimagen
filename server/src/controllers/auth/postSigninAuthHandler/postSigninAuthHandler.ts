@@ -8,13 +8,6 @@ import { postSigninAuthHandlerBodyProps } from './postSigninAuthHandler.types'
 export const postSigninAuthHandler: RequestHandler = async (req, res) => {
   try {
     const { email, password }: postSigninAuthHandlerBodyProps = req.body
-    console.log('hi')
-
-    //NOTE: Zod data validation
-    const { validPassword } = await User.zodCredentialsValidation({
-      email,
-      password
-    })
 
     //NOTE: Checking for the user exist in the DB
     const user = await prisma.user.findUnique({ where: { email } })
@@ -23,7 +16,7 @@ export const postSigninAuthHandler: RequestHandler = async (req, res) => {
     }
 
     //NOTE: comparing passwords
-    if (!user || !(await bcrypt.compare(validPassword, user.password))) {
+    if (!user || !(await bcrypt.compare(password, user.password))) {
       return res
         .status(401)
         .json({ error: 'Unvalid Credintial (email 0r password)!', user: null })

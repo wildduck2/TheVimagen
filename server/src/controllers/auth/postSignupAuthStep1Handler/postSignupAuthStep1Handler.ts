@@ -9,14 +9,11 @@ export const postSignupAuthStep1Handler: RequestHandler = async (req, res) => {
     const { password, email, userName }: postSignupAuthStep1HandlerBodyProps =
       req.body
 
-    //NOTE: Zod data validation
-    const { validEmail, validPassword } = await User.zodCredentialsValidation({
-      email,
-      password
-    })
-
     //NOTE: checking for the user existence in out DB
-    const userDoExist = await User.checkUserExistInDb({ validEmail, userName })
+    const userDoExist = await User.checkUserExistInDb({
+      email,
+      userName
+    })
 
     if (userDoExist)
       return res.json({
@@ -24,21 +21,20 @@ export const postSignupAuthStep1Handler: RequestHandler = async (req, res) => {
       })
 
     const user = await User.createNewUser({
-      validEmail,
+      email,
       userName,
-      validPassword,
+      password,
       sessionId: req.session.id,
       expiresAt: req.session.cookie.expires!,
       session: req.session
     })
 
     //NOTE: Hash the password before saving it to the database
-    if (!user) return res.json({ error: "user hasn't created" })
+    if (!user) return res.json({ error: "user hasn't created", user })
 
     //NOTE: genrating the OTP and create DB field with it
     const { otp } = await User.generateOTP({ userId: user.id })
 
-    req.session.otp = otp
     req.session.user = user
 
     //NOTE: Rendering the Coponent and send the Email
@@ -55,7 +51,7 @@ export const postSignupAuthStep1Handler: RequestHandler = async (req, res) => {
     //     },
     // });
 
-    return res.json({ user: user, error: null })
+    return res.json({ user, error: null, otp })
   } catch (error) {
     if (error instanceof z.ZodError) {
       return res.status(401).json({
