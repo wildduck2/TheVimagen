@@ -132,16 +132,16 @@ export class User {
         where: { sid: sessionId }
       })
 
-      if (sessionDoExist !== null) {
-        await prisma.session.create({
-          data: {
-            sid: sessionId,
-            userId: userId,
-            expiresAt: expiresAt,
-            data: JSON.stringify(session)
-          }
-        })
-      }
+      if (sessionDoExist) return sessionDoExist
+
+      return await prisma.session.create({
+        data: {
+          sid: sessionId,
+          userId: userId,
+          expiresAt: expiresAt,
+          data: JSON.stringify(session)
+        }
+      })
     } catch (error) {
       console.log(error)
     }

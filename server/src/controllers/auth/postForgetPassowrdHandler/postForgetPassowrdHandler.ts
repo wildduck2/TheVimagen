@@ -22,7 +22,8 @@ export const postForgetPassowrdHandler: RequestHandler = async (req, res) => {
       title: 'Reset your account password at TheVimeagen',
       email,
       cb: (error) => {
-        if (error) return res.json({ error: error, info: null })
+        if (error) return res.status(400)
+        return res.status(200)
       }
     })
 
