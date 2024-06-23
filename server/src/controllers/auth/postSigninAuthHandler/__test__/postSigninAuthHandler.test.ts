@@ -5,16 +5,35 @@ import { prisma } from '../../../../utils'
 import { User } from '../../../../modles'
 import { vi, it, Mock, beforeEach, describe, expect } from 'vitest'
 import { postSigninAuthHandler } from '../postSigninAuthHandler'
+import session from 'express-session'
 
 const app: Express = express()
 app.use(express.json())
+app.use(
+  session({
+    secret: 'testsecret',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      maxAge: 70 * 60 * 1000, // 7 days
+      httpOnly: true,
+      secure: false
+    }
+  })
+)
 app.post('/auth/signin-email', postSigninAuthHandler)
 
 vi.mock('bcrypt')
-vi.mock('../../../../modles')
 vi.mock('../../../../utils', () => ({
   prisma: {
-    user: { findUnique: vi.fn() }
+    user: {
+      findUnique: vi.fn()
+    }
+  }
+}))
+vi.mock('../../../../modles', () => ({
+  User: {
+    findSesssionIfNotCreateOne: vi.fn()
   }
 }))
 
@@ -22,6 +41,8 @@ describe('postSigninAuthHandler', () => {
   beforeEach(() => {
     vi.clearAllMocks()
   })
+
+  // FIX: make sure to add the middleware test for zod
 
   it('should return error if the user does not exist', async () => {
     ;(prisma.user.findUnique as Mock).mockResolvedValue(null)
@@ -55,31 +76,31 @@ describe('postSigninAuthHandler', () => {
   })
 
   it('should return error if the session has not created', async () => {
-    const res = {
-      session: {
-        error: {},
-        user: null
-      }
-    }
     ;(prisma.user.findUnique as Mock).mockResolvedValue({
       id: '123',
       email: 'doexist@gmail.com'
     })
     ;(bcrypt.compare as Mock).mockResolvedValue(true)
-    ;(User.findSesssionIfNotCreateOne as Mock).mockRejectedValue(null)
+    ;(User.findSesssionIfNotCreateOne as Mock).mockResolvedValue(null)
 
     const response = await request(app).post('/auth/signin-email').send({
       email: 'doexist@gmail.com',
       password: '123423Ansdfl'
     })
 
-    expect(response.body).toEqual(res.session)
-    // expect(User.findSesssionIfNotCreateOne).toHaveBeenCalledWith({
-    //   userId: '123',
-    //   session: expect.any(Object),
-    //   expiresAt: expect.any(Date),
-    //   sessionId: expect.any(String)
-    // })
+    expect(response.body).toEqual({
+      error: 'session has not created',
+      user: {
+        email: 'doexist@gmail.com',
+        id: '123'
+      }
+    })
+    expect(User.findSesssionIfNotCreateOne).toHaveBeenCalledWith({
+      userId: '123',
+      session: expect.any(Object),
+      expiresAt: expect.any(Date),
+      sessionId: expect.any(String)
+    })
   })
 
   it('should return user if signin has worked well', async () => {
@@ -95,8 +116,8 @@ describe('postSigninAuthHandler', () => {
       .send({ email: 'doexist@gmail.com', password: '123455Aa*&&' })
 
     expect(response.body).toEqual({
-      error: {},
-      user: null
+      error: null,
+      user: { id: '123', email: 'doexist@gmail.com' }
     })
   })
 })

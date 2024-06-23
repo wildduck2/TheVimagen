@@ -14,33 +14,19 @@ import { mailOptions, prisma, transporter } from '../../utils'
 export class User {
   constructor() {}
 
-  static async checkUserExistInDb({
-    email,
-    userName,
-    userID
-  }: CheckUserExistInDbType) {
-    try {
-      if (userName && email) {
-        return await prisma.user.findFirst({
-          where: {
-            AND: [{ email: email }, { userName: userName }]
-          }
-        })
-      }
+  static async checkUserExistInDb({ email, userName }: CheckUserExistInDbType) {
+    if (userName && email) {
+      return await prisma.user.findFirst({
+        where: {
+          AND: [{ email: email }, { userName: userName }]
+        }
+      })
+    }
 
-      if (userID) {
-        return await prisma.user.findUnique({
-          where: { id: userID }
-        })
-      }
-
-      if (email) {
-        return await prisma.user.findUnique({
-          where: { email: email }
-        })
-      }
-    } catch (error) {
-      console.log(error)
+    if (email) {
+      return await prisma.user.findUnique({
+        where: { email: email }
+      })
     }
   }
 
@@ -74,6 +60,7 @@ export class User {
       return user
     } catch (error) {
       console.log(error)
+      return null
     }
   }
 
@@ -144,6 +131,7 @@ export class User {
       })
     } catch (error) {
       console.log(error)
+      return null
     }
   }
 
@@ -204,10 +192,9 @@ export class User {
         }
       })
 
-      if (!userUpdated)
-        return { user: null, error: 'User Data Has not updated!!' }
+      if (!userUpdated) return null
 
-      return { user: userUpdated, error: null }
+      return userUpdated
     } catch (error) {
       console.log(error)
     }

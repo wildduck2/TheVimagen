@@ -5,6 +5,6 @@ export type postSignupAuthStep3HandlerBodyValues = {
   lastName: string
   profession: string
   pronounce: string
-  userId: string
+  email: string
   yearsOfExprience: string
 }

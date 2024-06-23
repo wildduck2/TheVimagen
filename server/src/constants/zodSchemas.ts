@@ -2,10 +2,10 @@ import { Request, Response, NextFunction } from 'express'
 import { ZodError, ZodIssue, ZodSchema, z } from 'zod'
 
 //NOTE: ZOD SCHEMAS
-export const userNameShcema = z.object({
+export const emailShcema = z.object({
   email: z.string().email()
 })
-export const emailPasswordSchema = userNameShcema.extend({
+export const emailPasswordSchema = emailShcema.extend({
   password: z
     .string()
     .min(8, { message: 'Password must be at least 8 characters long' })
@@ -23,12 +23,16 @@ export const emailPasswordSchema = userNameShcema.extend({
       message: 'Password must contain at least one special character'
     })
 })
-export const emailPasswordUserNameSchema = emailPasswordSchema.extend({
+
+export const userNameShcema = z.object({
   userName: z
     .string()
     .min(6, { message: 'Password must be at least 6 characters long' })
     .max(32, { message: 'Password cannot be longer than 32 characters' })
 })
+
+export const emailPasswordUserNameSchema =
+  emailPasswordSchema.merge(userNameShcema)
 
 export const optUserIdSchema = z.object({
   otp: z.string(),

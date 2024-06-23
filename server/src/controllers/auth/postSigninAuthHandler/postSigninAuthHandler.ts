@@ -31,10 +31,13 @@ export const postSigninAuthHandler: RequestHandler = async (req, res) => {
     console.log(session)
     if (!session) return res.json({ error: 'session has not created', user })
 
-    // req.session.user = user
+    req.session.user = user
     return res.json({ user, error: null })
   } catch (error) {
     console.log(error)
-    return res.json({ error, user: null })
+    return res.json({
+      error: 'sign in failed some Credintials are invalid',
+      user: null
+    })
   }
 }

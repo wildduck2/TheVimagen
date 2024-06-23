@@ -9,7 +9,6 @@ export type ZodCredentialsValidationType = {
 export type CheckUserExistInDbType = {
   email?: string | null
   userName?: string | null
-  userID?: string | null
 }
 
 export type CreateNewUserType = {

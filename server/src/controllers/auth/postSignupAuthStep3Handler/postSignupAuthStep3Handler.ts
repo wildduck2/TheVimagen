@@ -12,11 +12,11 @@ export const postSignupAuthStep3Handler: RequestHandler = async (req, res) => {
       lastName,
       profession,
       pronounce,
-      userId,
+      email,
       yearsOfExprience
     }: postSignupAuthStep3HandlerBodyValues = req.body
 
-    const user = await User.checkUserExistInDb({ userID: userId })
+    const user = await User.checkUserExistInDb({ email: email })
 
     if (!user)
       return res.json({ user: null, error: "This user Doesn't exist!!" })
@@ -32,7 +32,8 @@ export const postSignupAuthStep3Handler: RequestHandler = async (req, res) => {
       profession
     })
 
-    if (!updatedUser) return res.json({ error: '', user: null })
+    if (!updatedUser)
+      return res.json({ error: 'User Data Has not updated!!', user: null })
 
     return res.json({ error: null, user: updatedUser })
   } catch (error) {
