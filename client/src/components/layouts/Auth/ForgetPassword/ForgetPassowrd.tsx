@@ -2,12 +2,10 @@ import { Button, EmailInput } from '@/components/ui'
 import { Icons } from '@/constants'
 import { useForgetPasswordEmail } from '@/hooks'
 import { useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link } from '@tanstack/react-router'
 
 export const ForgetPassword = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
-
   const emailRef = useRef<HTMLInputElement>(null)
 
   const [email, setEmail] = useState<string>('')
