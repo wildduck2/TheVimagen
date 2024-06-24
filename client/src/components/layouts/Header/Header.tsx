@@ -5,7 +5,7 @@ import { Nav } from './Nav'
 import Logo from './Logo'
 import { User, ChevronRight } from 'lucide-react'
 import { link } from './Header.types'
-import { Outlet } from 'react-router-dom'
+import { Outlet } from '@tanstack/react-router'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../context/redux/store'
 
@@ -31,28 +31,18 @@ const Header = () => {
   }
 
   return (
-    <>
-      {!logged && (
-        <header data-collapsed={isCollapsed} className={`header ${isCollapsed && 'collapsed'}`}>
-          <Logo isCollapsed={isCollapsed} />
-          <Separator />
-          <Nav isCollapsed={isCollapsed} links={headerLinks.first} />
-          <Separator />
-          <Nav isCollapsed={isCollapsed} links={headerLinks.second} />
+    <header data-collapsed={isCollapsed} className={`header ${isCollapsed && 'collapsed'}`}>
+      <Logo isCollapsed={isCollapsed} />
+      <Separator />
+      <Nav isCollapsed={isCollapsed} links={headerLinks.first} />
+      <Separator />
+      <Nav isCollapsed={isCollapsed} links={headerLinks.second} />
 
-          <div className="header__toggle">
-            <DropDownMenuWrapper data={profileLinkData} isCollapsed={isCollapsed} />
-            <TooltipButton
-              key={1}
-              button={toggleheaderLinkData}
-              isCollapsed={isCollapsed}
-              onClick={toggleHeaderHandler}
-            />
-          </div>
-        </header>
-      )}
-      <Outlet />
-    </>
+      <div className="header__toggle">
+        <DropDownMenuWrapper data={profileLinkData} isCollapsed={isCollapsed} />
+        <TooltipButton key={1} button={toggleheaderLinkData} isCollapsed={isCollapsed} onClick={toggleHeaderHandler} />
+      </div>
+    </header>
   )
 }
 

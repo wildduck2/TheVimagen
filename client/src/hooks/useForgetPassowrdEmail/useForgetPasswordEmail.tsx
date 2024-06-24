@@ -3,7 +3,8 @@ import { UseForgetPassowrdType } from './useForgetPasswordEmail.types'
 import { toast } from 'sonner'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@tanstack/react-router'
+import { User, getUserData } from '@/context'
 
 export const useForgetPasswordEmail = ({ setIsLoading, email }: UseForgetPassowrdType) => {
   const dispatch = useDispatch()
@@ -28,18 +29,16 @@ export const useForgetPasswordEmail = ({ setIsLoading, email }: UseForgetPassowr
         },
       )
 
-      console.log(data, statusText)
-
-      if (statusText !== 'OK' && !data) {
+      if (statusText !== 'OK' || !data.user) {
         //TODO: [ ]-- The dispatch and the next step
         toast.error('The user does not exist')
         return setIsLoading(false)
       }
 
-      // dispatch(getUserData(data.user as User))
-      toast.success('Access granted, authentication successful.')
+      dispatch(getUserData(data.user as User))
+      toast.success('Account found, moving forward!!')
       setIsLoading(false)
-      // route('/auth/signup/signup-email-step2')
+      route({ to: '/auth/otp-verification-step', search: { forgetPassword: true } })
     } catch (error) {
       if (error instanceof z.ZodError) {
         toast.error('The email is not valied')

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Tooltip, TooltipContent, TooltipTrigger, buttonVariants } from '..'
-import { NavLink } from 'react-router-dom'
+import { Link } from '@tanstack/react-router'
 import { cn } from '../../../utils'
 import { TooltipLinkProps } from './TooltipLink.types'
 
@@ -13,42 +13,36 @@ const unCollapsedActiveHeaderLink =
 const TooltipLink = ({ link, id = 0, isCollapsed }: TooltipLinkProps) => {
   return isCollapsed ? (
     <Tooltip key={id} delayDuration={0}>
-      <TooltipTrigger>
-        <NavLink
-          to={link.title}
-          className={({ isActive }) =>
-            cn(
-              buttonVariants({ variant: 'ghost', size: 'icon' }),
-              'header__nav__link collabsed',
-              isActive ? activeHeader : '',
-            )
-          }
+      <TooltipTrigger asChild>
+        <Link
+          to={`/${link.title}`}
+          className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), 'header__nav__link collabsed')}
+          activeProps={{
+            className: activeHeader,
+          }}
         >
           <link.icon className="icon" />
-          <span className="sr-only">{link.title}</span>
-        </NavLink>
+          <span className="sr-only capitalize">{link.title}</span>
+        </Link>
       </TooltipTrigger>
       <TooltipContent side="right" className="header__nav__tooltip">
         {link.title}
-        {link.label && <span className="header__nav__tooltip__label">{link.label}</span>}
+        {<span className="header__nav__tooltip__label">{link.label}</span>}
       </TooltipContent>
     </Tooltip>
   ) : (
-    <NavLink
+    <Link
       key={id}
-      to={link.title}
-      className={({ isActive }) =>
-        cn(
-          buttonVariants({ variant: 'ghost', size: 'sm' }),
-          'header__nav__link a',
-          isActive && unCollapsedActiveHeaderLink,
-        )
-      }
+      to={`/${link.title}`}
+      className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'header__nav__link px-[.55rem]')}
+      activeProps={{
+        className: unCollapsedActiveHeaderLink,
+      }}
     >
       <link.icon className="icon icon-notcollabsed" />
       {link.title}
-      {link.label && <span className={cn('ml-auto')}>{link.label}</span>}
-    </NavLink>
+      {<span className={cn('ml-auto capitalize')}>{link.label}</span>}
+    </Link>
   )
 }
 

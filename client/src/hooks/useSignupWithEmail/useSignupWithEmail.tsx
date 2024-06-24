@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from '@tanstack/react-router'
 import axios from 'axios'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -44,10 +44,9 @@ export const useSignupWithEmail = ({ email, password, setIsLoading }: useSignupW
         }
 
         dispatch(getUserData(data.user as User))
-        localStorage.setItem('email', email)
         toast.success('Access granted, authentication successful.')
         setIsLoading(false)
-        route('/auth/signup/signup-email-step2')
+        route({ to: '/auth/otp-verification-step', search: { forgetPassword: false } })
       }
     } catch (error) {
       setIsLoading(false)

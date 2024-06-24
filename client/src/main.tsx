@@ -2,24 +2,32 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import { Provider } from 'react-redux'
-import { BrowserRouter } from 'react-router-dom'
-import { store } from './context/redux/store.ts'
+import { RouterProvider, createRouter } from '@tanstack/react-router'
 
+import { ThemeProvider, Toaster, TooltipProvider } from './components/ui'
+
+import { store } from './context/redux/store.ts'
+import { routeTree } from './routeTree.gen'
 import './scss/style.scss'
-import { ThemeProvider } from './components/ui/ThemeProvider/ThemeProfider.tsx'
-import { Toaster, TooltipProvider } from './components/ui'
+
+const router = createRouter({ routeTree })
+
+declare module '@tanstack/react-router' {
+  interface Register {
+    router: typeof router
+  }
+}
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-          <TooltipProvider delayDuration={0}>
-            <Toaster />
-            <App />
-          </TooltipProvider>
-        </ThemeProvider>
-      </Provider>
-    </BrowserRouter>
+    <Provider store={store}>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <TooltipProvider delayDuration={0}>
+          <Toaster />
+          <RouterProvider router={router} />
+        </TooltipProvider>
+      </ThemeProvider>
+    </Provider>
   </React.StrictMode>,
 )
+// <App />

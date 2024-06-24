@@ -1,4 +1,3 @@
-import React from 'react'
 import { TooltipLink } from '../../ui'
 import { NavProps } from './Header.types'
 

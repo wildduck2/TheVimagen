@@ -121,37 +121,37 @@ export type headerLinksType = {
 export const headerLinks: Record<string, headerLinksType> = {
   first: [
     {
-      title: 'Inbox',
+      title: 'inbox',
       label: '128',
       icon: Inbox,
       variant: 'default',
     },
     {
-      title: 'Files',
+      title: 'files',
       label: '9',
       icon: GalleryVerticalEnd,
       variant: 'ghost',
     },
     {
-      title: 'Sent',
+      title: 'sent',
       label: '',
       icon: Send,
       variant: 'ghost',
     },
     {
-      title: 'Junk',
+      title: 'junk',
       label: '23',
       icon: ArchiveX,
       variant: 'ghost',
     },
     {
-      title: 'Trash',
+      title: 'trash',
       label: '',
       icon: Trash2,
       variant: 'ghost',
     },
     {
-      title: 'Archive',
+      title: 'archive',
       label: '',
       icon: Archive,
       variant: 'ghost',
@@ -159,31 +159,31 @@ export const headerLinks: Record<string, headerLinksType> = {
   ],
   second: [
     {
-      title: 'Social',
+      title: 'social',
       label: '972',
       icon: Users2,
       variant: 'ghost',
     },
     {
-      title: 'Updates',
+      title: 'updates',
       label: '342',
       icon: AlertCircle,
       variant: 'ghost',
     },
     {
-      title: 'Forums',
+      title: 'forums',
       label: '128',
       icon: MessagesSquare,
       variant: 'ghost',
     },
     {
-      title: 'Notifications',
+      title: 'notifications',
       label: '8',
       icon: Bell,
       variant: 'ghost',
     },
     {
-      title: 'Settings',
+      title: 'settings',
       label: '21',
       icon: Settings,
       variant: 'ghost',

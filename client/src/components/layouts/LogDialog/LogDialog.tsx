@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from '../../ui'
-import { Link } from 'react-router-dom'
+import { Link } from '@tanstack/react-router'
 import { Separator } from '../../ui/'
 import { DiVim } from 'react-icons/di'
 

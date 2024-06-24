@@ -18,7 +18,7 @@ export const UserNameInput = ({ isLoading, userNameRef: emailRef }: UserNameInpu
   const inputsValid = useSelector((state: RootState) => state.utils.inputsValid)
   const dispatch = useDispatch()
 
-  const [userNameValid, setUserNameValid] = useState<boolean>(false)
+  const [userNameValid, setUserNameValid] = useState<boolean>(true)
   const [userName, setUserName] = useState<string>('')
 
   const debounceValue = useDebounce(userName)
@@ -39,7 +39,7 @@ export const UserNameInput = ({ isLoading, userNameRef: emailRef }: UserNameInpu
         <Label htmlFor="userName">Email</Label>
         <Input
           id="userName"
-          className={`${userNameValid && 'input-notvalid'}`}
+          className={`${!userNameValid && 'input-notvalid'}`}
           placeholder="wildduck2"
           type="text"
           autoCapitalize="none"
@@ -53,9 +53,9 @@ export const UserNameInput = ({ isLoading, userNameRef: emailRef }: UserNameInpu
           required
           ref={emailRef}
         />
-        <div>{userNameValid && <BsPatchExclamation className="h-4 w-4 text-red-700" />}</div>
+        <div>{!userNameValid && <BsPatchExclamation className="h-4 w-4 text-red-700" />}</div>
       </div>
-      <p className={!userNameValid ? 'hide' : 'active'}>userName is not valid</p>
+      <p className={userNameValid ? 'hide' : 'active'}>userName is not valid</p>
     </>
   )
 }

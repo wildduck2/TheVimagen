@@ -1,4 +1,4 @@
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet } from '@tanstack/react-router'
 
 import { buttonVariants } from '@/components/ui'
 import { AuthSide, ForgetPassword, Signin, Signup } from '@/components/layouts'

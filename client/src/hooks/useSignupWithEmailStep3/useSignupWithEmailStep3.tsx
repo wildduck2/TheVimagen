@@ -1,10 +1,12 @@
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { toast } from 'sonner'
 
-import { RootState } from '@/context'
+import { RootState, User, getUserData } from '@/context'
 import type { error, useSignupIWthEmailStep3Props } from './useSignupWithEmailStep3.types'
+import { useNavigate } from '@tanstack/react-router'
+import { disconnect } from 'process'
 
 export const useSignupIWthEmailStep3 = ({
   firstName,
@@ -15,6 +17,8 @@ export const useSignupIWthEmailStep3 = ({
   pronounce,
   bio,
 }: useSignupIWthEmailStep3Props) => {
+  const route = useNavigate()
+  const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const user = useSelector((state: RootState) => state.user.user)
   const [error, setError] = useState<error>(null)
@@ -51,8 +55,8 @@ export const useSignupIWthEmailStep3 = ({
         {
           firstName,
           lastName,
-          age,
-          yearsOfExprience,
+          age: +age,
+          yearsOfExprience: +yearsOfExprience,
           pronounce,
           profession,
           bio,
@@ -66,7 +70,8 @@ export const useSignupIWthEmailStep3 = ({
       }
 
       setIsLoading(false)
-      console.log(data)
+      dispatch(getUserData(data.user as User))
+      route({ to: '/Home' })
     } catch (error) {
       toast.error(`Failed ot complete the comfermation of the data!`)
       setIsLoading(false)

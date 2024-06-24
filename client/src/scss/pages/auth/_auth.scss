@@ -33,12 +33,20 @@
 
   &__link {
     position: absolute;
-    right: size(na) /* 16px */;
-    top: size(na) /* 16px */;
+    right: size(na)
+      /* 16px */
+    ;
+    top: size(na)
+      /* 16px */
+    ;
 
     @include u.breakpoint(xsmall) {
-      right: size(4xl) /* 32px */;
-      top: size(4xl) /* 32px */;
+      right: size(4xl)
+        /* 32px */
+      ;
+      top: size(4xl)
+        /* 32px */
+      ;
     }
   }
 
@@ -46,7 +54,9 @@
     position: relative;
     display: none;
     height: 100%;
-    padding: size(5xl) /* 40px */;
+    padding: size(5xl)
+      /* 40px */
+    ;
     flex-direction: column;
     color: white;
     background-color: hsl(var(--muted));
@@ -64,8 +74,12 @@
     & .top {
       position: relative;
       @include u.flex(flex, center);
-      font-size: size(lg) /* 19px */;
-      line-height: 1.75rem /* 28px */;
+      font-size: size(lg)
+        /* 19px */
+      ;
+      line-height: 1.75rem
+        /* 28px */
+      ;
       font-weight: 700;
       color: u.color(primary, white-80);
       z-index: 20;
@@ -76,22 +90,30 @@
       margin-top: auto;
       z-index: 20;
 
-      & > blockquote {
+      &>blockquote {
         margin-block: 0.5rem;
         max-width: 800px;
 
-        & > p {
-          font-size: size(lg) /* 19px */;
-          line-height: 1.75rem /* 28px */;
+        &>p {
+          font-size: size(lg)
+            /* 19px */
+          ;
+          line-height: 1.75rem
+            /* 28px */
+          ;
           margin-bottom: 0.8rem;
         }
 
-        & > footer {
+        &>footer {
           @include u.flex(flex, center);
           gap: 0.5rem;
           color: u.color(black, 200);
-          font-size: 1.2rem /* 14px */;
-          line-height: 1.5rem /* 20px */;
+          font-size: 1.2rem
+            /* 14px */
+          ;
+          line-height: 1.5rem
+            /* 20px */
+          ;
           font-weight: 600;
           text-transform: capitalize;
         }
@@ -101,48 +123,64 @@
 
   &__Sign-form {
     @include u.breakpoint(extra-large) {
-      padding: size(4xl) /* 32px */;
+      padding: size(4xl)
+        /* 32px */
+      ;
     }
 
-    & > div {
+    &>div {
       @include u.flex(flex, center, center);
       flex-direction: column;
       width: 100%;
       margin-inline: auto;
-      gap: size(3xl) /* 24px */;
+      gap: size(3xl)
+        /* 24px */
+      ;
 
       @include u.breakpoint(xsmall) {
         width: 350px;
       }
 
-      & > div:first-child {
+      &>div:first-child {
         @include u.flex(flex);
         flex-direction: column;
         row-gap: 0.5rem;
         text-align: center;
 
-        & > h1 {
-          font-size: size(3xl) /* 24px */;
-          line-height: size(4xl) /* 32px */;
+        &>h1 {
+          font-size: size(3xl)
+            /* 24px */
+          ;
+          line-height: size(4xl)
+            /* 32px */
+          ;
           font-weight: 600;
           letter-spacing: -0.025em;
         }
 
-        & > p {
-          font-size: size(smd) /* 14px */;
-          line-height: size(lg) /* 20px */;
+        &>p {
+          font-size: size(smd)
+            /* 14px */
+          ;
+          line-height: size(lg)
+            /* 20px */
+          ;
           color: hsl(var(--muted-foreground));
         }
       }
 
-      & > p {
+      &>p {
         padding-inline: 2rem;
         text-align: center;
-        font-size: size(smd) /* 14px */;
-        line-height: size(lg) /* 20px */;
+        font-size: size(smd)
+          /* 14px */
+        ;
+        line-height: size(lg)
+          /* 20px */
+        ;
         color: hsl(var(--muted-foreground));
 
-        & > a {
+        &>a {
           text-decoration-line: underline;
           text-underline-offset: 4px;
 

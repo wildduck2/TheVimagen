@@ -54,7 +54,7 @@ export const Signup = ({ ...props }: UserAuthFormProps) => {
                 <PasowordConirmInput isLoading={isLoading} passwordRef={passwordRef} />
 
                 <Button disabled={isLoading || !notValid}>
-                  {isLoading && <Icons.spinner />}
+                  {isLoading && <Icons.spinner className="spin" />}
                   Sign Up with Email
                 </Button>
               </div>

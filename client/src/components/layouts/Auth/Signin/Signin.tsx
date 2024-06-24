@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from '@tanstack/react-router'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Button, EmailInput, PasswordInput } from '@/components/ui'
@@ -82,10 +82,9 @@ export const Signin = ({ ...props }: UserAuthFormProps) => {
                 className="forget__password"
                 variant={'link'}
                 type="button"
-                onClick={() => route('/auth/forget-Password')}
+                onClick={() => route({ to: '/auth/forget-password' })}
               >
-                {' '}
-                Forget Passowrd{' '}
+                Forget Passowrd
               </Button>
               <Button type="submit" disabled={isLoading || notValid}>
                 {isLoading && <Icons.spinner className="spin" />}

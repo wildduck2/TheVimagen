@@ -116,10 +116,10 @@ export const PasswordConfirmValidation = ({
 
 export const UserNameValidation = async ({ inputValue, dispatch, setvalid, inputsValid }: UserNameValidationType) => {
   const { email, password, passwordConfirm } = inputsValid
-  try {
-    if (inputValue === '') return
+  if (inputValue === '') return
 
-    //NOTE: Checking the userName Available
+  try {
+    // NOTE: Checking the userName Availability
     const { data, statusText } = await axios.post(
       `${process.env.ROOT_URL}/auth/userNameExist`,
       {
@@ -128,17 +128,20 @@ export const UserNameValidation = async ({ inputValue, dispatch, setvalid, input
       { withCredentials: true },
     )
 
-    setvalid(data.valid === true || statusText !== 'OK' ? false : true)
+    const isValid = data.valid === true && statusText === 'OK'
+    setvalid(isValid)
+
     dispatch(
       checkInputsValid({
-        userName: data.valid === true || statusText !== 'OK' ? true : false,
+        userName: isValid,
         email,
         password,
         passwordConfirm,
       }),
     )
   } catch (error) {
-    toast.error(`couldn't verify the userName try again!`)
+    setvalid(false)
+    toast.error("Couldn't verify the userName. Please try again!")
     console.log(error)
   }
 }

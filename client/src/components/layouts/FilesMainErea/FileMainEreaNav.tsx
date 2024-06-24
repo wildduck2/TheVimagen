@@ -1,6 +1,4 @@
-import React from 'react'
-
-import { NavLink } from 'react-router-dom'
+import { Link } from '@tanstack/react-router'
 import { bodyHeaderLinks } from '../../../constants'
 import { Separator } from '../../ui'
 import { FaPlus } from 'react-icons/fa6'
@@ -38,12 +36,12 @@ const FileMainEreaNav = () => {
       <ul>
         {bodyHeaderLinks.map((link) => (
           <li key={link.id}>
-            <NavLink
+            <Link
               to={link.path}
               className={({ isActive }) => (isActive ? 'header__link header__link--active' : 'header__link')}
             >
               <span>{link.name}</span>
-            </NavLink>
+            </Link>
           </li>
         ))}
       </ul>
