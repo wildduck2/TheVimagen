@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Input } from '../Input'
@@ -11,9 +11,13 @@ import { useDebounce } from '@/hooks'
 import { BsPatchExclamation } from 'react-icons/bs'
 import { RiEyeLine, RiEyeOffLine } from 'react-icons/ri'
 
-export type PasswordConfirmInputProps = { isLoading: boolean; passwordRef: React.RefObject<HTMLInputElement> }
+export type PasswordConfirmInputProps = {
+  isLoading: boolean
+  passwordRef: React.RefObject<HTMLInputElement>
+  passwordConfirmRef: React.RefObject<HTMLInputElement>
+}
 
-export const PasowordConirmInput = ({ isLoading, passwordRef }: PasswordConfirmInputProps) => {
+export const PasowordConirmInput = ({ isLoading, passwordRef, passwordConfirmRef }: PasswordConfirmInputProps) => {
   const inputsValid = useSelector((state: RootState) => state.utils.inputsValid)
   const dispatch = useDispatch()
 
@@ -22,8 +26,6 @@ export const PasowordConirmInput = ({ isLoading, passwordRef }: PasswordConfirmI
   const [passwordconfirmValid, setPasswordconfirmValid] = useState<boolean>(false)
   const [passwordconfirm, setPasswordconfirm] = useState<string>('')
   const [passwordconfirmShow, setPasswordconfirmationShow] = useState<boolean>(false)
-
-  const passwordcomfirmRef = useRef<HTMLInputElement>(null)
 
   const debounceValue = useDebounce(passwordconfirm)
 
@@ -67,7 +69,7 @@ export const PasowordConirmInput = ({ isLoading, passwordRef }: PasswordConfirmI
             setPasswordconfirm(() => currentTarget.value)
           }}
           disabled={isLoading}
-          ref={passwordcomfirmRef}
+          ref={passwordConfirmRef}
         />
         <div>
           {passwordconfirmValid && <BsPatchExclamation className="text-red-700" />}
@@ -76,7 +78,7 @@ export const PasowordConirmInput = ({ isLoading, passwordRef }: PasswordConfirmI
             onClick={() =>
               onPasswordShow({
                 setFunc: setPasswordconfirmationShow,
-                passwordRef: passwordcomfirmRef,
+                passwordRef: passwordConfirmRef,
                 passwordShow: passwordconfirmShow,
               })
             }

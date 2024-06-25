@@ -1,4 +1,3 @@
-import { Header, RequireAuth } from '@/components/layouts'
 import { createRootRoute, Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 

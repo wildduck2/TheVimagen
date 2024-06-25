@@ -16,9 +16,10 @@ import { Route as rootRoute } from './routes/__root'
 
 // Create Virtual Routes
 
-const HomeLazyImport = createFileRoute('/Home')()
-const FileLazyImport = createFileRoute('/File')()
 const IndexLazyImport = createFileRoute('/')()
+const DashboardIndexLazyImport = createFileRoute('/dashboard/')()
+const DashboardHomeLazyImport = createFileRoute('/dashboard/Home')()
+const DashboardFileLazyImport = createFileRoute('/dashboard/File')()
 const AuthSignupLazyImport = createFileRoute('/auth/signup')()
 const AuthSigninLazyImport = createFileRoute('/auth/signin')()
 const AuthOtpVerificationStepLazyImport = createFileRoute(
@@ -34,20 +35,31 @@ const AuthCompleteAccountInformationLazyImport = createFileRoute(
 
 // Create/Update Routes
 
-const HomeLazyRoute = HomeLazyImport.update({
-  path: '/Home',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/Home.lazy').then((d) => d.Route))
-
-const FileLazyRoute = FileLazyImport.update({
-  path: '/File',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/File.lazy').then((d) => d.Route))
-
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const DashboardIndexLazyRoute = DashboardIndexLazyImport.update({
+  path: '/dashboard/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/dashboard/index.lazy').then((d) => d.Route),
+)
+
+const DashboardHomeLazyRoute = DashboardHomeLazyImport.update({
+  path: '/dashboard/Home',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/dashboard/Home.lazy').then((d) => d.Route),
+)
+
+const DashboardFileLazyRoute = DashboardFileLazyImport.update({
+  path: '/dashboard/File',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/dashboard/File.lazy').then((d) => d.Route),
+)
 
 const AuthSignupLazyRoute = AuthSignupLazyImport.update({
   path: '/auth/signup',
@@ -103,20 +115,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
-    '/File': {
-      id: '/File'
-      path: '/File'
-      fullPath: '/File'
-      preLoaderRoute: typeof FileLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/Home': {
-      id: '/Home'
-      path: '/Home'
-      fullPath: '/Home'
-      preLoaderRoute: typeof HomeLazyImport
-      parentRoute: typeof rootRoute
-    }
     '/auth/complete-account-information': {
       id: '/auth/complete-account-information'
       path: '/auth/complete-account-information'
@@ -159,6 +157,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignupLazyImport
       parentRoute: typeof rootRoute
     }
+    '/dashboard/File': {
+      id: '/dashboard/File'
+      path: '/dashboard/File'
+      fullPath: '/dashboard/File'
+      preLoaderRoute: typeof DashboardFileLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/dashboard/Home': {
+      id: '/dashboard/Home'
+      path: '/dashboard/Home'
+      fullPath: '/dashboard/Home'
+      preLoaderRoute: typeof DashboardHomeLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -166,14 +185,15 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
-  FileLazyRoute,
-  HomeLazyRoute,
   AuthCompleteAccountInformationLazyRoute,
   AuthCompleteForgetPasswordLazyRoute,
   AuthForgetPasswordLazyRoute,
   AuthOtpVerificationStepLazyRoute,
   AuthSigninLazyRoute,
   AuthSignupLazyRoute,
+  DashboardFileLazyRoute,
+  DashboardHomeLazyRoute,
+  DashboardIndexLazyRoute,
 })
 
 /* prettier-ignore-end */
@@ -185,24 +205,19 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/File",
-        "/Home",
         "/auth/complete-account-information",
         "/auth/complete-forget-password",
         "/auth/forget-password",
         "/auth/otp-verification-step",
         "/auth/signin",
-        "/auth/signup"
+        "/auth/signup",
+        "/dashboard/File",
+        "/dashboard/Home",
+        "/dashboard/"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
-    },
-    "/File": {
-      "filePath": "File.lazy.tsx"
-    },
-    "/Home": {
-      "filePath": "Home.lazy.tsx"
     },
     "/auth/complete-account-information": {
       "filePath": "auth/complete-account-information.lazy.tsx"
@@ -221,6 +236,15 @@ export const routeTree = rootRoute.addChildren({
     },
     "/auth/signup": {
       "filePath": "auth/signup.lazy.tsx"
+    },
+    "/dashboard/File": {
+      "filePath": "dashboard/File.lazy.tsx"
+    },
+    "/dashboard/Home": {
+      "filePath": "dashboard/Home.lazy.tsx"
+    },
+    "/dashboard/": {
+      "filePath": "dashboard/index.lazy.tsx"
     }
   }
 }

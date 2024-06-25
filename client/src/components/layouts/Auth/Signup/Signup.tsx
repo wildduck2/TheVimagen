@@ -18,6 +18,7 @@ export const Signup = ({ ...props }: UserAuthFormProps) => {
   const emailRef = useRef<HTMLInputElement>(null)
   const passwordRef = useRef<HTMLInputElement>(null)
   const userNameRef = useRef<HTMLInputElement>(null)
+  const passwordcomfirmRef = useRef<HTMLInputElement>(null)
 
   const { authEmail } = useSignupWithEmail({
     email: emailRef.current?.value as string,
@@ -51,7 +52,11 @@ export const Signup = ({ ...props }: UserAuthFormProps) => {
                   email={email}
                   setEmail={setEmail}
                 />
-                <PasowordConirmInput isLoading={isLoading} passwordRef={passwordRef} />
+                <PasowordConirmInput
+                  isLoading={isLoading}
+                  passwordRef={passwordRef}
+                  passwordConfirmRef={passwordcomfirmRef}
+                />
 
                 <Button disabled={isLoading || !notValid}>
                   {isLoading && <Icons.spinner className="spin" />}

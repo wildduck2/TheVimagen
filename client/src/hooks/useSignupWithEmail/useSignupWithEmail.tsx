@@ -38,15 +38,14 @@ export const useSignupWithEmail = ({ email, password, setIsLoading }: useSignupW
         }
 
         if (statusText !== 'OK' && !data) {
-          //TODO: [ ]-- The dispatch and the next step
           toast.error(`Credentials didn't pass authentication check.`)
           return setIsLoading(false)
         }
 
         dispatch(getUserData(data.user as User))
-        toast.success('Access granted, authentication successful.')
         setIsLoading(false)
         route({ to: '/auth/otp-verification-step', search: { forgetPassword: false } })
+        return toast.success('Access granted, authentication successful.')
       }
     } catch (error) {
       setIsLoading(false)
@@ -54,7 +53,7 @@ export const useSignupWithEmail = ({ email, password, setIsLoading }: useSignupW
         console.log('Validation errors:', error.errors)
         return toast.error('Wrong Email or Password! enter valid credentials')
       }
-      toast.error(`Credentials didn't pass authentication check.`)
+      return toast.error(`Credentials didn't pass authentication check.`)
     }
   }
 

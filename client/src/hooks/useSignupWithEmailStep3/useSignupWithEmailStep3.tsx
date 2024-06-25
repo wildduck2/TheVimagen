@@ -71,7 +71,7 @@ export const useSignupIWthEmailStep3 = ({
 
       setIsLoading(false)
       dispatch(getUserData(data.user as User))
-      route({ to: '/Home' })
+      route({ to: '/dashboard/Home' })
     } catch (error) {
       toast.error(`Failed ot complete the comfermation of the data!`)
       setIsLoading(false)
