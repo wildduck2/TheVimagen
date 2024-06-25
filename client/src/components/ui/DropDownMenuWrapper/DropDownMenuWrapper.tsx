@@ -6,7 +6,6 @@ import {
   Keyboard,
   LifeBuoy,
   LogOut,
-  LucideIcon,
   PlusCircle,
   Settings,
   User,
@@ -26,16 +25,8 @@ import {
   DropdownMenuTrigger,
   buttonVariants,
 } from '..'
-import { cn } from '../../../utils'
-
-export type DropDownMenuWrapper = {
-  data: {
-    title: string
-    label?: string | undefined
-    icon: LucideIcon
-  }
-  isCollapsed: boolean
-}
+import { cn, signoutAsync } from '../../../utils'
+import { DropdownMenuGroupProps, DropDownMenuWrapperType } from './DropDownMenuWrapper.types'
 
 const menuData = {
   first: [
@@ -110,33 +101,26 @@ const menuData = {
       title: 'Log out',
       icon: LogOut,
       command: '⇧⌘Q',
+      cb: signoutAsync,
     },
   ],
 }
 
-export type DropdownMenuGroupProps = {
-  id: string
-  title: string
-  icon: LucideIcon
-  command: string
-}
-
 const DropdownMenuGroupWrappere = (group: DropdownMenuGroupProps[]) => {
-  console.log(Object.values(group))
   return Object.values(group).map((item) => {
     return (
-      <>
-        <DropdownMenuItem key={item.id} className="dark:text-white header__nav__dropdown__item">
+      <div key={item.id}>
+        <DropdownMenuItem className="dark:text-white header__nav__dropdown__item" onClick={item.cb}>
           <item.icon className="icon" />
           {item.title}
           <DropdownMenuShortcut>{item.command}</DropdownMenuShortcut>
         </DropdownMenuItem>
-      </>
+      </div>
     )
   })
 }
 
-const DropDownMenuWrapper: React.FC<DropDownMenuWrapper> = ({ data, isCollapsed }) => {
+const DropDownMenuWrapper: React.FC<DropDownMenuWrapperType> = ({ data, isCollapsed }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

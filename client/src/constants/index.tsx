@@ -10,12 +10,14 @@ import {
   GalleryVerticalEnd,
   Inbox,
   LucideIcon,
+  Mail,
   MessagesSquare,
   Send,
   Settings,
   Trash2,
   Users2,
 } from 'lucide-react'
+import { headerLinksType } from '@/components/ui'
 
 export const logo = (
   <svg
@@ -51,7 +53,7 @@ export const bodyHeaderLinks = [
   {
     id: 4,
     name: 'Files',
-    path: '/files/files',
+    path: '/Files',
   },
   {
     id: 5,
@@ -111,80 +113,73 @@ export const actions: ActionType[] = [
   },
 ]
 
-export type headerLinksType = {
-  title: string
-  label?: string
-  icon: LucideIcon
-  variant: 'default' | 'ghost'
-}[]
-
-export const headerLinks: Record<string, headerLinksType> = {
+export const headerLinks: Record<string, headerLinksType[]> = {
   first: [
     {
       title: 'inbox',
-      label: '128',
+      link: 'Email',
       icon: Inbox,
       variant: 'default',
     },
     {
-      title: 'files',
-      label: '9',
+      title: 'Files',
+      link: 'Email',
       icon: GalleryVerticalEnd,
       variant: 'ghost',
     },
     {
       title: 'sent',
-      label: '',
+      link: 'Email',
       icon: Send,
       variant: 'ghost',
     },
     {
       title: 'junk',
-      label: '23',
+      link: 'Email',
       icon: ArchiveX,
       variant: 'ghost',
     },
     {
       title: 'trash',
-      label: '',
+      link: 'Email',
       icon: Trash2,
       variant: 'ghost',
     },
     {
       title: 'archive',
-      label: '',
+      link: 'Email',
       icon: Archive,
       variant: 'ghost',
     },
   ],
   second: [
     {
-      title: 'social',
-      label: '972',
-      icon: Users2,
+      title: 'Email',
+      icon: Mail,
+      link: 'Email',
       variant: 'ghost',
     },
     {
       title: 'updates',
-      label: '342',
+      link: 'Email',
       icon: AlertCircle,
       variant: 'ghost',
     },
     {
       title: 'forums',
-      label: '128',
+      link: 'Email',
       icon: MessagesSquare,
       variant: 'ghost',
     },
     {
       title: 'notifications',
-      label: '8',
+      link: 'Email',
       icon: Bell,
       variant: 'ghost',
     },
     {
       title: 'settings',
-      label: '21',
+      link: 'Email',
       icon: Settings,
       variant: 'ghost',
     },

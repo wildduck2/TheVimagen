@@ -3,5 +3,9 @@ import { CompleteForgetPassword } from '@/components/layouts'
 import { createLazyFileRoute } from '@tanstack/react-router'
 
 export const Route = createLazyFileRoute('/auth/complete-forget-password')({
-  component: () => <CompleteForgetPassword />,
+  component: () => (
+    <RequireAuth>
+      <CompleteForgetPassword />
+    </RequireAuth>
+  ),
 })

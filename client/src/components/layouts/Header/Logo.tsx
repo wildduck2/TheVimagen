@@ -3,7 +3,7 @@ import { Link } from '@tanstack/react-router'
 import { Avatar } from '../../ui'
 import { LogoProps } from './Header.types'
 
-const Logo: React.FC<LogoProps> = ({ isCollapsed }) => {
+export const Logo: React.FC<LogoProps> = ({ isCollapsed }) => {
   return (
     <>
       <Link to="/" className="header__logo">
@@ -25,5 +25,3 @@ const Logo: React.FC<LogoProps> = ({ isCollapsed }) => {
     </>
   )
 }
-
-export default Logo

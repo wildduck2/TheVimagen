@@ -1,13 +1,10 @@
 import React from 'react'
-import { headerLinks } from '../../../constants'
-import { DropDownMenuWrapper, Separator, TooltipButton } from '../../ui'
-import { Nav } from './Nav'
-import Logo from './Logo'
+
+import { headerLinks } from '@/constants'
+import { DropDownMenuWrapper, Separator, TooltipButton } from '@/components/ui'
+import { link, Nav, Logo } from '..'
+
 import { User, ChevronRight } from 'lucide-react'
-import { link } from './Header.types'
-import { Outlet } from '@tanstack/react-router'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../../context/redux/store'
 
 const toggleheaderLinkData: link = {
   title: 'Menu',
@@ -21,10 +18,8 @@ const profileLinkData: link = {
   icon: User,
 }
 
-const Header = () => {
+export const Header = () => {
   const [isCollapsed, setIsCollapsed] = React.useState(true)
-
-  const logged = useSelector((state: RootState) => state.data.logged)
 
   const toggleHeaderHandler = () => {
     setIsCollapsed(!isCollapsed)
@@ -45,8 +40,6 @@ const Header = () => {
     </header>
   )
 }
-
-export default Header
 
 // <div className={cn('flex h-[52px] items-center justify-center', isCollapsed ? 'h-[52px]' : 'px-2')}>
 //   <AccountSwitcher isCollapsed={isCollapsed} accounts={accounts} />

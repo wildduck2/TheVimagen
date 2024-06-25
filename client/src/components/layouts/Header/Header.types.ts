@@ -18,4 +18,5 @@ export type link = {
   title: string
   label?: string | undefined
   icon: LucideIcon
+  cb?: () => Promise<boolean | undefined>
 }

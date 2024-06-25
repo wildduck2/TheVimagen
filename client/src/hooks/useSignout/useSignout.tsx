@@ -21,14 +21,15 @@ export const useSignout = () => {
       })
 
       if (statusText !== 'OK' || !data.user) {
-        toast.error('The user does not exist')
+        toast.error('The User is not Signed out')
+        return
       }
 
       dispatch(getUserData(null))
       route({ to: '/auth/signin' })
-      return toast.success(`Sign out done, sucessfully`)
+      return toast.success('The User is Signed out successfully')
     } catch (error) {
-      return toast.error(`Sign out fails, try again!`)
+      return toast.error('Sign out failed. Please try again.')
     }
   }
 

@@ -12,7 +12,14 @@ export default defineConfig(({ mode }) => {
       'process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY': JSON.stringify(env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
       'process.env.ROOT_URL': JSON.stringify(env.ROOT_URL),
     },
-    plugins: [TanStackRouterVite(), viteReact()],
+    plugins: [
+      TanStackRouterVite({
+        experimental: {
+          enableCodeSplitting: true,
+        },
+      }),
+      viteReact(),
+    ],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),

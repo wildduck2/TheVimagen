@@ -22,26 +22,25 @@ const TooltipLink = ({ link, id = 0, isCollapsed }: TooltipLinkProps) => {
           }}
         >
           <link.icon className="icon" />
-          <span className="sr-only capitalize">{link.title}</span>
         </Link>
       </TooltipTrigger>
       <TooltipContent side="right" className="header__nav__tooltip">
-        {link.title}
-        {<span className="header__nav__tooltip__label">{link.label}</span>}
+        <div className=" capitalize">{link.title}</div>
+        <span className="header__nav__tooltip__label capitalize">{link.label}</span>
       </TooltipContent>
     </Tooltip>
   ) : (
     <Link
       key={id}
       to={`/${link.title}`}
-      className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'header__nav__link px-[.55rem]')}
+      className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'header__nav__link px-[.55rem] capitalize')}
       activeProps={{
         className: unCollapsedActiveHeaderLink,
       }}
     >
       <link.icon className="icon icon-notcollabsed" />
       {link.title}
-      {<span className={cn('ml-auto capitalize')}>{link.label}</span>}
+      {<span className={cn('ml-auto')}>{link.label}</span>}
     </Link>
   )
 }
