@@ -13,6 +13,7 @@
         "build-storybook": "storybook build"
     },
     "dependencies": {
+        "@hookform/resolvers": "^3.6.0",
         "@radix-ui/react-accordion": "^1.2.0",
         "@radix-ui/react-avatar": "^1.1.0",
         "@radix-ui/react-checkbox": "^1.1.0",
@@ -37,6 +38,7 @@
         "@supabase/auth-ui-shared": "^0.1.8",
         "@supabase/supabase-js": "^2.43.5",
         "@tanstack/react-router": "^1.40.0",
+        "@types/react-icons": "^3.0.0",
         "@types/uuid": "^9.0.8",
         "axios": "^1.7.2",
         "class-variance-authority": "^0.7.0",
@@ -51,6 +53,7 @@
         "react": "^18.3.1",
         "react-day-picker": "^8.10.1",
         "react-dom": "^18.3.1",
+        "react-hook-form": "^7.52.0",
         "react-icon": "^1.0.0",
         "react-query": "^3.39.3",
         "react-redux": "^8.1.3",

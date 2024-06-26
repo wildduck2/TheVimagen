@@ -15,7 +15,7 @@ const TooltipLink = ({ link, id = 0, isCollapsed }: TooltipLinkProps) => {
     <Tooltip key={id} delayDuration={0}>
       <TooltipTrigger asChild>
         <Link
-          to={`/${link.title}`}
+          to={`/${link.link}`}
           className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), 'header__nav__link collabsed')}
           activeProps={{
             className: activeHeader,
@@ -32,7 +32,7 @@ const TooltipLink = ({ link, id = 0, isCollapsed }: TooltipLinkProps) => {
   ) : (
     <Link
       key={id}
-      to={`/${link.title}`}
+      to={`/${link.link}`}
       className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'header__nav__link px-[.55rem] capitalize')}
       activeProps={{
         className: unCollapsedActiveHeaderLink,

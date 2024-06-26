@@ -1,8 +1,8 @@
+import { mails } from '@/constants/Email/MailData'
 import { atom, useAtom } from 'jotai'
-import { Mail, mails } from '../../../constants'
 
 type Config = {
-  selected: Mail['id'] | null
+  selected: Email['id'] | null
 }
 
 const configAtom = atom<Config>({

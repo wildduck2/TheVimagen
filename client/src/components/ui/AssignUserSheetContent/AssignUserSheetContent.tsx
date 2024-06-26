@@ -15,8 +15,8 @@ import {
 } from '..'
 
 import { AssignUserSheetContentProps, Users } from './AssignUserSheetContent.types'
-import { searchUsersHandler, slectUserHandler, toggleSelectAllUsersHandler } from '../../../utils'
-import { actions } from '../../../constants'
+import { searchUsersHandler, slectUserHandler, toggleSelectAllUsersHandler } from '@/utils'
+import { actions } from '@/constants'
 
 export const users: Users[] = [
   {

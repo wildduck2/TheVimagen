@@ -13,10 +13,13 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as EmailEmailImport } from './routes/email/_email'
 import { Route as DashboardDashboardImport } from './routes/dashboard/_dashboard'
+import { Route as EmailEmailIndexImport } from './routes/email/_email.index'
 
 // Create Virtual Routes
 
+const EmailImport = createFileRoute('/email')()
 const DashboardImport = createFileRoute('/dashboard')()
 const AuthSignupLazyImport = createFileRoute('/auth/signup')()
 const AuthSigninLazyImport = createFileRoute('/auth/signin')()
@@ -30,6 +33,23 @@ const AuthCompleteForgetPasswordLazyImport = createFileRoute(
 const AuthCompleteAccountInformationLazyImport = createFileRoute(
   '/auth/complete-account-information',
 )()
+const EmailEmailUpdatesLazyImport = createFileRoute('/email/_email/updates')()
+const EmailEmailTrashLazyImport = createFileRoute('/email/_email/trash')()
+const EmailEmailSettingsLazyImport = createFileRoute('/email/_email/settings')()
+const EmailEmailSentLazyImport = createFileRoute('/email/_email/sent')()
+const EmailEmailScheduledLazyImport = createFileRoute(
+  '/email/_email/scheduled',
+)()
+const EmailEmailJunkLazyImport = createFileRoute('/email/_email/junk')()
+const EmailEmailInboxLazyImport = createFileRoute('/email/_email/inbox')()
+const EmailEmailDraftsLazyImport = createFileRoute('/email/_email/drafts')()
+const EmailEmailCategoriesLazyImport = createFileRoute(
+  '/email/_email/categories',
+)()
+const EmailEmailArchiveLazyImport = createFileRoute('/email/_email/archive')()
+const EmailEmailAllEmailLazyImport = createFileRoute(
+  '/email/_email/all-email',
+)()
 const DashboardDashboardHomeLazyImport = createFileRoute(
   '/dashboard/_dashboard/Home',
 )()
@@ -38,6 +58,11 @@ const DashboardDashboardFilesLazyImport = createFileRoute(
 )()
 
 // Create/Update Routes
+
+const EmailRoute = EmailImport.update({
+  path: '/email',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const DashboardRoute = DashboardImport.update({
   path: '/dashboard',
@@ -87,10 +112,97 @@ const AuthCompleteAccountInformationLazyRoute =
     ),
   )
 
+const EmailEmailRoute = EmailEmailImport.update({
+  id: '/_email',
+  getParentRoute: () => EmailRoute,
+} as any)
+
 const DashboardDashboardRoute = DashboardDashboardImport.update({
   id: '/_dashboard',
   getParentRoute: () => DashboardRoute,
 } as any)
+
+const EmailEmailIndexRoute = EmailEmailIndexImport.update({
+  path: '/',
+  getParentRoute: () => EmailEmailRoute,
+} as any)
+
+const EmailEmailUpdatesLazyRoute = EmailEmailUpdatesLazyImport.update({
+  path: '/updates',
+  getParentRoute: () => EmailEmailRoute,
+} as any).lazy(() =>
+  import('./routes/email/_email.updates.lazy').then((d) => d.Route),
+)
+
+const EmailEmailTrashLazyRoute = EmailEmailTrashLazyImport.update({
+  path: '/trash',
+  getParentRoute: () => EmailEmailRoute,
+} as any).lazy(() =>
+  import('./routes/email/_email.trash.lazy').then((d) => d.Route),
+)
+
+const EmailEmailSettingsLazyRoute = EmailEmailSettingsLazyImport.update({
+  path: '/settings',
+  getParentRoute: () => EmailEmailRoute,
+} as any).lazy(() =>
+  import('./routes/email/_email.settings.lazy').then((d) => d.Route),
+)
+
+const EmailEmailSentLazyRoute = EmailEmailSentLazyImport.update({
+  path: '/sent',
+  getParentRoute: () => EmailEmailRoute,
+} as any).lazy(() =>
+  import('./routes/email/_email.sent.lazy').then((d) => d.Route),
+)
+
+const EmailEmailScheduledLazyRoute = EmailEmailScheduledLazyImport.update({
+  path: '/scheduled',
+  getParentRoute: () => EmailEmailRoute,
+} as any).lazy(() =>
+  import('./routes/email/_email.scheduled.lazy').then((d) => d.Route),
+)
+
+const EmailEmailJunkLazyRoute = EmailEmailJunkLazyImport.update({
+  path: '/junk',
+  getParentRoute: () => EmailEmailRoute,
+} as any).lazy(() =>
+  import('./routes/email/_email.junk.lazy').then((d) => d.Route),
+)
+
+const EmailEmailInboxLazyRoute = EmailEmailInboxLazyImport.update({
+  path: '/inbox',
+  getParentRoute: () => EmailEmailRoute,
+} as any).lazy(() =>
+  import('./routes/email/_email.inbox.lazy').then((d) => d.Route),
+)
+
+const EmailEmailDraftsLazyRoute = EmailEmailDraftsLazyImport.update({
+  path: '/drafts',
+  getParentRoute: () => EmailEmailRoute,
+} as any).lazy(() =>
+  import('./routes/email/_email.drafts.lazy').then((d) => d.Route),
+)
+
+const EmailEmailCategoriesLazyRoute = EmailEmailCategoriesLazyImport.update({
+  path: '/categories',
+  getParentRoute: () => EmailEmailRoute,
+} as any).lazy(() =>
+  import('./routes/email/_email.categories.lazy').then((d) => d.Route),
+)
+
+const EmailEmailArchiveLazyRoute = EmailEmailArchiveLazyImport.update({
+  path: '/archive',
+  getParentRoute: () => EmailEmailRoute,
+} as any).lazy(() =>
+  import('./routes/email/_email.archive.lazy').then((d) => d.Route),
+)
+
+const EmailEmailAllEmailLazyRoute = EmailEmailAllEmailLazyImport.update({
+  path: '/all-email',
+  getParentRoute: () => EmailEmailRoute,
+} as any).lazy(() =>
+  import('./routes/email/_email.all-email.lazy').then((d) => d.Route),
+)
 
 const DashboardDashboardHomeLazyRoute = DashboardDashboardHomeLazyImport.update(
   {
@@ -126,6 +238,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardDashboardImport
       parentRoute: typeof DashboardRoute
+    }
+    '/email': {
+      id: '/email'
+      path: '/email'
+      fullPath: '/email'
+      preLoaderRoute: typeof EmailImport
+      parentRoute: typeof rootRoute
+    }
+    '/email/_email': {
+      id: '/email/_email'
+      path: '/email'
+      fullPath: '/email'
+      preLoaderRoute: typeof EmailEmailImport
+      parentRoute: typeof EmailRoute
     }
     '/auth/complete-account-information': {
       id: '/auth/complete-account-information'
@@ -183,6 +309,90 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardDashboardHomeLazyImport
       parentRoute: typeof DashboardDashboardImport
     }
+    '/email/_email/all-email': {
+      id: '/email/_email/all-email'
+      path: '/all-email'
+      fullPath: '/email/all-email'
+      preLoaderRoute: typeof EmailEmailAllEmailLazyImport
+      parentRoute: typeof EmailEmailImport
+    }
+    '/email/_email/archive': {
+      id: '/email/_email/archive'
+      path: '/archive'
+      fullPath: '/email/archive'
+      preLoaderRoute: typeof EmailEmailArchiveLazyImport
+      parentRoute: typeof EmailEmailImport
+    }
+    '/email/_email/categories': {
+      id: '/email/_email/categories'
+      path: '/categories'
+      fullPath: '/email/categories'
+      preLoaderRoute: typeof EmailEmailCategoriesLazyImport
+      parentRoute: typeof EmailEmailImport
+    }
+    '/email/_email/drafts': {
+      id: '/email/_email/drafts'
+      path: '/drafts'
+      fullPath: '/email/drafts'
+      preLoaderRoute: typeof EmailEmailDraftsLazyImport
+      parentRoute: typeof EmailEmailImport
+    }
+    '/email/_email/inbox': {
+      id: '/email/_email/inbox'
+      path: '/inbox'
+      fullPath: '/email/inbox'
+      preLoaderRoute: typeof EmailEmailInboxLazyImport
+      parentRoute: typeof EmailEmailImport
+    }
+    '/email/_email/junk': {
+      id: '/email/_email/junk'
+      path: '/junk'
+      fullPath: '/email/junk'
+      preLoaderRoute: typeof EmailEmailJunkLazyImport
+      parentRoute: typeof EmailEmailImport
+    }
+    '/email/_email/scheduled': {
+      id: '/email/_email/scheduled'
+      path: '/scheduled'
+      fullPath: '/email/scheduled'
+      preLoaderRoute: typeof EmailEmailScheduledLazyImport
+      parentRoute: typeof EmailEmailImport
+    }
+    '/email/_email/sent': {
+      id: '/email/_email/sent'
+      path: '/sent'
+      fullPath: '/email/sent'
+      preLoaderRoute: typeof EmailEmailSentLazyImport
+      parentRoute: typeof EmailEmailImport
+    }
+    '/email/_email/settings': {
+      id: '/email/_email/settings'
+      path: '/settings'
+      fullPath: '/email/settings'
+      preLoaderRoute: typeof EmailEmailSettingsLazyImport
+      parentRoute: typeof EmailEmailImport
+    }
+    '/email/_email/trash': {
+      id: '/email/_email/trash'
+      path: '/trash'
+      fullPath: '/email/trash'
+      preLoaderRoute: typeof EmailEmailTrashLazyImport
+      parentRoute: typeof EmailEmailImport
+    }
+    '/email/_email/updates': {
+      id: '/email/_email/updates'
+      path: '/updates'
+      fullPath: '/email/updates'
+      preLoaderRoute: typeof EmailEmailUpdatesLazyImport
+      parentRoute: typeof EmailEmailImport
+    }
+    '/email/_email/': {
+      id: '/email/_email/'
+      path: '/'
+      fullPath: '/email/'
+      preLoaderRoute: typeof EmailEmailIndexImport
+      parentRoute: typeof EmailEmailImport
+    }
   }
 }
 
@@ -193,6 +403,22 @@ export const routeTree = rootRoute.addChildren({
     DashboardDashboardRoute: DashboardDashboardRoute.addChildren({
       DashboardDashboardFilesLazyRoute,
       DashboardDashboardHomeLazyRoute,
+    }),
+  }),
+  EmailRoute: EmailRoute.addChildren({
+    EmailEmailRoute: EmailEmailRoute.addChildren({
+      EmailEmailAllEmailLazyRoute,
+      EmailEmailArchiveLazyRoute,
+      EmailEmailCategoriesLazyRoute,
+      EmailEmailDraftsLazyRoute,
+      EmailEmailInboxLazyRoute,
+      EmailEmailJunkLazyRoute,
+      EmailEmailScheduledLazyRoute,
+      EmailEmailSentLazyRoute,
+      EmailEmailSettingsLazyRoute,
+      EmailEmailTrashLazyRoute,
+      EmailEmailUpdatesLazyRoute,
+      EmailEmailIndexRoute,
     }),
   }),
   AuthCompleteAccountInformationLazyRoute,
@@ -212,6 +438,7 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/dashboard",
+        "/email",
         "/auth/complete-account-information",
         "/auth/complete-forget-password",
         "/auth/forget-password",
@@ -232,6 +459,30 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/dashboard/_dashboard/Files",
         "/dashboard/_dashboard/Home"
+      ]
+    },
+    "/email": {
+      "filePath": "email",
+      "children": [
+        "/email/_email"
+      ]
+    },
+    "/email/_email": {
+      "filePath": "email/_email.tsx",
+      "parent": "/email",
+      "children": [
+        "/email/_email/all-email",
+        "/email/_email/archive",
+        "/email/_email/categories",
+        "/email/_email/drafts",
+        "/email/_email/inbox",
+        "/email/_email/junk",
+        "/email/_email/scheduled",
+        "/email/_email/sent",
+        "/email/_email/settings",
+        "/email/_email/trash",
+        "/email/_email/updates",
+        "/email/_email/"
       ]
     },
     "/auth/complete-account-information": {
@@ -259,6 +510,54 @@ export const routeTree = rootRoute.addChildren({
     "/dashboard/_dashboard/Home": {
       "filePath": "dashboard/_dashboard.Home.lazy.tsx",
       "parent": "/dashboard/_dashboard"
+    },
+    "/email/_email/all-email": {
+      "filePath": "email/_email.all-email.lazy.tsx",
+      "parent": "/email/_email"
+    },
+    "/email/_email/archive": {
+      "filePath": "email/_email.archive.lazy.tsx",
+      "parent": "/email/_email"
+    },
+    "/email/_email/categories": {
+      "filePath": "email/_email.categories.lazy.tsx",
+      "parent": "/email/_email"
+    },
+    "/email/_email/drafts": {
+      "filePath": "email/_email.drafts.lazy.tsx",
+      "parent": "/email/_email"
+    },
+    "/email/_email/inbox": {
+      "filePath": "email/_email.inbox.lazy.tsx",
+      "parent": "/email/_email"
+    },
+    "/email/_email/junk": {
+      "filePath": "email/_email.junk.lazy.tsx",
+      "parent": "/email/_email"
+    },
+    "/email/_email/scheduled": {
+      "filePath": "email/_email.scheduled.lazy.tsx",
+      "parent": "/email/_email"
+    },
+    "/email/_email/sent": {
+      "filePath": "email/_email.sent.lazy.tsx",
+      "parent": "/email/_email"
+    },
+    "/email/_email/settings": {
+      "filePath": "email/_email.settings.lazy.tsx",
+      "parent": "/email/_email"
+    },
+    "/email/_email/trash": {
+      "filePath": "email/_email.trash.lazy.tsx",
+      "parent": "/email/_email"
+    },
+    "/email/_email/updates": {
+      "filePath": "email/_email.updates.lazy.tsx",
+      "parent": "/email/_email"
+    },
+    "/email/_email/": {
+      "filePath": "email/_email.index.tsx",
+      "parent": "/email/_email"
     }
   }
 }

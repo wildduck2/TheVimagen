@@ -14,15 +14,16 @@
 */
 
 .header {
+  --max-with: 270px;
+
   @include u.flex(flex);
   position: relative;
   transition: 0.3s ease;
-  width: 260px;
-  min-width: 260px;
+  width: var(--max-with);
+  min-width: var(--max-with);
   height: 100vh;
   flex-direction: column;
-  // overflow: hidden;
-  gap: 1rem;
+  gap: 0.5rem;
   padding-block: 0.5rem;
   border-right-width: 1px;
   transition: 0.3s ease-out;
@@ -32,19 +33,23 @@
     min-width: 53px;
   }
 
-  &[data-collapsed='true'] {
-    padding-block: 0.5rem;
-  }
-
   #{&}__logo {
-    @include u.flex(flex, center);
+    @include u.flex(flex, center, center);
     width: 52px;
     height: 36px;
     color: hsl(var(--foreground));
     font-size: size(3xl);
     font-weight: 600;
-    padding-inline: 0.5rem;
-    margin-bottom: -0.5rem;
+
+    span {
+      @include u.flex(grid, center);
+      place-content: center;
+
+      svg {
+        width: 30px;
+        height: 30px;
+      }
+    }
   }
 
   &__nav {

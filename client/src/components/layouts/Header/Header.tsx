@@ -1,22 +1,8 @@
 import React from 'react'
 
-import { headerLinks } from '@/constants'
+import { headerLinks, profileLinkData, toggleheaderLinkData } from '@/constants'
 import { DropDownMenuWrapper, Separator, TooltipButton } from '@/components/ui'
-import { link, Nav, Logo } from '..'
-
-import { User, ChevronRight } from 'lucide-react'
-
-const toggleheaderLinkData: link = {
-  title: 'Menu',
-  label: '',
-  icon: ChevronRight,
-}
-
-const profileLinkData: link = {
-  title: 'Profile',
-  label: '',
-  icon: User,
-}
+import { Nav, Logo } from '..'
 
 export const Header = () => {
   const [isCollapsed, setIsCollapsed] = React.useState(true)
