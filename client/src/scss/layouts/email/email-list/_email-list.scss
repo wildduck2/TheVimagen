@@ -1,0 +1,105 @@
+/*
+
+    This code is writen by Ahmed Ayob
+
+*/
+
+@use '../../../base' as *;
+@use '../../../utils' as u;
+
+/*
+
+    Email List
+
+*/
+
+.email__list {
+  height: calc(100vh - 130px);
+
+  &__wrapper {
+    @include u.flex(flex);
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    padding-top: 0;
+
+    &__item {
+      @include u.flex(flex, flex-start);
+      flex-direction: column;
+      gap: 0.5rem;
+      border-radius: var(--radius);
+      border: 1px solid hsl(var(--border));
+      text-align: left;
+      padding: 0.75rem;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      transition-property: all;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-duration: 150ms;
+
+      &::hover {
+        background-color: hsl(var(--accent));
+      }
+
+      &__top {
+        @include u.flex(flex);
+        flex-direction: column;
+        width: 100%;
+        gap: 0.25rem;
+
+        &__header {
+          @include u.flex(flex, center);
+
+          &>div:first-child {
+            @include u.flex(flex, center);
+            gap: 0.5rem;
+
+            &>div {
+              font-weight: 600;
+            }
+
+            &>span {
+              @include u.flex(flex);
+              width: 0.5rem;
+              height: 0.5rem;
+              border-radius: 9999px;
+              background-color: rgb(37 99 235 / 1);
+            }
+          }
+
+          &>div:nth-child(2) {
+            margin-left: auto;
+            font-size: 0.75rem;
+            line-height: 1rem;
+            color: hsl(var(--muted-foreground));
+
+            &.active {
+              color: hsl(var(--foreground));
+            }
+          }
+        }
+
+        &__subject {
+          font-size: 0.75rem;
+          line-height: 1rem;
+          font-weight: 500;
+        }
+      }
+
+      &__bottom {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        font-size: 0.75rem;
+        line-height: 1rem;
+        color: hsl(var(--muted-foreground));
+
+        &>div {
+          @include u.flex(flex, center);
+          gap: 0.5rem;
+        }
+      }
+    }
+  }
+}
