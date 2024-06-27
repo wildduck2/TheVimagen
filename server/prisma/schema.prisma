@@ -14,31 +14,32 @@ datasource db {
 }
 
 model User {
-    id                           String        @id @default(uuid()) @db.Char(36)
-    firstName                    String?
-    lastName                     String?
-    userName                     String        @unique
-    email                        String        @unique
-    address                      Json?
-    age                          Int?
-    bio                          String?
-    pronounce                    String?
-    yearsOfExprience             Int?
-    profession                   String?
-    lastLoginIp                  String?
-    password                     String
-    passwordResetToken           String?
-    passwordResetTokenExpiration DateTime?
-    created_at                   DateTime      @default(now())
-    updated_at                   DateTime      @updatedAt
-    OAuthToken                   OAuthToken?
-    EmailLog                     EmailLog?
-    sessions                     Session?
-    Otp                          Otp?
-    recoveryData                 RecoveryData?
-    isVerified                   Boolean?
+    id                              String        @id @default(uuid()) @db.Char(36)
+    first_name                      String?
+    last_name                       String?
+    user_name                       String        @unique
+    email                           String        @unique
+    address                         Json?
+    age                             Int?
+    bio                             String?
+    picture                         String?
+    pronounce                       String?
+    years_of_exprience              Int?
+    profession                      String?
+    lastLogin_ip                    String?
+    password                        String
+    password_reset_token            String?
+    password_reset_token_expiration DateTime?
+    created_at                      DateTime      @default(now())
+    updated_at                      DateTime      @updatedAt
+    OAuthToken                      OAuthToken?
+    EmailLog                        EmailLog?
+    sessions                        Session?
+    Otp                             Otp?
+    recoveryData                    RecoveryData?
+    verified_email                  Boolean?
 
-    @@index([userName, email], map: "_IDX_UESR")
+    @@index([user_name, email], map: "_IDX_UESR")
 }
 
 model RecoveryData {
@@ -74,19 +75,19 @@ model EmailLog {
 model Session {
     id        String   @id @default(uuid()) @db.Char(36)
     sid       String   @unique
-    userId    String?  @unique
-    user      User?    @relation(fields: [userId], references: [id])
-    expiresAt DateTime @db.Timestamp(6)
+    user_id    String?  @unique
+    user      User?    @relation(fields: [user_id], references: [id])
+    expires_at DateTime @db.Timestamp(6)
     data      Json     @db.Json
 
-    @@index([expiresAt], map: "IDX_session_expire")
+    @@index([expires_at], map: "IDX_session_expire")
 }
 
 model Otp {
     id         String   @id @default(uuid()) @db.Char(36)
-    userId     String   @unique
+    user_id     String   @unique
     otp        String
     created_at DateTime @default(now())
-    expiresAt  DateTime
-    user       User?    @relation(fields: [userId], references: [id])
+    expires_at  DateTime
+    user       User?    @relation(fields: [user_id], references: [id])
 }
