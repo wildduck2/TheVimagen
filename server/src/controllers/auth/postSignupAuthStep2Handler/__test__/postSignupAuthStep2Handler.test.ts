@@ -3,7 +3,7 @@ import session from 'express-session'
 import { describe, it, vi, Mock, expect } from 'vitest'
 import request from 'supertest'
 import { postSignupAuthStep2Handler } from '../postSignupAuthStep2Handler'
-import { User } from '../../../../modles'
+import { User } from '../../../../services'
 
 const app: Express = express()
 app.use(express.json())
@@ -21,7 +21,7 @@ app.use(
 )
 app.post('/auth/signup-email-step2', postSignupAuthStep2Handler)
 
-vi.mock('../../../../modles')
+vi.mock('../../../../services')
 
 describe('postSignupAuthStep2Handler', () => {
   // FIX: make sure to add the middleware to the test

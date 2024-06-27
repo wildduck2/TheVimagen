@@ -13,11 +13,11 @@ export const postUserNameExist: RequestHandler = async (req, res) => {
       return res.json({
         user: null,
         error: 'User does not exist',
-        valid: false
+        valid: true
       })
     }
 
-    return res.json({ user, error: null, valid: true })
+    return res.json({ user, error: null, valid: false })
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === 'P2002') {

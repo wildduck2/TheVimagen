@@ -1,9 +1,8 @@
-import { Router } from 'express';
-import { getAuthLogin } from '../../controllers';
+import { Router } from 'express'
+import { postGoogleLogin } from '../../controllers'
 
-const oauthRouter = Router();
+const oauthRouter = Router()
 
-// authRouter.post('/auth/login', getAuthLogin)
-oauthRouter.get('/auth/login', getAuthLogin);
+oauthRouter.get('/oauth/google', postGoogleLogin)
 
-export { oauthRouter };
+export { oauthRouter }

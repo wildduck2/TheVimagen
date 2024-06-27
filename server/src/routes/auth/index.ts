@@ -2,6 +2,7 @@ import { Router } from 'express'
 import {
   postForgetPassowrdHandler,
   postSigninAuthHandler,
+  postSignoutHandler,
   postSignupAuthStep1Handler,
   postSignupAuthStep2Handler,
   postSignupAuthStep3Handler,
@@ -11,6 +12,7 @@ import { sessionVerify } from '../../middlewares'
 import {
   emailPasswordSchema,
   emailPasswordUserNameSchema,
+  emailShcema,
   optUserIdSchema,
   userData,
   userNameShcema,
@@ -37,7 +39,7 @@ authRouter.post(
 )
 authRouter.post(
   '/auth/signup-email-step3',
-  // sessionVerify,
+  sessionVerify,
   validate(userData),
   postSignupAuthStep3Handler
 )
@@ -48,8 +50,9 @@ authRouter.post(
 )
 authRouter.post(
   '/auth/forgetPassword',
-  validate(emailPasswordSchema),
+  validate(emailShcema),
   postForgetPassowrdHandler
 )
+authRouter.post('/auth/signout', postSignoutHandler)
 
 export { authRouter }

@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express'
 import { z } from 'zod'
-import { User } from '../../../modles'
+import { User } from '../../../services'
 import { Prisma } from '@prisma/client'
 import { postSignupAuthStep1HandlerBodyProps } from './postSignupAuthStep1Handler.types'
 
@@ -53,6 +53,7 @@ export const postSignupAuthStep1Handler: RequestHandler = async (req, res) => {
         return res.status(200).json({ user, error: null, email: info.response })
       }
     })
+    return res.status(200).json({ user, error: null })
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === 'P2002') {

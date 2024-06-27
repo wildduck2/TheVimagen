@@ -2,7 +2,7 @@ import express, { type Express } from 'express'
 import request from 'supertest'
 import bcrypt from 'bcrypt'
 import { prisma } from '../../../../utils'
-import { User } from '../../../../modles'
+import { User } from '../../../../services'
 import { vi, it, Mock, beforeEach, describe, expect } from 'vitest'
 import { postSigninAuthHandler } from '../postSigninAuthHandler'
 import session from 'express-session'
@@ -31,7 +31,7 @@ vi.mock('../../../../utils', () => ({
     }
   }
 }))
-vi.mock('../../../../modles', () => ({
+vi.mock('../../../../services', () => ({
   User: {
     findSesssionIfNotCreateOne: vi.fn()
   }

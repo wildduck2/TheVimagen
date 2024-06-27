@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express'
 import bcrypt from 'bcrypt'
-import { User } from '../../../modles'
+import { User } from '../../../services'
 import { prisma } from '../../../utils'
 import { postSigninAuthHandlerBodyProps } from './postSigninAuthHandler.types'
 

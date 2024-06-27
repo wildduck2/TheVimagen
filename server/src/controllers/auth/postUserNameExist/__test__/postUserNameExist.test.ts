@@ -41,7 +41,7 @@ describe('userNameExist', () => {
     expect(response.body).toEqual({
       user: null,
       error: 'User does not exist',
-      valid: false
+      valid: true
     })
     expect(response.status).toBe(200)
   })
@@ -57,7 +57,7 @@ describe('userNameExist', () => {
     expect(response.body).toEqual({
       user: mockUser,
       error: null,
-      valid: true
+      valid: false
     })
     expect(response.status).toBe(200)
   })

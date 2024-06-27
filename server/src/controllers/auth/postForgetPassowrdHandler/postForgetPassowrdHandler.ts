@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express'
-import { User } from '../../../modles'
+import { User } from '../../../services'
 import { postForgetPassowrdHandlerBodyProps } from './postForgetPassowrdHandler.types'
 
 export const postForgetPassowrdHandler: RequestHandler = async (req, res) => {
@@ -13,7 +13,7 @@ export const postForgetPassowrdHandler: RequestHandler = async (req, res) => {
     if (!user) return res.json({ error: 'The user does not exist', user: null })
 
     // NOTE: Generateing OTP for the user
-    const { otp } = await User.generateOTP({ userId: user.id })
+    const { otp } = await User.generateOTP({ user_id: user.id })
     if (!otp) return res.json({ error: 'The user does not exist', user: null })
 
     // NOTE: Rendering the Coponent and send the Email

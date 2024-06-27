@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express'
-import { User } from '../../../modles'
+import { User } from '../../../services'
 import { Prisma } from '@prisma/client'
 import { postSignupAuthStep3HandlerBodyValues } from './postSignupAuthStep3Handler.types'
 
@@ -12,23 +12,18 @@ export const postSignupAuthStep3Handler: RequestHandler = async (req, res) => {
       lastName,
       profession,
       pronounce,
-      email,
+      userId,
       yearsOfExprience
     }: postSignupAuthStep3HandlerBodyValues = req.body
 
-    const user = await User.checkUserExistInDb({ email: email })
-
-    if (!user)
-      return res.json({ user: null, error: "This user Doesn't exist!!" })
-
     const updatedUser = await User.completeUserInfoSignupStep3({
-      userID: user?.id,
-      age: +age,
+      userId,
+      age: age,
       bio,
       lastName,
       firstName,
       pronounce,
-      yearsOfExprience: +yearsOfExprience,
+      yearsOfExprience: yearsOfExprience,
       profession
     })
 

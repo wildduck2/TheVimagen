@@ -3,7 +3,7 @@ import session from 'express-session'
 import request from 'supertest'
 import { postSignupAuthStep1Handler } from '../postSignupAuthStep1Handler'
 import { describe, vi, Mock, it, expect, beforeAll } from 'vitest'
-import { User } from '../../../../modles'
+import { User } from '../../../../services'
 
 const app: Express = express()
 app.use(express.json())
@@ -25,7 +25,7 @@ app.post('/auth/signup-email-step1', postSignupAuthStep1Handler)
 vi.mock('z')
 vi.mock('bcrypt')
 vi.mock('../../../../constants')
-vi.mock('../../../../modles')
+vi.mock('../../../../services')
 
 describe('postSignupAuthStep1Handler', () => {
   beforeAll(() => {
