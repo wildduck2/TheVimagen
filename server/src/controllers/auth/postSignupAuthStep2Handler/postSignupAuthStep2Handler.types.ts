@@ -1,4 +1,4 @@
 export type postSignupAuthStep2HandlerBodyProps = {
   otp: string
-  userId: string
+  user_id: string
 }

@@ -22,11 +22,11 @@ export const postSigninAuthHandler: RequestHandler = async (req, res) => {
     }
 
     //NOTE: checking for any session realated to this user and it's valid not expired
-    const session = await User.findSesssionIfNotCreateOne({
-      userId: user.id,
+    const session = await User.find_sesssion_if_not_create_one({
+      user_id: user.id,
       session: req.session,
-      expiresAt: req.session.cookie.expires!,
-      sessionId: req.sessionID
+      expires_at: req.session.cookie.expires!,
+      session_id: req.sessionID
     })
     console.log(session)
     if (!session) return res.json({ error: 'session has not created', user })

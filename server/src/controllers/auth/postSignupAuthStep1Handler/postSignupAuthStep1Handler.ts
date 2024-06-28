@@ -1,19 +1,15 @@
 import { RequestHandler } from 'express'
-import { z } from 'zod'
 import { User } from '../../../services'
 import { Prisma } from '@prisma/client'
 import { postSignupAuthStep1HandlerBodyProps } from './postSignupAuthStep1Handler.types'
 
 export const postSignupAuthStep1Handler: RequestHandler = async (req, res) => {
   try {
-    const { password, email, userName }: postSignupAuthStep1HandlerBodyProps =
+    const { password, email, user_name }: postSignupAuthStep1HandlerBodyProps =
       req.body
 
     //NOTE: checking for the user existence in out DB
-    const userDoExist = await User.checkUserExistInDb({
-      email,
-      userName
-    })
+    const userDoExist = await User.checkUserExistInDb({ email })
     if (userDoExist)
       return res.json({
         error: 'User creation failed with error!! try again!',
@@ -23,16 +19,16 @@ export const postSignupAuthStep1Handler: RequestHandler = async (req, res) => {
     // NOTE: create new user
     const user = await User.createNewUser({
       email,
-      userName,
+      user_name,
       password,
-      sessionId: req.session.id,
-      expiresAt: req.session.cookie.expires!,
+      session_id: req.session.id,
+      expires_at: req.session.cookie.expires!,
       session: req.session
     })
     if (!user) return res.json({ error: "user hasn't created", user: null })
 
     //NOTE: genrating the OTP and create DB field with it
-    const { otp } = await User.generateOTP({ userId: user.id })
+    const { otp } = await User.generateOTP({ user_id: user.id })
     if (!otp) {
       return res.json({ error: 'otp has not created', user: null })
     }

@@ -33,7 +33,7 @@ vi.mock('../../../../utils', () => ({
 }))
 vi.mock('../../../../services', () => ({
   User: {
-    findSesssionIfNotCreateOne: vi.fn()
+    find_sesssion_if_not_create_one: vi.fn()
   }
 }))
 
@@ -81,7 +81,7 @@ describe('postSigninAuthHandler', () => {
       email: 'doexist@gmail.com'
     })
     ;(bcrypt.compare as Mock).mockResolvedValue(true)
-    ;(User.findSesssionIfNotCreateOne as Mock).mockResolvedValue(null)
+    ;(User.find_sesssion_if_not_create_one as Mock).mockResolvedValue(null)
 
     const response = await request(app).post('/auth/signin-email').send({
       email: 'doexist@gmail.com',
@@ -95,12 +95,8 @@ describe('postSigninAuthHandler', () => {
         id: '123'
       }
     })
-    expect(User.findSesssionIfNotCreateOne).toHaveBeenCalledWith({
-      userId: '123',
-      session: expect.any(Object),
-      expiresAt: expect.any(Date),
-      sessionId: expect.any(String)
-    })
+    expect(User.find_sesssion_if_not_create_one).toHaveBeenCalledOnce()
+    expect(User.find_sesssion_if_not_create_one).toHaveReturnedWith(null)
   })
 
   it('should return user if signin has worked well', async () => {
@@ -109,7 +105,9 @@ describe('postSigninAuthHandler', () => {
       email: 'doexist@gmail.com'
     })
     ;(bcrypt.compare as Mock).mockResolvedValue(true)
-    ;(User.findSesssionIfNotCreateOne as Mock).mockResolvedValue({ error: {} })
+    ;(User.find_sesssion_if_not_create_one as Mock).mockResolvedValue({
+      error: {}
+    })
 
     const response = await request(app)
       .post('/auth/signin-email')

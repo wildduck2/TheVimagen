@@ -4,10 +4,10 @@ import { postSignupAuthStep2HandlerBodyProps } from './postSignupAuthStep2Handle
 
 export const postSignupAuthStep2Handler: RequestHandler = async (req, res) => {
   try {
-    const { otp, userId }: postSignupAuthStep2HandlerBodyProps = req.body
+    const { otp, user_id }: postSignupAuthStep2HandlerBodyProps = req.body
 
     //NOTE: checking for the OTP in the DB
-    const OTP = await User.verifyOTP({ userId, otp })
+    const OTP = await User.verifyOTP({ user_id, otp })
     if (!OTP) return res.json({ error: 'Wrong OTP code try again', otp: null })
 
     return res.json({ verified: true })

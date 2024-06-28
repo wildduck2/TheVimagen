@@ -25,7 +25,7 @@ export const emailPasswordSchema = emailShcema.extend({
 })
 
 export const userNameShcema = z.object({
-  userName: z
+  user_name: z
     .string()
     .min(6, { message: 'Password must be at least 6 characters long' })
     .max(32, { message: 'Password cannot be longer than 32 characters' })
@@ -36,25 +36,26 @@ export const emailPasswordUserNameSchema =
 
 export const optUserIdSchema = z.object({
   otp: z.string(),
-  userId: z.string()
+  user_id: z.string()
 })
 
 export const userData = z.object({
   bio: z.string(),
-  firstName: z.string(),
-  lastName: z.string(),
-  userId: z.string(),
+  first_name: z.string(),
+  last_name: z.string(),
+  user_id: z.string(),
   profession: z.string(),
   pronounce: z.string(),
   age: z
     .number()
     .min(18, { message: 'Password must be at least 18 characters long' }),
-  yearsOfExprience: z
+  years_of_exprience: z
     .number()
     .min(0, { message: 'Password must be at least 0 characters long' })
 })
 
 export type zodObject =
+  | z.infer<typeof emailShcema>
   | z.infer<typeof userNameShcema>
   | z.infer<typeof emailPasswordSchema>
   | z.infer<typeof emailPasswordUserNameSchema>

@@ -29,6 +29,7 @@ model User {
     lastLogin_ip                    String?
     password                        String
     password_reset_token            String?
+    verified_email                  Boolean?
     password_reset_token_expiration DateTime?
     created_at                      DateTime      @default(now())
     updated_at                      DateTime      @updatedAt
@@ -37,7 +38,6 @@ model User {
     sessions                        Session?
     Otp                             Otp?
     recoveryData                    RecoveryData?
-    verified_email                  Boolean?
 
     @@index([user_name, email], map: "_IDX_UESR")
 }
@@ -73,21 +73,22 @@ model EmailLog {
 }
 
 model Session {
-    id        String   @id @default(uuid()) @db.Char(36)
-    sid       String   @unique
+    id         String   @id @default(uuid()) @db.Char(36)
+    sid        String   @unique
     user_id    String?  @unique
-    user      User?    @relation(fields: [user_id], references: [id])
-    expires_at DateTime @db.Timestamp(6)
-    data      Json     @db.Json
+    user       User?    @relation(fields: [user_id], references: [id])
+    created_at DateTime @default(now())
+    expiresAt DateTime @db.Timestamp(6)
+    data       Json     @db.Json
 
-    @@index([expires_at], map: "IDX_session_expire")
+    @@index([expiresAt], map: "IDX_session_expire")
 }
 
 model Otp {
     id         String   @id @default(uuid()) @db.Char(36)
-    user_id     String   @unique
+    user_id    String   @unique
     otp        String
     created_at DateTime @default(now())
-    expires_at  DateTime
+    expires_at DateTime
     user       User?    @relation(fields: [user_id], references: [id])
 }

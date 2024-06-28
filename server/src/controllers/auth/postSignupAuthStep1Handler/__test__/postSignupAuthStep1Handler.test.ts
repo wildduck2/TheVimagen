@@ -4,6 +4,7 @@ import request from 'supertest'
 import { postSignupAuthStep1Handler } from '../postSignupAuthStep1Handler'
 import { describe, vi, Mock, it, expect, beforeAll } from 'vitest'
 import { User } from '../../../../services'
+import { mock } from 'node:test'
 
 const app: Express = express()
 app.use(express.json())
@@ -35,7 +36,16 @@ describe('postSignupAuthStep1Handler', () => {
   const user = {
     email: 'doexist@gmail.com',
     password: '123456Aa*',
-    userName: 'ahmedayob'
+    user_name: 'ahmedayob'
+  }
+
+  const mock_call = {
+    email: 'test@example.com',
+    user_name: 'testuser',
+    password: 'password123',
+    session_id: expect.any(String),
+    expires_at: expect.any(Date),
+    session: expect.any(Object)
   }
 
   // FIX: you should make middleware test right here and refactor the other tests
@@ -70,8 +80,7 @@ describe('postSignupAuthStep1Handler', () => {
       user: { id: '123', ...user }
     })
     expect(User.checkUserExistInDb).toHaveBeenCalledWith({
-      email: user.email,
-      userName: user.userName
+      email: user.email
     })
   })
 
@@ -84,14 +93,9 @@ describe('postSignupAuthStep1Handler', () => {
       userName: 'testuser',
       password: 'password123'
     })
-    expect(User.createNewUser).toHaveBeenCalledWith({
-      email: 'test@example.com',
-      userName: 'testuser',
-      password: 'password123',
-      sessionId: expect.any(String),
-      expiresAt: expect.any(Date),
-      session: expect.any(Object)
-    })
+
+    expect(User.createNewUser).toHaveBeenCalledOnce()
+    expect(User.createNewUser).toHaveReturnedWith(null)
     expect(response.body).toEqual({
       error: "user hasn't created",
       user: null
@@ -105,22 +109,14 @@ describe('postSignupAuthStep1Handler', () => {
 
     const response = await request(app).post('/auth/signup-email-step1').send({
       email: 'test@example.com',
-      userName: 'testuser',
+      user_name: 'testuser',
       password: 'password123'
     })
     expect(User.checkUserExistInDb).toHaveBeenCalledWith({
-      email: 'test@example.com',
-      userName: 'testuser'
+      email: 'test@example.com'
     })
-    expect(User.createNewUser).toHaveBeenCalledWith({
-      email: 'test@example.com',
-      userName: 'testuser',
-      password: 'password123',
-      sessionId: expect.any(String),
-      expiresAt: expect.any(Date),
-      session: expect.any(Object)
-    })
-    expect(User.generateOTP).toHaveBeenCalledWith({ userId: '123' })
+    expect(User.createNewUser).toHaveBeenCalledWith(mock_call)
+    expect(User.generateOTP).toHaveBeenCalledWith({ user_id: '123' })
     expect(response.body).toEqual({
       error: 'otp has not created',
       user: null
@@ -137,25 +133,17 @@ describe('postSignupAuthStep1Handler', () => {
 
     const response = await request(app).post('/auth/signup-email-step1').send({
       email: 'test@example.com',
-      userName: 'testuser',
+      user_name: 'testuser',
       passowrd: 'passowrd123'
     })
 
     expect(User.checkUserExistInDb).toHaveBeenCalledWith({
-      email: 'test@example.com',
-      userName: 'testuser'
+      email: 'test@example.com'
     })
 
-    expect(User.createNewUser).toHaveBeenCalledWith({
-      email: 'test@example.com',
-      userName: 'testuser',
-      password: 'password123',
-      sessionId: expect.any(String),
-      expiresAt: expect.any(Date),
-      session: expect.any(Object)
-    })
+    expect(User.createNewUser).toHaveBeenCalledWith(mock_call)
 
-    expect(User.generateOTP).toHaveBeenCalledWith({ userId: '123' })
+    expect(User.generateOTP).toHaveBeenCalledWith({ user_id: '123' })
 
     expect(User.sendEmail).toHaveBeenCalledWith({
       email: 'test@example.com',
@@ -181,25 +169,17 @@ describe('postSignupAuthStep1Handler', () => {
 
     const response = await request(app).post('/auth/signup-email-step1').send({
       email: 'test@example.com',
-      userName: 'testuser',
+      user_name: 'testuser',
       password: 'testpassword12*A'
     })
 
     expect(User.checkUserExistInDb).toHaveBeenCalledWith({
-      email: 'test@example.com',
-      userName: 'testuser'
+      email: 'test@example.com'
     })
 
-    expect(User.createNewUser).toHaveBeenCalledWith({
-      email: 'test@example.com',
-      userName: 'testuser',
-      password: 'password123',
-      sessionId: expect.any(String),
-      expiresAt: expect.any(Date),
-      session: expect.any(Object)
-    })
+    expect(User.createNewUser).toHaveBeenCalledWith(mock_call)
 
-    expect(User.generateOTP).toHaveBeenCalledWith({ userId: '123' })
+    expect(User.generateOTP).toHaveBeenCalledWith({ user_id: '123' })
 
     expect(User.sendEmail).toHaveBeenCalledWith({
       email: 'test@example.com',

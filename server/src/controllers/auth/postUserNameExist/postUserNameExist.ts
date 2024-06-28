@@ -4,10 +4,10 @@ import { postUserNameExistBodyProps } from './postUserNameExist.types'
 import { Prisma } from '@prisma/client'
 
 export const postUserNameExist: RequestHandler = async (req, res) => {
-  const { userName }: postUserNameExistBodyProps = req.body
+  const { user_name }: postUserNameExistBodyProps = req.body
 
   try {
-    const user = await prisma.user.findUnique({ where: { userName } })
+    const user = await prisma.user.findUnique({ where: { user_name } })
 
     if (!user) {
       return res.json({

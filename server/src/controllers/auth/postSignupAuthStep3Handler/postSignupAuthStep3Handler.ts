@@ -8,22 +8,22 @@ export const postSignupAuthStep3Handler: RequestHandler = async (req, res) => {
     const {
       age,
       bio,
-      firstName,
-      lastName,
+      first_name,
+      last_name,
       profession,
       pronounce,
-      userId,
-      yearsOfExprience
+      user_id,
+      years_of_exprience
     }: postSignupAuthStep3HandlerBodyValues = req.body
 
     const updatedUser = await User.completeUserInfoSignupStep3({
-      userId,
+      user_id,
       age: age,
       bio,
-      lastName,
-      firstName,
+      last_name,
+      first_name,
       pronounce,
-      yearsOfExprience: yearsOfExprience,
+      years_of_exprience,
       profession
     })
 

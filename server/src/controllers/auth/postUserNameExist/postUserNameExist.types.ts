@@ -1,3 +1,3 @@
 export type postUserNameExistBodyProps = {
-  userName: string
+  user_name: string
 }
