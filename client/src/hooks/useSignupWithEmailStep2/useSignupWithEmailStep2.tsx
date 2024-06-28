@@ -22,7 +22,7 @@ export const useSignupIWthEmailStep2 = ({ otp, forgetPassword }: useSignupIWthEm
         `${process.env.ROOT_URL}/auth/signup-email-step2`,
         {
           otp,
-          userId: user?.id,
+          user_id: user?.id,
         },
         { withCredentials: true },
       )

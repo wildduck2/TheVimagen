@@ -27,7 +27,8 @@ export const useSignupWithEmail = ({ email, password, setIsLoading }: useSignupW
           {
             email,
             password,
-            userName: 'ahmedyssdfsdfdfaosdfb234',
+            //FIX: get the real user Name data
+            user_name: 'ahmedyssdfsdfdfaosdfb234',
           },
           { withCredentials: true },
         )

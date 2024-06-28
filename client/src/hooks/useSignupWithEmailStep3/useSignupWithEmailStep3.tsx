@@ -9,11 +9,11 @@ import { useNavigate } from '@tanstack/react-router'
 import { disconnect } from 'process'
 
 export const useSignupIWthEmailStep3 = ({
-  firstName,
-  lastName,
+  first_name,
+  last_name,
   age,
   profession,
-  yearsOfExprience,
+  years_of_exprience,
   pronounce,
   bio,
 }: useSignupIWthEmailStep3Props) => {
@@ -26,19 +26,19 @@ export const useSignupIWthEmailStep3 = ({
   const formSubmitionInvoke = async (e: React.SyntheticEvent) => {
     e.preventDefault()
     setError({
-      firstName: !firstName ? true : false,
-      lastName: !lastName ? true : false,
+      first_name: !first_name ? true : false,
+      last_name: !last_name ? true : false,
       pronounce: !pronounce ? true : false,
       age: !age ? true : false,
       profession: !profession ? true : false,
-      yearsOfExprience: !yearsOfExprience ? true : false,
+      years_of_exprience: !years_of_exprience ? true : false,
       bio: !bio ? true : false,
     })
     if (
-      lastName === '' ||
-      firstName === '' ||
+      last_name === '' ||
+      first_name === '' ||
       age === '' ||
-      yearsOfExprience === '' ||
+      years_of_exprience === '' ||
       profession === '' ||
       pronounce == '' ||
       bio === ''
@@ -53,14 +53,14 @@ export const useSignupIWthEmailStep3 = ({
       const { data, statusText } = await axios.post(
         `${process.env.ROOT_URL}/auth/signup-email-step3`,
         {
-          firstName,
-          lastName,
+          first_name,
+          last_name,
           age: +age,
-          yearsOfExprience: +yearsOfExprience,
+          years_of_exprience: +years_of_exprience,
           pronounce,
           profession,
           bio,
-          userId: user?.id,
+          user_id: user?.id,
         },
         { withCredentials: true },
       )

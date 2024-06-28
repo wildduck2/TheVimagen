@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { toast } from 'sonner'
 import axios from 'axios'
 import { z } from 'zod'
-import { useSigninWithEmailProps } from './userSigninWithEmail.types'
+import { useSigninWithEmailProps } from './useSigninWithEmail.types'
 import { User, getUserData } from '@/context'
 import { zodCreditValidation } from '@/utils'
 

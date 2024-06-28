@@ -1,19 +1,19 @@
 export type useSignupIWthEmailStep3Props = {
-  firstName: string
-  lastName: string
+  first_name: string
+  last_name: string
   pronounce: string
   age: string
   profession: string
-  yearsOfExprience: string
+  years_of_exprience: string
   bio: string
 }
 
 export type error = {
-  firstName: boolean
-  lastName: boolean
+  first_name: boolean
+  last_name: boolean
   age: boolean
   profession: boolean
-  yearsOfExprience: boolean
+  years_of_exprience: boolean
   pronounce: boolean
   bio: boolean
 } | null

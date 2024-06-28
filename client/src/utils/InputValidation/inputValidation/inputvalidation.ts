@@ -123,7 +123,7 @@ export const UserNameValidation = async ({ inputValue, dispatch, setvalid, input
     const { data, statusText } = await axios.post(
       `${process.env.ROOT_URL}/auth/userNameExist`,
       {
-        userName: inputValue,
+        user_name: inputValue,
       },
       { withCredentials: true },
     )

@@ -6,7 +6,8 @@ import { Button, EmailInput, PasswordInput } from '@/components/ui'
 import { UserAuthFormProps } from '@/components/pages'
 import { RootState, checkInputsValid } from '@/context'
 import { Icons } from '@/constants'
-import { useSigninWithEmail } from '@/hooks'
+import { useSigninWithEmail, useSigninWithGoogle } from '@/hooks'
+import { google_icon } from '@/assets'
 
 export const Signin = ({ ...props }: UserAuthFormProps) => {
   const route = useNavigate()
@@ -33,14 +34,8 @@ export const Signin = ({ ...props }: UserAuthFormProps) => {
     setPasswordValid,
   })
 
-  // const { creditValidGithub, authGithub } = useSigninwithGithub({
-  //     dispatch,
-  //     setIsLoading,
-  //     setEmailValid,
-  //     setPasswordValid,
-  //     route,
-  // })
-  // console.log(emailValid, passwordValid)
+  const { authEmail: AuthGoogle } = useSigninWithGoogle({ setIsLoading })
+  console.log(emailValid, passwordValid)
 
   useEffect(() => {
     dispatch(checkInputsValid({ password: false, email: false, userName: false, passwordConfirm: false }))
@@ -100,8 +95,8 @@ export const Signin = ({ ...props }: UserAuthFormProps) => {
               <span>Or continue with</span>
             </div>
           </div>
-          <Button variant="outline" type="button" disabled={isLoading} onClick={() => {}}>
-            {isLoading ? <Icons.spinner className="animate-spin" /> : <Icons.gitHub />} Github
+          <Button variant="outline" type="button" disabled={isLoading} onClick={AuthGoogle}>
+            {isLoading ? <Icons.spinner className="animate-spin" /> : <img src={google_icon} />}Google
           </Button>
         </div>
 

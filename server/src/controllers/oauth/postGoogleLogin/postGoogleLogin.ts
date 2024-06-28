@@ -59,8 +59,8 @@ export const postGoogleLogin: RequestHandler = async (req, res) => {
         console.log(req.session.cookie)
 
         //NOTE: redirect back to the client
-        // res.json({ error: null, body: userData })
-        res.redirect('http://localhost:5173/email/inbox')
+        res.json({ error: null, body: userData })
+        // res.redirect('http://localhost:5173/email/inbox')
     } catch (error) {
         return res.json({ error: 'oauth with google has failed, please try again' })
     }
