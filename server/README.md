@@ -35,3 +35,7 @@ Labels created by a user. These labels can be deleted or modified by the user or
 --NOTE: Pre-fetching: Fetch some data in advance that you anticipate the user will likely access, based on their previous interactions or typical usage patterns.
 
 --NOTE: Server-Side Rendering: Format and render the data on the server side before sending it to the client. This can reduce the client's processing load and ensure consistent rendering.
+
+////////////////
+--NOTE: 4. Pagination or Lazy Loading
+If the large HTML content can be split into smaller parts, consider using pagination or lazy loading to send the content in chunks.

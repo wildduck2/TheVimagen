@@ -1,13 +1,12 @@
 import express from 'express'
 import dotEnv from 'dotenv'
-import { authRouter, oauthRouter } from './routes'
+import { oauth_router, auth_router, email_router } from './routes'
 import cors from 'cors'
 import bodyParser from 'body-parser'
-import { getGoogleOAuthURL, prismaSession } from './utils'
+import { prismaSession } from './utils'
 import cookieParser from 'cookie-parser'
-// import { csrfToken } from './middlewares';
+// import { csrf_token } from './middlewares';
 // import { corsOptions } from './constants';
-import cheerio from 'cheerio'
 
 export const app = express()
 dotEnv.config()
@@ -25,9 +24,10 @@ app.use(cookieParser())
 app.use(prismaSession)
 // app.use(doubleCsrfProtection);
 
-// app.use(csrfToken)
-app.use(oauthRouter)
-app.use(authRouter)
+// app.use(csrf_token)
+app.use(oauth_router)
+app.use(auth_router)
+app.use(email_router)
 
 app.listen(3000, () => {
   console.log('wild_duck server is runing and listening to the port : 3000')

@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express'
 import { User } from 'services'
 import { get_new_access_token } from 'utils'
+import { AuthCredentialsAboutToExpireType } from './auth_credentials_about_to_expire.types'
 
 export const auth_credentials_about_to_expire: RequestHandler = async (
   req,
@@ -8,10 +9,10 @@ export const auth_credentials_about_to_expire: RequestHandler = async (
   next
 ) => {
   try {
+    const { user_id }: AuthCredentialsAboutToExpireType = req.body
+
     //NOTE: get oauth data from db
-    const oauth_user_data = await User.get_oauth_data({
-      user_id: '' //FIX: you need a real id from the request
-    })
+    const oauth_user_data = await User.get_oauth_data({ user_id })
     if (!oauth_user_data)
       return res.json({ error: `Error: user does not exist`, data: null })
 

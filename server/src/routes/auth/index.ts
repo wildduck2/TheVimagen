@@ -1,58 +1,58 @@
 import { Router } from 'express'
 import {
-  postForgetPassowrdHandler,
-  postSigninAuthHandler,
-  postSignoutHandler,
-  postSignupAuthStep1Handler,
-  postSignupAuthStep2Handler,
-  postSignupAuthStep3Handler,
-  postUserNameExist
+    postForgetPassowrdHandler,
+    postSigninAuthHandler,
+    postSignoutHandler,
+    postSignupAuthStep1Handler,
+    postSignupAuthStep2Handler,
+    postSignupAuthStep3Handler,
+    postUserNameExist
 } from '../../controllers'
-import { sessionVerify } from '../../middlewares'
+import { session_verify } from '../../middlewares'
 import {
-  emailPasswordSchema,
-  emailPasswordUserNameSchema,
-  emailShcema,
-  optUserIdSchema,
-  userData,
-  userNameShcema,
-  validate
+    emailPasswordSchema,
+    emailPasswordUserNameSchema,
+    emailShcema,
+    optUserIdSchema,
+    userData,
+    userNameShcema,
+    validate
 } from '../../constants'
 
-const authRouter = Router()
+const auth_router = Router()
 
-authRouter.post(
-  '/auth/signin-email',
-  validate(emailPasswordSchema),
-  postSigninAuthHandler
+auth_router.post(
+    '/auth/signin-email',
+    validate(emailPasswordSchema),
+    postSigninAuthHandler
 )
-authRouter.post(
-  '/auth/signup-email-step1',
-  validate(emailPasswordUserNameSchema),
-  postSignupAuthStep1Handler
+auth_router.post(
+    '/auth/signup-email-step1',
+    validate(emailPasswordUserNameSchema),
+    postSignupAuthStep1Handler
 )
-authRouter.post(
-  '/auth/signup-email-step2',
-  validate(optUserIdSchema),
-  sessionVerify,
-  postSignupAuthStep2Handler
+auth_router.post(
+    '/auth/signup-email-step2',
+    validate(optUserIdSchema),
+    session_verify,
+    postSignupAuthStep2Handler
 )
-authRouter.post(
-  '/auth/signup-email-step3',
-  sessionVerify,
-  validate(userData),
-  postSignupAuthStep3Handler
+auth_router.post(
+    '/auth/signup-email-step3',
+    session_verify,
+    validate(userData),
+    postSignupAuthStep3Handler
 )
-authRouter.post(
-  '/auth/userNameExist',
-  validate(userNameShcema),
-  postUserNameExist
+auth_router.post(
+    '/auth/userNameExist',
+    validate(userNameShcema),
+    postUserNameExist
 )
-authRouter.post(
-  '/auth/forgetPassword',
-  validate(emailShcema),
-  postForgetPassowrdHandler
+auth_router.post(
+    '/auth/forgetPassword',
+    validate(emailShcema),
+    postForgetPassowrdHandler
 )
-authRouter.post('/auth/signout', postSignoutHandler)
+auth_router.post('/auth/signout', postSignoutHandler)
 
-export { authRouter }
+export { auth_router }

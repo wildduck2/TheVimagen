@@ -1,15 +1,9 @@
 import { Router } from 'express'
-import { get_google_gmail, post_google_login } from '../../controllers'
-import { auth_credentials_about_to_expire } from 'middlewares/auth_credentials_about_to_expire'
+import { get_google_login, post_google_login } from '../../controllers'
 
-const oauthRouter = Router()
+const oauth_router = Router()
 
-oauthRouter.get('/oauth/signin-google', get_google_gmail)
-oauthRouter.get('/oauth/google', post_google_login)
-oauthRouter.get(
-  '/oauth/google/get-drafts',
-  auth_credentials_about_to_expire,
-  get_google_gmail
-)
+oauth_router.get('/oauth/signin-google', get_google_login)
+oauth_router.get('/oauth/google', post_google_login)
 
-export { oauthRouter }
+export { oauth_router }
