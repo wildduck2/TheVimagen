@@ -13,6 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as IndexImport } from './routes/index'
 import { Route as EmailEmailImport } from './routes/email/_email'
 import { Route as DashboardDashboardImport } from './routes/dashboard/_dashboard'
 import { Route as AuthSigninImport } from './routes/auth/signin'
@@ -66,6 +67,11 @@ const EmailRoute = EmailImport.update({
 
 const DashboardRoute = DashboardImport.update({
   path: '/dashboard',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const IndexRoute = IndexImport.update({
+  path: '/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -223,6 +229,13 @@ const EmailEmailInboxRoute = EmailEmailInboxImport.update({
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
     '/auth/signin': {
       id: '/auth/signin'
       path: '/auth/signin'
@@ -397,6 +410,7 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren({
+  IndexRoute,
   AuthSigninRoute,
   DashboardRoute: DashboardRoute.addChildren({
     DashboardDashboardRoute: DashboardDashboardRoute.addChildren({
@@ -435,6 +449,7 @@ export const routeTree = rootRoute.addChildren({
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
+        "/",
         "/auth/signin",
         "/dashboard",
         "/email",
@@ -444,6 +459,9 @@ export const routeTree = rootRoute.addChildren({
         "/auth/otp-verification-step",
         "/auth/signup"
       ]
+    },
+    "/": {
+      "filePath": "index.tsx"
     },
     "/auth/signin": {
       "filePath": "auth/signin.tsx"

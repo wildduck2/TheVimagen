@@ -3,11 +3,14 @@ import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 export const Route = createRootRoute({
-  component: () => (
-    <>
-      <TanStackRouterDevtools position="bottom-right" />
-      <ReactQueryDevtools />
-      <Outlet />
-    </>
-  ),
+  component: () => {
+    console.log('sdfsdf')
+    return (
+      <>
+        <TanStackRouterDevtools position="bottom-right" />
+        <ReactQueryDevtools />
+      </>
+    )
+  },
+  // <Outlet />
 })

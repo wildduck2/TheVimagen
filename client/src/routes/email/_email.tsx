@@ -14,16 +14,16 @@ export const Route = createFileRoute('/email/_email')({
 
     return (
       <>
-        <Outlet />
+        <ResizablePanelGroup
+          direction="horizontal"
+          onLayout={(sizes: number[]) => {
+            document.cookie = `react-resizable-panels:layout=${JSON.stringify(sizes)}`
+          }}
+        >
+          <EmailHeader defaultLayout={120} defaultCollapsed={true} />
+          <Outlet />
+        </ResizablePanelGroup>
       </>
     )
   },
 })
-// <EmailHeader defaultLayout={120} defaultCollapsed={true} />
-// <ResizablePanelGroup
-//   direction="horizontal"
-//   onLayout={(sizes: number[]) => {
-//     document.cookie = `react-resizable-panels:layout=${JSON.stringify(sizes)}`
-//   }}
-// >
-// </ResizablePanelGroup>
