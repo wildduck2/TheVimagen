@@ -7,10 +7,10 @@ export const prisma = new PrismaClient()
 export const prismaSession = expressSession({
   cookie: {
     maxAge: 70 * 60 * 1000, // 7 days
-    // sameSite: 'lax'
+    // sameSite: 'lax',
     //  secure: process.env.NODE_ENV === 'production' ? true : false,
     httpOnly: true,
-    secure: true
+    secure: false
     // sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
   },
   secret: 'your_secret_key',

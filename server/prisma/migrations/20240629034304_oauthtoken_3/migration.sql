@@ -14,9 +14,7 @@ CREATE TABLE `User` (
     `profession` VARCHAR(191) NULL,
     `lastLogin_ip` VARCHAR(191) NULL,
     `password` VARCHAR(191) NOT NULL,
-    `password_reset_token` VARCHAR(191) NULL,
     `verified_email` BOOLEAN NULL,
-    `password_reset_token_expiration` DATETIME(3) NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
 
@@ -41,13 +39,16 @@ CREATE TABLE `RecoveryData` (
 CREATE TABLE `OAuthToken` (
     `id` CHAR(36) NOT NULL,
     `user_id` VARCHAR(191) NOT NULL,
-    `access_token` VARCHAR(191) NOT NULL,
-    `refresh_token` VARCHAR(191) NOT NULL,
+    `oauth_id` VARCHAR(191) NOT NULL,
+    `access_token` CHAR(100) NOT NULL,
+    `refresh_token` CHAR(100) NULL,
+    `id_token` TEXT NOT NULL,
     `expire_in` INTEGER NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
 
     UNIQUE INDEX `OAuthToken_user_id_key`(`user_id`),
+    UNIQUE INDEX `OAuthToken_oauth_id_key`(`oauth_id`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -71,12 +72,12 @@ CREATE TABLE `Session` (
     `sid` VARCHAR(191) NOT NULL,
     `user_id` VARCHAR(191) NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `expires_at` TIMESTAMP(6) NOT NULL,
+    `expiresAt` TIMESTAMP(6) NOT NULL,
     `data` JSON NOT NULL,
 
     UNIQUE INDEX `Session_sid_key`(`sid`),
     UNIQUE INDEX `Session_user_id_key`(`user_id`),
-    INDEX `IDX_session_expire`(`expires_at`),
+    INDEX `IDX_session_expire`(`expiresAt`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

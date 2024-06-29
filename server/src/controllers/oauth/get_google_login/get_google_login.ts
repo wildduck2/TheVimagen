@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express'
 import { getGoogleOAuthURL } from 'utils'
 
-export const getGoogleLogin: RequestHandler = async (req, res) => {
+export const get_google_login: RequestHandler = async (req, res) => {
   //NOTE: gen GOOGLE OAUTH URL
   const url = getGoogleOAuthURL()
 

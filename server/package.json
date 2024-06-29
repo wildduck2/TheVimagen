@@ -71,6 +71,7 @@
         "express": "^4.19.2",
         "express-session": "^1.18.0",
         "generate-password": "^1.7.1",
+        "gmail-api-parse-message-ts": "^2.2.33",
         "jsonwebtoken": "^9.0.2",
         "nodemailer": "^6.9.14",
         "otp-generator": "^4.0.1",

@@ -1,3 +1,4 @@
+import { OAuthToken } from '@prisma/client'
 import { JsonValue } from '@prisma/client/runtime/library'
 import 'express-session'
 
@@ -5,6 +6,7 @@ declare module 'express-session' {
   interface SessionData {
     user: User
     otp: string
+    oauth_user_data?: OAuthToken | null
   }
 }
 
@@ -13,6 +15,7 @@ export interface User {
   first_name?: string | null
   last_name?: string | null
   user_name: string
+  google_id?: string | null
   email: string
   address?: JsonValue | null
   age?: number | null
@@ -23,8 +26,6 @@ export interface User {
   profession?: string | null
   lastlogin_ip?: string | null
   password: string
-  password_reset_token?: string | null
-  password_reset_token_expiration?: Date | null
   verified_email?: boolean | null
   created_at: Date
   updated_at: Date
