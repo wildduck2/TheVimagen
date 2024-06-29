@@ -1,28 +1,21 @@
 import { EmailDisplay, EmailSideList } from '@/components/layouts'
-import { ResizableHandle, ResizablePanel } from '@/components/ui'
-import { InboxType } from './Inbox.types'
+import { ResizableHandle } from '@/components/ui'
+import { use_get_threads } from '@/hooks'
 import { getCookie } from '@/utils'
-
-//FIX: remove this dumby data
-import { mails } from '@/constants/Email/MailData'
-import { useMail } from '../useEmail'
+import { useEffect } from 'react'
 
 export const Inbox = () => {
-  const [mail] = useMail()
+  // const layout = getCookie('react-resizable-panels:layout')
+  // const defaultLayout = layout ? JSON.parse(layout) : undefined
 
-  const layout = getCookie('react-resizable-panels:layout')
+  // use_get_threads()
+  console.log('hi')
 
-  const defaultLayout = layout ? JSON.parse(layout) : undefined
-
-  console.log(defaultLayout)
   return (
     <>
-      <EmailSideList defaultLayout={defaultLayout ? defaultLayout[1] : null} />
+      <EmailSideList defaultLayout={230} />
       <ResizableHandle withHandle />
-      <EmailDisplay
-        mail={mails.find((item) => item.id === mail.selected) || null}
-        defaultLayout={defaultLayout ? defaultLayout[2] : null}
-      />
+      <EmailDisplay mail={[]} defaultLayout={20} />
     </>
   )
 }

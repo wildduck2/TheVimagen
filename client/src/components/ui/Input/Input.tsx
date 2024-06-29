@@ -19,3 +19,25 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, type,
 Input.displayName = 'Input'
 
 export { Input }
+
+// enum sizes {
+//     fit,
+//     full,
+// }
+//
+// type H = {
+//     [K in keyof typeof sizes]: `w-${K}`
+// }
+//
+// const button: H = {
+//
+//
+//
+//
+//
+//
+//
+//     fit: 'w-ft'
+// }
+//
+// button

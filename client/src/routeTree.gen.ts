@@ -15,14 +15,15 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRoute } from './routes/__root'
 import { Route as EmailEmailImport } from './routes/email/_email'
 import { Route as DashboardDashboardImport } from './routes/dashboard/_dashboard'
+import { Route as AuthSigninImport } from './routes/auth/signin'
 import { Route as EmailEmailIndexImport } from './routes/email/_email.index'
+import { Route as EmailEmailInboxImport } from './routes/email/_email.inbox'
 
 // Create Virtual Routes
 
 const EmailImport = createFileRoute('/email')()
 const DashboardImport = createFileRoute('/dashboard')()
 const AuthSignupLazyImport = createFileRoute('/auth/signup')()
-const AuthSigninLazyImport = createFileRoute('/auth/signin')()
 const AuthOtpVerificationStepLazyImport = createFileRoute(
   '/auth/otp-verification-step',
 )()
@@ -41,7 +42,6 @@ const EmailEmailScheduledLazyImport = createFileRoute(
   '/email/_email/scheduled',
 )()
 const EmailEmailJunkLazyImport = createFileRoute('/email/_email/junk')()
-const EmailEmailInboxLazyImport = createFileRoute('/email/_email/inbox')()
 const EmailEmailDraftsLazyImport = createFileRoute('/email/_email/drafts')()
 const EmailEmailCategoriesLazyImport = createFileRoute(
   '/email/_email/categories',
@@ -73,11 +73,6 @@ const AuthSignupLazyRoute = AuthSignupLazyImport.update({
   path: '/auth/signup',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/auth/signup.lazy').then((d) => d.Route))
-
-const AuthSigninLazyRoute = AuthSigninLazyImport.update({
-  path: '/auth/signin',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/auth/signin.lazy').then((d) => d.Route))
 
 const AuthOtpVerificationStepLazyRoute =
   AuthOtpVerificationStepLazyImport.update({
@@ -120,6 +115,11 @@ const EmailEmailRoute = EmailEmailImport.update({
 const DashboardDashboardRoute = DashboardDashboardImport.update({
   id: '/_dashboard',
   getParentRoute: () => DashboardRoute,
+} as any)
+
+const AuthSigninRoute = AuthSigninImport.update({
+  path: '/auth/signin',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const EmailEmailIndexRoute = EmailEmailIndexImport.update({
@@ -169,13 +169,6 @@ const EmailEmailJunkLazyRoute = EmailEmailJunkLazyImport.update({
   import('./routes/email/_email.junk.lazy').then((d) => d.Route),
 )
 
-const EmailEmailInboxLazyRoute = EmailEmailInboxLazyImport.update({
-  path: '/inbox',
-  getParentRoute: () => EmailEmailRoute,
-} as any).lazy(() =>
-  import('./routes/email/_email.inbox.lazy').then((d) => d.Route),
-)
-
 const EmailEmailDraftsLazyRoute = EmailEmailDraftsLazyImport.update({
   path: '/drafts',
   getParentRoute: () => EmailEmailRoute,
@@ -221,10 +214,22 @@ const DashboardDashboardFilesLazyRoute =
     import('./routes/dashboard/_dashboard.Files.lazy').then((d) => d.Route),
   )
 
+const EmailEmailInboxRoute = EmailEmailInboxImport.update({
+  path: '/inbox',
+  getParentRoute: () => EmailEmailRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/auth/signin': {
+      id: '/auth/signin'
+      path: '/auth/signin'
+      fullPath: '/auth/signin'
+      preLoaderRoute: typeof AuthSigninImport
+      parentRoute: typeof rootRoute
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -281,19 +286,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthOtpVerificationStepLazyImport
       parentRoute: typeof rootRoute
     }
-    '/auth/signin': {
-      id: '/auth/signin'
-      path: '/auth/signin'
-      fullPath: '/auth/signin'
-      preLoaderRoute: typeof AuthSigninLazyImport
-      parentRoute: typeof rootRoute
-    }
     '/auth/signup': {
       id: '/auth/signup'
       path: '/auth/signup'
       fullPath: '/auth/signup'
       preLoaderRoute: typeof AuthSignupLazyImport
       parentRoute: typeof rootRoute
+    }
+    '/email/_email/inbox': {
+      id: '/email/_email/inbox'
+      path: '/inbox'
+      fullPath: '/email/inbox'
+      preLoaderRoute: typeof EmailEmailInboxImport
+      parentRoute: typeof EmailEmailImport
     }
     '/dashboard/_dashboard/Files': {
       id: '/dashboard/_dashboard/Files'
@@ -335,13 +340,6 @@ declare module '@tanstack/react-router' {
       path: '/drafts'
       fullPath: '/email/drafts'
       preLoaderRoute: typeof EmailEmailDraftsLazyImport
-      parentRoute: typeof EmailEmailImport
-    }
-    '/email/_email/inbox': {
-      id: '/email/_email/inbox'
-      path: '/inbox'
-      fullPath: '/email/inbox'
-      preLoaderRoute: typeof EmailEmailInboxLazyImport
       parentRoute: typeof EmailEmailImport
     }
     '/email/_email/junk': {
@@ -399,6 +397,7 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren({
+  AuthSigninRoute,
   DashboardRoute: DashboardRoute.addChildren({
     DashboardDashboardRoute: DashboardDashboardRoute.addChildren({
       DashboardDashboardFilesLazyRoute,
@@ -407,11 +406,11 @@ export const routeTree = rootRoute.addChildren({
   }),
   EmailRoute: EmailRoute.addChildren({
     EmailEmailRoute: EmailEmailRoute.addChildren({
+      EmailEmailInboxRoute,
       EmailEmailAllEmailLazyRoute,
       EmailEmailArchiveLazyRoute,
       EmailEmailCategoriesLazyRoute,
       EmailEmailDraftsLazyRoute,
-      EmailEmailInboxLazyRoute,
       EmailEmailJunkLazyRoute,
       EmailEmailScheduledLazyRoute,
       EmailEmailSentLazyRoute,
@@ -425,7 +424,6 @@ export const routeTree = rootRoute.addChildren({
   AuthCompleteForgetPasswordLazyRoute,
   AuthForgetPasswordLazyRoute,
   AuthOtpVerificationStepLazyRoute,
-  AuthSigninLazyRoute,
   AuthSignupLazyRoute,
 })
 
@@ -437,15 +435,18 @@ export const routeTree = rootRoute.addChildren({
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
+        "/auth/signin",
         "/dashboard",
         "/email",
         "/auth/complete-account-information",
         "/auth/complete-forget-password",
         "/auth/forget-password",
         "/auth/otp-verification-step",
-        "/auth/signin",
         "/auth/signup"
       ]
+    },
+    "/auth/signin": {
+      "filePath": "auth/signin.tsx"
     },
     "/dashboard": {
       "filePath": "dashboard",
@@ -471,11 +472,11 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "email/_email.tsx",
       "parent": "/email",
       "children": [
+        "/email/_email/inbox",
         "/email/_email/all-email",
         "/email/_email/archive",
         "/email/_email/categories",
         "/email/_email/drafts",
-        "/email/_email/inbox",
         "/email/_email/junk",
         "/email/_email/scheduled",
         "/email/_email/sent",
@@ -497,11 +498,12 @@ export const routeTree = rootRoute.addChildren({
     "/auth/otp-verification-step": {
       "filePath": "auth/otp-verification-step.lazy.tsx"
     },
-    "/auth/signin": {
-      "filePath": "auth/signin.lazy.tsx"
-    },
     "/auth/signup": {
       "filePath": "auth/signup.lazy.tsx"
+    },
+    "/email/_email/inbox": {
+      "filePath": "email/_email.inbox.tsx",
+      "parent": "/email/_email"
     },
     "/dashboard/_dashboard/Files": {
       "filePath": "dashboard/_dashboard.Files.lazy.tsx",
@@ -525,10 +527,6 @@ export const routeTree = rootRoute.addChildren({
     },
     "/email/_email/drafts": {
       "filePath": "email/_email.drafts.lazy.tsx",
-      "parent": "/email/_email"
-    },
-    "/email/_email/inbox": {
-      "filePath": "email/_email.inbox.lazy.tsx",
       "parent": "/email/_email"
     },
     "/email/_email/junk": {
