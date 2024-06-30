@@ -1,7 +1,5 @@
 /// <reference types="vite/client" />
 
-//
-
 interface H {
   name: string
 }
