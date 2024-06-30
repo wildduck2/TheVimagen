@@ -1,8 +1,5 @@
 /// <reference types="vite/client" />
 
-import { on } from 'events'
-
-//
 //
 
 interface H {
