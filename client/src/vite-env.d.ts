@@ -12,3 +12,4 @@ interface H {
 type G = {
   name: string
 }
+//
