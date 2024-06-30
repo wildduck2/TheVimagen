@@ -7,7 +7,7 @@ const initialState: initialStateTypes = {
   logged: JSON.parse(localStorage.getItem('userData') || 'false'),
 }
 
-export const dataSlice = createSlice({
+export const data_slice = createSlice({
   name: 'data',
   initialState,
   reducers: {
@@ -28,6 +28,6 @@ export const dataSlice = createSlice({
   },
 })
 
-export const { getUserDispatch, signin, signout } = dataSlice.actions
+export const { getUserDispatch, signin, signout } = data_slice.actions
 
-export default dataSlice.reducer
+export default data_slice.reducer
