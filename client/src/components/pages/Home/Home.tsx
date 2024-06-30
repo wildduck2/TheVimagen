@@ -1,8 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 
 import { LogDialog } from '@/components/layouts'
-import { signout } from '@/context/Data'
-import { supabase } from '@/supabase/supabase'
 import { RootState } from '@/context'
 
 export const Home = () => {
@@ -11,14 +9,7 @@ export const Home = () => {
 
   return !logged ? (
     <div className="w-full">
-      <button
-        onClick={() => {
-          supabase.auth.signOut()
-          dispatch(signout())
-        }}
-      >
-        Welcome
-      </button>
+      <button onClick={() => {}}>Welcome</button>
       Home
     </div>
   ) : (
