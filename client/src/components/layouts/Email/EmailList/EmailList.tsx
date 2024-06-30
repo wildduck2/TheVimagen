@@ -7,9 +7,14 @@ import { EmailListProps } from './EmailList.types'
 //FIX: should fetch data instead of this dumby data
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import { useMail } from '@/components/pages/Email/useEmail'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/context'
 
 export function EmailList({ items }: EmailListProps) {
   const [mail, setMail] = useMail()
+
+  // const threads_data = useSelector((state: RootState) => state.email.threads_data)
+  // console.log(threads_data, 'hi')
 
   return (
     <ScrollArea className="email__list">

@@ -3,6 +3,7 @@ import { combineReducers } from 'redux'
 import data_reducer from '../Data/Data'
 import utils_reducer from '../Utils/Utils'
 import user_reducer from '../User/User'
+
 export type RootState = ReturnType<typeof rootReducer>
 
 const rootReducer = combineReducers({
