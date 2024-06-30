@@ -7,7 +7,7 @@ import { UserAuthFormProps } from '@/components/pages'
 import { RootState, checkInputsValid } from '@/context'
 import { Icons } from '@/constants'
 import { useSigninWithEmail, useSigninWithGoogle } from '@/hooks'
-import { google_icon } from '@/assets'
+// import { google_icon } from '@/assets'
 
 export const Signin = ({ ...props }: UserAuthFormProps) => {
   const route = useNavigate()
@@ -96,7 +96,7 @@ export const Signin = ({ ...props }: UserAuthFormProps) => {
             </div>
           </div>
           <Button variant="outline" type="button" disabled={isLoading} onClick={AuthGoogle}>
-            {isLoading ? <Icons.spinner className="animate-spin" /> : <img src={google_icon} />}Google
+            {isLoading ? <Icons.spinner className="animate-spin" /> : <img src={''} />}Google
           </Button>
         </div>
 

@@ -17,7 +17,7 @@ const initialState: initialStateTypes = {
   emailisnotvalid: false,
 }
 
-export const utilsSlice = createSlice({
+export const utils_slice = createSlice({
   name: 'utils',
   initialState,
   reducers: {
@@ -29,6 +29,6 @@ export const utilsSlice = createSlice({
   },
 })
 
-export const { checkInputsValid } = utilsSlice.actions
+export const { checkInputsValid } = utils_slice.actions
 
-export default utilsSlice.reducer
+export default utils_slice.reducer
