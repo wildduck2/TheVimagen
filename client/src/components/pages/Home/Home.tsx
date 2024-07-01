@@ -11,10 +11,6 @@ export const Home = () => {
   return !logged ? (
     <div className="w-full">
       <button
-        onClick={() => {
-          supabase.auth.signOut()
-          dispatch(signout())
-        }}
       >
         Welcome
       </button>
