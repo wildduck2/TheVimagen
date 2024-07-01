@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { LogDialog } from '@/components/layouts'
 import { signout } from '@/context/Data'
+
 import { RootState } from '@/context'
 
 export const Home = () => {
@@ -14,6 +15,7 @@ export const Home = () => {
       >
         Welcome
       </button>
+      <button onClick={() => {}}>Welcome</button>
       Home
     </div>
   ) : (

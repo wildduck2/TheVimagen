@@ -53,16 +53,6 @@ const AddAttachmentSheetWrapper = () => {
       }
 
       // generate signed url the file and use axios to upload
-      const { data, error } = await supabase.storage
-        .from('attachment')
-        .createSignedUploadUrl(`attachment-${ID()}-${user}-${Date.now()}.${filedata.type}`)
-      console.log(data)
-      if (error) {
-        console.log(error)
-      } else {
-        setData(data)
-        setUploadedFiles([...uploadedFiles, { ...filedata, url: data?.signedUrl }])
-      }
     } catch (error) {
       console.log(error)
     }
