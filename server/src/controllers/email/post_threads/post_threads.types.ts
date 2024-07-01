@@ -9,3 +9,8 @@ export type ThreadsType = {
   nextPageToken: string
   resultSizeEstimate: number
 }
+export type ThreadsDataType = {
+  threads: ThreadType[]
+  nextPageToken: string
+  historyId: string
+}
