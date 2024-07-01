@@ -1,8 +1,5 @@
-import React from 'react'
-
-import { FaRegCommentAlt } from 'react-icons/fa'
-import { FiLink } from 'react-icons/fi'
 import { users } from '../../../FileMainEreaNav'
+import { Icon } from '@/assets'
 
 const FileMainEeaBodyKanbanColmunTaskFooter = () => {
   return (
@@ -13,8 +10,8 @@ const FileMainEeaBodyKanbanColmunTaskFooter = () => {
         {users.length > 2 && <button>+{users.length - 2}</button>}
       </div>
       <div>
-        <FaRegCommentAlt size={22} />
-        <FiLink size={22} />
+        <Icon.regCommentAlt className='size-[22px]' />
+        <Icon.fiLink className='size-[22px]' />
       </div>
     </div>
   )

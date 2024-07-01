@@ -2,23 +2,23 @@ import React from 'react'
 
 import { FilterWrapper, Tabs, TabsContent, TabsList, TabsTrigger } from '../../../ui'
 import { FileMainEreaBodyKanban, FileMainEreaBodyTable } from './'
-import { KanbanSquare, List, Table } from 'lucide-react'
+import { Icon } from '@/assets'
 
 const buttons = [
   {
     id: 1,
     name: 'Kanban',
-    icon: KanbanSquare,
+    icon: <Icon.squareKanban/>,
   },
   {
     id: 2,
     name: 'Table',
-    icon: Table,
+    icon: <Icon.table/>,
   },
   {
     id: 3,
     name: 'List View',
-    icon: List,
+    icon: <Icon.list/>,
   },
 ]
 
@@ -30,7 +30,7 @@ const FileMainEreaNav = () => {
           <ul>
             {buttons.map((button) => (
               <TabsTrigger key={button.id} className="file-mainerea__nav-wrapper__nav__trigger" value={button.name}>
-                <button.icon size={20} />
+                <button.icon  className={'size-[20px]'} />
                 <span>{button.name}</span>
               </TabsTrigger>
             ))}

@@ -7,9 +7,7 @@ import { RootState } from '@/context'
 import { PasswordConfirmValidation, onPasswordShow } from '@/utils'
 import { PasswordInput } from './PasswordInput'
 import { useDebounce } from '@/hooks'
-
-import { BsPatchExclamation } from 'react-icons/bs'
-import { RiEyeLine, RiEyeOffLine } from 'react-icons/ri'
+import { Icon } from '@/assets'
 
 export type PasswordConfirmInputProps = {
   isLoading: boolean
@@ -72,7 +70,7 @@ export const PasowordConirmInput = ({ isLoading, passwordRef, passwordConfirmRef
           ref={passwordConfirmRef}
         />
         <div>
-          {passwordconfirmValid && <BsPatchExclamation className="text-red-700" />}
+          {passwordconfirmValid && <Icon.execlmation className="text-red-700" />}
           <button
             type="button"
             onClick={() =>
@@ -83,7 +81,7 @@ export const PasowordConirmInput = ({ isLoading, passwordRef, passwordConfirmRef
               })
             }
           >
-            {passwordconfirmShow ? <RiEyeLine /> : <RiEyeOffLine />}
+            {passwordconfirmShow ? <Icon.eyeOpen /> : <Icon.eyeOff />}
           </button>
         </div>
       </div>

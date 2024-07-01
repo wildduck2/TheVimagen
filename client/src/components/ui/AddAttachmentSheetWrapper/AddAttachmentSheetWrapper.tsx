@@ -16,7 +16,6 @@ import {
 } from '..'
 import { FiUpload } from 'react-icons/fi'
 import { RiDeleteBin6Fill } from 'react-icons/ri'
-import { supabase } from '../../../supabase/supabase'
 import axios from 'axios'
 
 export type AttachmentType = {

@@ -1,3 +1,4 @@
+import { Icon } from '@/assets'
 import {
   Button,
   Calendar,
@@ -9,7 +10,6 @@ import {
   TooltipTrigger,
 } from '@/components/ui'
 import { addDays, addHours, format, nextSaturday, setDate } from 'date-fns'
-import { Clock } from 'lucide-react'
 import { useState } from 'react'
 
 export const EmailSnoozeButton = () => {
@@ -36,7 +36,7 @@ export const EmailSnoozeButton = () => {
                   false
                 }
               >
-                <Clock />
+                <Icon.clock />
                 <span>Snooze</span>
               </Button>
             </TooltipTrigger>

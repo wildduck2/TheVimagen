@@ -6,8 +6,8 @@ import { Label } from '../Label'
 import { EmailValidation, setValidType, setValueFunc } from '@/utils'
 import { RootState } from '@/context'
 
-import { BsPatchExclamation } from 'react-icons/bs'
 import { useDebounce } from '@/hooks'
+import { Icon } from '@/assets'
 
 export interface EmailInputPorps {
   isLoading: boolean
@@ -54,7 +54,7 @@ export const EmailInput = ({ isLoading, emailRef, emailValid, setEmailValid, ema
           required
           ref={emailRef}
         />
-        <div>{emailValid && <BsPatchExclamation className="h-4 w-4 text-red-700" />}</div>
+        <div>{emailValid && <Icon.execlmation className="h-4 w-4 text-red-700" />}</div>
       </div>
       <p className={!emailValid ? 'hide' : 'active'}>Email is not valid</p>
     </>

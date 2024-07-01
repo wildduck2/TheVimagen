@@ -6,8 +6,7 @@ import { Label } from '../Label'
 import { UserNameValidation } from '@/utils'
 import { RootState } from '@/context'
 import { useDebounce } from '@/hooks'
-
-import { BsPatchExclamation } from 'react-icons/bs'
+import { Icon } from '@/assets'
 
 export interface UserNameInputPorps {
   isLoading: boolean
@@ -53,7 +52,7 @@ export const UserNameInput = ({ isLoading, userNameRef: emailRef }: UserNameInpu
           required
           ref={emailRef}
         />
-        <div>{!userNameValid && <BsPatchExclamation className="h-4 w-4 text-red-700" />}</div>
+        <div>{!userNameValid && <Icon.execlmation className="h-4 w-4 text-red-700" />}</div>
       </div>
       <p className={userNameValid ? 'hide' : 'active'}>userName is not valid</p>
     </>

@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { LogDialog } from '@/components/layouts'
 import { signout } from '@/context/Data'
-import { supabase } from '@/supabase/supabase'
 import { RootState } from '@/context'
 
 export const Home = () => {

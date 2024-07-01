@@ -1,19 +1,5 @@
 import React from 'react'
 import {
-  Cloud,
-  CreditCard,
-  Github,
-  Keyboard,
-  LifeBuoy,
-  LogOut,
-  PlusCircle,
-  Settings,
-  User,
-  UserPlus,
-  Users,
-} from 'lucide-react'
-
-import {
   Button,
   DropdownMenu,
   DropdownMenuContent,
@@ -27,31 +13,32 @@ import {
 } from '..'
 import { cn, signoutAsync } from '../../../utils'
 import { DropdownMenuGroupProps, DropDownMenuWrapperType } from './DropDownMenuWrapper.types'
+import { Icon } from '@/assets'
 
 const menuData = {
   first: [
     {
       id: '1',
       title: 'Profile',
-      icon: User,
+      icon: <Icon.user/>,
       command: '⇧⌘P',
     },
     {
       id: '2',
       title: 'Billing',
-      icon: CreditCard,
+      icon: <Icon.creditCard/>,
       command: '⌘B',
     },
     {
       id: '3',
       title: 'Settings',
-      icon: Settings,
+      icon: <Icon.settings/>,
       command: '⌘S',
     },
     {
       id: '4',
       title: 'Keyboard shortcuts',
-      icon: Keyboard,
+      icon: <Icon.keyboard/>,
       command: '⌘K',
     },
   ],
@@ -59,19 +46,19 @@ const menuData = {
     {
       id: '5',
       title: 'Team',
-      icon: Users,
+      icon: <Icon.users/>,
       command: '',
     },
     {
       id: '6',
       title: 'Invite Users',
-      icon: UserPlus,
+      icon: <Icon.userPlus/>,
       command: '',
     },
     {
       id: '7',
       title: 'New Team',
-      icon: PlusCircle,
+      icon: <Icon.plusCircle/>,
       command: '⌘T',
     },
   ],
@@ -79,19 +66,19 @@ const menuData = {
     {
       id: '8',
       title: 'Github',
-      icon: Github,
+      icon: <Icon.github/>,
       command: '',
     },
     {
       id: '9',
       title: 'Support',
-      icon: Cloud,
+      icon: <Icon.cloud/>,
       command: '',
     },
     {
       id: '10',
       title: 'Discord',
-      icon: LifeBuoy,
+      icon: <Icon.discord/>,
       command: '',
     },
   ],
@@ -99,7 +86,7 @@ const menuData = {
     {
       id: '11',
       title: 'Log out',
-      icon: LogOut,
+      icon: <Icon.logOut/>,
       command: '⇧⌘Q',
       cb: signoutAsync,
     },

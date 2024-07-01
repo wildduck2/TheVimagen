@@ -6,10 +6,9 @@ import { RootState } from '@/context'
 import { PasswordValidation, onPasswordShow, setValidType, setValueFunc } from '@/utils'
 import { Label, Input } from '..'
 
-import { BsPatchExclamation } from 'react-icons/bs'
 import { GiPlainCircle } from 'react-icons/gi'
-import { RiEyeLine, RiEyeOffLine } from 'react-icons/ri'
 import { useDebounce } from '@/hooks'
+import { Icon } from '@/assets'
 
 type PasswordInputProps = {
   isLoading: boolean
@@ -87,9 +86,9 @@ export const PasswordInput = ({
           onFocus={() => setPasswordShowMenu(true)}
         />
         <div>
-          {passwordValid && <BsPatchExclamation className="text-red-700" />}
+          {passwordValid && <Icon.execlmation className="text-red-700" />}
           <button type="button" onClick={() => onPasswordShow({ setFunc: setPasswordShow, passwordRef, passwordShow })}>
-            {passwordShow ? <RiEyeLine /> : <RiEyeOffLine />}
+            {passwordShow ? <Icon.eyeOpen /> : <Icon.eyeOff />}
           </button>
         </div>
       </div>
@@ -98,14 +97,15 @@ export const PasswordInput = ({
         <ul>
           {passwordrules.map((rule) => (
             <li key={rule.id}>
-              <GiPlainCircle
-                className={`${passwordValid && 'red'}  
-                                             ${passwordHasUppercase && rule.id === 1 && 'green'}
-                                             ${passwordHasLowercase && rule.id === 2 && 'green'}
-                                             ${passwordHasNumber && rule.id === 3 && 'green'}
-                                             ${passwordHasSpecialCharacter && rule.id === 4 && 'green'}
-                                             ${passwordInRange && rule.id === 5 && 'green'}
-                                        `}
+              <Icon.plainCyrcle
+                className={`
+                  ${passwordValid && 'red'}  
+                  ${passwordHasUppercase && rule.id === 1 && 'green'}
+                  ${passwordHasLowercase && rule.id === 2 && 'green'}
+                  ${passwordHasNumber && rule.id === 3 && 'green'}
+                  ${passwordHasSpecialCharacter && rule.id === 4 && 'green'}
+                  ${passwordInRange && rule.id === 5 && 'green'}
+                `}
               />
               <span>{rule.name}</span>
             </li>

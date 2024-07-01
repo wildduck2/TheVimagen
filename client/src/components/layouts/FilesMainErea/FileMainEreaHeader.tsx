@@ -1,11 +1,6 @@
-import React from 'react'
-
-import { Search } from 'lucide-react'
-import { FaRegSquare } from 'react-icons/fa6'
-import { BsThreeDotsVertical } from 'react-icons/bs'
 import { ToggleToolTipWrapper } from '../../ui'
-import { FiStar } from 'react-icons/fi'
 import FileMainEreaNav from './FileMainEreaNav'
+import { Icon } from '@/assets'
 
 const FileMainEreaHeader = () => {
   return (
@@ -13,12 +8,12 @@ const FileMainEreaHeader = () => {
       <div className="file-mainerea__header">
         <div>
           <h1>
-            <FaRegSquare />
+            <Icon.reqSquare />
             <span>Unique</span>
           </h1>
           <div>
             <ToggleToolTipWrapper tip="Search">
-              <Search />
+              <Icon.search />
             </ToggleToolTipWrapper>
             <ToggleToolTipWrapper
               onClick={(e) => {
@@ -26,10 +21,10 @@ const FileMainEreaHeader = () => {
               }}
               tip="Rate the project"
             >
-              <FiStar />
+              <Icon.fiStar />
             </ToggleToolTipWrapper>
             <ToggleToolTipWrapper tip="More">
-              <BsThreeDotsVertical />
+              <Icon.dotVertical />
             </ToggleToolTipWrapper>
           </div>
         </div>
@@ -37,21 +32,21 @@ const FileMainEreaHeader = () => {
         <div>
           <div>
             <p>
-              <FaRegSquare />
+              <Icon.reqSquare />
               <span>Unique</span>
             </p>
             <span>/</span>
           </div>
           <div>
             <p>
-              <FaRegSquare />
+              <Icon.reqSquare />
               <span>Unique</span>
             </p>
             <span>/</span>
           </div>
           <div>
             <p>
-              <FaRegSquare />
+              <Icon.reqSquare />
               <span>Unique</span>
             </p>
             <span>/</span>

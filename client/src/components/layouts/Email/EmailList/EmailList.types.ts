@@ -1,5 +1,5 @@
-import { EmailData } from '@/constants/Email/MailData'
+import { MessageType } from '@/utils'
 
 export interface EmailListProps {
-  items: EmailData[]
+  items: MessageType[] | undefined
 }

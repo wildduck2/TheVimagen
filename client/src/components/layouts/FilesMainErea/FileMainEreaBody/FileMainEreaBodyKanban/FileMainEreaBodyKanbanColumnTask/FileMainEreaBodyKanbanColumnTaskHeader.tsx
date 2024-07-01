@@ -1,7 +1,7 @@
 import React from 'react'
 import { Badge } from '../../../../../ui'
-import { BsThreeDotsVertical } from 'react-icons/bs'
 import { FileMainEreaBodyKanbanColumnTaskHeaderProps } from './FileMainEreaBodyKanbanColumnTask.types'
+import { Icon } from '@/assets'
 
 const FileMainEreaBodyKanbanColumnTaskHeader: React.FC<FileMainEreaBodyKanbanColumnTaskHeaderProps> = ({
   catagory,
@@ -14,7 +14,7 @@ const FileMainEreaBodyKanbanColumnTaskHeader: React.FC<FileMainEreaBodyKanbanCol
           <Badge className={priority}>{priority}</Badge>
           <Badge className={catagory}>{catagory}</Badge>
         </div>
-        <BsThreeDotsVertical size={21} />
+        <Icon.dotVertical className='size-[21px]' />
       </div>
     </>
   )

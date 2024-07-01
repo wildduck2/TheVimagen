@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { addDays, format } from 'date-fns'
-import { Calendar as CalendarIcon } from 'lucide-react'
 import { DateRange } from 'react-day-picker'
 import { Button, Calendar, Popover, PopoverContent, PopoverTrigger } from '..'
 import { cn } from '../../../utils'
+import { Icon } from '@/assets'
 
 export interface DatePickerWithRangeProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -22,7 +22,7 @@ export function DatePickerWithRange({ className }: DatePickerWithRangeProps) {
             variant={'outline'}
             className={cn('w-[300px] justify-start text-left font-normal', !date && 'text-muted-foreground')}
           >
-            <CalendarIcon className="mr-2 h-4 w-4" />
+            <Icon.calendar className="mr-2 h-4 w-4" />
             {date?.from ? (
               date.to ? (
                 <>
