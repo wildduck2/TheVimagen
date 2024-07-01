@@ -10,14 +10,13 @@ import {
   DropdownMenuTrigger,
 } from '..'
 
-import { MoreHorizontal } from 'lucide-react'
-
 import {
   ActionType,
   DroppedMenuWrapperProps,
   ShowMoreBadgesProps,
   ShowMoreOptionsProps,
 } from './DroppedMenuWrapper.types'
+import { Icon } from '@/assets'
 
 const DroppedMenuWrapper: React.FC<DroppedMenuWrapperProps> = ({ trigger, content, title }) => {
   return (
@@ -39,7 +38,7 @@ const ShowMoreOptions: React.FC<ShowMoreOptionsProps> = ({ name, title, actions 
   const trigger = (
     <>
       <span className="sr-only">{name}</span>
-      <MoreHorizontal className="h-4 w-4" />
+      <Icon.moreHorizontal className="h-4 w-4" />
     </>
   )
 
@@ -59,7 +58,7 @@ const ShowMoreBadges: React.FC<ShowMoreBadgesProps> = ({ name, title, actions })
   const trigger = (
     <>
       <span className="sr-only">{name}</span>
-      <MoreHorizontal className="h-4 w-4" />
+      <Icon.moveHorizontal className="h-4 w-4" />
     </>
   )
 

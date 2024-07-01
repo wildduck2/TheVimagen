@@ -72,6 +72,17 @@
         width: 100%;
         padding-inline: 0.5rem;
       }
+
+      &>svg {
+        width: 1.15rem;
+        height: 1.15rem;
+      }
+
+      &:not(.collabsed) {
+        svg {
+          margin-right: 0.5rem;
+        }
+      }
     }
 
     &__tooltip {
@@ -113,14 +124,5 @@
   .ghost-button {
     background: initial;
     color: hsl(var(--foreground));
-  }
-}
-
-.icon {
-  width: 1.15rem;
-  height: 1.15rem;
-
-  &.icon-notcollabsed {
-    margin-right: 0.5rem;
   }
 }

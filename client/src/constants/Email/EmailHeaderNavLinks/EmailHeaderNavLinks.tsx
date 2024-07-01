@@ -1,24 +1,4 @@
-import {
-  AlertCircle,
-  Archive,
-  ArchiveX,
-  ChevronRight,
-  File,
-  Inbox,
-  MessagesSquare,
-  Send,
-  ShoppingCart,
-  Trash2,
-  User,
-  Users2,
-  LucideIcon,
-  Tags,
-  CalendarCheck,
-  GalleryVerticalEnd,
-  Settings,
-  ArrowLeftFromLine,
-} from 'lucide-react'
-import { BiSolidCategoryAlt } from 'react-icons/bi'
+import { Icon } from '@/assets'
 import { EmailHeaderNavLinksType, link } from './EmailHeaderNavLinks.types'
 
 export const EmailHeaderNavLinks: EmailHeaderNavLinksType = {
@@ -27,42 +7,42 @@ export const EmailHeaderNavLinks: EmailHeaderNavLinksType = {
       title: 'Inbox',
       link: '/email/inbox',
       label: '128',
-      icon: Inbox,
+      icon: <Icon.inbox/>,
       variant: 'default',
     },
     {
       title: 'Drafts',
       link: '/email/drafts',
       label: '9',
-      icon: File,
+      icon: <Icon.file/>,
       variant: 'ghost',
     },
     {
       title: 'Sent',
       link: '/email/sent',
       label: '',
-      icon: Send,
+      icon: <Icon.send/>,
       variant: 'ghost',
     },
     {
       title: 'Junk',
       link: '/email/junk',
       label: '23',
-      icon: ArchiveX,
+      icon: <Icon.archiveX/>,
       variant: 'ghost',
     },
     {
       title: 'Trash',
       link: '/email/trash',
       label: '',
-      icon: Trash2,
+      icon: <Icon.trash2/>,
       variant: 'ghost',
     },
     {
       title: 'Archive',
       link: '/email/archive',
       label: '',
-      icon: Archive,
+      icon: <Icon.archive/>,
       variant: 'ghost',
     },
   ],
@@ -71,35 +51,35 @@ export const EmailHeaderNavLinks: EmailHeaderNavLinksType = {
       title: 'Categories',
       link: '/email/categories',
       label: '972',
-      icon: Tags,
+      icon: <Icon.tags/>,
       variant: 'ghost',
     },
     {
       title: 'Scheduled',
       link: '/email/scheduled',
       label: '342',
-      icon: CalendarCheck,
+      icon: <Icon.calendarCheck/>,
       variant: 'ghost',
     },
     {
       title: 'Updates',
       link: '/email/updates',
       label: '342',
-      icon: AlertCircle,
+      icon: <Icon.alertCircle/>,
       variant: 'ghost',
     },
     {
       title: 'All Email',
       link: '/email/all-email',
       label: '342',
-      icon: GalleryVerticalEnd,
+      icon: <Icon.galleryVerticalEnd/>,
       variant: 'ghost',
     },
     {
       title: 'Settings',
       link: '/email/settings',
       label: '21',
-      icon: Settings,
+      icon: <Icon.settings/>,
       variant: 'ghost',
     },
   ],
@@ -107,15 +87,15 @@ export const EmailHeaderNavLinks: EmailHeaderNavLinksType = {
 
 export const logoutHeaderLinkData: link = {
   title: 'Get back',
-  icon: ArrowLeftFromLine,
+  icon: Icon.arrowLeftFromLine,
 }
 
 export const toggleheaderLinkData: link = {
   title: 'Menu',
-  icon: ChevronRight,
+  icon: Icon.chevronRight,
 }
 
 export const profileLinkData: link = {
   title: 'Profile',
-  icon: User,
+  icon: Icon.user,
 }

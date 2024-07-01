@@ -21,7 +21,7 @@ const TooltipLink = ({ link, id = 0, isCollapsed }: TooltipLinkProps) => {
             className: activeHeader,
           }}
         >
-          <link.icon className="icon" />
+          {link.icon}
         </Link>
       </TooltipTrigger>
       <TooltipContent side="right" className="header__nav__tooltip">
@@ -33,16 +33,20 @@ const TooltipLink = ({ link, id = 0, isCollapsed }: TooltipLinkProps) => {
     <Link
       key={id}
       to={`/${link.link}`}
-      className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'header__nav__link px-[.55rem] capitalize')}
+      className={cn(
+        buttonVariants({ variant: 'ghost', size: 'sm' }),
+        'header__nav__link px-[.55rem] capitalize icon icon-notcollabsed',
+      )}
       activeProps={{
         className: unCollapsedActiveHeaderLink,
       }}
     >
-      <link.icon className="icon icon-notcollabsed" />
+      {link.icon}
       {link.title}
       {<span className={cn('ml-auto')}>{link.label}</span>}
     </Link>
   )
 }
 
+// className="icon icon-notcollabsed"
 export { TooltipLink }
