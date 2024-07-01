@@ -16,6 +16,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as EmailEmailImport } from './routes/email/_email'
 import { Route as DashboardDashboardImport } from './routes/dashboard/_dashboard'
 import { Route as EmailEmailIndexImport } from './routes/email/_email.index'
+import { Route as EmailEmailInboxImport } from './routes/email/_email.inbox'
 
 // Create Virtual Routes
 
@@ -41,7 +42,6 @@ const EmailEmailScheduledLazyImport = createFileRoute(
   '/email/_email/scheduled',
 )()
 const EmailEmailJunkLazyImport = createFileRoute('/email/_email/junk')()
-const EmailEmailInboxLazyImport = createFileRoute('/email/_email/inbox')()
 const EmailEmailDraftsLazyImport = createFileRoute('/email/_email/drafts')()
 const EmailEmailCategoriesLazyImport = createFileRoute(
   '/email/_email/categories',
@@ -169,13 +169,6 @@ const EmailEmailJunkLazyRoute = EmailEmailJunkLazyImport.update({
   import('./routes/email/_email.junk.lazy').then((d) => d.Route),
 )
 
-const EmailEmailInboxLazyRoute = EmailEmailInboxLazyImport.update({
-  path: '/inbox',
-  getParentRoute: () => EmailEmailRoute,
-} as any).lazy(() =>
-  import('./routes/email/_email.inbox.lazy').then((d) => d.Route),
-)
-
 const EmailEmailDraftsLazyRoute = EmailEmailDraftsLazyImport.update({
   path: '/drafts',
   getParentRoute: () => EmailEmailRoute,
@@ -220,6 +213,11 @@ const DashboardDashboardFilesLazyRoute =
   } as any).lazy(() =>
     import('./routes/dashboard/_dashboard.Files.lazy').then((d) => d.Route),
   )
+
+const EmailEmailInboxRoute = EmailEmailInboxImport.update({
+  path: '/inbox',
+  getParentRoute: () => EmailEmailRoute,
+} as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -295,6 +293,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignupLazyImport
       parentRoute: typeof rootRoute
     }
+    '/email/_email/inbox': {
+      id: '/email/_email/inbox'
+      path: '/inbox'
+      fullPath: '/email/inbox'
+      preLoaderRoute: typeof EmailEmailInboxImport
+      parentRoute: typeof EmailEmailImport
+    }
     '/dashboard/_dashboard/Files': {
       id: '/dashboard/_dashboard/Files'
       path: '/Files'
@@ -335,13 +340,6 @@ declare module '@tanstack/react-router' {
       path: '/drafts'
       fullPath: '/email/drafts'
       preLoaderRoute: typeof EmailEmailDraftsLazyImport
-      parentRoute: typeof EmailEmailImport
-    }
-    '/email/_email/inbox': {
-      id: '/email/_email/inbox'
-      path: '/inbox'
-      fullPath: '/email/inbox'
-      preLoaderRoute: typeof EmailEmailInboxLazyImport
       parentRoute: typeof EmailEmailImport
     }
     '/email/_email/junk': {
@@ -407,11 +405,11 @@ export const routeTree = rootRoute.addChildren({
   }),
   EmailRoute: EmailRoute.addChildren({
     EmailEmailRoute: EmailEmailRoute.addChildren({
+      EmailEmailInboxRoute,
       EmailEmailAllEmailLazyRoute,
       EmailEmailArchiveLazyRoute,
       EmailEmailCategoriesLazyRoute,
       EmailEmailDraftsLazyRoute,
-      EmailEmailInboxLazyRoute,
       EmailEmailJunkLazyRoute,
       EmailEmailScheduledLazyRoute,
       EmailEmailSentLazyRoute,
@@ -471,11 +469,11 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "email/_email.tsx",
       "parent": "/email",
       "children": [
+        "/email/_email/inbox",
         "/email/_email/all-email",
         "/email/_email/archive",
         "/email/_email/categories",
         "/email/_email/drafts",
-        "/email/_email/inbox",
         "/email/_email/junk",
         "/email/_email/scheduled",
         "/email/_email/sent",
@@ -503,6 +501,10 @@ export const routeTree = rootRoute.addChildren({
     "/auth/signup": {
       "filePath": "auth/signup.lazy.tsx"
     },
+    "/email/_email/inbox": {
+      "filePath": "email/_email.inbox.tsx",
+      "parent": "/email/_email"
+    },
     "/dashboard/_dashboard/Files": {
       "filePath": "dashboard/_dashboard.Files.lazy.tsx",
       "parent": "/dashboard/_dashboard"
@@ -525,10 +527,6 @@ export const routeTree = rootRoute.addChildren({
     },
     "/email/_email/drafts": {
       "filePath": "email/_email.drafts.lazy.tsx",
-      "parent": "/email/_email"
-    },
-    "/email/_email/inbox": {
-      "filePath": "email/_email.inbox.lazy.tsx",
       "parent": "/email/_email"
     },
     "/email/_email/junk": {

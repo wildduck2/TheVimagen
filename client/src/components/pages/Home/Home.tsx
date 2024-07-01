@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux'
 
 import { LogDialog } from '@/components/layouts'
+import { signout } from '@/context/Data'
+
 import { RootState } from '@/context'
 
 export const Home = () => {
@@ -9,6 +11,10 @@ export const Home = () => {
 
   return !logged ? (
     <div className="w-full">
+      <button
+      >
+        Welcome
+      </button>
       <button onClick={() => {}}>Welcome</button>
       Home
     </div>

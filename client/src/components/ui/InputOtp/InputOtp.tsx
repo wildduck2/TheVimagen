@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { OTPInput, OTPInputContext } from 'input-otp'
-import { Dot } from 'lucide-react'
 import { cn } from '@/utils'
+import { Icon } from '@/assets'
 
 const InputOTP = React.forwardRef<React.ElementRef<typeof OTPInput>, React.ComponentPropsWithoutRef<typeof OTPInput>>(
   ({ className, containerClassName, ...props }, ref) => (
@@ -51,7 +51,7 @@ InputOTPSlot.displayName = 'InputOTPSlot'
 const InputOTPSeparator = React.forwardRef<React.ElementRef<'div'>, React.ComponentPropsWithoutRef<'div'>>(
   ({ ...props }, ref) => (
     <div ref={ref} role="separator" {...props}>
-      <Dot />
+      <Icon.dot />
     </div>
   ),
 )

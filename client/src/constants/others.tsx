@@ -9,7 +9,6 @@ import {
   Bell,
   GalleryVerticalEnd,
   Inbox,
-  LucideIcon,
   Mail,
   MessagesSquare,
   Send,
@@ -18,6 +17,7 @@ import {
   Users2,
 } from 'lucide-react'
 import { headerLinksType } from '@/components/ui'
+import { Icon, IconType } from '@/assets'
 
 export const logo = (
   <svg
@@ -118,69 +118,69 @@ export const headerLinks: Record<string, headerLinksType[]> = {
     {
       title: 'inbox',
       link: 'email',
-      icon: Inbox,
+      icon: ({className}:IconType)=><Icon.inbox className={className}/>,
       variant: 'default',
     },
     {
       title: 'Files',
       link: 'email',
-      icon: GalleryVerticalEnd,
+      icon: ({className}:IconType)=><Icon.galleryVerticalEnd className={className}/>,
       variant: 'ghost',
     },
     {
       title: 'sent',
       link: 'email',
-      icon: Send,
+      icon: ({className}:IconType)=><Icon.send className={className}/>,
       variant: 'ghost',
     },
     {
       title: 'junk',
       link: 'email',
-      icon: ArchiveX,
+      icon: ({className}:IconType)=><Icon.archiveX className={className}/>,
       variant: 'ghost',
     },
     {
       title: 'trash',
       link: 'email',
-      icon: Trash2,
+      icon: ({className}:IconType)=><Icon.trash2 className={className}/>,
       variant: 'ghost',
     },
     {
       title: 'archive',
       link: 'email',
-      icon: Archive,
+      icon: ({className}:IconType)=><Icon.archive className={className}/>,
       variant: 'ghost',
     },
   ],
   second: [
     {
       title: 'email',
-      icon: Mail,
+      icon: ({className}:IconType)=><Icon.mail className={className}/>,
       link: 'email',
       variant: 'ghost',
     },
     {
       title: 'updates',
       link: 'email',
-      icon: AlertCircle,
+      icon: ({className}:IconType)=><Icon.alertCircle className={className}/>,
       variant: 'ghost',
     },
     {
       title: 'forums',
       link: 'email',
-      icon: MessagesSquare,
+      icon: ({className}:IconType)=><Icon.messageSquare className={className}/>,
       variant: 'ghost',
     },
     {
       title: 'notifications',
       link: 'email',
-      icon: Bell,
+      icon: ({className}:IconType)=><Icon.bell className={className}/>,
       variant: 'ghost',
     },
     {
       title: 'settings',
       link: 'email',
-      icon: Settings,
+      icon: ({className}:IconType)=><Icon.settings className={className}/>,
       variant: 'ghost',
     },
   ],

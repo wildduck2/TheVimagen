@@ -2,10 +2,10 @@ import React from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '../Popover'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '../Command'
 import { Button } from '../Button'
-import { Check, ChevronsUpDown } from 'lucide-react'
 import { cn } from '@/utils'
 import { CommandWrapperType } from './CommandWrapper.types'
 import { Label } from '../Label'
+import { Icon } from '@/assets'
 
 export const CommandWrapper: React.FC<CommandWrapperType> = ({
   data,
@@ -32,7 +32,7 @@ export const CommandWrapper: React.FC<CommandWrapperType> = ({
               className={`${error ? 'bg-red-700/5 border-red-700/35' : ''} "w-[200px] justify-between capitalize`}
             >
               {value ? value : 'Select data...'}
-              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+              <Icon.chevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0 h-[345px]" id={title}>
@@ -50,7 +50,7 @@ export const CommandWrapper: React.FC<CommandWrapperType> = ({
                         setOpen(false)
                       }}
                     >
-                      <Check className={cn('mr-2 h-4 w-4', value === el ? 'opacity-100' : 'opacity-0')} />
+                      <Icon.check className={cn('mr-2 h-4 w-4', value === el ? 'opacity-100' : 'opacity-0')} />
                       {el}
                     </CommandItem>
                   ))}

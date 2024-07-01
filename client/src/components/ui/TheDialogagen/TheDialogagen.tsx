@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { MdKeyboardCommandKey } from 'react-icons/md'
 import {
   CommandEmpty,
   CommandGroup,
@@ -11,9 +10,9 @@ import {
   Button,
   CommandDialog,
 } from '../../ui'
-import { Calculator, Calendar, CreditCard, Search, Settings, Smile, User } from 'lucide-react'
 import { TheDialogagenPops } from './TheDialogagen.types'
 import React from 'react'
+import { Icon } from '@/assets'
 
 const TheDialogagen: React.FC<TheDialogagenPops> = ({ keyValue }) => {
   const [open, setOpen] = useState(false)
@@ -37,10 +36,10 @@ const TheDialogagen: React.FC<TheDialogagenPops> = ({ keyValue }) => {
         onClick={() => setOpen(true)}
       >
         {/* <input type="text" disabled/> */}
-        <Search className=" text-sm mr-2 h-4 w-4 shrink-0 opacity-50 pointer-events-none" />
+        <Icon.search className=" text-sm mr-2 h-4 w-4 shrink-0 opacity-50 pointer-events-none" />
         <input type="text" disabled placeholder="Search..." className="max-w-[150px] pointer-events-none" />
         <div className="text-lg pointer-events-none flex items-center">
-          <MdKeyboardCommandKey size={13} />
+          <Icon.commandKey className="size-[18px]" />
           <span className="-mt-[.2rem] ml-[.1rem] font-normal">{keyValue}</span>
         </div>
       </Button>
@@ -51,32 +50,32 @@ const TheDialogagen: React.FC<TheDialogagenPops> = ({ keyValue }) => {
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup heading="Suggestions">
             <CommandItem>
-              <Calendar className="mr-2 h-4 w-4" />
+              <Icon.calendar className="mr-2 h-4 w-4" />
               <span>Calendar</span>
             </CommandItem>
             <CommandItem>
-              <Smile className="mr-2 h-4 w-4" />
+              <Icon.smile className="mr-2 h-4 w-4" />
               <span>Search Emoji</span>
             </CommandItem>
             <CommandItem>
-              <Calculator className="mr-2 h-4 w-4" />
+              <Icon.calculator className="mr-2 h-4 w-4" />
               <span>Calculator</span>
             </CommandItem>
           </CommandGroup>
           <CommandSeparator />
           <CommandGroup heading="Settings">
             <CommandItem>
-              <User className="mr-2 h-4 w-4" />
+              <Icon.user className="mr-2 h-4 w-4" />
               <span>Profile</span>
               <CommandShortcut>⌘P</CommandShortcut>
             </CommandItem>
             <CommandItem>
-              <CreditCard className="mr-2 h-4 w-4" />
+              <Icon.creditCard className="mr-2 h-4 w-4" />
               <span>Billing</span>
               <CommandShortcut>⌘B</CommandShortcut>
             </CommandItem>
             <CommandItem>
-              <Settings className="mr-2 h-4 w-4" />
+              <Icon.settings className="mr-2 h-4 w-4" />
               <span>Settings</span>
               <CommandShortcut>⌘S</CommandShortcut>
             </CommandItem>

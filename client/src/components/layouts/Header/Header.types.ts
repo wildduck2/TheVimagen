@@ -1,5 +1,5 @@
 import { headerLinksType } from '@/components/ui'
-import { LucideIcon } from 'lucide-react'
+import { ReactElement } from 'react'
 
 export interface NavProps {
   isCollapsed: boolean
@@ -13,6 +13,6 @@ export type LogoProps = {
 export type link = {
   title: string
   label?: string | undefined
-  icon: LucideIcon
+  icon: ReactElement
   cb?: () => Promise<boolean | undefined>
 }

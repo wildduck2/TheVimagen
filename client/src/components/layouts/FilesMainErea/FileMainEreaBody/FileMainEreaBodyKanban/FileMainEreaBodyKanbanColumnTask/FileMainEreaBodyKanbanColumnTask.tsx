@@ -1,4 +1,4 @@
-import React from 'react'
+import {FC} from 'react'
 import {
   FileMainEreaBodyKanbanColumnSubtask,
   FileMainEreaBodyKanbanColumnTaskHeader,
@@ -6,7 +6,7 @@ import {
   FileMainEreaBodyKanbanColumnTaskFooter,
 } from '.'
 
-const FileMainEreaBodyKanbanColumnTask: React.FC<FileMainEreaBodyKanbanColumnTaskProps> = ({ tasks }) => {
+const FileMainEreaBodyKanbanColumnTask: FC<FileMainEreaBodyKanbanColumnTaskProps> = ({ tasks }) => {
   return (
     <>
       <ul className="file-mainerea__body__kanban__colmun__task__list">

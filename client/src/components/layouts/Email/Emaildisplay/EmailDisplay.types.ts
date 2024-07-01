@@ -1,6 +1,6 @@
-import { EmailData } from '@/constants/Email/MailData'
+import { MessageType } from '@/utils'
 
 export interface EmailDisplayProps {
-  mail: EmailData | null
+  threads: MessageType[] | undefined
   defaultLayout: number
 }

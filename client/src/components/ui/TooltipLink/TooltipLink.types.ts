@@ -1,11 +1,12 @@
-import { LucideIcon } from 'lucide-react'
+import { IconType } from '@/assets'
+import { ReactElement } from 'react'
 
 export type headerLinksType = {
   title: string
   label?: string
   link: string
-  icon: LucideIcon
-  variant: 'default' | 'ghost'
+  icon: ({ className }: IconType) => JSX.Element
+    variant: 'default' | 'ghost'
 }
 
 export type TooltipLinkProps = {

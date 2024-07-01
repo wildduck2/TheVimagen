@@ -1,6 +1,7 @@
 import { EmailHeader } from '@/components/layouts'
 import { ResizablePanelGroup } from '@/components/ui'
-import { getCookie } from '@/utils'
+import { get_threads, getCookie } from '@/utils'
+import { useQuery } from '@tanstack/react-query'
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/email/_email')({
@@ -10,8 +11,6 @@ export const Route = createFileRoute('/email/_email')({
 
     const defaultLayout = layout ? JSON.parse(layout) : undefined
     const defaultCollapsed = collapsed ? JSON.parse(collapsed) : undefined
-
-    console.log(defaultLayout, defaultCollapsed)
 
     return (
       <>

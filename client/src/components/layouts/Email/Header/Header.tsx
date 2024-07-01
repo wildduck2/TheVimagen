@@ -5,6 +5,8 @@ import { useState } from 'react'
 import { BiLogoGmail } from 'react-icons/bi'
 import { useNavigate } from '@tanstack/react-router'
 import { EmailHeaderType } from './Header.types'
+import { useQuery } from '@tanstack/react-query'
+import { get_threads } from '@/utils'
 
 export const EmailHeader = ({ defaultCollapsed, defaultLayout }: EmailHeaderType) => {
   const route = useNavigate()
