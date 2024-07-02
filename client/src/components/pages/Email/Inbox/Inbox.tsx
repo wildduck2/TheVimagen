@@ -1,6 +1,6 @@
 import { EmailDisplay, EmailSideList } from '@/components/layouts'
 import { ResizableHandle } from '@/components/ui'
-import { get_threads, getCookie } from '@/utils'
+import { getThreads, getCookie } from '@/utils'
 import { useQuery } from '@tanstack/react-query'
 
 export const Inbox = () => {
@@ -9,17 +9,17 @@ export const Inbox = () => {
 
   const inboxQuery = useQuery({
     queryKey: ['inbox'],
-    queryFn: () => get_threads(),
+    queryFn: () => getThreads(),
   })
 
   const promotionQuery = useQuery({
     queryKey: ['promotion'],
-    queryFn: () => get_threads('CATEGORY_PROMOTIONS'),
+    queryFn: () => getThreads('CATEGORY_PROMOTIONS'),
   })
 
   const socialQuery = useQuery({
     queryKey: ['social'],
-    queryFn: () => get_threads('CATEGORY_SOCIAL'),
+    queryFn: () => getThreads('CATEGORY_SOCIAL'),
   })
 
   return (

@@ -32,7 +32,7 @@ import { Icon } from '@/assets'
 
 export const emailDisplayButtonData = ['Archive', 'Move to junk', 'Move to trash']
 
-export function EmailDisplay({ inbox, promotion, defaultLayout = 37 }: EmailDisplayProps) {
+export function EmailDisplay({ inbox, promotion, social, defaultLayout = 37 }: EmailDisplayProps) {
   return (
     <ResizablePanel order={2} defaultSize={defaultLayout} minSize={30}>
       <div className="flex h-full flex-col">

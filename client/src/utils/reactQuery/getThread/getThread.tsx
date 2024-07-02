@@ -1,8 +1,8 @@
 import axios from 'axios'
-import { get_thread_res } from './get_thread.types'
+import { getThread_res } from './getThread.types'
 
-export const get_thread = async () => {
-  const { data } = await axios.post<get_thread_res>(
+export const getThread = async () => {
+  const { data } = await axios.post<getThread_res>(
     `${process.env.ROOT_URL}/email/get/thread`,
     {
       user_id: '2dfa461a-85e8-4ac7-b0e9-28b1d88bd6dc',
