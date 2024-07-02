@@ -3,17 +3,15 @@ import { ComponentProps } from 'react'
 import { Badge, ScrollArea } from '@/components/ui'
 import { cn, HeaderType } from '@/utils'
 import { EmailListProps } from './EmailList.types'
-import { Icon } from '@iconify-icon/react'
 
 //FIX: should fetch data instead of this dumby data
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+import { Icon } from '@/assets'
 
 export function EmailList({ items }: EmailListProps) {
   const WANTED_HEADERS = items?.map((item) =>
     item.payload.headers.filter((head) => head.name === 'Subject' || head.name === 'From' || head.name === 'To'),
   ) as HeaderType[][]
-
-  console.log(WANTED_HEADERS, 'sdf')
 
   return (
     <ScrollArea className="email__list">
@@ -31,7 +29,11 @@ export function EmailList({ items }: EmailListProps) {
                         .replace(/"/gi, ' ')}
                     </div>
                     <button>
-                      <Icon icon="mdi:home" className={'inline-block w-4 h-4'}></Icon>
+                      {item.labelIds.includes('STARRED') ? (
+                        <Icon.filledStar className="size-[1rem]" />
+                      ) : (
+                        <Icon.fiStar className="size-[1rem]" />
+                      )}
                     </button>
                     {item.labelIds.includes('UNREAD') && <span />}
                   </div>
@@ -50,11 +52,17 @@ export function EmailList({ items }: EmailListProps) {
                 <div className="email__list__wrapper__item__labels">
                   {item.labelIds
                     .filter(
-                      (label) => !(label === 'INBOX' || label === 'UNREAD' || label === 'CATEGORY_UPDATES') && label,
+                      (label) =>
+                        !(
+                          label === 'INBOX' ||
+                          label === 'UNREAD' ||
+                          label === 'CATEGORY_UPDATES' ||
+                          label === 'STARRED'
+                        ) && label,
                     )
                     .map((label: string) => (
                       <Badge key={label} variant={getBadgeVariantFromLabel(label)}>
-                        {label}
+                        {label.replace(/_/gi, ' ').toLowerCase()}
                       </Badge>
                     ))}
                 </div>

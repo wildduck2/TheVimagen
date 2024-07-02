@@ -1,25 +1,30 @@
-import { EmailList } from '../EmailList'
+import { EmailList } from '..'
 import { Input, ResizablePanel, Separator, Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui'
-
-//FIX: should fetch data instead of this dumby data
-import { mails } from '@/constants/Email/MailData'
 import { EmailSideListType } from './EmailSideList.types'
 import { Icon } from '@/assets'
+import { getCookie } from '@/utils'
 
-export const EmailSideList = ({ threads, defaultLayout = 37 }: EmailSideListType) => {
+export const EmailSideList = ({ inbox, promotion, social, defaultLayout = 37 }: EmailSideListType) => {
+  const defaultActive = getCookie('tabs:active') || 'primary'
+  const setActiveTabCookie = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
+    (document.cookie = `tabs:active=${(e.currentTarget as HTMLButtonElement).innerText}`)
+
   return (
     <>
       <ResizablePanel order={1} defaultSize={defaultLayout} minSize={30}>
-        <Tabs defaultValue="all" className="email__side__list">
+        <Tabs defaultValue={defaultActive.toLowerCase()} className="email__side__list">
           <div className="email__side__list__warpper">
             <div className="email__side__list__wrapper__top">
               <h1>Inbox</h1>
               <TabsList className="tab__list">
-                <TabsTrigger value="all" className="tab__list__trigger">
-                  All mail
+                <TabsTrigger value="primary" className="tab__list__trigger" onClick={setActiveTabCookie}>
+                  Primary
                 </TabsTrigger>
-                <TabsTrigger value="unread" className="tab__list__trigger">
-                  Unread
+                <TabsTrigger value="promotion" className="tab__list__trigger" onClick={setActiveTabCookie}>
+                  Promotion
+                </TabsTrigger>
+                <TabsTrigger value="social" className="tab__list__trigger" onClick={setActiveTabCookie}>
+                  social
                 </TabsTrigger>
               </TabsList>
             </div>
@@ -33,13 +38,17 @@ export const EmailSideList = ({ threads, defaultLayout = 37 }: EmailSideListType
               </form>
             </div>
           </div>
-          <TabsContent value="all" className="email__side__list__content">
-            <EmailList items={threads} />
+          <TabsContent value="primary" className="email__side__list__content">
+            <EmailList items={inbox} />
           </TabsContent>
-          <TabsContent value="unread" className="email__side__list__content"></TabsContent>
+          <TabsContent value="promotion" className="email__side__list__content">
+            <EmailList items={promotion} />
+          </TabsContent>
+          <TabsContent value="social" className="email__side__list__content">
+            <EmailList items={social} />
+          </TabsContent>
         </Tabs>
       </ResizablePanel>
     </>
   )
 }
-// <EmailList items={mails.filter((item) => !item.read)} />

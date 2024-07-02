@@ -1,8 +1,6 @@
-import React from 'react'
-import { Button } from '../../ui'
 import { Link } from '@tanstack/react-router'
-import { Separator } from '../../ui/'
-import { DiVim } from 'react-icons/di'
+import { Button, Separator } from '@/components/ui'
+import { Icon } from '@/assets'
 
 export const LogDialog = () => {
   return (
@@ -27,7 +25,7 @@ export const LogDialog = () => {
           Welcome back to{' '}
           <div className="top flex items-center">
             The
-            <DiVim size={40} />
+            <Icon.vim className="size-40px]" />
             agen
           </div>
         </h1>

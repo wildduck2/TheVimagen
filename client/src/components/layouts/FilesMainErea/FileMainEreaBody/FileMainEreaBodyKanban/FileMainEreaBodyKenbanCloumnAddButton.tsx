@@ -1,3 +1,4 @@
+import { Icon } from '@/assets'
 import {
   AddButtonWrapper,
   Button,
@@ -15,7 +16,6 @@ import {
   Textarea,
   SelectedWrapper,
 } from '@/components/ui'
-import { FaPlus } from 'react-icons/fa6'
 
 const statusData = ['To Do', 'In Progress', 'Code Review', 'PM Validation', 'Done']
 const priorityData = ['High', 'Medium', 'Low']
@@ -27,7 +27,7 @@ const FileMainEreaBodyKenbanCloumnAddButton = () => {
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="ghost" type="button">
-            <FaPlus size={19} />
+            <Icon.plus className="size-[19px]" />
           </Button>
         </SheetTrigger>
         <SheetContent className="dialog-content">

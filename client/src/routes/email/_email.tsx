@@ -1,8 +1,8 @@
+import { createFileRoute, Outlet } from '@tanstack/react-router'
+
 import { EmailHeader } from '@/components/layouts'
 import { ResizablePanelGroup } from '@/components/ui'
-import { get_threads, getCookie } from '@/utils'
-import { useQuery } from '@tanstack/react-query'
-import { createFileRoute, Outlet } from '@tanstack/react-router'
+import { getCookie } from '@/utils'
 
 export const Route = createFileRoute('/email/_email')({
   component: () => {

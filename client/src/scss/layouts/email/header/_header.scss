@@ -14,13 +14,7 @@
 */
 .email__header {
   & .account__switcher {
-    place-content: center;
-    place-self: center;
-
-    &>span>svg {
-      width: auto;
-      height: auto;
-      font-size: 1.3rem;
-    }
+    width: auto;
+    margin-inline: 0.5rem;
   }
 }

@@ -2,6 +2,7 @@ import { ThreadType } from '../post_thread'
 
 export type post_threads_type = {
   maxResults: number
+  labelIds: string
 }
 
 export type ThreadsType = {

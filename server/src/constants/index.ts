@@ -4,4 +4,6 @@ export const corsOptions = {
   // allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true // if you need to support credentials
 }
+
+export const GMAIL_URL = `https://gmail.googleapis.com/gmail/v1/users/`
 export * from './zodSchemas'

@@ -1,4 +1,4 @@
-import { DiVim } from 'react-icons/di'
+import { Icon } from '@/assets'
 
 export const AuthSide = () => {
   return (
@@ -8,7 +8,7 @@ export const AuthSide = () => {
 
         <div className="top">
           The
-          <DiVim size={40} />
+          <Icon.vim className="size-[40px]" />
           agen
         </div>
 
