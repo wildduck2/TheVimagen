@@ -5,16 +5,16 @@ import { formatDistanceToNow } from 'date-fns'
 import { ComponentProps } from 'react'
 
 export type EmailListItemType = {
-  items: MessageType[]
+  item: MessageType
 }
 
-export const EmailListItem = ({ items }: EmailListItemType) => {
-  const item = items[items.length - 1]
+export const EmailListItem = ({ item }: EmailListItemType) => {
   const WANTED_HEADERS = item.payload.headers.filter(
     (head) => head.name === 'Subject' || head.name === 'From' || head.name === 'To',
   )
 
   return (
+    //TODO: you have to make the select item
     <>
       <div key={item.id} className={cn('email__list__wrapper__item', 'g-muted')}>
         <div className="email__list__wrapper__item__top">

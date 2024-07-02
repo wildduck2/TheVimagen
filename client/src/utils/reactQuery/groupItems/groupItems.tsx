@@ -11,5 +11,5 @@ export const groupMessagesBySender = (threads: MessageType[]) => {
     grouped[sender].push(message)
   })
 
-  return grouped
+  return Object.values(grouped)
 }
