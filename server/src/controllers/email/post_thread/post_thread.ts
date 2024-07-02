@@ -30,6 +30,13 @@ export const post_thread: RequestHandler = async (req, res) => {
     const gmailResponse = data.messages[0]
     const email: IEmail = parse.parseMessage(gmailResponse)
 
+    //NOTE: removing the sepcial cahrs
+    const emailText = email.textHtml.replace(
+      `<[^>]+?>([^<]*)</[^>]+?>|([^<]*)/g`,
+      '$1 $2'.replace(/\s+/g, ' ')
+    )
+    console.log(emailText)
+
     return res.json({ error: null, data: email })
   } catch (error) {
     console.log(error)

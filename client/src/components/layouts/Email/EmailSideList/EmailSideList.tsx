@@ -2,7 +2,7 @@ import { EmailList } from '..'
 import { Input, ResizablePanel, Separator, Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui'
 import { EmailSideListType } from './EmailSideList.types'
 import { Icon } from '@/assets'
-import { getCookie } from '@/utils'
+import { getCookie, groupMessagesBySender } from '@/utils'
 
 export const EmailSideList = ({ inbox, promotion, social, defaultLayout = 37 }: EmailSideListType) => {
   const defaultActive = getCookie('tabs:active') || 'primary'
@@ -39,13 +39,13 @@ export const EmailSideList = ({ inbox, promotion, social, defaultLayout = 37 }: 
             </div>
           </div>
           <TabsContent value="primary" className="email__side__list__content">
-            <EmailList items={inbox} />
+            <EmailList items={groupMessagesBySender(inbox || [])} />
           </TabsContent>
           <TabsContent value="promotion" className="email__side__list__content">
-            <EmailList items={promotion} />
+            <EmailList items={promotion!} />
           </TabsContent>
           <TabsContent value="social" className="email__side__list__content">
-            <EmailList items={social} />
+            <EmailList items={social!} />
           </TabsContent>
         </Tabs>
       </ResizablePanel>

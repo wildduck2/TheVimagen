@@ -1,4 +1,4 @@
-import { ThreadType } from 'controllers'
+import { MessageType, ThreadType } from 'controllers'
 
 export type GetIdsFromGmailAPIType = {
   access_token: string

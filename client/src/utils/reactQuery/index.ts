@@ -1,2 +1,3 @@
-export * from './get_thread'
-export * from './get_threads'
+export * from './getThread'
+export * from './getThreads'
+export * from './groupItems'
