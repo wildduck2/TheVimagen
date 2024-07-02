@@ -32,7 +32,7 @@ import { Icon } from '@/assets'
 
 export const emailDisplayButtonData = ['Archive', 'Move to junk', 'Move to trash']
 
-export function EmailDisplay({ threads, defaultLayout = 37 }: EmailDisplayProps) {
+export function EmailDisplay({ inbox, promotion, defaultLayout = 37 }: EmailDisplayProps) {
   return (
     <ResizablePanel order={2} defaultSize={defaultLayout} minSize={30}>
       <div className="flex h-full flex-col">
@@ -40,7 +40,7 @@ export function EmailDisplay({ threads, defaultLayout = 37 }: EmailDisplayProps)
           <div className="flex items-center gap-2">
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="ghost" size="icon" disabled={!threads}>
+                <Button variant="ghost" size="icon" disabled={!inbox}>
                   <Icon.archive className="h-4 w-4" />
                   <span className="sr-only">Archive</span>
                 </Button>
@@ -49,7 +49,7 @@ export function EmailDisplay({ threads, defaultLayout = 37 }: EmailDisplayProps)
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="ghost" size="icon" disabled={!threads}>
+                <Button variant="ghost" size="icon" disabled={!inbox}>
                   <Icon.archiveX className="h-4 w-4" />
                   <span className="sr-only">Move to junk</span>
                 </Button>
@@ -58,7 +58,7 @@ export function EmailDisplay({ threads, defaultLayout = 37 }: EmailDisplayProps)
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="ghost" size="icon" disabled={!threads}>
+                <Button variant="ghost" size="icon" disabled={!inbox}>
                   <Icon.trash2 className="h-4 w-4" />
                   <span className="sr-only">Move to trash</span>
                 </Button>
@@ -71,7 +71,7 @@ export function EmailDisplay({ threads, defaultLayout = 37 }: EmailDisplayProps)
           <div className="ml-auto flex items-center gap-2">
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="ghost" size="icon" disabled={!threads}>
+                <Button variant="ghost" size="icon" disabled={!inbox}>
                   <Icon.reply className="h-4 w-4" />
                   <span className="sr-only">Reply</span>
                 </Button>
@@ -80,7 +80,7 @@ export function EmailDisplay({ threads, defaultLayout = 37 }: EmailDisplayProps)
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="ghost" size="icon" disabled={!threads}>
+                <Button variant="ghost" size="icon" disabled={!inbox}>
                   <Icon.replyAll className="h-4 w-4" />
                   <span className="sr-only">Reply all</span>
                 </Button>
@@ -89,7 +89,7 @@ export function EmailDisplay({ threads, defaultLayout = 37 }: EmailDisplayProps)
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="ghost" size="icon" disabled={!threads}>
+                <Button variant="ghost" size="icon" disabled={!inbox}>
                   <Icon.forward className="h-4 w-4" />
                   <span className="sr-only">Forward</span>
                 </Button>
@@ -100,7 +100,7 @@ export function EmailDisplay({ threads, defaultLayout = 37 }: EmailDisplayProps)
           <Separator orientation="vertical" className="mx-2 h-6" />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" disabled={!threads}>
+              <Button variant="ghost" size="icon" disabled={!inbox}>
                 <Icon.moreHorizontal className="h-4 w-4" />
                 <span className="sr-only">More</span>
               </Button>
@@ -114,15 +114,15 @@ export function EmailDisplay({ threads, defaultLayout = 37 }: EmailDisplayProps)
           </DropdownMenu>
         </div>
         <Separator />
-        {threads ? (
+        {inbox ? (
           <div className="flex flex-1 flex-col">
             <div className="flex items-start p-4">
               <div className="flex items-start gap-4 text-sm">
                 <Avatar>
-                  <AvatarImage alt={threads.name} />
+                  <AvatarImage alt={inbox.name} />
                   <AvatarFallback>
                     {
-                      threads.name
+                      inbox.name
                       // .split(' ')
                       // .map((chunk) => chunk[0])
                       // .join('')
@@ -130,24 +130,24 @@ export function EmailDisplay({ threads, defaultLayout = 37 }: EmailDisplayProps)
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid gap-1">
-                  <div className="font-semibold">{threads.name}</div>
-                  <div className="line-clamp-1 text-xs">{threads.subject}</div>
+                  <div className="font-semibold">{inbox.name}</div>
+                  <div className="line-clamp-1 text-xs">{inbox.subject}</div>
                   <div className="line-clamp-1 text-xs">
-                    <span className="font-medium">Reply-To:</span> {threads.email}
+                    <span className="font-medium">Reply-To:</span> {inbox.email}
                   </div>
                 </div>
               </div>
-              {threads.date && (
-                <div className="ml-auto text-xs text-muted-foreground">{format(new Date(threads.date), 'PPpp')}</div>
+              {inbox.date && (
+                <div className="ml-auto text-xs text-muted-foreground">{format(new Date(inbox.date), 'PPpp')}</div>
               )}
             </div>
             <Separator />
-            <div className="flex-1 whitespace-pre-wrap p-4 text-sm">{threads.text}</div>
+            <div className="flex-1 whitespace-pre-wrap p-4 text-sm">{inbox.text}</div>
             <Separator className="mt-auto" />
             <div className="p-4">
               <form>
                 <div className="grid gap-4">
-                  <Textarea className="p-4" placeholder={`Reply ${threads.name}...`} />
+                  <Textarea className="p-4" placeholder={`Reply ${inbox.name}...`} />
                   <div className="flex items-center">
                     <Label htmlFor="mute" className="flex items-center gap-2 text-xs font-normal">
                       <Switch id="mute" aria-label="Mute thread" /> Mute this thread

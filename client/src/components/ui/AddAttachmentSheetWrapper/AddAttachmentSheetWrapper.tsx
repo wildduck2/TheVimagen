@@ -6,7 +6,6 @@ import {
   ContextMenu,
   ContextMenuTrigger,
   Input,
-  Progress,
   Table,
   TableBody,
   TableCell,
@@ -14,9 +13,8 @@ import {
   TableHeader,
   TableRow,
 } from '..'
-import { FiUpload } from 'react-icons/fi'
-import { RiDeleteBin6Fill } from 'react-icons/ri'
 import axios from 'axios'
+import { Icon } from '@/assets'
 
 export type AttachmentType = {
   id: string
@@ -116,7 +114,7 @@ const AddAttachmentSheetWrapper = () => {
           <ContextMenu>
             <ContextMenuTrigger className="add-attachment__header__trigger">
               <div>
-                <FiUpload size={30} />
+                <Icon.upload className="size-[30px]" />
                 <span>Click to upload</span>
               </div>
               <Input placeholder="Filter emails..." type="file" onChange={getFileDataHandler} />
@@ -140,7 +138,7 @@ const AddAttachmentSheetWrapper = () => {
                 <TableRow key={invoice.id}>
                   <TableCell className="font-medium w-[20px] pr-0">
                     <Button variant="ghost">
-                      <RiDeleteBin6Fill size={20} />
+                      <Icon.trash2 className="size-[20px]" />
                     </Button>
                   </TableCell>
                   <TableCell className="font-medium">

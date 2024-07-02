@@ -13,9 +13,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '..'
-import { FaPlus } from 'react-icons/fa6'
 import { AddButtonWrapperProps } from './AddButtonWrapper.types'
 import { userDataAssigned } from '../AssignUserSheetContent/AssignUserSheetContent.types'
+import { Icon } from '@/assets'
 const frameworks: userDataAssigned[] = [
   {
     id: '1',
@@ -61,7 +61,7 @@ const AddButtonWrapper: React.FC<AddButtonWrapperProps> = ({ title, data, disc, 
       <Sheet>
         <SheetTrigger asChild>
           <Button type="button" variant="ghost" className="gap-2">
-            <FaPlus size={19} />
+            <Icon.plus className="size-[19px]" />
             <span>{title}</span>
           </Button>
         </SheetTrigger>

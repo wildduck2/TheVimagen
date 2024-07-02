@@ -1,6 +1,8 @@
 import { MessageType } from '@/utils'
 
 export interface EmailDisplayProps {
-  threads: MessageType[] | undefined
+  inbox: MessageType[] | undefined
+  promotion: MessageType[] | undefined
+  social: MessageType[] | undefined
   defaultLayout: number
 }

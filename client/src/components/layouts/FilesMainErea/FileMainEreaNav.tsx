@@ -1,8 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { bodyHeaderLinks } from '../../../constants'
 import { Separator } from '../../ui'
-import { FaPlus } from 'react-icons/fa6'
-
+import { Icon } from '@/assets'
 export const users = [
   {
     id: 1,
@@ -55,7 +54,7 @@ const FileMainEreaNav = () => {
 
         <Separator orientation="vertical" className="sperator" />
         <button>
-          <FaPlus size={17} />
+          <Icon.plus className="size-[17px]" />
         </button>
       </div>
     </div>

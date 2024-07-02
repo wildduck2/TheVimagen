@@ -1,6 +1,6 @@
 import React from 'react'
 import { FileMainEreaBodyKanbanColmunHeaderProps } from './FileMainEreaBodyKanban.types'
-import { HiDotsVertical } from 'react-icons/hi'
+import { Icon } from '@/assets'
 
 const FileMainEreaBodyKanbanColmunHeader: React.FC<FileMainEreaBodyKanbanColmunHeaderProps> = ({
   columnName,
@@ -14,7 +14,7 @@ const FileMainEreaBodyKanbanColmunHeader: React.FC<FileMainEreaBodyKanbanColmunH
           <h4>{columnName}</h4>
           <span>{tasksCount}</span>
         </div>
-        <HiDotsVertical size={21} />
+        <Icon.dotVertical className="size-[21px]" />
       </div>
     </>
   )

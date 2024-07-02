@@ -1,16 +1,14 @@
 import { AccountSwitcher, ResizableHandle, ResizablePanel, Separator, TooltipButton } from '@/components/ui'
 import { Nav } from '../../Header'
-import { EmailHeaderNavLinks, logoutHeaderLinkData, toggleheaderLinkData } from '@/constants'
+import { EmailHeaderNavLinks, logoutHeaderLinkData } from '@/constants'
 import { useState } from 'react'
-import { BiLogoGmail } from 'react-icons/bi'
 import { useNavigate } from '@tanstack/react-router'
 import { EmailHeaderType } from './Header.types'
-import { useQuery } from '@tanstack/react-query'
-import { get_threads } from '@/utils'
+import { Icon } from '@/assets'
 
 export const EmailHeader = ({ defaultCollapsed, defaultLayout }: EmailHeaderType) => {
   const route = useNavigate()
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(false)
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(defaultCollapsed)
 
   return (
     <>
@@ -20,7 +18,7 @@ export const EmailHeader = ({ defaultCollapsed, defaultLayout }: EmailHeaderType
         order={0}
         minSize={5}
         maxSize={17}
-        defaultSize={25}
+        defaultSize={defaultLayout}
         collapsible={true}
         collapsedSize={2.5}
         onCollapse={() => {
@@ -31,7 +29,13 @@ export const EmailHeader = ({ defaultCollapsed, defaultLayout }: EmailHeaderType
         }}
       >
         <AccountSwitcher
-          accounts={[{ email: 'wezonaser50@gmail.com', icon: <BiLogoGmail />, label: 'wezonaser50@gmail.com' }]}
+          accounts={[
+            {
+              email: 'wezonaser50@gmail.com',
+              icon: <Icon.gmail className="size-[20px]" />,
+              label: 'wezonaser50@gmail.com',
+            },
+          ]}
           isCollapsed={isCollapsed}
         />
         <Separator />
