@@ -4,9 +4,9 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 export const Route = createRootRoute({
   component: () => (
+    // <ReactQueryDevtools initialIsOpen={false} />
+    //     <TanStackRouterDevtools position="bottom-right" />
     <>
-      <ReactQueryDevtools initialIsOpen={false} />
-      <TanStackRouterDevtools position="bottom-right" />
       <Outlet />
     </>
   ),

@@ -1,14 +1,20 @@
 import { Icon } from '@/assets'
 import { Badge } from '@/components/ui'
-import { cn, MessageType } from '@/utils'
+import { getSelectedEmailIdDispatch, RootState } from '@/context'
+import { cn, getThread, MessageType } from '@/utils'
+import { useQuery } from '@tanstack/react-query'
 import { formatDistanceToNow } from 'date-fns'
 import { ComponentProps } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 export type EmailListItemType = {
   item: MessageType
 }
 
 export const EmailListItem = ({ item }: EmailListItemType) => {
+  const emailSelectedId = useSelector((state: RootState) => state.email.selectedEmailId)
+  const dispatch = useDispatch()
+
   const WANTED_HEADERS = item.payload.headers.filter(
     (head) => head.name === 'Subject' || head.name === 'From' || head.name === 'To',
   )
@@ -16,7 +22,14 @@ export const EmailListItem = ({ item }: EmailListItemType) => {
   return (
     //TODO: you have to make the select item
     <>
-      <div key={item.id} className={cn('email__list__wrapper__item', 'g-muted')}>
+      <div
+        key={item.id}
+        className={cn('email__list__wrapper__item', emailSelectedId === item.id && 'bg-muted')}
+        onClick={() => {
+          dispatch(getSelectedEmailIdDispatch(item.id))
+          // refetch()
+        }}
+      >
         <div className="email__list__wrapper__item__top">
           <div className="email__list__wrapper__item__top__header">
             <div>

@@ -9,17 +9,17 @@ export const Inbox = () => {
 
   const inboxQuery = useQuery({
     queryKey: ['inbox'],
-    queryFn: () => getThreads(),
+    queryFn: () => getThreads({}),
   })
 
   const promotionQuery = useQuery({
     queryKey: ['promotion'],
-    queryFn: () => getThreads('CATEGORY_PROMOTIONS'),
+    queryFn: () => getThreads({ labelIds: 'CATEGORY_PROMOTIONS' }),
   })
 
   const socialQuery = useQuery({
     queryKey: ['social'],
-    queryFn: () => getThreads('CATEGORY_SOCIAL'),
+    queryFn: () => getThreads({ labelIds: 'CATEGORY_SOCIAL' }),
   })
 
   return (
@@ -31,14 +31,7 @@ export const Inbox = () => {
         social={socialQuery.data?.messages}
       />
       <ResizableHandle withHandle />
-      <EmailDisplay
-        defaultLayout={defaultLayout ? defaultLayout[2] : null}
-        inbox={inboxQuery.data?.messages}
-        promotion={promotionQuery.data?.messages}
-        social={socialQuery.data?.messages}
-      />
+      <EmailDisplay defaultLayout={defaultLayout ? defaultLayout[2] : null} />
     </>
   )
 }
-
-// defaultLayout={defaultLayout ? defaultLayout[2] : null}
