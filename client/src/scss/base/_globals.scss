@@ -14,12 +14,12 @@
 */
 
 *,
-*::after,
-*::before {
+::after,
+::before {
+  /* all: initial !important; */
   box-sizing: border-box;
   user-select: none;
   border-color: hsl(var(--input));
-  font-family: 'Poppins', sans-serif;
 }
 
 html {
@@ -64,41 +64,34 @@ input:active {
 }
 
 .spin {
-  margin-right: 0.5rem
-    /* 8px */
-  ;
-  height: size(na)
-    /* 16px */
-  ;
-  width: size(na)
-    /* 16px */
-  ;
-  animation: spin 1s linear infinite;
+  margin-right: 0.5rem;
+  height: size(na);
+  width: size(na);
   animation: spin 1s linear infinite;
 }
 
-*::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 5px;
   border-radius: 0.5rem;
 }
 
 //
-*::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background-color: rgb(66, 66, 66);
   border-radius: 1rem;
 }
 
-*::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background-color: color('primary', 'white-80');
 }
 
-*::-webkit-scrollbar {
+::-webkit-scrollbar {
   position: absolute;
   width: 4px;
   height: 1px;
 }
 
-*::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
   background-color: var(--second-color);
 }
 

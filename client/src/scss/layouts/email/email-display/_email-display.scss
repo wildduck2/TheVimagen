@@ -34,7 +34,15 @@
     height: calc(100vh - 315px);
     padding: 1rem;
 
+    div[data-radix-scroll-area-viewport]>div {
+      display: grid !important;
+      gap: 0.5rem;
+      /* display: none; */
+    }
+
     iframe {
+      width: 100%;
+      height: 61.88vh;
       background-color: white !important;
       color: black !important;
 
@@ -72,6 +80,10 @@
           &>button {
             margin-left: auto;
             width: 120px;
+          }
+
+          .data-\[state\=checked\]\:translate-x-5[data-state='checked'] {
+            --tw-translate-x: 1.34rem;
           }
         }
       }
