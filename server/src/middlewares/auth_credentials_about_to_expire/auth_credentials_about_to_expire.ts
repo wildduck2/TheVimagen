@@ -26,7 +26,7 @@ export const auth_credentials_about_to_expire: RequestHandler = async (
     const timeElapsed = currentTime - created_at.getTime()
     const timeRemaining = expire_in * 1000 - timeElapsed
 
-    if (!(timeRemaining < EXPIRATION_THRESHOLD)) return next()
+    if (timeRemaining >= EXPIRATION_THRESHOLD) return next()
 
     //NOTE: refresh the token if it's about to expire
     const access_data = await get_new_access_token({
