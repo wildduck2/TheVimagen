@@ -5,7 +5,7 @@ export const EmailDisplayButton = ({ icon, label, emailSelectedId }: Emaildispal
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <Button variant="ghost" size="icon" disabled={emailSelectedId === ''}>
+        <Button variant="ghost" size="icon" disabled={!emailSelectedId.length}>
           {icon}
           <span className="sr-only">{label}</span>
         </Button>

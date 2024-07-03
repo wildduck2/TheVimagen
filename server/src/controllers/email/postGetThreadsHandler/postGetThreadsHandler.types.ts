@@ -1,6 +1,6 @@
-import { ThreadType } from '../post_thread'
+import { ThreadType } from '../postGetThreadHandler'
 
-export type post_threads_type = {
+export type postGetThreadsHandlerType = {
   maxResults: number
   labelIds: string
 }

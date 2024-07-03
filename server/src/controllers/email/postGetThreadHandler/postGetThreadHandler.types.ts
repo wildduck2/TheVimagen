@@ -1,5 +1,5 @@
-export type post_thread_type = {
-  thread_id: string
+export type PostThreadHandler = {
+  threads_id: string[]
 }
 
 export type ThreadType = {

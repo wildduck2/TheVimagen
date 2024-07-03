@@ -1,14 +1,15 @@
 import axios from 'axios'
-import { GetThread, GetThreadRes } from './getThread.types'
+import { GetThreadType, GetThreadRes } from './getThread.types'
+import { IEmail } from 'gmail-api-parse-message-ts'
 
-export const getThread = async ({ thread_id }: GetThread) => {
-  if (!thread_id) return null
+export const getThread = async ({ threads_id }: GetThreadType): Promise<IEmail[]> => {
+  if (!threads_id.length) return []
 
   const { data } = await axios.post<GetThreadRes>(
     `${process.env.ROOT_URL}/email/get/thread`,
     {
       user_id: '2dfa461a-85e8-4ac7-b0e9-28b1d88bd6dc',
-      thread_id,
+      threads_id,
     },
     {
       withCredentials: true,
@@ -17,6 +18,10 @@ export const getThread = async ({ thread_id }: GetThread) => {
       },
     },
   )
+
+  if (data.error) {
+    throw new Error(data.error)
+  }
 
   return data.data
 }

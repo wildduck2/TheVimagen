@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 
 export type EmaildispalyButtonType = {
-  emailSelectedId: string
+  emailSelectedId: string[]
   label: string
   icon: ReactElement
 }

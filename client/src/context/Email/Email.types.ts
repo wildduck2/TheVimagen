@@ -1,11 +1,11 @@
-export interface initialStateTypes {
-  selectedEmailId: string
+export interface initialStateEmailTypes {
+  selectedEmailId: string[]
 }
 
 export type SelectedEmailIdState = {
-  selectedEmailId: string
+  selectedEmailId: string[]
 }
 
 export type SelectedEmailIdAction = {
-  payload: string
+  payload: string[]
 }

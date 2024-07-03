@@ -1,9 +1,13 @@
 import { IEmail } from 'gmail-api-parse-message-ts'
 
-export type GetThread = {
-  thread_id: string
+export type GetThreadType = {
+  threads_id: string[]
 }
-export type GetThreadRes = Awaited<Promise<{ error: string | null; data: ThreadType }>>
+
+export type GetThreadRes = {
+  error: string | null
+  data: IEmail[]
+}
 
 export type ThreadFullMessageType = {
   id: string

@@ -1,19 +1,23 @@
 import { RequestHandler } from 'express'
 import { OAuthToken } from '@prisma/client'
-import { post_threads_type } from './post_threads.types'
+import {
+  postGetThreadsHandlerType,
+  ThreadsType
+} from './postGetThreadsHandler.types'
 import { Email } from 'services'
+import { MessageType, ThreadMessageType } from '../postGetThreadHandler'
 
-export const post_threads: RequestHandler = async (req, res) => {
+export const postGetThreadsHandler: RequestHandler = async (req, res) => {
   // Getting parameters of the req [body - session]
   const { access_token, oauth_id, user_id } = req.session
     .oauth_user_data as OAuthToken
-  const { maxResults = 4, labelIds }: post_threads_type = req.body
+  const { maxResults = 4, labelIds }: postGetThreadsHandlerType = req.body
 
   try {
     // getting the msg from the GMAIL API
-    const data = await Email.getIdsFromGmailAPI({
+    const data = await Email.getMessagesIdsFromGmailAPI<ThreadsType>({
       access_token,
-      maxResults,
+      maxResults: 30,
       distnation: `${oauth_id}/threads/`,
       fields: 'threads(id),nextPageToken',
       labelIds
@@ -28,9 +32,12 @@ export const post_threads: RequestHandler = async (req, res) => {
     }
 
     // Fetch detailed data for each thread
-    const messagesData = await Email.fetchEachOneWithId({
+    const messagesData = await Email.fetchEachOneWithId<
+      MessageType,
+      ThreadMessageType
+    >({
       access_token,
-      groupOfIds: threads,
+      groupOfIds: threads.map((thread) => thread.id),
       distnation: `${oauth_id}/threads/`,
       fields: '',
       format: 'metadata'

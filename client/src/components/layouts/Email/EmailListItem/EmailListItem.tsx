@@ -1,17 +1,15 @@
-import { Icon } from '@/assets'
-import { Badge } from '@/components/ui'
-import { getSelectedEmailIdDispatch, RootState } from '@/context'
-import { cn, getThread, MessageType } from '@/utils'
-import { useQuery } from '@tanstack/react-query'
 import { formatDistanceToNow } from 'date-fns'
 import { ComponentProps } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-export type EmailListItemType = {
-  item: MessageType
-}
+import { Icon } from '@/assets'
+import { Badge } from '@/components/ui'
+import { getSelectedEmailIdDispatch, RootState } from '@/context'
+import { cn } from '@/utils'
 
-export const EmailListItem = ({ item }: EmailListItemType) => {
+import { EmailListItemType } from './EmailListItem.types'
+
+export const EmailListItem = ({ item, items }: EmailListItemType) => {
   const emailSelectedId = useSelector((state: RootState) => state.email.selectedEmailId)
   const dispatch = useDispatch()
 
@@ -19,16 +17,16 @@ export const EmailListItem = ({ item }: EmailListItemType) => {
     (head) => head.name === 'Subject' || head.name === 'From' || head.name === 'To',
   )
 
+  const itemsFilteredIds = items.map((item) => item.id)
+
+  // console.log(emailSelectedId, itemsFilteredIds)
+
   return (
-    //TODO: you have to make the select item
     <>
       <div
         key={item.id}
-        className={cn('email__list__wrapper__item', emailSelectedId === item.id && 'bg-muted')}
-        onClick={() => {
-          dispatch(getSelectedEmailIdDispatch(item.id))
-          // refetch()
-        }}
+        className={cn('email__list__wrapper__item', emailSelectedId === itemsFilteredIds && 'bg-muted')}
+        onClick={() => dispatch(getSelectedEmailIdDispatch(itemsFilteredIds))}
       >
         <div className="email__list__wrapper__item__top">
           <div className="email__list__wrapper__item__top__header">
@@ -40,6 +38,7 @@ export const EmailListItem = ({ item }: EmailListItemType) => {
               </div>
               <button>
                 {item.labelIds.includes('STARRED') ? (
+                  //TODO: make the use start the item
                   <Icon.filledStar className="size-[1rem]" />
                 ) : (
                   <Icon.fiStar className="size-[1rem]" />

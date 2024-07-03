@@ -1,55 +1,42 @@
+import { useSelector } from 'react-redux'
+import { useQuery } from '@tanstack/react-query'
+import { useEffect } from 'react'
+import { IEmail } from 'gmail-api-parse-message-ts'
+
 import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
   Button,
-  Calendar,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  Label,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
   ResizablePanel,
   Separator,
-  Switch,
-  Textarea,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
 } from '@/components/ui'
-import { EmailDisplayProps } from './EmailDisplay.types'
-
-//FIX: should fetch data instead of this dumby data
-import addDays from 'date-fns/addDays'
-import addHours from 'date-fns/addHours'
-import format from 'date-fns/format'
-import nextSaturday from 'date-fns/nextSaturday'
-import { EmailSnoozeButton } from '../EmailSnoozeButton'
 import { Icon } from '@/assets'
-import { useSelector } from 'react-redux'
 import { RootState } from '@/context'
-import { useQuery } from '@tanstack/react-query'
 import { getThread } from '@/utils'
+
+import { EmailSnoozeButton } from '../EmailSnoozeButton'
 import { EmailDisplayButton } from '../EmailDisplayButton/EmailDispalyButton'
-import { MutableRefObject, useEffect, useRef } from 'react'
-import { IEmail, ParseGmailApi } from 'gmail-api-parse-message-ts'
 import { EmailDisplayInbox } from '../EmailDisplayInbox'
+import { EmailDisplayProps } from './EmailDisplay.types'
 
 export const emailDisplayButtonData = ['Archive', 'Move to junk', 'Move to trash']
 
 export function EmailDisplay({ defaultLayout = 37 }: EmailDisplayProps) {
   const emailSelectedId = useSelector((state: RootState) => state.email.selectedEmailId)
 
-  const { data, refetch } = useQuery<IEmail>({
+  // console.log(emailSelectedId)
+
+  const { data, refetch } = useQuery<IEmail[]>({
     queryKey: ['emailSelectedIdMessage'],
-    queryFn: () => getThread({ thread_id: emailSelectedId }),
+    queryFn: () => getThread({ threads_id: emailSelectedId }),
   })
 
+  // console.log(data)
+
   useEffect(() => {
-    emailSelectedId !== '' && refetch()
+    refetch()
   }, [emailSelectedId])
 
   return (
@@ -99,7 +86,7 @@ export function EmailDisplay({ defaultLayout = 37 }: EmailDisplayProps) {
           <Separator orientation="vertical" className="mx-2 h-6" />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" disabled={emailSelectedId === ''}>
+              <Button variant="ghost" size="icon" disabled={!emailSelectedId.length}>
                 <Icon.moreHorizontal className="h-4 w-4" />
                 <span className="sr-only">More</span>
               </Button>
@@ -113,7 +100,7 @@ export function EmailDisplay({ defaultLayout = 37 }: EmailDisplayProps) {
           </DropdownMenu>
         </div>
         <Separator />
-        <EmailDisplayInbox inbox={data ? data : null} />
+        <EmailDisplayInbox inbox={data ? data : []} />
       </div>
     </ResizablePanel>
   )

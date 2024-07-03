@@ -1,15 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { initialStateEmailTypes } from './Email.types'
+import { initialStateEmailTypes, SelectedEmailIdAction, SelectedEmailIdState } from './Email.types'
 
 const initialState: initialStateEmailTypes = {
-  selectedEmailId: '',
+  selectedEmailId: [],
 }
 
 export const emailSlice = createSlice({
   name: 'data',
   initialState,
   reducers: {
-    getSelectedEmailIdDispatch: (state, action) => {
+    getSelectedEmailIdDispatch: (state: SelectedEmailIdState, action: SelectedEmailIdAction) => {
       state.selectedEmailId = action.payload
     },
   },
