@@ -11,7 +11,7 @@ import { Record } from '@prisma/client/runtime/library'
 export class Email {
   constructor() {}
 
-  static async getIdsFromGmailAPI({
+  static async getMessagesIdsFromGmailAPI<T>({
     access_token,
     maxResults,
     distnation,
@@ -19,7 +19,7 @@ export class Email {
     labelIds
   }: GetIdsFromGmailAPIType) {
     try {
-      const { data } = await axios.get<Awaited<Promise<ThreadsType>>>(
+      const { data } = await axios.get<Awaited<Promise<T>>>(
         `${GMAIL_URL}${distnation}`,
         {
           withCredentials: true,
@@ -43,26 +43,26 @@ export class Email {
     }
   }
 
-  static async fetchEachOneWithId({
+  static async fetchEachOneWithId<
+    T extends MessageType,
+    K extends ThreadMessageType
+  >({
     groupOfIds,
     access_token,
     distnation,
     fields,
     format
-  }: FetchEachOneWithIdType) {
-    const messagesData: MessageType[] = []
+  }: FetchEachOneWithIdType): Promise<T[] | null> {
+    const messagesData: T[] = []
 
     try {
       // Fetch detailed data for each thread
-      const detailedDataPromises = await Promise.all(
-        groupOfIds.map(async (thread) => {
-          const threadId = thread.id
-
-          try {
-            // Fetch detailed thread data
-            const { data } = await axios.get<
-              Awaited<Promise<ThreadMessageType>>
-            >(`${GMAIL_URL}${distnation}${threadId}`, {
+      const detailedDataPromises = groupOfIds.map(async (thread) => {
+        try {
+          // Fetch detailed thread data
+          const { data } = await axios.get<Awaited<Promise<K>>>(
+            `${GMAIL_URL}${distnation}${thread}`,
+            {
               headers: {
                 Authorization: `Bearer ${access_token}`
               },
@@ -70,24 +70,23 @@ export class Email {
                 fields,
                 format
               }
-            })
-            const { messages } = data
-            if (!messages) return null
+            }
+          )
+          const { messages } = data
+          if (!messages) return null
 
-            return messages
-          } catch (error) {
-            return null
-          }
-        })
-      )
+          return messages as T[]
+        } catch (error) {
+          return null
+        }
+      })
 
       // Execute all requests and preserve order
-      await Promise.all(detailedDataPromises).then((results) => {
-        results.forEach((messages) => {
-          if (messages && messages.length > 0) {
-            messagesData.push(...messages)
-          }
-        })
+      const results = await Promise.all(detailedDataPromises)
+      results.forEach((messages) => {
+        if (messages && messages.length > 0) {
+          messagesData.push(...messages)
+        }
       })
 
       return messagesData

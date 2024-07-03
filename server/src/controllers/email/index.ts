@@ -1,2 +1,3 @@
-export * from './post_threads'
-export * from './post_thread'
+export * from './postGetThreadsHandler'
+export * from './postGetThreadHandler'
+export * from './postGetHistoryHandler'
