@@ -12,7 +12,7 @@ export function EmailList({ items }: EmailListProps) {
             (items[0] as MessageType).id ? (
               <EmailListItem key={idx} item={item as MessageType} />
             ) : (
-              <EmailListItem key={idx} item={(item as MessageType[])[0]} />
+              <EmailListItem key={idx} item={(item as MessageType[])[0]} items={(items as MessageType[])[idx]} />
             ),
           )}
       </div>
