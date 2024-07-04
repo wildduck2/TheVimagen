@@ -3,7 +3,6 @@ import { describe, it, vi, beforeAll, Mock, expect } from 'vitest'
 import express, { Express, Request, Response, NextFunction } from 'express'
 import { Email } from '@services/Email'
 import { postGetThreadHandler } from '../postGetThreadHandler'
-import { ThreadsType } from 'controllers/email'
 
 vi.mock('../../../../services/Email', () => ({
   Email: {
