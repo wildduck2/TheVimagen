@@ -10,6 +10,14 @@
         "baseUrl": "./src",
         "outDir": "./dist",
         "rootDir": "./src",
+        "paths": {
+            "@services/*": [
+                "services/*"
+            ],
+            "@middlewares/*": [
+                "middlewares/*"
+            ]
+        },
         "typeRoots": [
             "./types",
             "./node_modules/@types"
@@ -22,10 +30,12 @@
         ]
     },
     "include": [
-        "src",
+        "src/**/*",
+        "tests/**/*",
         "types"
     ],
     "exclude": [
-        "node_modules"
+        "node_modules",
+        "dist"
     ]
 }
