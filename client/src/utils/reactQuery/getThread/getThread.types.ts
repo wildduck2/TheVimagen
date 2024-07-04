@@ -44,7 +44,7 @@ export type PayloadType = {
   headers: HeaderType[]
 }
 
-type LabelIds = ['UNREAD', 'INBOX', 'SUBJECT', 'CATEGORY_UPDATES']
+export type LabelIds = ['UNREAD', 'INBOX', 'SUBJECT', 'CATEGORY_UPDATES']
 
 export type HeaderType = {
   name: string

@@ -1,1 +1,3 @@
-export type EmailSnoozeButtonType = {}
+export type EmailSnoozeButtonType = {
+  emailSelectedId: string[]
+}

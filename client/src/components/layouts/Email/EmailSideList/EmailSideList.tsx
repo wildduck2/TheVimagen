@@ -2,9 +2,9 @@ import { EmailList } from '..'
 import { Input, ResizablePanel, Separator, Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui'
 import { EmailSideListType } from './EmailSideList.types'
 import { Icon } from '@/assets'
-import { getCookie, groupMessagesBySender } from '@/utils'
+import { getCookie } from '@/utils'
 
-export const EmailSideList = ({ inbox, promotion, social, defaultLayout = 37 }: EmailSideListType) => {
+export const EmailSideList = ({ defaultLayout = 37 }: EmailSideListType) => {
   const defaultActive = getCookie('tabs:active') || 'primary'
   const setActiveTabCookie = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
     (document.cookie = `tabs:active=${(e.currentTarget as HTMLButtonElement).innerText}`)
@@ -39,13 +39,13 @@ export const EmailSideList = ({ inbox, promotion, social, defaultLayout = 37 }: 
             </div>
           </div>
           <TabsContent value="primary" className="email__side__list__content">
-            <EmailList items={groupMessagesBySender(inbox || [])} />
+            <EmailList queryKey="inbox" />
           </TabsContent>
           <TabsContent value="promotion" className="email__side__list__content">
-            <EmailList items={promotion!} />
+            <EmailList queryKey="promotion" labelIds="CATEGORY_PROMOTIONS" />
           </TabsContent>
           <TabsContent value="social" className="email__side__list__content">
-            <EmailList items={social!} />
+            <EmailList queryKey="social" labelIds="CATEGORY_SOCIAL" />
           </TabsContent>
         </Tabs>
       </ResizablePanel>

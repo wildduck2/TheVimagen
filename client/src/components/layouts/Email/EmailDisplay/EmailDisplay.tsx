@@ -1,7 +1,4 @@
 import { useSelector } from 'react-redux'
-import { useQuery } from '@tanstack/react-query'
-import { useEffect } from 'react'
-import { IEmail } from 'gmail-api-parse-message-ts'
 
 import {
   Button,
@@ -14,7 +11,6 @@ import {
 } from '@/components/ui'
 import { Icon } from '@/assets'
 import { RootState } from '@/context'
-import { getThread } from '@/utils'
 
 import { EmailSnoozeButton } from '../EmailSnoozeButton'
 import { EmailDisplayButton } from '../EmailDisplayButton/EmailDispalyButton'
@@ -25,19 +21,6 @@ export const emailDisplayButtonData = ['Archive', 'Move to junk', 'Move to trash
 
 export function EmailDisplay({ defaultLayout = 37 }: EmailDisplayProps) {
   const emailSelectedId = useSelector((state: RootState) => state.email.selectedEmailId)
-
-  // console.log(emailSelectedId)
-
-  const { data, refetch } = useQuery<IEmail[]>({
-    queryKey: ['emailSelectedIdMessage'],
-    queryFn: () => getThread({ threads_id: emailSelectedId }),
-  })
-
-  // console.log(data)
-
-  useEffect(() => {
-    refetch()
-  }, [emailSelectedId])
 
   return (
     <ResizablePanel order={2} defaultSize={defaultLayout} minSize={30}>
@@ -62,7 +45,7 @@ export function EmailDisplay({ defaultLayout = 37 }: EmailDisplayProps) {
               icon={<Icon.trash2 className="h-4 w-4" />}
             />
             <Separator orientation="vertical" className="mx-1 h-6" />
-            <EmailSnoozeButton />
+            <EmailSnoozeButton emailSelectedId={emailSelectedId} />
           </div>
           <div className="ml-auto flex items-center gap-2">
             <EmailDisplayButton
@@ -100,7 +83,7 @@ export function EmailDisplay({ defaultLayout = 37 }: EmailDisplayProps) {
           </DropdownMenu>
         </div>
         <Separator />
-        <EmailDisplayInbox inbox={data ? data : []} />
+        <EmailDisplayInbox />
       </div>
     </ResizablePanel>
   )
