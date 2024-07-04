@@ -26,7 +26,6 @@
     &__item {
       @include u.flex(flex, flex-start);
       flex-direction: column;
-      gap: 0.5rem;
       border-radius: var(--radius);
       border: 1px solid hsl(var(--border));
       text-align: left;
@@ -47,6 +46,7 @@
         flex-direction: column;
         width: 100%;
         gap: 0.25rem;
+        margin-bottom: 0.5rem;
 
         &__header {
           @include u.flex(flex, center);
@@ -105,6 +105,10 @@
       &__labels {
         @include u.flex(flex, center);
         gap: 0.5rem;
+
+        &>div {
+          margin-top: 0.5rem;
+        }
       }
     }
   }

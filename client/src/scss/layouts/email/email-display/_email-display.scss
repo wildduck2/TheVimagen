@@ -18,20 +18,59 @@
   flex: 1 1 0%;
   flex-direction: column;
 
+  .skeleton__top {
+    height: 77px;
+    margin: 1rem 1rem 0 1rem;
+  }
+
+  .skeleton__content {
+    padding: 0;
+    height: 61.8vh;
+  }
+
   &__wrapper {
     @include u.flex(flex, flex-start);
     padding: 1rem;
 
     &__top {
-      @include u.flex(flex, flex-start);
+      @include u.flex(flex, flex-start, space-between);
+      width: 100%;
       gap: 1rem;
       font-size: 0.875rem;
       line-height: 1.25rem;
+
+      &__avatar {}
+
+      &__data {
+        @include u.flex(grid);
+        gap: 0.25rem;
+
+        &>div:nth-child(1) {
+          font-weight: 600;
+        }
+
+        &>div:nth-child(2),
+        &>div:nth-child(3) {
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 1;
+          font-size: 0.75rem;
+          line-height: 1rem;
+        }
+      }
+
+      &__date {
+        margin-left: auto;
+        font-size: 0.75rem;
+        line-height: 1rem;
+        color: hsl(var(--muted-foreground));
+      }
     }
   }
 
   &__content {
-    height: calc(100vh - 315px);
+    height: calc(100vh - 314px);
     padding: 1rem;
 
     div[data-radix-scroll-area-viewport]>div {
@@ -89,10 +128,4 @@
       }
     }
   }
-}
-
-.email__display__inbox__not__found {
-  @include u.flex(flex, center, center);
-  color: hsl(var(--muted-foreground));
-  padding: 2rem;
 }
