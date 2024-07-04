@@ -1,7 +1,7 @@
 import { ThreadMessageType, GetThreadType } from '../getThread'
 
 export type GetThreads = {
-  labelIds?: string | null
+  q?: string | null
   maxResults?: number | null
   nextPageId?: string | null
 }

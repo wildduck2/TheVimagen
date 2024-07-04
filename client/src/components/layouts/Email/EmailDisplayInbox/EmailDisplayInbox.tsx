@@ -90,7 +90,7 @@ export const EmailDisplayInbox = () => {
             <EmailDisplayInboxItem inbox={item} key={item.id} single={data.length === 1 ? true : false} />
           ))
         ) : emailSelectedId.length > 0 ? (
-          <Skeleton class314pxName="skeleton__content"></Skeleton>
+          <Skeleton className="skeleton__content"></Skeleton>
         ) : (
           <div className="email__display__inbox__not__found">No message selected</div>
         )}

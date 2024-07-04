@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { GetThreads, GetThreadsRes } from './getThreads.types'
 
-export const getThreads = async ({ labelIds, maxResults }: GetThreads) => {
+export const getThreads = async ({ q, maxResults }: GetThreads) => {
   try {
     const { data } = await axios.post<GetThreadsRes>(
       `${process.env.ROOT_URL}/email/get/threads`,
@@ -9,7 +9,7 @@ export const getThreads = async ({ labelIds, maxResults }: GetThreads) => {
         user_id: '2dfa461a-85e8-4ac7-b0e9-28b1d88bd6dc',
         thread_id: '1906343e98e4780b',
         maxResults,
-        labelIds,
+        q,
       },
       {
         withCredentials: true,

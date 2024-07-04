@@ -3,6 +3,7 @@ import { Input, ResizablePanel, Separator, Tabs, TabsContent, TabsList, TabsTrig
 import { EmailSideListType } from './EmailSideList.types'
 import { Icon } from '@/assets'
 import { getCookie } from '@/utils'
+import { EmailListSearch } from '../EmailListSerach'
 
 export const EmailSideList = ({ defaultLayout = 37 }: EmailSideListType) => {
   const defaultActive = getCookie('tabs:active') || 'primary'
@@ -30,22 +31,17 @@ export const EmailSideList = ({ defaultLayout = 37 }: EmailSideListType) => {
             </div>
             <Separator />
             <div className="email__side__list__wrapper__bottom">
-              <form>
-                <div>
-                  <Icon.search />
-                  <Input placeholder="Search" />
-                </div>
-              </form>
+              <EmailListSearch />
             </div>
           </div>
           <TabsContent value="primary" className="email__side__list__content">
-            <EmailList queryKey="inbox" />
+            <EmailList queryKey="inbox" q="category:primary" />
           </TabsContent>
           <TabsContent value="promotion" className="email__side__list__content">
-            <EmailList queryKey="promotion" labelIds="CATEGORY_PROMOTIONS" />
+            <EmailList queryKey="promotion" q="category:promotions" />
           </TabsContent>
           <TabsContent value="social" className="email__side__list__content">
-            <EmailList queryKey="social" labelIds="CATEGORY_SOCIAL" />
+            <EmailList queryKey="social" q="category:social" />
           </TabsContent>
         </Tabs>
       </ResizablePanel>
