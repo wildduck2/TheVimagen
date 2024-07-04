@@ -1,24 +1,21 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import { LogDialog } from '@/components/layouts'
-import { signout } from '@/context/Data'
+// import { signout } from '@/context/Data'
 
 import { RootState } from '@/context'
 
 export const Home = () => {
-  const logged = useSelector((state: RootState) => state.data.logged)
-  const dispatch = useDispatch()
+    const logged = useSelector((state: RootState) => state.data.logged)
+    // const dispatch = useDispatch()
 
-  return !logged ? (
-    <div className="w-full">
-      <button
-      >
-        Welcome
-      </button>
-      <button onClick={() => {}}>Welcome</button>
-      Home
-    </div>
-  ) : (
-    <LogDialog />
-  )
+    return !logged ? (
+        <div className="w-full">
+            <button>Welcome</button>
+            <button onClick={() => { }}>Welcome</button>
+            Home
+        </div>
+    ) : (
+        <LogDialog />
+    )
 }

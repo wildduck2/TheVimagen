@@ -1,4 +1,3 @@
-import React from 'react'
 import { Tooltip, TooltipContent, TooltipTrigger, buttonVariants } from '..'
 import { Link } from '@tanstack/react-router'
 import { cn } from '../../../utils'
@@ -21,7 +20,7 @@ const TooltipLink = ({ link, id = 0, isCollapsed }: TooltipLinkProps) => {
             className: activeHeader,
           }}
         >
-          {link.icon}
+          {<link.icon />}
         </Link>
       </TooltipTrigger>
       <TooltipContent side="right" className="header__nav__tooltip">
@@ -41,7 +40,7 @@ const TooltipLink = ({ link, id = 0, isCollapsed }: TooltipLinkProps) => {
         className: unCollapsedActiveHeaderLink,
       }}
     >
-      {link.icon}
+      {<link.icon />}
       {link.title}
       {<span className={cn('ml-auto')}>{link.label}</span>}
     </Link>

@@ -1,4 +1,4 @@
-import React from 'react'
+ 
 import { FileMainEreaBody, FileMainEreaBodyNav, FileMainEreaHeader } from './'
 
 const FileMainErea = () => {

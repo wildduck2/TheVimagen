@@ -1,17 +1,13 @@
-import { useNavigate } from '@tanstack/react-router'
-import { useDispatch } from 'react-redux'
+// import { useNavigate } from '@tanstack/react-router'
+// import { useDispatch } from 'react-redux'
 import { toast } from 'sonner'
 import axios from 'axios'
 import { z } from 'zod'
-import { User, getUserData } from '@/context'
-import { getGoogleOAuthURL, signupPopup, zodCreditValidation } from '@/utils'
 import { useSigninWithGoogleProps } from './useSigninWithGoogle.types'
-import { rejects } from 'assert'
-import { log } from 'console'
 
 export const useSigninWithGoogle = ({ setIsLoading }: useSigninWithGoogleProps) => {
-  const dispatch = useDispatch()
-  const route = useNavigate()
+  // const dispatch = useDispatch()
+  // const route = useNavigate()
 
   const authEmail = async (e: React.SyntheticEvent) => {
     e.preventDefault()
@@ -21,7 +17,7 @@ export const useSigninWithGoogle = ({ setIsLoading }: useSigninWithGoogleProps) 
     const left = (screen.width - width) / 2
     const top = (screen.height - height) / 2
 
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise((_, reject) => {
       const cb = async () => {
         try {
           //NOTE: Making the req to the server with the credentials
@@ -39,11 +35,8 @@ export const useSigninWithGoogle = ({ setIsLoading }: useSigninWithGoogleProps) 
           }
 
           //NOTE: opening widnow with the url to make perform the signin within popup window
-          const popupWindow: Window | null = window.open(
-            data.url,
-            '_blank',
-            `width=${width},height=${height}, left=${left}, top=${top}`,
-          )
+          // const popupWindow: Window | null =
+          window.open(data.url, '_blank', `width=${width},height=${height}, left=${left}, top=${top}`)
 
           // console.log(data)
           //

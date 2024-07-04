@@ -1,13 +1,13 @@
-import React from 'react'
+ 
 import { AccordionProps, DefaultICons } from './AccordionGroup.types'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../ui'
 import { Icon } from '@/assets'
 
 const defaultIcons: DefaultICons = {
-  traingle: <Icon.triangle className="stroke-2 size-[18px] fill-[#FBAD38]" />,
-  star: <Icon.regStar className="stroke-2 size-[18px] fill-[#FBAD38]" />,
-  rectangle: <Icon.rectangleBold className="stroke-2 size-[18px] fill-[#FBAD38]" />,
-  circle: <Icon.regCircle className="stroke-2 size-[18px] fill-[#FBAD38]" />,
+  traingle:()=> <Icon.triangle className="stroke-2 size-[18px] fill-[#FBAD38]" />,
+  star: ()=> <Icon.regStar className="stroke-2 size-[18px] fill-[#FBAD38]" />,
+  rectangle: ()=> <Icon.rectangleBold className="stroke-2 size-[18px] fill-[#FBAD38]" />,
+  circle: ()=> <Icon.regCircle className="stroke-2 size-[18px] fill-[#FBAD38]" />,
 }
 
 const data = [
@@ -33,7 +33,7 @@ const data = [
   },
 ]
 
-const AccordionGroup: React.FC<AccordionProps> = ({ dataa }) => {
+const AccordionGroup: React.FC<AccordionProps> = () => {
   return (
     <>
       <Accordion type="single" collapsible>
@@ -44,7 +44,7 @@ const AccordionGroup: React.FC<AccordionProps> = ({ dataa }) => {
               return (
                 <div key={item.id} className="files-tree__accordion__item">
                   <div className="files-tree__accordion__item__title">
-                    {defaultIcons[item.icon]}
+                    {defaultIcons[item.icon]({})}
                     <span>{item.name}</span>
                   </div>
                   {/* <div>

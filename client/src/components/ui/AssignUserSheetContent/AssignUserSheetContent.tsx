@@ -1,4 +1,4 @@
-import React from 'react'
+ 
 import {
   Badge,
   Checkbox,
@@ -17,6 +17,7 @@ import {
 import { AssignUserSheetContentProps, Users } from './AssignUserSheetContent.types'
 import { searchUsersHandler, slectUserHandler, toggleSelectAllUsersHandler } from '@/utils'
 import { actions } from '@/constants'
+import React from 'react'
 
 export const users: Users[] = [
   {

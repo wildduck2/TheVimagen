@@ -2,9 +2,10 @@ import { EmailList } from '..'
 import { Input, ResizablePanel, Separator, Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui'
 import { EmailSideListType } from './EmailSideList.types'
 import { Icon } from '@/assets'
-import { getCookie, groupMessagesBySender } from '@/utils'
+import { getCookie } from '@/utils'
+import { EmailListSearch } from '../EmailListSerach'
 
-export const EmailSideList = ({ inbox, promotion, social, defaultLayout = 37 }: EmailSideListType) => {
+export const EmailSideList = ({ defaultLayout = 37 }: EmailSideListType) => {
   const defaultActive = getCookie('tabs:active') || 'primary'
   const setActiveTabCookie = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
     (document.cookie = `tabs:active=${(e.currentTarget as HTMLButtonElement).innerText}`)
@@ -30,22 +31,17 @@ export const EmailSideList = ({ inbox, promotion, social, defaultLayout = 37 }: 
             </div>
             <Separator />
             <div className="email__side__list__wrapper__bottom">
-              <form>
-                <div>
-                  <Icon.search />
-                  <Input placeholder="Search" />
-                </div>
-              </form>
+              <EmailListSearch />
             </div>
           </div>
           <TabsContent value="primary" className="email__side__list__content">
-            <EmailList items={groupMessagesBySender(inbox || [])} />
+            <EmailList queryKey="inbox" q="category:primary" />
           </TabsContent>
           <TabsContent value="promotion" className="email__side__list__content">
-            <EmailList items={promotion!} />
+            <EmailList queryKey="promotion" q="category:promotions" />
           </TabsContent>
           <TabsContent value="social" className="email__side__list__content">
-            <EmailList items={social!} />
+            <EmailList queryKey="social" q="category:social" />
           </TabsContent>
         </Tabs>
       </ResizablePanel>

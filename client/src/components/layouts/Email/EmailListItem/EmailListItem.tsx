@@ -16,24 +16,23 @@ export const EmailListItem = ({ item, items }: EmailListItemType) => {
   const WANTED_HEADERS = item.payload.headers.filter(
     (head) => head.name === 'Subject' || head.name === 'From' || head.name === 'To',
   )
-
-  const itemsFilteredIds = items.map((item) => item.id)
-
-  // console.log(emailSelectedId, itemsFilteredIds)
+  const ids = items.map((id) => id.id)
 
   return (
     <>
       <div
         key={item.id}
-        className={cn('email__list__wrapper__item', emailSelectedId === itemsFilteredIds && 'bg-muted')}
-        onClick={() => dispatch(getSelectedEmailIdDispatch(itemsFilteredIds))}
+        className={cn('email__list__wrapper__item', emailSelectedId[0] === ids[0] && 'bg-muted')}
+        onClick={() => {
+          dispatch(getSelectedEmailIdDispatch(ids))
+        }}
       >
         <div className="email__list__wrapper__item__top">
           <div className="email__list__wrapper__item__top__header">
             <div>
               <div>
                 {WANTED_HEADERS.find((obj) => obj.name === 'From')!
-                  .value.split(' ')[0]
+                  .value.split('<')[0]
                   .replace(/"/gi, ' ')}
               </div>
               <button>
@@ -57,7 +56,7 @@ export const EmailListItem = ({ item, items }: EmailListItemType) => {
           </div>
         </div>
         <div className="email__list__wrapper__item__bottom">{item.snippet.substring(0, 300)}</div>
-        {item.labelIds.length ? (
+        {item.labelIds.length && (
           <div className="email__list__wrapper__item__labels">
             {item.labelIds
               .filter(
@@ -78,7 +77,7 @@ export const EmailListItem = ({ item, items }: EmailListItemType) => {
                 </Badge>
               ))}
           </div>
-        ) : null}
+        )}
       </div>
     </>
   )

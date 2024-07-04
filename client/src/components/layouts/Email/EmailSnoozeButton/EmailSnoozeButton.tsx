@@ -9,10 +9,11 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui'
-import { addDays, addHours, format, nextSaturday, setDate } from 'date-fns'
+import { addDays, addHours, format, nextSaturday } from 'date-fns'
 import { useState } from 'react'
+import { EmailSnoozeButtonType } from './EmailSnoozeButton.types'
 
-export const EmailSnoozeButton = () => {
+export const EmailSnoozeButton = ({ emailSelectedId }: EmailSnoozeButtonType) => {
   const [date, setDate] = useState<Date | undefined>(new Date())
 
   const today = new Date()
@@ -27,15 +28,7 @@ export const EmailSnoozeButton = () => {
         <Popover>
           <PopoverTrigger asChild>
             <TooltipTrigger asChild>
-              <Button
-                className="email__snooze__button"
-                variant="ghost"
-                size="icon"
-                disabled={
-                  //FIX: GET the state from redux
-                  false
-                }
-              >
+              <Button className="email__snooze__button" variant="ghost" size="icon" disabled={!emailSelectedId.length}>
                 <Icon.clock />
                 <span>Snooze</span>
               </Button>

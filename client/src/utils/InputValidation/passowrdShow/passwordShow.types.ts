@@ -1,7 +1,7 @@
-import { setValidFunc } from '../inputValidation'
+import { setValidType } from '../inputValidation'
 
 export interface onPasswordShowProps {
-  setFunc: setValidFunc
+  setFunc: setValidType
   passwordRef: React.RefObject<HTMLInputElement>
   passwordShow: boolean
 }

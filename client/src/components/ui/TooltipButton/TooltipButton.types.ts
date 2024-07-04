@@ -1,10 +1,10 @@
-import { ReactElement } from 'react'
+import { IconType } from '@/assets'
 
 export type TooltipButtonProps = {
   button: {
     title: string
     label?: string
-    icon: ReactElement 
+  icon: ({ className }: IconType) => JSX.Element
   }
   id?: number
   isCollapsed: boolean

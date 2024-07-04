@@ -11,7 +11,8 @@ export const postGetThreadsHandler: RequestHandler = async (req, res) => {
   // Getting parameters of the req [body - session]
   const { access_token, oauth_id, user_id } = req.session
     .oauth_user_data as OAuthToken
-  const { maxResults = 4, labelIds }: postGetThreadsHandlerType = req.body
+  const { maxResults, q }: postGetThreadsHandlerType = req.body
+  console.log(q)
 
   try {
     // getting the msg from the GMAIL API
@@ -20,7 +21,7 @@ export const postGetThreadsHandler: RequestHandler = async (req, res) => {
       maxResults: 30,
       distnation: `${oauth_id}/threads/`,
       fields: 'threads(id),nextPageToken',
-      labelIds
+      q
     })
     if (!data)
       return res.json({ error: `Error: failed to get threads`, data: null })

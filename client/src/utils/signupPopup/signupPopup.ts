@@ -1,10 +1,8 @@
-import { toast } from 'sonner'
-
 interface SignupPopupProps {
   url: string
 }
 
-const signupPopup = async ({ url }: SignupPopupProps): Promise<boolean> => {
+const signupPopup = async ({ url }: SignupPopupProps) => {
   const width = 600
   const height = 600
   const left = (screen.width - width) / 2

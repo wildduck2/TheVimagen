@@ -5,10 +5,10 @@ export type GetIdsFromGmailAPIType = {
   maxResults?: number | null
   distnation: string
   fields: string
-  labelIds: string
+  q: string
 }
 export interface FetchEachOneWithIdType
-  extends Omit<GetIdsFromGmailAPIType, 'maxResults' | 'labelIds'> {
+  extends Omit<GetIdsFromGmailAPIType, 'maxResults' | 'q'> {
   groupOfIds: string[]
   format: string
 }
