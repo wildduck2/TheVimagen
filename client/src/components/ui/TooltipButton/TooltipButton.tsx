@@ -1,4 +1,4 @@
-import React from 'react'
+ 
 import { Button, Tooltip, TooltipContent, TooltipTrigger, buttonVariants } from '..'
 import { cn } from '../../../utils'
 import { TooltipButtonProps } from './TooltipButton.types'
@@ -11,7 +11,7 @@ const TooltipButton = ({ button, id = 0, isCollapsed, onClick }: TooltipButtonPr
           onClick={onClick}
           className={cn(buttonVariants({ variant: 'secondary', size: 'icon' }), 'header__nav__link collabsed')}
         >
-          <button.icon className="icon" />
+          {<button.icon className="icon" />}
           <span className="sr-only">{button.title}</span>
         </Button>
       </TooltipTrigger>

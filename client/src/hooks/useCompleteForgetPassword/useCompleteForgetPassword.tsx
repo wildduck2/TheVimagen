@@ -17,28 +17,27 @@ export const useCompleteForgetPassword = ({ password, confirmPassword }: useComp
     setIsLoading(true)
     try {
       //NOTE: if no user navigate
-      // if (!user || password !== confirmPassword || password === '' || confirmPassword === '')
-      //   return route({ to: '/auth/signin' })
+      if (!user || password !== confirmPassword || password === '' || confirmPassword === '')
+        return route({ to: '/auth/signin' })
 
       //NOTE: Update password with the new password
-      // const { data, statusText } = await axios.post(
-      //   `${process.env.ROOT_URL}/auth/update-password`,
-      //   {
-      //     password,
-      //     confirmPassword,
-      //   },
-      //   { withCredentials: true },
-      // )
-      setTimeout(() => {
-        setIsLoading(false)
-        //NOTE: handling errors if fails
-        // if (!data.updated || statusText !== 'OK') {
-        //   return toast.error('Error: password has not updated!')
-        // }
+      const { data, statusText } = await axios.post(
+        `${process.env.ROOT_URL}/auth/update-password`,
+        {
+          password,
+          confirmPassword,
+        },
+        { withCredentials: true },
+      )
+      setIsLoading(false)
+      //NOTE: handling errors if fails
+      if (!data.updated || statusText !== 'OK') {
+        return toast.error('Error: password has not updated!')
+      }
 
-        setDone(true)
-        return toast.success('Password has updated sucssesfully')
-      }, 4000)
+      setDone(true)
+      route({ to: '/dashboard/Home' })
+      return toast.success('Password has updated sucssesfully')
     } catch (error) {
       setIsLoading(false)
       return toast.error('Error: password has not updated!')

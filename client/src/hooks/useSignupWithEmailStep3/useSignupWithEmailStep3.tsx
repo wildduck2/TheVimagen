@@ -6,7 +6,6 @@ import { toast } from 'sonner'
 import { RootState, User, getUserData } from '@/context'
 import type { error, useSignupIWthEmailStep3Props } from './useSignupWithEmailStep3.types'
 import { useNavigate } from '@tanstack/react-router'
-import { disconnect } from 'process'
 
 export const useSignupIWthEmailStep3 = ({
   first_name,

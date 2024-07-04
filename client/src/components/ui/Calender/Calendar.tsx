@@ -42,8 +42,8 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
         ...classNames,
       }}
       components={{
-        IconLeft: ({ ...props }) => <Icon.chevronLeft className="h-4 w-4" />,
-        IconRight: ({ ...props }) => <Icon.chevronRight className="h-4 w-4" />,
+        IconLeft: () => <Icon.chevronLeft className="h-4 w-4" />,
+        IconRight: () => <Icon.chevronRight className="h-4 w-4" />,
       }}
       {...props}
     />

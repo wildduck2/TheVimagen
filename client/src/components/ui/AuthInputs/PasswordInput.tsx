@@ -6,7 +6,6 @@ import { RootState } from '@/context'
 import { PasswordValidation, onPasswordShow, setValidType, setValueFunc } from '@/utils'
 import { Label, Input } from '..'
 
-import { GiPlainCircle } from 'react-icons/gi'
 import { useDebounce } from '@/hooks'
 import { Icon } from '@/assets'
 

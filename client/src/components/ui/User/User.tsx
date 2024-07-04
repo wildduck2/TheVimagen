@@ -1,4 +1,4 @@
-import React from 'react'
+ 
 import { Avatar, AvatarFallback, AvatarImage } from '..'
 import { UserProps } from './User.types'
 

@@ -1,9 +1,9 @@
-import type { TbTriangle } from 'react-icons/tb'
+import { IconType } from "@/assets"
 
 export interface AccordionProps {
   data: string[]
 }
 
 export type DefaultICons = {
-  [key: string]: typeof TbTriangle
+  [key: string]: ({ className }: IconType) => JSX.Element
 }

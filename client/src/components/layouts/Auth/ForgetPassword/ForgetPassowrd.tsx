@@ -48,8 +48,8 @@ export const ForgetPassword = () => {
         </div>
 
         <p>
-          By clicking continue, you agree to our <Link to="/terms">Terms of Service</Link> and
-          <Link to="/privacy">Privacy Policy</Link>.
+          By clicking continue, you agree to our <Link >Terms of Service</Link> and
+          <Link>Privacy Policy</Link>.
         </p>
       </div>
     </div>

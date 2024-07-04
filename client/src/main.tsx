@@ -1,4 +1,3 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
@@ -10,8 +9,8 @@ import { store } from './context/redux/store.ts'
 import { routeTree } from './routeTree.gen'
 import './scss/style.scss'
 
-const router = createRouter({ routeTree })
-const queryClient = new QueryClient()
+export const router = createRouter({ routeTree })
+export const queryClient = new QueryClient()
 
 declare module '@tanstack/react-router' {
   interface Register {

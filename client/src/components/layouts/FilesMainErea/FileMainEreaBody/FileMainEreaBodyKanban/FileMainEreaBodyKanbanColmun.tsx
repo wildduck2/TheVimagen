@@ -1,4 +1,4 @@
-import React from 'react'
+ 
 import { FileMainEreaBodyKanbanColmunProps } from './FileMainEreaBodyKanban.types'
 import {
   FileMainEreaBodyKanbanColmunHeaer,

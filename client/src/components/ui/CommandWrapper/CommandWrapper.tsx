@@ -1,4 +1,4 @@
-import React from 'react'
+ 
 import { Popover, PopoverContent, PopoverTrigger } from '../Popover'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '../Command'
 import { Button } from '../Button'
@@ -6,6 +6,7 @@ import { cn } from '@/utils'
 import { CommandWrapperType } from './CommandWrapper.types'
 import { Label } from '../Label'
 import { Icon } from '@/assets'
+import React from 'react'
 
 export const CommandWrapper: React.FC<CommandWrapperType> = ({
   data,

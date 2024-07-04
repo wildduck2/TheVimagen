@@ -1,4 +1,4 @@
-import { Icon } from '@/assets'
+import { Icon, IconType } from '@/assets'
 import { EmailHeaderNavLinksType, link } from './EmailHeaderNavLinks.types'
 
 export const EmailHeaderNavLinks: EmailHeaderNavLinksType = {
@@ -7,42 +7,42 @@ export const EmailHeaderNavLinks: EmailHeaderNavLinksType = {
       title: 'Inbox',
       link: '/email/inbox',
       label: '128',
-      icon: <Icon.inbox/>,
+      icon: ({ className }: IconType) => <Icon.inbox className={className} />,
       variant: 'default',
     },
     {
       title: 'Drafts',
       link: '/email/drafts',
       label: '9',
-      icon: <Icon.file/>,
+      icon: ({ className }: IconType) => <Icon.file className={className} />,
       variant: 'ghost',
     },
     {
       title: 'Sent',
       link: '/email/sent',
       label: '',
-      icon: <Icon.send/>,
+      icon: ({ className }: IconType) => <Icon.send className={className} />,
       variant: 'ghost',
     },
     {
       title: 'Junk',
       link: '/email/junk',
       label: '23',
-      icon: <Icon.archiveX/>,
+      icon: ({ className }: IconType) => <Icon.archiveX className={className} />,
       variant: 'ghost',
     },
     {
       title: 'Trash',
       link: '/email/trash',
       label: '',
-      icon: <Icon.trash2/>,
+      icon: ({ className }: IconType) => <Icon.trash2 className={className} />,
       variant: 'ghost',
     },
     {
       title: 'Archive',
       link: '/email/archive',
       label: '',
-      icon: <Icon.archive/>,
+      icon: ({ className }: IconType) => <Icon.archive className={className} />,
       variant: 'ghost',
     },
   ],
@@ -51,35 +51,35 @@ export const EmailHeaderNavLinks: EmailHeaderNavLinksType = {
       title: 'Categories',
       link: '/email/categories',
       label: '972',
-      icon: <Icon.tags/>,
+      icon: ({ className }: IconType) => <Icon.tags className={className} />,
       variant: 'ghost',
     },
     {
       title: 'Scheduled',
       link: '/email/scheduled',
       label: '342',
-      icon: <Icon.calendarCheck/>,
+      icon: ({ className }: IconType) => <Icon.calendarCheck className={className} />,
       variant: 'ghost',
     },
     {
       title: 'Updates',
       link: '/email/updates',
       label: '342',
-      icon: <Icon.alertCircle/>,
+      icon: ({ className }: IconType) => <Icon.alertCircle className={className} />,
       variant: 'ghost',
     },
     {
       title: 'All Email',
       link: '/email/all-email',
       label: '342',
-      icon: <Icon.galleryVerticalEnd/>,
+      icon: ({ className }: IconType) => <Icon.galleryVerticalEnd className={className} />,
       variant: 'ghost',
     },
     {
       title: 'Settings',
       link: '/email/settings',
       label: '21',
-      icon: <Icon.settings/>,
+      icon: ({ className }: IconType) => <Icon.settings className={className} />,
       variant: 'ghost',
     },
   ],
@@ -87,15 +87,15 @@ export const EmailHeaderNavLinks: EmailHeaderNavLinksType = {
 
 export const logoutHeaderLinkData: link = {
   title: 'Get back',
-  icon: Icon.arrowLeftFromLine,
+  icon: ({ className }: IconType) => <Icon.arrowLeftFromLine className={className} />,
 }
 
 export const toggleheaderLinkData: link = {
   title: 'Menu',
-  icon: Icon.chevronRight,
+  icon: ({ className }: IconType) => <Icon.chevronRight className={className} />,
 }
 
 export const profileLinkData: link = {
   title: 'Profile',
-  icon: Icon.user,
+  icon: ({ className }: IconType) => <Icon.user className={className} />,
 }

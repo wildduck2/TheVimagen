@@ -1,8 +1,9 @@
-import React from 'react'
+ 
 import { useNavigate } from '@tanstack/react-router'
 import { RequireAuthType } from './RequireAuth.types'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/context'
+import React from 'react'
 
 export const RequireAuth = ({ children }: RequireAuthType) => {
   const user = useSelector((state: RootState) => state.user.user)
