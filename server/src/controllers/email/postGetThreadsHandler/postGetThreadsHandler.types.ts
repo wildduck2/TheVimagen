@@ -2,7 +2,7 @@ import { ThreadType } from '../postGetThreadHandler'
 
 export type postGetThreadsHandlerType = {
   maxResults: number
-  labelIds: string
+  q: string
 }
 
 export type ThreadsType = {
