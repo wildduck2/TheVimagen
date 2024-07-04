@@ -2,9 +2,9 @@ import {
   postGetHistoryHandler,
   postGetThreadHandler,
   postGetThreadsHandler
-} from 'controllers'
+} from '../../controllers'
 import { Router } from 'express'
-import { auth_credentials_about_to_expire } from 'middlewares'
+import { auth_credentials_about_to_expire } from '../../middlewares'
 
 const email_router = Router()
 
