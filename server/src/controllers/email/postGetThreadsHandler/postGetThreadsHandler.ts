@@ -4,7 +4,7 @@ import {
   postGetThreadsHandlerType,
   ThreadsType
 } from './postGetThreadsHandler.types'
-import { Email } from 'services'
+import { Email } from '../../../services/Email'
 import { MessageType, ThreadMessageType } from '../postGetThreadHandler'
 
 export const postGetThreadsHandler: RequestHandler = async (req, res) => {
@@ -12,7 +12,6 @@ export const postGetThreadsHandler: RequestHandler = async (req, res) => {
   const { access_token, oauth_id, user_id } = req.session
     .oauth_user_data as OAuthToken
   const { maxResults, q }: postGetThreadsHandlerType = req.body
-  console.log(q)
 
   try {
     // getting the msg from the GMAIL API

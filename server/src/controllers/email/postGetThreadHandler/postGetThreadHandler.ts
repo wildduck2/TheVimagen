@@ -1,9 +1,8 @@
-import axios from 'axios'
 import { RequestHandler } from 'express'
 import { OAuthToken } from '@prisma/client'
 import { ParseGmailApi, IEmail } from 'gmail-api-parse-message-ts'
+import { Email } from '../../../services'
 import { PostThreadHandler } from './postGetThreadHandler.types'
-import { Email } from 'services'
 
 export const postGetThreadHandler: RequestHandler = async (req, res) => {
   const { threads_id }: PostThreadHandler = req.body
@@ -30,8 +29,6 @@ export const postGetThreadHandler: RequestHandler = async (req, res) => {
 
     return res.json({ error: null, data: email })
   } catch (error) {
-    console.log(error)
-
     return res.json({ error: 'failed to get msgs', data: null })
   }
 }

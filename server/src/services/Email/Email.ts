@@ -1,8 +1,7 @@
 import axios from 'axios'
 import { FetchEachOneWithIdType, GetIdsFromGmailAPIType } from './Email.type'
-import { MessageType, ThreadMessageType, ThreadsType } from 'controllers'
+import { MessageType, ThreadMessageType } from 'controllers'
 import { GMAIL_URL } from '../../constants'
-import { Record } from '@prisma/client/runtime/library'
 
 export class Email {
   constructor() {}
@@ -15,8 +14,6 @@ export class Email {
     q
   }: GetIdsFromGmailAPIType) {
     try {
-      console.log(q)
-
       const { data } = await axios.get<Awaited<Promise<T>>>(
         `${GMAIL_URL}${distnation}`,
         {

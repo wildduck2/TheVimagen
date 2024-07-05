@@ -21,6 +21,7 @@ import { WelcomeEmail, renderEmail } from '../../views'
 import { mailOptions, prisma, transporter } from '../../utils'
 import axios from 'axios'
 import generator from 'generate-password'
+import { Otp } from '@prisma/client'
 
 export class User {
   constructor() {}
@@ -275,7 +276,7 @@ export class User {
   //INFO : tested
   static async generatePasswordResetToken({
     user_id
-  }: GenerateOTPType): Promise<string | null> {
+  }: GenerateOTPType): Promise<Otp | null> {
     try {
       const OTP = otpGenerator.generate(6, {
         upperCaseAlphabets: false,
@@ -284,22 +285,28 @@ export class User {
       })
       const expires_at = new Date(Date.now() + 60000 * 10) // Expires after 10 minutes
 
-      const user = await prisma.user.update({
-        where: { id: user_id },
+      const otp = await prisma.otp.findUnique({
+        where: { user_id }
+      })
+      if (otp) return otp
+
+      const otpCreated = await prisma.otp.create({
         data: {
-          password_reset_token: OTP,
-          password_reset_token_expiration: expires_at
+          otp: OTP,
+          user_id,
+          expires_at
         }
       })
 
-      if (!user) return null
+      if (!otpCreated) return null
 
-      return OTP
+      return otpCreated
     } catch (error) {
       return null
     }
   }
 
+  //NOTE: tested
   static async upsert_user_oauth_data({
     last_name,
     first_name,
@@ -345,6 +352,7 @@ export class User {
     }
   }
 
+  //NOTE: tested
   static async upsert_oauth_data({
     oauth_id,
     user_id,
@@ -370,9 +378,6 @@ export class User {
           access_token,
           expire_in,
           id_token
-        },
-        include: {
-          user: true
         }
       })
       if (!oauth_data) return null
@@ -383,6 +388,7 @@ export class User {
     }
   }
 
+  //NOTE: tested
   static async get_oauth_data({ user_id }: getOauthDataType) {
     try {
       const oauth_user_data = await prisma.oAuthToken.findUnique({
