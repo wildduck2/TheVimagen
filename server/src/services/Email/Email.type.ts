@@ -6,9 +6,10 @@ export type GetIdsFromGmailAPIType = {
   distnation: string
   fields: string
   q: string
+  pageToken: string
 }
 export interface FetchEachOneWithIdType
-  extends Omit<GetIdsFromGmailAPIType, 'maxResults' | 'q'> {
+  extends Omit<GetIdsFromGmailAPIType, 'maxResults' | 'q' | 'pageToken'> {
   groupOfIds: string[]
   format: string
 }

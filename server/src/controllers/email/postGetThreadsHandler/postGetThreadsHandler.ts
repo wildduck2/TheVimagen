@@ -11,15 +11,16 @@ export const postGetThreadsHandler: RequestHandler = async (req, res) => {
   // Getting parameters of the req [body - session]
   const { access_token, oauth_id, user_id } = req.session
     .oauth_user_data as OAuthToken
-  const { maxResults, q }: postGetThreadsHandlerType = req.body
+  const { pageToken, q }: postGetThreadsHandlerType = req.body
 
   try {
     // getting the msg from the GMAIL API
     const data = await Email.getMessagesIdsFromGmailAPI<ThreadsType>({
       access_token,
-      maxResults: 30,
+      maxResults: 10,
       distnation: `${oauth_id}/threads/`,
       fields: 'threads(id),nextPageToken',
+      pageToken,
       q
     })
     if (!data)
