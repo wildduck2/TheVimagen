@@ -35,7 +35,7 @@ vi.mock('../../../utils', () => ({
     html
   })),
   prisma: {
-    oAuthToken: { upsert: vi.fn() },
+    oAuthToken: { upsert: vi.fn(), findUnique: vi.fn() },
     user: {
       findFirst: vi.fn(),
       findUnique: vi.fn(),
@@ -730,6 +730,35 @@ describe('upsert_oauth_data unit tests', () => {
   })
 })
 //NOTE: get_oauth_data unit tests
+describe('get_oauth_data unit tests', () => {
+  it('should return error if the data does not found', async () => {
+    ;(prisma.oAuthToken.findUnique as Mock).mockResolvedValue(null)
+
+    const data = await User.get_oauth_data({
+      user_id: '1233'
+    })
+
+    expect(data).toBeNull()
+  })
+
+  it('should return null if  the req failed', async () => {
+    ;(prisma.oAuthToken.findUnique as Mock).mockRejectedValue(null)
+
+    const data = await User.get_oauth_data({
+      user_id: '1233'
+    })
+    expect(data).toBeNull()
+  })
+
+  it('should return data if all things  went okay', async () => {
+    ;(prisma.oAuthToken.findUnique as Mock).mockResolvedValue({ id: '1233' })
+
+    const data = await User.get_oauth_data({
+      user_id: '1233'
+    })
+    expect(data).toEqual({ id: '1233' })
+  })
+})
 
 //NOTE: sendEmail unit tests
 describe('sendEmail unit tests', () => {
