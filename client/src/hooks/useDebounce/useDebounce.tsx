@@ -1,3 +1,19 @@
+import { useRef } from 'react'
+
+export const useDebounce = <T extends (...args: unknown[]) => void>(cb: T, delay = 500) => {
+  const timeoutRef = useRef<NodeJS.Timeout>()
+
+  ;(function () {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      cb()
+    }, delay)
+  })()
+}
+
 /* export function useDebounce<T, P extends (...args: T[]) => void>(func: P, timeout: number = 300) {
   let timer: ReturnType<typeof setTimeout>;
   return function (this: T, ...args: Parameters<P>) {
@@ -7,19 +23,3 @@
     }, timeout);
   };
 } */
-
-import { useEffect, useState } from 'react'
-
-export const useDebounce = <T,>(value: T, delay = 500) => {
-  const [debouncedValue, setDebouncedValue] = useState<T>(value)
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setDebouncedValue(value)
-    }, delay)
-
-    return () => clearTimeout(timeout)
-  }, [value, delay])
-
-  return debouncedValue
-}
