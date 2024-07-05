@@ -1,8 +1,8 @@
 import { useRef } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
 
-import { getThreads, groupMessagesBySender, MessageType, QueryKeyType, searchMessages } from '@/utils'
-import { ScrollAreaChildRef, Skeleton } from '@/components/ui'
+import { cn, getThreads, groupMessagesBySender, MessageType, QueryKeyType, searchMessages } from '@/utils'
+import { Badge, ScrollAreaChildRef, Skeleton } from '@/components/ui'
 
 import { EmailListItem } from '../EmailListItem'
 import { EmailListProps } from './EmailList.types'
@@ -14,13 +14,14 @@ import { Icons } from '@/constants'
 export function EmailList({ q, queryKey }: EmailListProps) {
   //INFO: handling featching data
   const qk: QueryKeyType = [queryKey, { q }]
-  const { data, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status } = useInfiniteQuery({
-    queryKey: qk,
-    queryFn: getThreads,
-    initialPageParam: '',
-    getNextPageParam: (prev) => prev.nextPageToken,
-    refetchOnWindowFocus: false,
-  })
+  const { data, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status, isRefetching } =
+    useInfiniteQuery({
+      queryKey: qk,
+      queryFn: getThreads,
+      initialPageParam: '',
+      getNextPageParam: (prev) => prev.nextPageToken,
+      refetchOnWindowFocus: false,
+    })
 
   //INFO: handling ids to feach message and groupMessagesBySender
   const searchId = useSelector((state: RootState) => state.email.searchInput)
@@ -40,6 +41,11 @@ export function EmailList({ q, queryKey }: EmailListProps) {
         {status === 'success' ? (
           finalData.length > 0 ? (
             <>
+              <Badge
+                className={cn('email__list__wrapper__loading', isRefetching && 'show', isFetchingNextPage && 'show')}
+              >
+                {isFetchingNextPage ? 'Loading more...' : 'Updating...'}
+              </Badge>
               {(finalData as MessageType[][]).map((item, idx) => (
                 <EmailListItem key={idx} item={item[0]} items={item} />
               ))}

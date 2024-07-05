@@ -18,10 +18,26 @@
 
   &__wrapper {
     @include u.flex(flex);
+    position: relative;
     flex-direction: column;
     gap: 0.5rem;
     padding: 1rem;
     padding-top: 0;
+
+    &__loading {
+      position: fixed;
+      place-self: center;
+      text-align: center;
+      width: fit-content;
+      translate: 0 -0.9rem;
+      opacity: 0;
+      transition: 0.3s ease-in-out;
+
+      &.show {
+        opacity: 1;
+        translate: 0 0.3rem;
+      }
+    }
 
     &__item {
       @include u.flex(flex, flex-start);

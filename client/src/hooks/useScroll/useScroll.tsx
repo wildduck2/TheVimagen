@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { UseWindowScrollType } from './useScroll.types'
 import { useThrottle } from '../useThrottle'
+import { useDebounce } from '../useDebounce'
 
 export const useWindowScroll = ({ scrollRef, cb }: UseWindowScrollType): void => {
   const handleScroll = useThrottle(() => {
@@ -8,7 +9,7 @@ export const useWindowScroll = ({ scrollRef, cb }: UseWindowScrollType): void =>
       const { scrollTop, scrollHeight, clientHeight } = scrollRef.current
       const scrollPosition = (scrollTop + clientHeight) / scrollHeight
 
-      if (scrollPosition >= 0.8) {
+      if (scrollPosition >= 0.9) {
         cb()
       }
     }
