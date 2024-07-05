@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express'
-import { User } from 'services'
-import { get_new_access_token } from 'utils'
+import { User } from '../../services'
+import { get_new_access_token } from '../../utils'
 import { AuthCredentialsAboutToExpireType } from './auth_credentials_about_to_expire.types'
 
 export const auth_credentials_about_to_expire: RequestHandler = async (
@@ -25,12 +25,6 @@ export const auth_credentials_about_to_expire: RequestHandler = async (
     const currentTime = Date.now()
     const timeElapsed = currentTime - updated_at.getTime()
     const timeRemaining = expire_in * 1000 - timeElapsed
-
-    console.log(
-      timeRemaining,
-      EXPIRATION_THRESHOLD,
-      timeRemaining >= EXPIRATION_THRESHOLD
-    )
 
     if (timeRemaining >= EXPIRATION_THRESHOLD) return next()
 
