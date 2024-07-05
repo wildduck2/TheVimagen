@@ -300,6 +300,7 @@ export class User {
     }
   }
 
+  //NOTE: tested
   static async upsert_user_oauth_data({
     last_name,
     first_name,
@@ -345,6 +346,7 @@ export class User {
     }
   }
 
+  //NOTE: tested
   static async upsert_oauth_data({
     oauth_id,
     user_id,
@@ -370,9 +372,6 @@ export class User {
           access_token,
           expire_in,
           id_token
-        },
-        include: {
-          user: true
         }
       })
       if (!oauth_data) return null

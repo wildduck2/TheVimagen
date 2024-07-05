@@ -29,8 +29,6 @@ export const postGetThreadHandler: RequestHandler = async (req, res) => {
 
     return res.json({ error: null, data: email })
   } catch (error) {
-    console.log(error)
-
     return res.json({ error: 'failed to get msgs', data: null })
   }
 }
