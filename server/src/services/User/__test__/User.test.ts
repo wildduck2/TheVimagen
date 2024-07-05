@@ -11,6 +11,7 @@ import generator, { generate } from 'generate-password'
 import axios from 'axios'
 import qs from 'qs'
 import { mock } from 'node:test'
+import { warn } from 'console'
 
 vi.mock('generate-password')
 vi.mock('axios')
@@ -44,6 +45,7 @@ vi.mock('../../../utils', () => ({
       upsert: vi.fn()
     },
     otp: {
+      findUnique: vi.fn(),
       create: vi.fn(),
       findFirst: vi.fn(),
       delete: vi.fn()
@@ -319,55 +321,88 @@ describe('verifyOTP unit tests', () => {
 
 //NOTE:  generatePasswordResetToken testing units
 describe('generatePasswordResetToken testing units', () => {
-  it('should return null if the passwordResetPassword has not created!', async () => {
-    ;(otpGenerator.generate as Mock).mockReturnValue(null)
+  const mockedOTP = 'otp'
+  const mockedOtpExist = { id: '123', otp: '12412' }
+  const expires_at = expect.any(Date)
+  const mockedCreatePasswordOtp = {
+    data: {
+      otp: 'otp',
+      user_id: '123',
+      expires_at
+    }
+  }
+
+  it('should reutrn otp if the otp do exist in the db', async () => {
+    ;(otpGenerator.generate as Mock).mockReturnValue(mockedOTP)
+    ;(prisma.otp.findUnique as Mock).mockResolvedValue(mockedOtpExist)
 
     const OTP = await User.generatePasswordResetToken({ user_id: '123' })
+    expect(prisma.otp.findUnique).toHaveBeenCalledOnce()
+    expect(prisma.otp.findUnique).toHaveBeenCalledWith({
+      where: { user_id: '123' }
+    })
 
-    expect(OTP).toBe(null)
+    expect(OTP).toEqual(mockedOtpExist)
   })
 
-  it('should return OTP if the passwordResetPassword has created and return error if the user has not  updated', async () => {
-    ;(otpGenerator.generate as Mock).mockReturnValue('123456')
-    ;(prisma.user.update as Mock).mockResolvedValue(null)
+  it('should return error if finding otp rejected', async () => {
+    ;(otpGenerator.generate as Mock).mockReturnValue(mockedOTP)
+    ;(prisma.otp.findUnique as Mock).mockRejectedValue(null)
 
     const OTP = await User.generatePasswordResetToken({ user_id: '123' })
-    const expires_at = new Date(Date.now() + 60000 * 10)
-
-    expect(otpGenerator.generate()).toBe('123456')
-    expect(prisma.user.update).toHaveBeenCalledWith({
-      where: { id: '123' },
-      data: {
-        password_reset_token: '123456',
-        password_reset_token_expiration: expires_at
-      }
+    expect(prisma.otp.findUnique).toHaveBeenCalledWith({
+      where: { user_id: '123' }
     })
-    expect(OTP).toBe(null)
+    expect(prisma.otp.findUnique).toHaveBeenCalledOnce()
+    expect(OTP).toBeNull()
   })
 
-  it('should return the OTP if the OTP has generated and the user has been updated', async () => {
-    ;(otpGenerator.generate as Mock).mockReturnValue('123456')
-    ;(prisma.user.update as Mock).mockResolvedValue({
-      id: '123',
-      email: 'doexist@gmail.com'
-    })
+  it('should return null if the creating req rejected', async () => {
+    ;(otpGenerator.generate as Mock).mockReturnValue(mockedOTP)
+    ;(prisma.otp.findUnique as Mock).mockResolvedValue(null)
+    ;(prisma.otp.create as Mock).mockRejectedValue(null)
 
     const OTP = await User.generatePasswordResetToken({ user_id: '123' })
-    const expires_at = new Date(Date.now() + 60000 * 10)
 
-    expect(otpGenerator.generate()).toBe('123456')
-    expect(prisma.user.update).toHaveBeenCalledWith({
-      where: { id: '123' },
-      data: {
-        password_reset_token: '123456',
-        password_reset_token_expiration: expires_at
-      }
+    expect(prisma.otp.findUnique).toHaveBeenCalledWith({
+      where: { user_id: '123' }
     })
-    expect(prisma.user.update).toReturnWith({
-      id: '123',
-      email: 'doexist@gmail.com'
+    expect(prisma.otp.create).toHaveBeenCalledWith(mockedCreatePasswordOtp)
+    expect(prisma.otp.create).toHaveBeenCalledOnce()
+    expect(prisma.otp.findUnique).toHaveBeenCalledOnce()
+    expect(OTP).toBeNull()
+  })
+
+  it('should return null if otp createing returned null', async () => {
+    ;(otpGenerator.generate as Mock).mockReturnValue(mockedOTP)
+    ;(prisma.otp.findUnique as Mock).mockResolvedValue(null)
+    ;(prisma.otp.create as Mock).mockResolvedValue(null)
+
+    const OTP = await User.generatePasswordResetToken({ user_id: '123' })
+
+    expect(prisma.otp.findUnique).toHaveBeenCalledWith({
+      where: { user_id: '123' }
     })
-    expect(OTP).toBe('123456')
+    expect(prisma.otp.create).toHaveBeenCalledWith(mockedCreatePasswordOtp)
+    expect(prisma.otp.create).toHaveBeenCalledOnce()
+    expect(prisma.otp.findUnique).toHaveBeenCalledOnce()
+    expect(OTP).toBeNull()
+  })
+
+  it('should return data if the createing of the otp went okay ', async () => {
+    ;(otpGenerator.generate as Mock).mockReturnValue(mockedOTP)
+    ;(prisma.otp.findUnique as Mock).mockResolvedValue(null)
+    ;(prisma.otp.create as Mock).mockResolvedValue(mockedOTP)
+
+    const OTP = await User.generatePasswordResetToken({ user_id: '123' })
+
+    expect(prisma.otp.findUnique).toHaveBeenCalledWith({
+      where: { user_id: '123' }
+    })
+    expect(prisma.otp.create).toHaveBeenCalledWith(mockedCreatePasswordOtp)
+    expect(prisma.otp.create).toHaveBeenCalledOnce()
+    expect(prisma.otp.findUnique).toHaveBeenCalledOnce()
+    expect(OTP).toEqual(mockedOTP)
   })
 })
 
