@@ -21,10 +21,16 @@ export const auth_credentials_about_to_expire: RequestHandler = async (
 
     //NOTE: checking for the expiration of the credentials
     const EXPIRATION_THRESHOLD = 5 * 60 * 1000
-    const { created_at, expire_in } = oauth_user_data
+    const { updated_at, expire_in } = oauth_user_data
     const currentTime = Date.now()
-    const timeElapsed = currentTime - created_at.getTime()
+    const timeElapsed = currentTime - updated_at.getTime()
     const timeRemaining = expire_in * 1000 - timeElapsed
+
+    console.log(
+      timeRemaining,
+      EXPIRATION_THRESHOLD,
+      timeRemaining >= EXPIRATION_THRESHOLD
+    )
 
     if (timeRemaining >= EXPIRATION_THRESHOLD) return next()
 

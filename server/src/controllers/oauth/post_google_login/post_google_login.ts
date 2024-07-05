@@ -49,7 +49,6 @@ export const post_google_login: RequestHandler = async (req, res) => {
       id_token,
       user_id: user?.id
     })
-    console.log(oauth_data)
 
     if (!oauth_data) {
       return res.json({ error: `Error: oauth data has not updated` })
@@ -76,7 +75,6 @@ export const post_google_login: RequestHandler = async (req, res) => {
     res.json({ error: null, body: userData })
     // res.redirect('http://localhost:5173/email/inbox')
   } catch (error) {
-    console.log(error)
     return res.json({ error: 'oauth with google has failed, please try again' })
   }
 }
