@@ -1,20 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { Input, Separator } from '@/components/ui'
+import { Input } from '@/components/ui'
 import { getSearchInput } from '@/context'
 import { useDebounce } from '@/hooks'
 import { Icon } from '@/assets'
 
 export const EmailListSearch = () => {
   const [sq, setSq] = useState<string>('')
-  const debounceValue = useDebounce(sq)
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    //NOTE: debouncing the input on change
-    dispatch(getSearchInput(debounceValue))
-  }, [debounceValue])
+  useDebounce(() => {
+    dispatch(getSearchInput(sq))
+  })
+
   return (
     <>
       <form>

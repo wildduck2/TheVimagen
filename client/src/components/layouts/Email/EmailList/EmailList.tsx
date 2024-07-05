@@ -9,6 +9,7 @@ import { EmailListProps } from './EmailList.types'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/context'
 import { useWindowScroll } from '@/hooks'
+import { Icons } from '@/constants'
 
 export function EmailList({ q, queryKey }: EmailListProps) {
   //INFO: handling featching data
@@ -46,7 +47,9 @@ export function EmailList({ q, queryKey }: EmailListProps) {
               {/*NOTE: handling refetching next page error */}
               {isFetchingNextPage &&
                 (isFetchingNextPage ? (
-                  <p className="email__list__wrapper__loadmore w-fit self-center">Loading more...</p>
+                  <p className="email__list__wrapper__loadmore self-center mt-3">
+                    <Icons.spinner className="spin" />
+                  </p>
                 ) : hasNextPage ? (
                   <p className="email__list__wrapper__loadmore w-fit self-center">Load More</p>
                 ) : (

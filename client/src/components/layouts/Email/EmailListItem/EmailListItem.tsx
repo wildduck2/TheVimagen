@@ -35,7 +35,7 @@ export const EmailListItem = ({ item, items }: EmailListItemType) => {
                   .value.split('<')[0]
                   .replace(/"/gi, ' ')}
               </div>
-              <button>
+              <button onClick={() => {}}>
                 {item.labelIds.includes('STARRED') ? (
                   //TODO: make the use start the item
                   <Icon.filledStar className="size-[1rem]" />
