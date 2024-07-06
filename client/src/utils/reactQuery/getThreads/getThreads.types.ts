@@ -18,5 +18,7 @@ export type QueryKeyType = [
   string,
   {
     q?: string | null
+    maxResults?: number | null
+    fields: string
   },
 ]

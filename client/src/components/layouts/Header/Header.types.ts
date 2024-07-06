@@ -4,6 +4,7 @@ import { ReactElement } from 'react'
 export interface NavProps {
   isCollapsed: boolean
   links: headerLinksType[]
+  labels: number[]
 }
 
 export type LogoProps = {

@@ -13,7 +13,14 @@ import { Icons } from '@/constants'
 
 export function EmailList({ q, queryKey }: EmailListProps) {
   //INFO: handling featching data
-  const qk: QueryKeyType = [queryKey, { q }]
+  const qk: QueryKeyType = [
+    queryKey,
+    {
+      q,
+      maxResults: 20,
+      fields: 'threads(id),nextPageToken',
+    },
+  ]
   const { data, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status, isRefetching } =
     useInfiniteQuery({
       queryKey: qk,

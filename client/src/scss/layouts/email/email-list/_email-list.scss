@@ -73,6 +73,12 @@
 
             &>div {
               font-weight: 600;
+
+              &.active {
+                &>svg {
+                  fill: currentColor;
+                }
+              }
             }
 
             &>span {
