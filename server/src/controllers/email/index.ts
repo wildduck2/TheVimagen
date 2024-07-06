@@ -1,3 +1,3 @@
 export * from './postGetThreadsHandler'
 export * from './postGetThreadHandler'
-export * from './postGetHistoryHandler'
+export * from './getGetSizeEstimatedHandler'

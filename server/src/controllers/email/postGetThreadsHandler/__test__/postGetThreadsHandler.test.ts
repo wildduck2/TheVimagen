@@ -60,6 +60,7 @@ describe('postGetThreadsHandler', () => {
     maxResults: 30,
     distnation: `URL/threads/`,
     fields: 'threads(id),nextPageToken',
+    pageToken: '',
     q: 'label:inbox'
   }
   const fetchEachOneWithIdMockData = {
