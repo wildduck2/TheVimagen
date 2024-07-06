@@ -6,9 +6,10 @@ export type ThreadType = {
   id: string
   snippet: string
   historyId: string
+  messages: MessageType[]
 }
 
-export type ThreadMessageType = {
+export type ThreadResType = {
   id: string
   historyId: string
   messages: MessageType[]

@@ -3,7 +3,6 @@ import { ThreadType } from '../postGetThreadHandler'
 export type postGetThreadsHandlerType = {
   maxResults: number
   q: string
-  pageToken: string
   fields: string
 }
 

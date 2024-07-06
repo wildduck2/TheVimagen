@@ -5,14 +5,13 @@ import {
   ThreadsType
 } from './postGetThreadsHandler.types'
 import { Email } from '../../../services/Email'
-import { MessageType, ThreadMessageType } from '../postGetThreadHandler'
+import { MessageType, ThreadResType } from '../postGetThreadHandler'
 
 export const postGetThreadsHandler: RequestHandler = async (req, res) => {
   // Getting parameters of the req [body - session]
   const { access_token, oauth_id, user_id } = req.session
     .oauth_user_data as OAuthToken
-  const { pageToken, q, maxResults, fields }: postGetThreadsHandlerType =
-    req.body
+  const { q, maxResults, fields }: postGetThreadsHandlerType = req.body
 
   try {
     // getting the msg from the GMAIL API
@@ -23,6 +22,7 @@ export const postGetThreadsHandler: RequestHandler = async (req, res) => {
       fields,
       q
     })
+
     if (!data)
       return res.json({ error: `Error: failed to get threads`, data: null })
 
@@ -35,7 +35,7 @@ export const postGetThreadsHandler: RequestHandler = async (req, res) => {
     // Fetch detailed data for each thread
     const messagesData = await Email.fetchEachOneWithId<
       MessageType,
-      ThreadMessageType
+      ThreadResType
     >({
       access_token,
       groupOfIds: threads.map((thread) => thread.id),

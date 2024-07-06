@@ -1,3 +1,5 @@
+import { ThreadResType } from 'controllers'
+
 export type GetIdsFromGmailAPIType = {
   access_token: string
   maxResults?: number | null
@@ -10,3 +12,12 @@ export interface FetchEachOneWithIdType
   groupOfIds: string[]
   format: string
 }
+
+export type ThreadModifyType = {
+  distnation: string
+  access_token: string
+  addLabelIds: string[]
+  removeLabelIds: string[]
+}
+
+export type ThreadModifyResType = ThreadResType

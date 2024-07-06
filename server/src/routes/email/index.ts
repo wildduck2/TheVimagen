@@ -1,7 +1,8 @@
 import {
   getGetSizeEsitmatedHandler,
   postGetThreadHandler,
-  postGetThreadsHandler
+  postGetThreadsHandler,
+  postThreadModify
 } from '../../controllers'
 import { Router } from 'express'
 import { auth_credentials_about_to_expire } from '../../middlewares'
@@ -23,6 +24,12 @@ email_router.post(
   '/email/get/time-estimated',
   auth_credentials_about_to_expire,
   getGetSizeEsitmatedHandler
+)
+
+email_router.post(
+  '/email/moify/thread',
+  auth_credentials_about_to_expire,
+  postThreadModify
 )
 
 export { email_router }

@@ -1,18 +1,25 @@
 import axios from 'axios'
-import { FetchEachOneWithIdType, GetIdsFromGmailAPIType } from './Email.type'
-import { MessageType, ThreadMessageType } from 'controllers'
+import {
+  FetchEachOneWithIdType,
+  GetIdsFromGmailAPIType,
+  ThreadModifyType
+} from './Email.type'
+import { MessageType, ThreadResType } from 'controllers'
 import { GMAIL_URL } from '../../constants'
 
 export class Email {
   constructor() {}
 
+  //NOTE: tested
   static async getMessagesIdsFromGmailAPI<T>({
     access_token,
     maxResults,
     distnation,
     fields,
     q
-  }: GetIdsFromGmailAPIType) {
+  }: GetIdsFromGmailAPIType): Promise<T | null> {
+    console.log(q)
+
     try {
       const { data } = await axios.get<Awaited<Promise<T>>>(
         `${GMAIL_URL}${distnation}`,
@@ -25,7 +32,7 @@ export class Email {
           },
           headers: {
             Authorization: `Bearer ${access_token}`,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json; charset=UTF-8'
           }
         }
       )
@@ -33,13 +40,16 @@ export class Email {
 
       return data
     } catch (error) {
-      return null
+      // console.log(error.data)
+
+      return error
     }
   }
 
+  //NOTE: tested
   static async fetchEachOneWithId<
     T extends MessageType,
-    K extends ThreadMessageType
+    K extends ThreadResType
   >({
     groupOfIds,
     access_token,
@@ -84,6 +94,34 @@ export class Email {
       })
 
       return messagesData
+    } catch (error) {
+      return null
+    }
+  }
+
+  static async threadModify({
+    distnation,
+    access_token,
+    addLabelIds,
+    removeLabelIds = []
+  }: ThreadModifyType): Promise<ThreadResType | null> {
+    try {
+      const { data } = await axios.post<ThreadResType>(
+        `${GMAIL_URL}${distnation}`,
+        {
+          addLabelIds,
+          removeLabelIds
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      )
+      if (!data) return null
+
+      return data
     } catch (error) {
       return null
     }

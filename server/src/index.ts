@@ -13,10 +13,10 @@ dotEnv.config()
 
 //NOTE: some configs for the routes
 app.use(
-  cors({
-    origin: 'http://localhost:5173',
-    credentials: true
-  })
+    cors({
+        origin: 'http://localhost:5173',
+        credentials: true
+    })
 )
 app.use(express.static('public'))
 app.use(bodyParser.json())
@@ -30,8 +30,31 @@ app.use(auth_router)
 app.use(email_router)
 
 app.listen(3000, () => {
-  console.log('wild_duck server is runing and listening to the port : 3000')
+    console.log('wild_duck server is runing and listening to the port : 3000')
 })
 
 // const url = getGoogleOAuthURL()
 // console.log(url)
+//
+declare global {
+    interface Wildduck {
+        userName: string
+        age: number
+    }
+}
+import 'virtual:*'
+
+declare module 'virtual:*' {
+    // eslint-disable-next-line
+    const component: any
+    export default component
+}
+
+const myDuck: Wildduck = {
+    userName: 'Daffy',
+    age: 4
+}
+
+console.log(`User: ${myDuck.userName}, Age: ${myDuck.age}`)
+
+const manga: Foo = {}
