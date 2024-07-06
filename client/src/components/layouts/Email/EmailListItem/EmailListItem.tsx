@@ -27,7 +27,7 @@ export const EmailListItem = ({ item, items }: EmailListItemType) => {
                       .value.split('<')[0]
                       .replace(/"/gi, ' ')}
                   </div>
-                  <ToggleMutationButton labelIds={item.labelIds} />
+                  <ToggleMutationButton labelIds={item.labelIds} threadId={item.threadId} />
                   {item.labelIds.includes('UNREAD') && <span />}
                 </div>
                 <div className={cn('active')}>
