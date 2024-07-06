@@ -1,7 +1,7 @@
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '..'
 import { ToggleToolTipWrapperProps } from './ToggleToolTipWrapper.types'
 
-const ToggleToolTipWrapper: React.FC<ToggleToolTipWrapperProps> = ({ children, onClick, tip }) => {
+const ToggleToolTipWrapper: React.FC<ToggleToolTipWrapperProps> = ({ children, onClick, tip, className }) => {
   return (
     <TooltipProvider>
       <Tooltip>

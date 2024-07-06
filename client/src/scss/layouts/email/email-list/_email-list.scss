@@ -52,84 +52,103 @@
       transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
       transition-duration: 150ms;
       cursor: pointer;
+      position: relative;
+      overflow: hidden;
 
-      &::hover {
-        background-color: hsl(var(--accent));
+      &__functionality__card {
+        @include u.flex(grid);
+        position: absolute;
+        right: -2.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        background: hsl(var(--background) / 0.8);
+        border-radius: 0.5rem;
+        transition: 0.3s ease-in-out;
       }
 
-      &__top {
-        @include u.flex(flex);
-        flex-direction: column;
-        width: 100%;
-        gap: 0.25rem;
-        margin-bottom: 0.5rem;
+      &:hover {
+        background-color: hsl(var(--accent));
 
-        &__header {
-          @include u.flex(flex, center);
+        .email__list__wrapper__item__functionality__card {
+          right: 0.5rem;
+        }
+      }
 
-          &>div:first-child {
+      &__card {
+        &__top {
+          @include u.flex(flex);
+          flex-direction: column;
+          width: 100%;
+          gap: 0.25rem;
+          margin-bottom: 0.5rem;
+
+          &__header {
             @include u.flex(flex, center);
-            gap: 0.5rem;
 
-            &>div {
-              font-weight: 600;
+            &>div:first-child {
+              @include u.flex(flex, center);
+              gap: 0.5rem;
 
-              &.active {
-                &>svg {
-                  fill: currentColor;
+              &>div {
+                font-weight: 600;
+
+                &.active {
+                  &>svg {
+                    fill: currentColor;
+                  }
                 }
+              }
+
+              &>span {
+                @include u.flex(flex);
+                width: 0.5rem;
+                height: 0.5rem;
+                border-radius: 9999px;
+                background-color: rgb(37 99 235 / 1);
               }
             }
 
-            &>span {
-              @include u.flex(flex);
-              width: 0.5rem;
-              height: 0.5rem;
-              border-radius: 9999px;
-              background-color: rgb(37 99 235 / 1);
+            &>div:nth-child(2) {
+              margin-left: auto;
+              font-size: 0.75rem;
+              line-height: 1rem;
+              color: hsl(var(--muted-foreground));
+
+              &.active {
+                color: hsl(var(--foreground));
+              }
             }
           }
 
-          &>div:nth-child(2) {
-            margin-left: auto;
+          &__subject {
             font-size: 0.75rem;
             line-height: 1rem;
-            color: hsl(var(--muted-foreground));
-
-            &.active {
-              color: hsl(var(--foreground));
-            }
+            font-weight: 500;
           }
         }
 
-        &__subject {
+        &__bottom {
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
           font-size: 0.75rem;
           line-height: 1rem;
-          font-weight: 500;
+          color: hsl(var(--muted-foreground));
+
+          &>div {
+            @include u.flex(flex, center);
+            gap: 0.5rem;
+          }
         }
-      }
 
-      &__bottom {
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-        font-size: 0.75rem;
-        line-height: 1rem;
-        color: hsl(var(--muted-foreground));
-
-        &>div {
+        &__labels {
           @include u.flex(flex, center);
           gap: 0.5rem;
-        }
-      }
 
-      &__labels {
-        @include u.flex(flex, center);
-        gap: 0.5rem;
-
-        &>div {
-          margin-top: 0.5rem;
+          &>div {
+            margin-top: 0.5rem;
+          }
         }
       }
     }
