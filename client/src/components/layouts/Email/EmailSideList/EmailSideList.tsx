@@ -1,7 +1,6 @@
 import { EmailList } from '..'
-import { Input, ResizablePanel, Separator, Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui'
+import { ResizablePanel, Separator, Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui'
 import { EmailSideListType } from './EmailSideList.types'
-import { Icon } from '@/assets'
 import { getCookie } from '@/utils'
 import { EmailListSearch } from '../EmailListSerach'
 
@@ -21,8 +20,8 @@ export const EmailSideList = ({ defaultLayout = 37 }: EmailSideListType) => {
                 <TabsTrigger value="primary" className="tab__list__trigger" onClick={setActiveTabCookie}>
                   Primary
                 </TabsTrigger>
-                <TabsTrigger value="promotion" className="tab__list__trigger" onClick={setActiveTabCookie}>
-                  Promotion
+                <TabsTrigger value="promotions" className="tab__list__trigger" onClick={setActiveTabCookie}>
+                  Promotions
                 </TabsTrigger>
                 <TabsTrigger value="social" className="tab__list__trigger" onClick={setActiveTabCookie}>
                   social
@@ -35,10 +34,10 @@ export const EmailSideList = ({ defaultLayout = 37 }: EmailSideListType) => {
             </div>
           </div>
           <TabsContent value="primary" className="email__side__list__content">
-            <EmailList queryKey="inbox" q="category:primary" />
+            <EmailList queryKey="primary" q="category:primary" />
           </TabsContent>
-          <TabsContent value="promotion" className="email__side__list__content">
-            <EmailList queryKey="promotion" q="category:promotions" />
+          <TabsContent value="promotions" className="email__side__list__content">
+            <EmailList queryKey="promotions" q="category:promotions" />
           </TabsContent>
           <TabsContent value="social" className="email__side__list__content">
             <EmailList queryKey="social" q="category:social" />

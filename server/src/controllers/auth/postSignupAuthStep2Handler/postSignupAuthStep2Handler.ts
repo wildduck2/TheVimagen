@@ -12,7 +12,6 @@ export const postSignupAuthStep2Handler: RequestHandler = async (req, res) => {
 
     return res.json({ verified: true })
   } catch (error) {
-    console.log(error)
     return res.json({ error: error })
   }
 }

@@ -1,4 +1,3 @@
- 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '..'
 import { ToggleToolTipWrapperProps } from './ToggleToolTipWrapper.types'
 
@@ -6,8 +5,8 @@ const ToggleToolTipWrapper: React.FC<ToggleToolTipWrapperProps> = ({ children, o
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger asChild>
-          <span onClick={onClick}>{children}</span>
+        <TooltipTrigger asChild onClick={onClick}>
+          {children}
         </TooltipTrigger>
         <TooltipContent>
           <p>{tip}</p>

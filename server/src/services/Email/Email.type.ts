@@ -1,5 +1,3 @@
-import { MessageType, ThreadType } from 'controllers'
-
 export type GetIdsFromGmailAPIType = {
   access_token: string
   maxResults?: number | null
@@ -8,7 +6,7 @@ export type GetIdsFromGmailAPIType = {
   q: string
 }
 export interface FetchEachOneWithIdType
-  extends Omit<GetIdsFromGmailAPIType, 'maxResults' | 'q'> {
+  extends Omit<GetIdsFromGmailAPIType, 'maxResults' | 'q' | 'pageToken'> {
   groupOfIds: string[]
   format: string
 }

@@ -18,7 +18,6 @@ describe('get_google_login', () => {
     ;(getGoogleOAuthURL as Mock).mockResolvedValue({ url: 'url' })
     const response = await request(app).get('/oauth/signin-google')
 
-    console.log(response.body)
     expect(response.body).toEqual({ url: {} })
   })
 })

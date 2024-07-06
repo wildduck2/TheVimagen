@@ -1,5 +1,5 @@
 import {
-  postGetHistoryHandler,
+  getGetSizeEsitmatedHandler,
   postGetThreadHandler,
   postGetThreadsHandler
 } from '../../controllers'
@@ -20,9 +20,9 @@ email_router.post(
 )
 
 email_router.post(
-  '/email/get/history',
+  '/email/get/time-estimated',
   auth_credentials_about_to_expire,
-  postGetHistoryHandler
+  getGetSizeEsitmatedHandler
 )
 
 export { email_router }

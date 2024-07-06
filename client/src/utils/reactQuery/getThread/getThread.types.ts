@@ -1,5 +1,11 @@
 import { IEmail } from 'gmail-api-parse-message-ts'
 
+export type ThreadMessageType = {
+  id: string
+  nextPageToken: string
+  messages: MessageType[]
+}
+
 export type GetThreadType = {
   threads_id: string[]
 }
@@ -20,12 +26,6 @@ export type ThreadFullMessageType = {
     inValid: true
   }
   headers: HeaderType[]
-}
-
-export type ThreadMessageType = {
-  id: string
-  historyId: string
-  messages: MessageType[]
 }
 
 export type MessageType = {

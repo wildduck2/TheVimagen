@@ -17,7 +17,6 @@ export const postGetThreadHandler: RequestHandler = async (req, res) => {
       format: 'full',
       fields: ''
     })
-    console.log(data)
 
     if (!data)
       return res.json({ error: `Error: failed to get threads`, data: null })
@@ -25,7 +24,6 @@ export const postGetThreadHandler: RequestHandler = async (req, res) => {
     // //NOTE: parsing the message to base64
     const parse = new ParseGmailApi()
     const email: IEmail[] = data.map((item) => parse.parseMessage(item))
-    // console.log(email)
 
     return res.json({ error: null, data: email })
   } catch (error) {

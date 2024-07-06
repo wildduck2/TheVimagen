@@ -40,7 +40,6 @@ export const postSignupAuthStep3Handler: RequestHandler = async (req, res) => {
         })
       }
     }
-    console.log(error)
     return res.json({ error: error })
   }
 }

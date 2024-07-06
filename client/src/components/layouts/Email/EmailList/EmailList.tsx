@@ -1,37 +1,78 @@
-import { useQuery } from '@tanstack/react-query'
+import { useRef } from 'react'
+import { useInfiniteQuery } from '@tanstack/react-query'
 
-import { getThreads, groupMessagesBySender, MessageType, searchMessages } from '@/utils'
-import { ScrollArea, Skeleton } from '@/components/ui'
+import { cn, getThreads, groupMessagesBySender, MessageType, QueryKeyType, searchMessages } from '@/utils'
+import { Badge, ScrollAreaChildRef, Skeleton } from '@/components/ui'
 
 import { EmailListItem } from '../EmailListItem'
 import { EmailListProps } from './EmailList.types'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/context'
+import { useWindowScroll } from '@/hooks'
+import { Icons } from '@/constants'
 
 export function EmailList({ q, queryKey }: EmailListProps) {
-  const { data, isFetched } = useQuery({
-    queryKey: [queryKey],
-    queryFn: () => getThreads({ q }),
-  })
+  //INFO: handling featching data
+  const qk: QueryKeyType = [
+    queryKey,
+    {
+      q,
+      maxResults: 20,
+      fields: 'threads(id),nextPageToken',
+    },
+  ]
+  const { data, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status, isRefetching } =
+    useInfiniteQuery({
+      queryKey: qk,
+      queryFn: getThreads,
+      initialPageParam: '',
+      getNextPageParam: (prev) => prev.nextPageToken,
+      refetchOnWindowFocus: false,
+    })
 
+  //INFO: handling ids to feach message and groupMessagesBySender
   const searchId = useSelector((state: RootState) => state.email.searchInput)
   const finalData =
     data &&
-    (q === 'category:primary'
-      ? groupMessagesBySender(searchMessages({ searchText: searchId, messages: data.messages }))
-      : groupMessagesBySender(searchMessages({ searchText: searchId, messages: data.messages })))
-  // : searchMessages({ searchText: searchId, messages: data.messages }))
+    data.pages.flatMap((item) =>
+      groupMessagesBySender(searchMessages({ searchText: searchId, messages: item.messages })),
+    )
+
+  //INFO: handling scroll and refetch next page
+  const scrollRef = useRef<HTMLDivElement | null>(null)
+  useWindowScroll({ scrollRef, cb: () => fetchNextPage() })
 
   return (
-    <ScrollArea className="email__list">
+    <ScrollAreaChildRef className="email__list" ref={scrollRef}>
       <div className="email__list__wrapper">
-        {isFetched ? (
+        {status === 'success' ? (
           finalData.length > 0 ? (
-            (finalData as MessageType[][]).map((item, idx) => <EmailListItem key={idx} item={item[0]} items={item} />)
+            <>
+              <Badge
+                className={cn('email__list__wrapper__loading', isRefetching && 'show', isFetchingNextPage && 'show')}
+              >
+                {isFetchingNextPage ? 'Loading more...' : 'Updating...'}
+              </Badge>
+              {(finalData as MessageType[][]).map((item, idx) => (
+                <EmailListItem key={idx} item={item[0]} items={item} />
+              ))}
+
+              {/*NOTE: handling refetching next page error */}
+              {isFetchingNextPage &&
+                (isFetchingNextPage ? (
+                  <p className="email__list__wrapper__loadmore self-center mt-3">
+                    <Icons.spinner className="spin" />
+                  </p>
+                ) : hasNextPage ? (
+                  <p className="email__list__wrapper__loadmore w-fit self-center">Load More</p>
+                ) : (
+                  <p className="email__list__wrapper__loadmore w-fit self-center">Nothing more to load</p>
+                ))}
+            </>
           ) : (
             <div className="email__display__inbox__not__found">No message found with your search.</div>
           )
-        ) : (
+        ) : status === 'pending' || isFetching ? (
           Array.from({ length: 10 }).map((_, idx) => (
             <div className="grid items-center  border border-solid border-input p-3 rounded-lg w-full" key={idx}>
               <div className="grid gap-2">
@@ -50,8 +91,10 @@ export function EmailList({ q, queryKey }: EmailListProps) {
               </div>
             </div>
           ))
+        ) : (
+          <div className="email__display__inbox__not__found">No Messages, Failed to get messages!!{error.message}</div>
         )}
       </div>
-    </ScrollArea>
+    </ScrollAreaChildRef>
   )
 }

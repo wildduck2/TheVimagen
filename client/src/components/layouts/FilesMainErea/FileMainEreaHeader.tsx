@@ -15,12 +15,14 @@ const FileMainEreaHeader = () => {
             <ToggleToolTipWrapper tip="Search">
               <Icon.search />
             </ToggleToolTipWrapper>
-            <ToggleToolTipWrapper
-              onClick={(e) => {
-                e.currentTarget.classList.toggle('active')
-              }}
-              tip="Rate the project"
-            >
+            <ToggleToolTipWrapper tip="Rate the project">
+              <span
+                onClick={(e) => {
+                  e.currentTarget.classList.toggle('active')
+                }}
+              >
+                <Icon.search />
+              </span>
               <Icon.fiStar />
             </ToggleToolTipWrapper>
             <ToggleToolTipWrapper tip="More">

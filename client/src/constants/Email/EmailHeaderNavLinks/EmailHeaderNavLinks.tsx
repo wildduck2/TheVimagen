@@ -6,7 +6,6 @@ export const EmailHeaderNavLinks: EmailHeaderNavLinksType = {
     {
       title: 'Inbox',
       link: '/email/inbox',
-      label: '128',
       icon: ({ className }: IconType) => <Icon.inbox className={className} />,
       variant: 'default',
     },

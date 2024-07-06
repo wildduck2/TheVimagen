@@ -5,10 +5,25 @@ import { useState } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 import { EmailHeaderType } from './Header.types'
 import { Icon } from '@/assets'
+import { useQuery } from '@tanstack/react-query'
+import { getTimeEstimated, QueryKeyType } from '@/utils'
 
 export const EmailHeader = ({ defaultCollapsed, defaultLayout }: EmailHeaderType) => {
   const route = useNavigate()
   const [isCollapsed, setIsCollapsed] = useState<boolean>(defaultCollapsed)
+
+  const qk: QueryKeyType = [
+    'header_inbox',
+    {
+      q: 'is:unread label:inbox category:primary',
+      fields: 'resultSizeEstimate',
+    },
+  ]
+  const { data } = useQuery({
+    queryKey: qk,
+    queryFn: getTimeEstimated,
+    refetchOnWindowFocus: false,
+  })
 
   return (
     <>
@@ -39,9 +54,9 @@ export const EmailHeader = ({ defaultCollapsed, defaultLayout }: EmailHeaderType
           isCollapsed={isCollapsed}
         />
         <Separator />
-        <Nav isCollapsed={isCollapsed} links={EmailHeaderNavLinks.first} />
+        <Nav isCollapsed={isCollapsed} links={[...EmailHeaderNavLinks.first]} labels={[data]} />
         <Separator />
-        <Nav isCollapsed={isCollapsed} links={EmailHeaderNavLinks.second} />
+        <Nav isCollapsed={isCollapsed} links={EmailHeaderNavLinks.second} labels={[]} />
         <div className="header__toggle">
           <TooltipButton
             button={logoutHeaderLinkData}
