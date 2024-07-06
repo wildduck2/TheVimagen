@@ -6,12 +6,13 @@ import { RootState } from '@/context'
 export const Files = () => {
   const store = useSelector((state: RootState) => state.data)
 
-  return !store.logged ? (
+  return (
     <>
       <TaskBarTree />
       <FileMainErea />
     </>
-  ) : (
-    <LogDialog />
   )
+  // ) : (
+  //   <LogDialog />
+  // )
 }

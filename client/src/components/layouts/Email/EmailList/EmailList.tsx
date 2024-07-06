@@ -1,15 +1,41 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
 
-import { cn, getThreads, groupMessagesBySender, MessageType, QueryKeyType, searchMessages } from '@/utils'
-import { Badge, ScrollAreaChildRef, Skeleton } from '@/components/ui'
+import {
+  cn,
+  getThreads,
+  groupMessagesBySender,
+  MessageType,
+  QueryKeyType,
+  searchMessages,
+  slectUserHandler,
+  toggleSelectAllUsersHandler,
+} from '@/utils'
+import {
+  Badge,
+  Checkbox,
+  ScrollAreaChildRef,
+  ShowMoreBadges,
+  ShowMoreOptions,
+  Skeleton,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  User,
+  users,
+  Users,
+} from '@/components/ui'
 
 import { EmailListItem } from '../EmailListItem'
 import { EmailListProps } from './EmailList.types'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/context'
 import { useWindowScroll } from '@/hooks'
-import { Icons } from '@/constants'
+import { actions, Icons } from '@/constants'
+import { TableWrapper } from '@/components/ui/TableWrapper'
 
 export function EmailList({ q, queryKey }: EmailListProps) {
   //INFO: handling featching data
@@ -53,9 +79,7 @@ export function EmailList({ q, queryKey }: EmailListProps) {
               >
                 {isFetchingNextPage ? 'Loading more...' : 'Updating...'}
               </Badge>
-              {(finalData as MessageType[][]).map((item, idx) => (
-                <EmailListItem key={idx} item={item[0]} items={item} />
-              ))}
+              <TableWrapper items={finalData as MessageType[][]} />
 
               {/*NOTE: handling refetching next page error */}
               {isFetchingNextPage &&

@@ -12,6 +12,8 @@ export const EmailListItem = ({ item, items }: EmailListItemType) => {
   )
   const ids = items.map((id) => id.id)
 
+  console.log(item.labelIds)
+
   return (
     <>
       <EmailListITemWrapper
@@ -19,15 +21,17 @@ export const EmailListItem = ({ item, items }: EmailListItemType) => {
         ids={ids}
         children={
           <>
-            <div className="email__list__wrapper__item__top">
-              <div className="email__list__wrapper__item__top__header">
+            <div className="email__list__wrapper__item__card__top">
+              <div className="email__list__wrapper__item__card__top__header">
                 <div>
                   <div>
                     {WANTED_HEADERS.find((obj) => obj.name === 'From')!
                       .value.split('<')[0]
                       .replace(/"/gi, ' ')}
                   </div>
-                  <ToggleMutationButton labelIds={item.labelIds} threadId={item.threadId} />
+                  {
+                    // <ToggleMutationButton labelIds={item.labelIds} threadId={item.threadId} />
+                  }
                   {item.labelIds.includes('UNREAD') && <span />}
                 </div>
                 <div className={cn('active')}>
@@ -36,13 +40,13 @@ export const EmailListItem = ({ item, items }: EmailListItemType) => {
                   })}
                 </div>
               </div>
-              <div className="email__list__wrapper__item__top__subject">
+              <div className="email__list__wrapper__item__card__top__subject">
                 {WANTED_HEADERS.find((obj) => obj.name === 'Subject')!.value}
               </div>
             </div>
-            <div className="email__list__wrapper__item__bottom">{item.snippet.substring(0, 300)}</div>
+            <div className="email__list__wrapper__item__card__bottom">{item.snippet.substring(0, 300)}</div>
             {item.labelIds.length && (
-              <div className="email__list__wrapper__item__labels">
+              <div className="email__list__wrapper__item__card__labels">
                 {item.labelIds
                   .filter(
                     (label) =>
