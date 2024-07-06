@@ -22,7 +22,6 @@
             "./types",
             "./node_modules/@types"
         ],
-        "jsx": "react",
         "types": [
             "node",
             "vitest",
