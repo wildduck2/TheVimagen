@@ -1,18 +1,25 @@
 import axios from 'axios'
-import { FetchEachOneWithIdType, GetIdsFromGmailAPIType } from './Email.type'
-import { MessageType, ThreadMessageType } from 'controllers'
+import {
+  FetchEachOneWithIdType,
+  GetIdsFromGmailAPIType,
+  ThreadModifyType,
+  ThreadTrashType
+} from './Email.type'
+import { MessageType, ThreadResType } from 'controllers'
 import { GMAIL_URL } from '../../constants'
+import { on } from 'node:events'
 
 export class Email {
   constructor() {}
 
+  //NOTE: tested
   static async getMessagesIdsFromGmailAPI<T>({
     access_token,
     maxResults,
     distnation,
     fields,
     q
-  }: GetIdsFromGmailAPIType) {
+  }: GetIdsFromGmailAPIType): Promise<T | null> {
     try {
       const { data } = await axios.get<Awaited<Promise<T>>>(
         `${GMAIL_URL}${distnation}`,
@@ -25,7 +32,7 @@ export class Email {
           },
           headers: {
             Authorization: `Bearer ${access_token}`,
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json; charset=UTF-8'
           }
         }
       )
@@ -37,9 +44,10 @@ export class Email {
     }
   }
 
+  //NOTE: tested
   static async fetchEachOneWithId<
     T extends MessageType,
-    K extends ThreadMessageType
+    K extends ThreadResType
   >({
     groupOfIds,
     access_token,
@@ -57,12 +65,13 @@ export class Email {
           const { data } = await axios.get<Awaited<Promise<K>>>(
             `${GMAIL_URL}${distnation}${thread}`,
             {
-              headers: {
-                Authorization: `Bearer ${access_token}`
-              },
               params: {
                 fields,
                 format
+              },
+              headers: {
+                Authorization: `Bearer ${access_token}`,
+                'Content-Type': 'application/json; charset=UTF-8'
               }
             }
           )
@@ -84,6 +93,60 @@ export class Email {
       })
 
       return messagesData
+    } catch (error) {
+      return null
+    }
+  }
+
+  static async threadModify({
+    distnation,
+    access_token,
+    addLabelIds,
+    removeLabelIds = []
+  }: ThreadModifyType): Promise<ThreadResType | null> {
+    try {
+      const { data } = await axios.post<ThreadResType>(
+        `${GMAIL_URL}${distnation}`,
+        {
+          addLabelIds,
+          removeLabelIds
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      )
+      console.log(data)
+
+      if (!data) return null
+
+      return data
+    } catch (error) {
+      return null
+    }
+  }
+
+  static async threadTrash({ id, distnation, access_token }: ThreadTrashType) {
+    try {
+      const { data } = await axios.post<ThreadResType>(
+        `${GMAIL_URL}${distnation}`,
+        {
+          id
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      )
+      console.log(data)
+
+      if (!data) return null
+
+      return data
     } catch (error) {
       return null
     }

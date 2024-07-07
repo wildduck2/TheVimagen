@@ -6,7 +6,7 @@ const ToggleToolTipWrapper: React.FC<ToggleToolTipWrapperProps> = ({ children, o
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild onClick={onClick}>
-          {children}
+          <div>{children}</div>
         </TooltipTrigger>
         <TooltipContent>
           <p>{tip}</p>

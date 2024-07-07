@@ -18,6 +18,7 @@
   place-content: start;
 
   &__header {
+    border-color: hsl(var(--input));
     @include u.flex(flex, center);
     padding-block: 1rem;
 
@@ -25,10 +26,9 @@
       max-width: 24rem;
     }
 
-    & button {
-    }
+    & button {}
 
-    & ~ div {
+    &~div {
       border-radius: calc(var(--radius) - 2px);
       height: 600px;
       overflow: scroll;
@@ -45,8 +45,7 @@
         gap: 0.5rem;
         width: 50px;
 
-        & button {
-        }
+        & button {}
       }
 
       &:nth-child(2) {
@@ -66,7 +65,7 @@
         }
 
         &__cell {
-          & > div {
+          &>div {
             @include u.flex(flex, center);
             gap: 0.7rem;
           }

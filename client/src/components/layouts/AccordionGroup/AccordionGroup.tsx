@@ -1,13 +1,12 @@
- 
 import { AccordionProps, DefaultICons } from './AccordionGroup.types'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../ui'
 import { Icon } from '@/assets'
 
 const defaultIcons: DefaultICons = {
-  traingle:()=> <Icon.triangle className="stroke-2 size-[18px] fill-[#FBAD38]" />,
-  star: ()=> <Icon.regStar className="stroke-2 size-[18px] fill-[#FBAD38]" />,
-  rectangle: ()=> <Icon.rectangleBold className="stroke-2 size-[18px] fill-[#FBAD38]" />,
-  circle: ()=> <Icon.regCircle className="stroke-2 size-[18px] fill-[#FBAD38]" />,
+  traingle: () => <Icon.triangle className="stroke-2 size-[18px] fill-[#FBAD38]" />,
+  star: () => <Icon.regStar className="stroke-2 size-[18px] fill-[#FBAD38]" />,
+  rectangle: () => <Icon.rectangleBold className="stroke-2 size-[18px] fill-[#FBAD38]" />,
+  circle: () => <Icon.regCircle className="stroke-2 size-[18px] fill-[#FBAD38]" />,
 }
 
 const data = [
@@ -71,31 +70,31 @@ export default AccordionGroup
 
 {
   /* <div className="files-tree__accordion">
-                            <div className="files-tree__accordion__title" onClick={showAccordionHandler}>
-                              <IoIosArrowUp />
-                              <span>FAVORITES</span>
-                            </div>
-                            <div className="files-tree__accordion__list h-[0px] accordion-up" ref={accordionRef}>
-                              {data.map((item) => {
-                                return (
-                                  <div key={item.id} className="files-tree__accordion__item">
-                                    <div className="files-tree__accordion__item__title">
-                                      {defaultIcons[item.icon]}
-                                      <span>{item.name}</span>
+                              <div className="files-tree__accordion__title" onClick={showAccordionHandler}>
+                                <IoIosArrowUp />
+                                <span>FAVORITES</span>
+                              </div>
+                              <div className="files-tree__accordion__list h-[0px] accordion-up" ref={accordionRef}>
+                                {data.map((item) => {
+                                  return (
+                                    <div key={item.id} className="files-tree__accordion__item">
+                                      <div className="files-tree__accordion__item__title">
+                                        {defaultIcons[item.icon]}
+                                        <span>{item.name}</span>
+                                      </div>
+                                      {/* <div>
+                                        {item.children.map((child) => {
+                                        return (
+                                          <div key={child.id}>
+                                            {React.createElement(defaultIcons[child.icon])}
+                                            <span>{child.name}</span>
+                                          </div>
+                                        );
+                                      })} 
                                     </div>
-                                    {/* <div>
-                                      {item.children.map((child) => {
-                                      return (
-                                        <div key={child.id}>
-                                          {React.createElement(defaultIcons[child.icon])}
-                                          <span>{child.name}</span>
-                                        </div>
-                                      );
-                                    })} 
-                                  </div>
-                                  </div>
-                                );
-                              })}
-                            </div>
-                          </div> */
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div> */
 }

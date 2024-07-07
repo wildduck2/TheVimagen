@@ -4,7 +4,7 @@ import express, { Express, Request, Response, NextFunction } from 'express'
 import { postGetThreadsHandler } from '../postGetThreadsHandler'
 import { Email } from '@services/Email'
 import { ThreadsType } from '../postGetThreadsHandler.types'
-import { MessageType, ThreadMessageType } from 'controllers/email'
+import { MessageType, ThreadResType } from 'controllers/email'
 
 vi.mock('../../../../services/Email', () => ({
   Email: {
@@ -84,7 +84,7 @@ describe('postGetThreadsHandler', () => {
 
     const finalData = await Email.fetchEachOneWithId<
       MessageType,
-      ThreadMessageType
+      ThreadResType
     >({
       ...fetchEachOneWithIdMockData,
       groupOfIds: data!.threads.map((thread) => thread.id)
@@ -163,7 +163,7 @@ describe('postGetThreadsHandler', () => {
 
     const finalData = await Email.fetchEachOneWithId<
       MessageType,
-      ThreadMessageType
+      ThreadResType
     >({
       ...fetchEachOneWithIdMockData,
       groupOfIds: data!.threads.map((thread) => thread.id)
@@ -218,7 +218,7 @@ describe('postGetThreadsHandler', () => {
 
     const finalData = await Email.fetchEachOneWithId<
       MessageType,
-      ThreadMessageType
+      ThreadResType
     >({
       ...fetchEachOneWithIdMockData,
       groupOfIds: data!.threads.map((thread) => thread.id)

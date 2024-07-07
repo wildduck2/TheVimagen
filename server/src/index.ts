@@ -32,6 +32,3 @@ app.use(email_router)
 app.listen(3000, () => {
   console.log('wild_duck server is runing and listening to the port : 3000')
 })
-
-// const url = getGoogleOAuthURL()
-// console.log(url)

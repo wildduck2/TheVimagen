@@ -1,5 +1,5 @@
 import { OAuthToken } from '@prisma/client'
-import { JsonValue } from '@prisma/client/runtime/library'
+import { Decimal, JsonValue } from '@prisma/client/runtime/library'
 import 'express-session'
 
 declare module 'express-session' {
@@ -29,4 +29,17 @@ export interface User {
   verified_email?: boolean | null
   created_at: Date
   updated_at: Date
+}
+
+declare global {
+  interface Wildduck {
+    userName: string
+    age: number
+  }
+}
+
+declare global {
+  type Foo = {
+    ahmed: string
+  }
 }

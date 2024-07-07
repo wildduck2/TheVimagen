@@ -1,3 +1,5 @@
+import { ThreadResType } from 'controllers'
+
 export type GetIdsFromGmailAPIType = {
   access_token: string
   maxResults?: number | null
@@ -9,4 +11,19 @@ export interface FetchEachOneWithIdType
   extends Omit<GetIdsFromGmailAPIType, 'maxResults' | 'q' | 'pageToken'> {
   groupOfIds: string[]
   format: string
+}
+
+export type ThreadModifyType = {
+  distnation: string
+  access_token: string
+  addLabelIds: string[]
+  removeLabelIds: string[]
+}
+
+export type ThreadModifyResType = ThreadResType
+
+export type ThreadTrashType = {
+  id: string
+  distnation: string
+  access_token: string
 }

@@ -13,6 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as FilesIndexImport } from './routes/files/index'
 import { Route as EmailEmailImport } from './routes/email/_email'
 import { Route as DashboardDashboardImport } from './routes/dashboard/_dashboard'
 import { Route as EmailEmailIndexImport } from './routes/email/_email.index'
@@ -22,6 +23,7 @@ import { Route as EmailEmailInboxImport } from './routes/email/_email.inbox'
 
 const EmailImport = createFileRoute('/email')()
 const DashboardImport = createFileRoute('/dashboard')()
+const FilesLazyImport = createFileRoute('/files')()
 const AuthSignupLazyImport = createFileRoute('/auth/signup')()
 const AuthSigninLazyImport = createFileRoute('/auth/signin')()
 const AuthOtpVerificationStepLazyImport = createFileRoute(
@@ -67,6 +69,16 @@ const EmailRoute = EmailImport.update({
 const DashboardRoute = DashboardImport.update({
   path: '/dashboard',
   getParentRoute: () => rootRoute,
+} as any)
+
+const FilesLazyRoute = FilesLazyImport.update({
+  path: '/files',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/files.lazy').then((d) => d.Route))
+
+const FilesIndexRoute = FilesIndexImport.update({
+  path: '/',
+  getParentRoute: () => FilesLazyRoute,
 } as any)
 
 const AuthSignupLazyRoute = AuthSignupLazyImport.update({
@@ -223,6 +235,13 @@ const EmailEmailInboxRoute = EmailEmailInboxImport.update({
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/files': {
+      id: '/files'
+      path: '/files'
+      fullPath: '/files'
+      preLoaderRoute: typeof FilesLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -292,6 +311,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth/signup'
       preLoaderRoute: typeof AuthSignupLazyImport
       parentRoute: typeof rootRoute
+    }
+    '/files/': {
+      id: '/files/'
+      path: '/'
+      fullPath: '/files/'
+      preLoaderRoute: typeof FilesIndexImport
+      parentRoute: typeof FilesLazyImport
     }
     '/email/_email/inbox': {
       id: '/email/_email/inbox'
@@ -397,6 +423,7 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren({
+  FilesLazyRoute: FilesLazyRoute.addChildren({ FilesIndexRoute }),
   DashboardRoute: DashboardRoute.addChildren({
     DashboardDashboardRoute: DashboardDashboardRoute.addChildren({
       DashboardDashboardFilesLazyRoute,
@@ -435,6 +462,7 @@ export const routeTree = rootRoute.addChildren({
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
+        "/files",
         "/dashboard",
         "/email",
         "/auth/complete-account-information",
@@ -443,6 +471,12 @@ export const routeTree = rootRoute.addChildren({
         "/auth/otp-verification-step",
         "/auth/signin",
         "/auth/signup"
+      ]
+    },
+    "/files": {
+      "filePath": "files.lazy.tsx",
+      "children": [
+        "/files/"
       ]
     },
     "/dashboard": {
@@ -500,6 +534,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/auth/signup": {
       "filePath": "auth/signup.lazy.tsx"
+    },
+    "/files/": {
+      "filePath": "files/index.tsx",
+      "parent": "/files"
     },
     "/email/_email/inbox": {
       "filePath": "email/_email.inbox.tsx",

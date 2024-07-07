@@ -5,16 +5,16 @@ import { GetThreadsRes, QueryKeyType } from './getThreads.types'
 import { ThreadMessageType } from '../getThread/getThread.types'
 
 export const getThreads = async ({ queryKey }: QueryFunctionContext): Promise<ThreadMessageType> => {
-  const [, { q, maxResults, fields }] = queryKey as QueryKeyType
+  const [, { q }] = queryKey as QueryKeyType
   try {
     const { data } = await axios.post<GetThreadsRes>(
       `${process.env.ROOT_URL}/email/get/threads`,
       {
-        user_id: '2dfa461a-85e8-4ac7-b0e9-28b1d88bd6dc',
+        user_id: 'fcb7d30c-b14a-47d3-bd9c-37ae5849c30e',
         thread_id: '1906343e98e4780b',
         q,
-        fields,
-        maxResults,
+        fields: 'threads(id),nextPageToken',
+        maxResults: 30,
       },
       {
         withCredentials: true,
@@ -23,6 +23,9 @@ export const getThreads = async ({ queryKey }: QueryFunctionContext): Promise<Th
         },
       },
     )
+    if (!data) return null
+
+    document.cookie = `query:key=${JSON.stringify(queryKey)}`
     return data.data
   } catch (error) {
     throw new Error('Failed to fetch threads')

@@ -6,18 +6,17 @@ import { PostThreadHandler } from './postGetThreadHandler.types'
 
 export const postGetThreadHandler: RequestHandler = async (req, res) => {
   const { threads_id }: PostThreadHandler = req.body
-  const oauth_user_data = req.session.oauth_user_data as OAuthToken
+  const { access_token, oauth_id } = req.session.oauth_user_data as OAuthToken
 
   try {
     //NOTE: getting the msg from the GMAIL API
     const data = await Email.fetchEachOneWithId({
       groupOfIds: threads_id,
-      distnation: `${oauth_user_data.oauth_id}/threads/`,
-      access_token: oauth_user_data.access_token,
-      format: 'full',
-      fields: ''
+      distnation: `${oauth_id}/threads/`,
+      access_token: access_token,
+      fields: '',
+      format: 'full'
     })
-
     if (!data)
       return res.json({ error: `Error: failed to get threads`, data: null })
 

@@ -11,6 +11,7 @@ import { getCookie } from '@/utils'
 export const EmailListSearch = () => {
   const [sq, setSq] = useState<string>('')
   const dispatch = useDispatch()
+  const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
 
   useDebounce(() => {
     dispatch(getSearchInput(sq))
@@ -27,12 +28,10 @@ export const EmailListSearch = () => {
           <TooltipTrigger asChild>
             <Button
               variant="outline"
-              className=""
-              children={<Icon.refresh className="size-5" />}
+              children={<Icon.refresh className="size-4" />}
               onClick={(e) => {
                 e.preventDefault()
-                const defaultActive = getCookie('tabs:active').toLowerCase() || 'primary'
-                queryClient.refetchQueries({ queryKey: [defaultActive, { q: `category:${defaultActive}` }] })
+                queryClient.refetchQueries(currentQueryKey)
               }}
             />
           </TooltipTrigger>

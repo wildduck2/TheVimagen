@@ -1,6 +1,7 @@
-import { formatDistanceToNow } from 'date-fns'
 import { ComponentProps } from 'react'
-import { Badge, EmailListITemWrapper, ToggleMutationButton } from '@/components/ui'
+import { formatDistanceToNow } from 'date-fns'
+
+import { Badge, ListItemWrapper } from '@/components/ui'
 import { cn } from '@/utils'
 
 import { EmailListItemType } from './EmailListItem.types'
@@ -10,24 +11,22 @@ export const EmailListItem = ({ item, items }: EmailListItemType) => {
   const WANTED_HEADERS = item.payload.headers.filter(
     (head) => head.name === 'Subject' || head.name === 'From' || head.name === 'To',
   )
-  const ids = items.map((id) => id.id)
 
   return (
     <>
-      <EmailListITemWrapper
+      <ListItemWrapper
         item={item}
-        ids={ids}
+        items={items}
         children={
           <>
-            <div className="email__list__wrapper__item__top">
-              <div className="email__list__wrapper__item__top__header">
+            <div className="email__list__wrapper__item__card__top">
+              <div className="email__list__wrapper__item__card__top__header">
                 <div>
                   <div>
                     {WANTED_HEADERS.find((obj) => obj.name === 'From')!
                       .value.split('<')[0]
                       .replace(/"/gi, ' ')}
                   </div>
-                  <ToggleMutationButton labelIds={item.labelIds} />
                   {item.labelIds.includes('UNREAD') && <span />}
                 </div>
                 <div className={cn('active')}>
@@ -36,20 +35,20 @@ export const EmailListItem = ({ item, items }: EmailListItemType) => {
                   })}
                 </div>
               </div>
-              <div className="email__list__wrapper__item__top__subject">
+              <div className="email__list__wrapper__item__card__top__subject">
                 {WANTED_HEADERS.find((obj) => obj.name === 'Subject')!.value}
               </div>
             </div>
-            <div className="email__list__wrapper__item__bottom">{item.snippet.substring(0, 300)}</div>
+            <div className="email__list__wrapper__item__card__bottom">{item.snippet}</div>
             {item.labelIds.length && (
-              <div className="email__list__wrapper__item__labels">
+              <div className="email__list__wrapper__item__card__labels">
                 {item.labelIds
                   .filter(
                     (label) =>
                       !(
-                        label === 'INBOX' ||
+                        label === 'INBOiX' ||
                         label === 'UNREAD' ||
-                        label === 'CATEGORY_UPDATES' ||
+                        label === 'CATEGORY_UPDAES' ||
                         label === 'STARRED' ||
                         label === 'CATEGORY_PERSONAL' ||
                         label === 'CATEGORY_PROMOTIONS' ||
@@ -65,7 +64,7 @@ export const EmailListItem = ({ item, items }: EmailListItemType) => {
             )}
           </>
         }
-      ></EmailListITemWrapper>
+      ></ListItemWrapper>
     </>
   )
 }
@@ -75,7 +74,7 @@ function getBadgeVariantFromLabel(label: string): ComponentProps<typeof Badge>['
     return 'destructive'
   }
 
-  if (['CATEGORY_PERSONAL'].includes(label)) {
+  if (['CATEGORY_UPDATES'].includes(label)) {
     return 'outline'
   }
 

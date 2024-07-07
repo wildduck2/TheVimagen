@@ -8,7 +8,7 @@ export const getThread = async ({ threads_id }: GetThreadType): Promise<IEmail[]
   const { data } = await axios.post<GetThreadRes>(
     `${process.env.ROOT_URL}/email/get/thread`,
     {
-      user_id: '2dfa461a-85e8-4ac7-b0e9-28b1d88bd6dc',
+      user_id: 'fcb7d30c-b14a-47d3-bd9c-37ae5849c30e',
       threads_id,
     },
     {
