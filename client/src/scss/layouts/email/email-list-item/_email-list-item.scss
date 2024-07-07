@@ -1,0 +1,156 @@
+/*
+
+    This code is writen by Ahmed Ayob
+
+*/
+
+@use '../../../base' as *;
+@use '../../../utils' as u;
+
+/*
+
+    Email List Item
+
+*/
+
+.email__list__wrapper__item {
+  @include u.flex(flex, center);
+  gap: 0.5rem;
+  border-radius: var(--radius);
+  border: 1px solid hsl(var(--border));
+  text-align: left;
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+
+  &:has(.email__list__wrapper__item__body.active) {
+    background-color: hsl(var(--accent));
+
+    button {
+      border-color: hsl(var(--foreground) / 0.8);
+    }
+
+    svg {
+      fill: hsl(var(--foreground) / 0.8);
+    }
+  }
+
+  &:hover {
+    background-color: hsl(var(--accent) / 0.4);
+  }
+
+  &__functionality__card {
+    @include u.flex(grid);
+    gap: 0.5rem;
+    transition: 0.3s ease-in-out;
+    padding-right: 0.5rem;
+    border-right: 1px solid hsl(var(--input));
+
+    svg {
+      width: 1.2rem !important;
+      height: 1.2rem !important;
+      stroke: hsl(var(--input));
+
+      &.active {
+        fill: hsl(var(--foreground));
+        stroke: hsl(var(--foreground));
+      }
+    }
+
+    button {
+      border: 1px solid hsl(var(--input));
+
+      &[aria-checked='true'] {
+        background: hsl(var(--foreground));
+      }
+
+      span {
+        height: 0px;
+      }
+    }
+  }
+
+  &__card {
+    &__top {
+      @include u.flex(flex);
+      flex-direction: column;
+      width: 100%;
+      gap: 0.25rem;
+      margin-bottom: 0.5rem;
+
+      &__header {
+        @include u.flex(flex, center);
+
+        &>div:first-child {
+          @include u.flex(flex, center);
+          gap: 0.5rem;
+
+          &>div {
+            font-weight: 600;
+
+            &.active {
+              &>svg {
+                fill: currentColor;
+              }
+            }
+          }
+
+          &>span {
+            @include u.flex(flex);
+            width: 0.5rem;
+            height: 0.5rem;
+            border-radius: 9999px;
+            background-color: rgb(37 99 235 / 1);
+          }
+        }
+
+        &>div:nth-child(2) {
+          margin-left: auto;
+          font-size: 0.75rem;
+          line-height: 1rem;
+          color: hsl(var(--muted-foreground));
+
+          &.active {
+            color: hsl(var(--foreground));
+          }
+        }
+      }
+
+      &__subject {
+        font-size: 0.75rem;
+        line-height: 1rem;
+        font-weight: 500;
+      }
+    }
+
+    &__bottom {
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      font-size: 0.75rem;
+      line-height: 1rem;
+      color: hsl(var(--muted-foreground));
+
+      &>div {
+        @include u.flex(flex, center);
+        gap: 0.5rem;
+      }
+    }
+
+    &__labels {
+      @include u.flex(flex, center);
+      gap: 0.5rem;
+
+      &>div {
+        margin-top: 0.5rem;
+      }
+    }
+  }
+}
