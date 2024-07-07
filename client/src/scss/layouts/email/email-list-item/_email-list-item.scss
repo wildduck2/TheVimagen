@@ -34,28 +34,32 @@
 
     button {
       border-color: hsl(var(--foreground) / 0.8);
+      color: red;
     }
 
-    svg {
-      fill: hsl(var(--foreground) / 0.8);
+    svg:not(button svg) {
+      stroke: hsl(var(--foreground) / 0.8);
+      stroke-width: 1.5px;
     }
-  }
-
-  &:hover {
-    background-color: hsl(var(--accent) / 0.4);
   }
 
   &__functionality__card {
     @include u.flex(grid);
     gap: 0.5rem;
-    transition: 0.3s ease-in-out;
     padding-right: 0.5rem;
     border-right: 1px solid hsl(var(--input));
+    margin-left: -2rem;
+    transform: translateX(-14px);
+    transition: 0.3s ease-in-out;
 
     svg {
       width: 1.2rem !important;
       height: 1.2rem !important;
       stroke: hsl(var(--input));
+      stroke-width: 1px;
+      transition-property: all;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-duration: 150ms;
 
       &.active {
         fill: hsl(var(--foreground));
@@ -63,8 +67,18 @@
       }
     }
 
+    &>div:has(button) {
+      width: 1.1rem !important;
+      height: 1.1rem !important;
+    }
+
     button {
+      width: 1.1rem !important;
+      height: 1.1rem !important;
       border: 1px solid hsl(var(--input));
+      transition-property: all;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-duration: 150ms;
 
       &[aria-checked='true'] {
         background: hsl(var(--foreground));
@@ -72,6 +86,24 @@
 
       span {
         height: 0px;
+      }
+    }
+  }
+
+  &:hover {
+    background-color: hsl(var(--accent) / 0.4);
+
+    .email__list__wrapper__item__functionality__card {
+      margin-left: 0rem;
+      width: auto;
+      transform: translateX(0);
+
+      &>div>svg {
+        stroke: hsl(var(--foreground));
+      }
+
+      button {
+        border: 1px solid hsl(var(--foreground) / 0.6);
       }
     }
   }
