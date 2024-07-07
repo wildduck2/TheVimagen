@@ -21,10 +21,13 @@ import { CheckboxWrapper } from '../CheckboxWrapper'
 import { Icon } from '@/assets'
 import { Separator } from '../Spearator'
 import React from 'react'
+import { ToggleFavoriateButton } from '../ToggleFavoriateButton'
+import { TrashMutate } from '../TrashMutate'
 
-export const ListItemWrapper = ({ children, ids, item, icon }: ListItemWrapperType) => {
+export const ListItemWrapper = ({ children, items, item }: ListItemWrapperType) => {
   const emailSelectedId = useSelector((state: RootState) => state.email.selectedEmailId)
   const dispatch = useDispatch()
+  const ids = items.map((id) => id.id)
 
   return (
     <>
@@ -35,7 +38,11 @@ export const ListItemWrapper = ({ children, ids, item, icon }: ListItemWrapperTy
               <div className="email__list__wrapper__item__functionality__card">
                 <CheckboxWrapper checked={false} tip="Select" />
                 <Separator />
-                {icon}
+                <ToggleFavoriateButton labelIds={item.labelIds} threadId={item.threadId} tip="Star" />
+                <Separator />
+                <TrashMutate threadId={item.threadId} tip="Trash" />
+                <Separator />
+                <ToggleFavoriateButton labelIds={item.labelIds} threadId={item.threadId} tip="Archive" />
               </div>
             </div>
             <div className={cn('email__list__wrapper__item__body', emailSelectedId[0] === ids[0] && 'active')}>
@@ -150,18 +157,3 @@ export const emailItemContextMenu = [
     },
   ],
 ]
-
-// <Separator />
-//           <ToggleMutationButton
-//             labelIds={item.labelIds}
-//             threadId={item.threadId}
-//             icon={Icon.trash2}
-//             tip="Trash"
-//           />
-//           <Separator />
-//           <ToggleMutationButton
-//             labelIds={item.labelIds}
-//             threadId={item.threadId}
-//             icon={Icon.archive}
-//             tip="Archive"
-//           />

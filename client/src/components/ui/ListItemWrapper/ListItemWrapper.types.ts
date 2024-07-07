@@ -3,7 +3,6 @@ import { ReactElement } from 'react'
 
 export type ListItemWrapperType = {
   item: MessageType
-  ids: string[]
+  items: MessageType[]
   children: ReactElement
-  icon: ReactElement
 }

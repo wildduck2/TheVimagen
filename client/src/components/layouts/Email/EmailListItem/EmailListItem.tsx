@@ -1,26 +1,22 @@
-import { formatDistanceToNow } from 'date-fns'
 import { ComponentProps } from 'react'
-import { Badge, ListItemWrapper, ToggleMutationButton } from '@/components/ui'
+import { formatDistanceToNow } from 'date-fns'
+
+import { Badge, ListItemWrapper } from '@/components/ui'
 import { cn } from '@/utils'
 
 import { EmailListItemType } from './EmailListItem.types'
-import { Icon } from '@/assets'
 
 export const EmailListItem = ({ item, items }: EmailListItemType) => {
   //INFO: filtering ids
   const WANTED_HEADERS = item.payload.headers.filter(
     (head) => head.name === 'Subject' || head.name === 'From' || head.name === 'To',
   )
-  const ids = items.map((id) => id.id)
-
-  console.log(item.labelIds)
 
   return (
     <>
       <ListItemWrapper
         item={item}
-        ids={ids}
-        icon={<ToggleMutationButton labelIds={item.labelIds} threadId={item.threadId} icon={Icon.fiStar} tip="Star" />}
+        items={items}
         children={
           <>
             <div className="email__list__wrapper__item__card__top">

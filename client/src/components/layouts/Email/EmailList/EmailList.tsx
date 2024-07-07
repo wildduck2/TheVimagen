@@ -1,54 +1,21 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
-
-import {
-  cn,
-  getThreads,
-  groupMessagesBySender,
-  MessageType,
-  QueryKeyType,
-  searchMessages,
-  slectUserHandler,
-  toggleSelectAllUsersHandler,
-} from '@/utils'
-import {
-  Badge,
-  Checkbox,
-  ScrollAreaChildRef,
-  ShowMoreBadges,
-  ShowMoreOptions,
-  Skeleton,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-  User,
-  users,
-  Users,
-} from '@/components/ui'
-
-import { EmailListItem } from '../EmailListItem'
-import { EmailListProps } from './EmailList.types'
 import { useSelector } from 'react-redux'
+
+import { cn, getThreads, groupMessagesBySender, MessageType, searchMessages } from '@/utils'
+import { Badge, ScrollAreaChildRef, Skeleton } from '@/components/ui'
+
 import { RootState } from '@/context'
 import { useWindowScroll } from '@/hooks'
-import { actions, Icons } from '@/constants'
+import { Icons } from '@/constants'
+import { EmailListItem } from '../EmailListItem'
+import { EmailListProps } from './EmailList.types'
 
 export function EmailList({ q, queryKey }: EmailListProps) {
   //INFO: handling featching data
-  const qk: QueryKeyType = [
-    queryKey,
-    {
-      q,
-      maxResults: 20,
-      fields: 'threads(id),nextPageToken',
-    },
-  ]
   const { data, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status, isRefetching } =
     useInfiniteQuery({
-      queryKey: qk,
+      queryKey: [queryKey, { q }],
       queryFn: getThreads,
       initialPageParam: '',
       getNextPageParam: (prev) => prev.nextPageToken,

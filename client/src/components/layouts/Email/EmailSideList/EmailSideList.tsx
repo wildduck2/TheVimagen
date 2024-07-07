@@ -34,7 +34,7 @@ export const EmailSideList = ({ defaultLayout = 37 }: EmailSideListType) => {
             </div>
           </div>
           <TabsContent value="primary" className="email__side__list__content">
-            <EmailList queryKey="primary" q="category:primary" />
+            <EmailList queryKey="primary" q="label:inbox category:primary" />
           </TabsContent>
           <TabsContent value="promotions" className="email__side__list__content">
             <EmailList queryKey="promotions" q="category:promotions" />
