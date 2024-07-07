@@ -11,6 +11,7 @@ import { getCookie } from '@/utils'
 export const EmailListSearch = () => {
   const [sq, setSq] = useState<string>('')
   const dispatch = useDispatch()
+  const value = getCookie('tabs:active')?.toLowerCase()
 
   useDebounce(() => {
     dispatch(getSearchInput(sq))
@@ -31,7 +32,7 @@ export const EmailListSearch = () => {
               children={<Icon.refresh className="size-5" />}
               onClick={(e) => {
                 e.preventDefault()
-                const defaultActive = getCookie('tabs:active').toLowerCase() || 'primary'
+                const defaultActive = value || 'primary'
                 queryClient.refetchQueries({ queryKey: [defaultActive, { q: `category:${defaultActive}` }] })
               }}
             />

@@ -23,7 +23,7 @@ export function EmailDisplay({ defaultLayout = 37 }: EmailDisplayProps) {
   const emailSelectedId = useSelector((state: RootState) => state.email.selectedEmailId)
 
   return (
-    <ResizablePanel order={2} defaultSize={defaultLayout} minSize={30}>
+    <ResizablePanel order={2} defaultSize={defaultLayout} minSize={40}>
       <div className="flex h-full flex-col">
         <div className="flex items-center p-2">
           <div className="flex items-center gap-2">

@@ -11,7 +11,7 @@ export const EmailSideList = ({ defaultLayout = 37 }: EmailSideListType) => {
 
   return (
     <>
-      <ResizablePanel order={1} defaultSize={defaultLayout} minSize={30}>
+      <ResizablePanel order={1} defaultSize={defaultLayout} minSize={40}>
         <Tabs defaultValue={defaultActive.toLowerCase()} className="email__side__list">
           <div className="email__side__list__warpper">
             <div className="email__side__list__wrapper__top">

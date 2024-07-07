@@ -35,7 +35,6 @@ import { useSelector } from 'react-redux'
 import { RootState } from '@/context'
 import { useWindowScroll } from '@/hooks'
 import { actions, Icons } from '@/constants'
-import { TableWrapper } from '@/components/ui/TableWrapper'
 
 export function EmailList({ q, queryKey }: EmailListProps) {
   //INFO: handling featching data
@@ -79,7 +78,9 @@ export function EmailList({ q, queryKey }: EmailListProps) {
               >
                 {isFetchingNextPage ? 'Loading more...' : 'Updating...'}
               </Badge>
-              <TableWrapper items={finalData as MessageType[][]} />
+              {(finalData as MessageType[][]).map((item, idx) => (
+                <EmailListItem key={idx} item={item[0]} items={item} />
+              ))}
 
               {/*NOTE: handling refetching next page error */}
               {isFetchingNextPage &&

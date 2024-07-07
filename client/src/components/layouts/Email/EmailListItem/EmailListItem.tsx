@@ -1,9 +1,10 @@
 import { formatDistanceToNow } from 'date-fns'
 import { ComponentProps } from 'react'
-import { Badge, EmailListITemWrapper, ToggleMutationButton } from '@/components/ui'
+import { Badge, ListItemWrapper, ToggleMutationButton } from '@/components/ui'
 import { cn } from '@/utils'
 
 import { EmailListItemType } from './EmailListItem.types'
+import { Icon } from '@/assets'
 
 export const EmailListItem = ({ item, items }: EmailListItemType) => {
   //INFO: filtering ids
@@ -16,9 +17,10 @@ export const EmailListItem = ({ item, items }: EmailListItemType) => {
 
   return (
     <>
-      <EmailListITemWrapper
+      <ListItemWrapper
         item={item}
         ids={ids}
+        icon={<ToggleMutationButton labelIds={item.labelIds} threadId={item.threadId} icon={Icon.fiStar} tip="Star" />}
         children={
           <>
             <div className="email__list__wrapper__item__card__top">
@@ -29,9 +31,6 @@ export const EmailListItem = ({ item, items }: EmailListItemType) => {
                       .value.split('<')[0]
                       .replace(/"/gi, ' ')}
                   </div>
-                  {
-                    // <ToggleMutationButton labelIds={item.labelIds} threadId={item.threadId} />
-                  }
                   {item.labelIds.includes('UNREAD') && <span />}
                 </div>
                 <div className={cn('active')}>
@@ -44,16 +43,16 @@ export const EmailListItem = ({ item, items }: EmailListItemType) => {
                 {WANTED_HEADERS.find((obj) => obj.name === 'Subject')!.value}
               </div>
             </div>
-            <div className="email__list__wrapper__item__card__bottom">{item.snippet.substring(0, 300)}</div>
+            <div className="email__list__wrapper__item__card__bottom">{item.snippet}</div>
             {item.labelIds.length && (
               <div className="email__list__wrapper__item__card__labels">
                 {item.labelIds
                   .filter(
                     (label) =>
                       !(
-                        label === 'INBOX' ||
+                        label === 'INBOiX' ||
                         label === 'UNREAD' ||
-                        label === 'CATEGORY_UPDATES' ||
+                        label === 'CATEGORY_UPDAES' ||
                         label === 'STARRED' ||
                         label === 'CATEGORY_PERSONAL' ||
                         label === 'CATEGORY_PROMOTIONS' ||
@@ -69,7 +68,7 @@ export const EmailListItem = ({ item, items }: EmailListItemType) => {
             )}
           </>
         }
-      ></EmailListITemWrapper>
+      ></ListItemWrapper>
     </>
   )
 }
@@ -79,7 +78,7 @@ function getBadgeVariantFromLabel(label: string): ComponentProps<typeof Badge>['
     return 'destructive'
   }
 
-  if (['CATEGORY_PERSONAL'].includes(label)) {
+  if (['CATEGORY_UPDATES'].includes(label)) {
     return 'outline'
   }
 
