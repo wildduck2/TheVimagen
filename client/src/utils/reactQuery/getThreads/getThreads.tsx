@@ -14,7 +14,7 @@ export const getThreads = async ({ queryKey }: QueryFunctionContext): Promise<Th
         thread_id: '1906343e98e4780b',
         q,
         fields,
-        maxResults,
+        maxResults: 1,
       },
       {
         withCredentials: true,

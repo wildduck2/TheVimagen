@@ -1,14 +1,11 @@
-import { Icon } from '@/assets'
 import { ToggleToolTipWrapper } from '../ToggleToolTipWrapper'
 import { ToggleMutationButtonType } from './ToggleMutationButton.types'
 import { cn, starThread } from '@/utils'
 import { toast } from 'sonner'
-import { Mutation, useMutation } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useMutation } from '@tanstack/react-query'
 
-export const ToggleMutationButton = ({ labelIds, threadId }: ToggleMutationButtonType) => {
+export const ToggleMutationButton = ({ labelIds, threadId, icon, tip }: ToggleMutationButtonType) => {
   const alreadyStarred = labelIds.includes('STARRED')
-  const [starred, setStarred] = useState<boolean>(alreadyStarred)
 
   //INFO: staring thread
   const invokeArgs = !alreadyStarred
@@ -19,23 +16,19 @@ export const ToggleMutationButton = ({ labelIds, threadId }: ToggleMutationButto
     mutationKey: ['starThread'],
     mutationFn: () => starThread(invokeArgs),
     onSettled: () => {
-      toast.success(`Messages has been ${starred ? 'starred' : 'unstarred'}!`, {})
+      toast.success(`Messages has been ${alreadyStarred ? 'starred' : 'unstarred'}!`, {})
     },
   })
 
   return (
     <ToggleToolTipWrapper
-      tip={'Star'}
+      tip={tip}
       onClick={({ currentTarget }) => {
         startMutation.mutate()
-        currentTarget.classList.toggle('fill-current')
-        setStarred(!starred)
+        currentTarget.classList.toggle('active')
       }}
     >
-      <div className="">
-        <Icon.fiStar className={cn('size-[1rem] z-50', starred ? 'fill-current' : '')} />
-      </div>
+      {icon({ className: cn('size-[1rem]', alreadyStarred && 'active') })}
     </ToggleToolTipWrapper>
-    // <Icon.fiStar className={cn('size-[1rem] z-50')} />
   )
 }

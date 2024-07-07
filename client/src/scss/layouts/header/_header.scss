@@ -63,6 +63,10 @@
     }
 
     &__link {
+      &:hover {
+        background-color: hsl(var(--accent) / 0.4) !important;
+      }
+
       &.collabsed {
         width: 2.25rem;
         height: 2.25rem;
