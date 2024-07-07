@@ -21,3 +21,9 @@ export type ThreadModifyType = {
 }
 
 export type ThreadModifyResType = ThreadResType
+
+export type ThreadTrashType = {
+  id: string
+  distnation: string
+  access_token: string
+}

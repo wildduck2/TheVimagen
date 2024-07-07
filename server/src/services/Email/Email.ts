@@ -2,10 +2,12 @@ import axios from 'axios'
 import {
   FetchEachOneWithIdType,
   GetIdsFromGmailAPIType,
-  ThreadModifyType
+  ThreadModifyType,
+  ThreadTrashType
 } from './Email.type'
 import { MessageType, ThreadResType } from 'controllers'
 import { GMAIL_URL } from '../../constants'
+import { on } from 'node:events'
 
 export class Email {
   constructor() {}
@@ -18,8 +20,6 @@ export class Email {
     fields,
     q
   }: GetIdsFromGmailAPIType): Promise<T | null> {
-    console.log(q)
-
     try {
       const { data } = await axios.get<Awaited<Promise<T>>>(
         `${GMAIL_URL}${distnation}`,
@@ -40,9 +40,7 @@ export class Email {
 
       return data
     } catch (error) {
-      // console.log(error.data)
-
-      return error
+      return null
     }
   }
 
@@ -67,12 +65,13 @@ export class Email {
           const { data } = await axios.get<Awaited<Promise<K>>>(
             `${GMAIL_URL}${distnation}${thread}`,
             {
-              headers: {
-                Authorization: `Bearer ${access_token}`
-              },
               params: {
                 fields,
                 format
+              },
+              headers: {
+                Authorization: `Bearer ${access_token}`,
+                'Content-Type': 'application/json; charset=UTF-8'
               }
             }
           )
@@ -119,6 +118,32 @@ export class Email {
           }
         }
       )
+      console.log(data)
+
+      if (!data) return null
+
+      return data
+    } catch (error) {
+      return null
+    }
+  }
+
+  static async threadTrash({ id, distnation, access_token }: ThreadTrashType) {
+    try {
+      const { data } = await axios.post<ThreadResType>(
+        `${GMAIL_URL}${distnation}`,
+        {
+          id
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      )
+      console.log(data)
+
       if (!data) return null
 
       return data
