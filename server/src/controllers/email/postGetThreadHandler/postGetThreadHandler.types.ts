@@ -24,6 +24,7 @@ export type MessageType = {
   sizeEstimate: number
   historyId: string
   internalDate: string
+  raw: string
 }
 
 export type PayloadType = {

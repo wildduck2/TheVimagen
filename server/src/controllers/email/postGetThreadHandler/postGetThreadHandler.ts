@@ -17,6 +17,7 @@ export const postGetThreadHandler: RequestHandler = async (req, res) => {
       fields: '',
       format: 'full'
     })
+
     if (!data)
       return res.json({ error: `Error: failed to get threads`, data: null })
 

@@ -83,6 +83,9 @@ importers:
       axios:
         specifier: ^1.7.2
         version: 1.7.2
+      base64url:
+        specifier: ^3.0.1
+        version: 3.0.1
       bcrypt:
         specifier: ^5.1.1
         version: 5.1.1
@@ -1663,6 +1666,10 @@ packages:
 
   base-64@0.1.0:
     resolution: {integrity: sha512-Y5gU45svrR5tI2Vt/X9GPd3L0HNIKzGu202EjxrXMpuc2V2CiKgemAbUUsqYmZJvPtCXoUKjNZwBJzsNScUbXA==}
+
+  base64url@3.0.1:
+    resolution: {integrity: sha512-ir1UPr3dkwexU7FdV8qBBbNDRUhMmIekYMFZfi+C/sLNnRESKPl23nB9b2pltqfOQNnGzsDdId90AEtG5tCx4A==}
+    engines: {node: '>=6.0.0'}
 
   bcrypt@5.1.1:
     resolution: {integrity: sha512-AGBHOG5hPYZ5Xl9KXzU5iKq9516yEmvCKDg3ecP5kX2aB6UqTeXZxk2ELnDgDm6BQSMlLt9rDB4LoSMx0rYwww==}
@@ -5405,6 +5412,8 @@ snapshots:
   balanced-match@1.0.2: {}
 
   base-64@0.1.0: {}
+
+  base64url@3.0.1: {}
 
   bcrypt@5.1.1:
     dependencies:
