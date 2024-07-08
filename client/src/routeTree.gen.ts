@@ -14,6 +14,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as FilesIndexImport } from './routes/files/index'
+import { Route as NotionFileImport } from './routes/notion/file'
 import { Route as EmailEmailImport } from './routes/email/_email'
 import { Route as DashboardDashboardImport } from './routes/dashboard/_dashboard'
 import { Route as EmailEmailIndexImport } from './routes/email/_email.index'
@@ -123,6 +124,11 @@ const AuthCompleteAccountInformationLazyRoute =
       (d) => d.Route,
     ),
   )
+
+const NotionFileRoute = NotionFileImport.update({
+  path: '/notion/file',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const EmailEmailRoute = EmailEmailImport.update({
   id: '/_email',
@@ -269,6 +275,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/email'
       preLoaderRoute: typeof EmailEmailImport
       parentRoute: typeof EmailRoute
+    }
+    '/notion/file': {
+      id: '/notion/file'
+      path: '/notion/file'
+      fullPath: '/notion/file'
+      preLoaderRoute: typeof NotionFileImport
+      parentRoute: typeof rootRoute
     }
     '/auth/complete-account-information': {
       id: '/auth/complete-account-information'
@@ -446,6 +459,7 @@ export const routeTree = rootRoute.addChildren({
       EmailEmailIndexRoute,
     }),
   }),
+  NotionFileRoute,
   AuthCompleteAccountInformationLazyRoute,
   AuthCompleteForgetPasswordLazyRoute,
   AuthForgetPasswordLazyRoute,
@@ -465,6 +479,7 @@ export const routeTree = rootRoute.addChildren({
         "/files",
         "/dashboard",
         "/email",
+        "/notion/file",
         "/auth/complete-account-information",
         "/auth/complete-forget-password",
         "/auth/forget-password",
@@ -516,6 +531,9 @@ export const routeTree = rootRoute.addChildren({
         "/email/_email/updates",
         "/email/_email/"
       ]
+    },
+    "/notion/file": {
+      "filePath": "notion/file.tsx"
     },
     "/auth/complete-account-information": {
       "filePath": "auth/complete-account-information.lazy.tsx"
