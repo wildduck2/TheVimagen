@@ -18,5 +18,6 @@ export type QueryKeyType = [
   string,
   {
     q?: string | null
+    fields?: string | null
   },
 ]

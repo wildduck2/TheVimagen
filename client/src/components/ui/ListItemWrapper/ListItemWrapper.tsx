@@ -23,11 +23,12 @@ import { Separator } from '../Spearator'
 import React from 'react'
 import { ToggleFavoriateButton } from '../ToggleFavoriateButton'
 import { TrashMutate } from '../TrashMutate'
+import { ArchiveMutate } from '../ArchiveMutate'
 
 export const ListItemWrapper = ({ children, items, item }: ListItemWrapperType) => {
   const emailSelectedId = useSelector((state: RootState) => state.email.selectedEmailId)
   const dispatch = useDispatch()
-  const ids = items.map((id) => id.id)
+  const ids = [items[0].threadId] //.map((id) => id.threadId)
 
   return (
     <>
@@ -42,7 +43,7 @@ export const ListItemWrapper = ({ children, items, item }: ListItemWrapperType) 
                 <Separator />
                 <TrashMutate threadId={item.threadId} tip="Trash" />
                 <Separator />
-                <ToggleFavoriateButton labelIds={item.labelIds} threadId={item.threadId} tip="Archive" />
+                <ArchiveMutate threadId={item.threadId} tip="Archive" />
               </div>
             </div>
             <div className={cn('email__list__wrapper__item__body', emailSelectedId[0] === ids[0] && 'active')}>

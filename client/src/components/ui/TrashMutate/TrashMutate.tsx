@@ -2,15 +2,10 @@ import { toast } from 'sonner'
 import { useMutation } from '@tanstack/react-query'
 
 import { ToggleToolTipWrapper } from '../ToggleToolTipWrapper'
-import { TrashMutateType } from './TrashMutate.types'
-import { getCookie, ThreadMessageType, trashMessage } from '@/utils'
+import { PaginatedMessages, TrashMutateType } from './TrashMutate.types'
+import { getCookie, trashMessage } from '@/utils'
 import { Icon } from '@/assets'
 import { queryClient } from '@/main'
-
-interface PaginatedMessages {
-  pages: ThreadMessageType[]
-  pageParams: string[]
-}
 
 export const TrashMutate = ({ threadId, tip }: TrashMutateType) => {
   const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
