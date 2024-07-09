@@ -4,7 +4,13 @@ export interface IconType extends HtmlHTMLAttributes<SVGElement> {}
 
 export const Icon = {
   execlmation: ({ className }: IconType) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16" className={className}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="1em"
+      height="1em"
+      viewBox="0 0 16 16"
+      className={className}
+    >
       <g fill="currentColor">
         <path d="M7.001 11a1 1 0 1 1 2 0a1 1 0 0 1-2 0" />
         <path d="M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.553.553 0 0 1-1.1 0z" />
@@ -127,7 +133,11 @@ export const Icon = {
       strokeLinejoin="round"
       className={className}
     >
-      <circle cx="12" cy="12" r="10" />
+      <circle
+        cx="12"
+        cy="12"
+        r="10"
+      />
     </svg>
   ),
   commandKey: ({ className }: IconType) => (
@@ -141,7 +151,10 @@ export const Icon = {
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      <path fill="none" d="M0 0h24v24H0z"></path>
+      <path
+        fill="none"
+        d="M0 0h24v24H0z"
+      ></path>
       <path d="M17.5 3C15.57 3 14 4.57 14 6.5V8h-4V6.5C10 4.57 8.43 3 6.5 3S3 4.57 3 6.5 4.57 10 6.5 10H8v4H6.5C4.57 14 3 15.57 3 17.5S4.57 21 6.5 21s3.5-1.57 3.5-3.5V16h4v1.5c0 1.93 1.57 3.5 3.5 3.5s3.5-1.57 3.5-3.5-1.57-3.5-3.5-3.5H16v-4h1.5c1.93 0 3.5-1.57 3.5-3.5S19.43 3 17.5 3zM16 8V6.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5S18.33 8 17.5 8H16zM6.5 8C5.67 8 5 7.33 5 6.5S5.67 5 6.5 5 8 5.67 8 6.5V8H6.5zm3.5 6v-4h4v4h-4zm7.5 5c-.83 0-1.5-.67-1.5-1.5V16h1.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5zm-11 0c-.83 0-1.5-.67-1.5-1.5S5.67 16 6.5 16H8v1.5c0 .83-.67 1.5-1.5 1.5z"></path>
     </svg>
   ),
@@ -255,7 +268,11 @@ export const Icon = {
       strokeLinejoin="round"
       className={className}
     >
-      <circle cx="11" cy="11" r="8" />
+      <circle
+        cx="11"
+        cy="11"
+        r="8"
+      />
       <path d="m21 21-4.3-4.3" />
     </svg>
   ),
@@ -273,9 +290,25 @@ export const Icon = {
       strokeLinejoin="round"
       className={className}
     >
-      <rect width="16" height="20" x="4" y="2" rx="2" />
-      <line x1="8" x2="16" y1="6" y2="6" />
-      <line x1="16" x2="16" y1="14" y2="18" />
+      <rect
+        width="16"
+        height="20"
+        x="4"
+        y="2"
+        rx="2"
+      />
+      <line
+        x1="8"
+        x2="16"
+        y1="6"
+        y2="6"
+      />
+      <line
+        x1="16"
+        x2="16"
+        y1="14"
+        y2="18"
+      />
       <path d="M16 10h.01" />
       <path d="M12 10h.01" />
       <path d="M8 10h.01" />
@@ -300,7 +333,13 @@ export const Icon = {
     >
       <path d="M8 2v4" />
       <path d="M16 2v4" />
-      <rect width="18" height="18" x="3" y="4" rx="2" />
+      <rect
+        width="18"
+        height="18"
+        x="3"
+        y="4"
+        rx="2"
+      />
       <path d="M3 10h18" />
     </svg>
   ),
@@ -317,8 +356,19 @@ export const Icon = {
       strokeLinejoin="round"
       className={className}
     >
-      <rect width="20" height="14" x="2" y="5" rx="2" />
-      <line x1="2" x2="22" y1="10" y2="10" />
+      <rect
+        width="20"
+        height="14"
+        x="2"
+        y="5"
+        rx="2"
+      />
+      <line
+        x1="2"
+        x2="22"
+        y1="10"
+        y2="10"
+      />
     </svg>
   ),
   settings: ({ className }: IconType) => (
@@ -335,7 +385,11 @@ export const Icon = {
       className={className}
     >
       <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
-      <circle cx="12" cy="12" r="3" />
+      <circle
+        cx="12"
+        cy="12"
+        r="3"
+      />
     </svg>
   ),
   smile: ({ className }: IconType) => (
@@ -351,10 +405,24 @@ export const Icon = {
       strokeLinejoin="round"
       className={className}
     >
-      <circle cx="12" cy="12" r="10" />
+      <circle
+        cx="12"
+        cy="12"
+        r="10"
+      />
       <path d="M8 14s1.5 2 4 2 4-2 4-2" />
-      <line x1="9" x2="9.01" y1="9" y2="9" />
-      <line x1="15" x2="15.01" y1="9" y2="9" />
+      <line
+        x1="9"
+        x2="9.01"
+        y1="9"
+        y2="9"
+      />
+      <line
+        x1="15"
+        x2="15.01"
+        y1="9"
+        y2="9"
+      />
     </svg>
   ),
   user: ({ className }: IconType) => (
@@ -371,7 +439,11 @@ export const Icon = {
       className={className}
     >
       <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-      <circle cx="12" cy="7" r="4" />
+      <circle
+        cx="12"
+        cy="7"
+        r="4"
+      />
     </svg>
   ),
   chevronUp: ({ className }: IconType) => (
@@ -454,9 +526,23 @@ export const Icon = {
       strokeLinejoin="round"
       className={className}
     >
-      <circle cx="12" cy="12" r="10" />
-      <line x1="12" x2="12" y1="8" y2="12" />
-      <line x1="12" x2="12.01" y1="16" y2="16" />
+      <circle
+        cx="12"
+        cy="12"
+        r="10"
+      />
+      <line
+        x1="12"
+        x2="12"
+        y1="8"
+        y2="12"
+      />
+      <line
+        x1="12"
+        x2="12.01"
+        y1="16"
+        y2="16"
+      />
     </svg>
   ),
 
@@ -473,7 +559,13 @@ export const Icon = {
       strokeLinejoin="round"
       className={className}
     >
-      <rect width="20" height="16" x="2" y="4" rx="2" />
+      <rect
+        width="20"
+        height="16"
+        x="2"
+        y="4"
+        rx="2"
+      />
       <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
     </svg>
   ),
@@ -491,7 +583,13 @@ export const Icon = {
       strokeLinejoin="round"
       className={className}
     >
-      <rect width="20" height="5" x="2" y="3" rx="1" />
+      <rect
+        width="20"
+        height="5"
+        x="2"
+        y="3"
+        rx="1"
+      />
       <path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8" />
       <path d="M10 12h4" />
     </svg>
@@ -513,8 +611,18 @@ export const Icon = {
       <path d="M3 6h18" />
       <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
       <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-      <line x1="10" x2="10" y1="11" y2="17" />
-      <line x1="14" x2="14" y1="11" y2="17" />
+      <line
+        x1="10"
+        x2="10"
+        y1="11"
+        y2="17"
+      />
+      <line
+        x1="14"
+        x2="14"
+        y1="11"
+        y2="17"
+      />
     </svg>
   ),
   archiveX: ({ className }: IconType) => (
@@ -530,7 +638,13 @@ export const Icon = {
       strokeLinejoin="round"
       className={className}
     >
-      <rect width="20" height="5" x="2" y="3" rx="1" />
+      <rect
+        width="20"
+        height="5"
+        x="2"
+        y="3"
+        rx="1"
+      />
       <path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8" />
       <path d="m9.5 17 5-5" />
       <path d="m9.5 12 5 5" />
@@ -569,7 +683,13 @@ export const Icon = {
     >
       <path d="M7 2h10" />
       <path d="M5 6h14" />
-      <rect width="18" height="12" x="3" y="10" rx="2" />
+      <rect
+        width="18"
+        height="12"
+        x="3"
+        y="10"
+        rx="2"
+      />
     </svg>
   ),
   inbox: ({ className }: IconType) => (
@@ -623,7 +743,12 @@ export const Icon = {
     >
       <path d="m15 5 6.3 6.3a2.4 2.4 0 0 1 0 3.4L17 19" />
       <path d="M9.586 5.586A2 2 0 0 0 8.172 5H3a1 1 0 0 0-1 1v5.172a2 2 0 0 0 .586 1.414L8.29 18.29a2.426 2.426 0 0 0 3.42 0l3.58-3.58a2.426 2.426 0 0 0 0-3.42z" />
-      <circle cx="6.5" cy="9.5" r=".5" fill="currentColor" />
+      <circle
+        cx="6.5"
+        cy="9.5"
+        r=".5"
+        fill="currentColor"
+      />
     </svg>
   ),
 
@@ -642,7 +767,13 @@ export const Icon = {
     >
       <path d="M8 2v4" />
       <path d="M16 2v4" />
-      <rect width="18" height="18" x="3" y="4" rx="2" />
+      <rect
+        width="18"
+        height="18"
+        x="3"
+        y="4"
+        rx="2"
+      />
       <path d="M3 10h18" />
       <path d="m9 16 2 2 4-4" />
     </svg>
@@ -755,7 +886,13 @@ export const Icon = {
       <path d="M6 8h.01" />
       <path d="M7 16h10" />
       <path d="M8 12h.01" />
-      <rect width="20" height="16" x="2" y="4" rx="2" />
+      <rect
+        width="20"
+        height="16"
+        x="2"
+        y="4"
+        rx="2"
+      />
     </svg>
   ),
   users: ({ className }: IconType) => (
@@ -772,7 +909,11 @@ export const Icon = {
       className={className}
     >
       <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
+      <circle
+        cx="9"
+        cy="7"
+        r="4"
+      />
       <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
       <path d="M16 3.13a4 4 0 0 1 0 7.75" />
     </svg>
@@ -791,7 +932,11 @@ export const Icon = {
       strokeLinejoin="round"
       className={className}
     >
-      <circle cx="12.1" cy="12.1" r="1" />
+      <circle
+        cx="12.1"
+        cy="12.1"
+        r="1"
+      />
     </svg>
   ),
 
@@ -809,9 +954,23 @@ export const Icon = {
       className={className}
     >
       <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <line x1="19" x2="19" y1="8" y2="14" />
-      <line x1="22" x2="16" y1="11" y2="11" />
+      <circle
+        cx="9"
+        cy="7"
+        r="4"
+      />
+      <line
+        x1="19"
+        x2="19"
+        y1="8"
+        y2="14"
+      />
+      <line
+        x1="22"
+        x2="16"
+        y1="11"
+        y2="11"
+      />
     </svg>
   ),
   plusCircle: ({ className }: IconType) => (
@@ -892,7 +1051,12 @@ export const Icon = {
     >
       <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
       <polyline points="16 17 21 12 16 7" />
-      <line x1="21" x2="9" y1="12" y2="12" />
+      <line
+        x1="21"
+        x2="9"
+        y1="12"
+        y2="12"
+      />
     </svg>
   ),
 
@@ -909,12 +1073,36 @@ export const Icon = {
       strokeLinejoin="round"
       className={className}
     >
-      <circle cx="9" cy="12" r="1" />
-      <circle cx="9" cy="5" r="1" />
-      <circle cx="9" cy="19" r="1" />
-      <circle cx="15" cy="12" r="1" />
-      <circle cx="15" cy="5" r="1" />
-      <circle cx="15" cy="19" r="1" />
+      <circle
+        cx="9"
+        cy="12"
+        r="1"
+      />
+      <circle
+        cx="9"
+        cy="5"
+        r="1"
+      />
+      <circle
+        cx="9"
+        cy="19"
+        r="1"
+      />
+      <circle
+        cx="15"
+        cy="12"
+        r="1"
+      />
+      <circle
+        cx="15"
+        cy="5"
+        r="1"
+      />
+      <circle
+        cx="15"
+        cy="19"
+        r="1"
+      />
     </svg>
   ),
 
@@ -931,7 +1119,13 @@ export const Icon = {
       strokeLinejoin="round"
       className={className}
     >
-      <rect width="18" height="18" x="3" y="3" rx="2" />
+      <rect
+        width="18"
+        height="18"
+        x="3"
+        y="3"
+        rx="2"
+      />
       <path d="M8 7v7" />
       <path d="M12 7v4" />
       <path d="M16 7v9" />
@@ -951,12 +1145,42 @@ export const Icon = {
       strokeLinejoin="round"
       className={className}
     >
-      <line x1="8" x2="21" y1="6" y2="6" />
-      <line x1="8" x2="21" y1="12" y2="12" />
-      <line x1="8" x2="21" y1="18" y2="18" />
-      <line x1="3" x2="3.01" y1="6" y2="6" />
-      <line x1="3" x2="3.01" y1="12" y2="12" />
-      <line x1="3" x2="3.01" y1="18" y2="18" />
+      <line
+        x1="8"
+        x2="21"
+        y1="6"
+        y2="6"
+      />
+      <line
+        x1="8"
+        x2="21"
+        y1="12"
+        y2="12"
+      />
+      <line
+        x1="8"
+        x2="21"
+        y1="18"
+        y2="18"
+      />
+      <line
+        x1="3"
+        x2="3.01"
+        y1="6"
+        y2="6"
+      />
+      <line
+        x1="3"
+        x2="3.01"
+        y1="12"
+        y2="12"
+      />
+      <line
+        x1="3"
+        x2="3.01"
+        y1="18"
+        y2="18"
+      />
     </svg>
   ),
 
@@ -973,11 +1197,38 @@ export const Icon = {
       strokeLinejoin="round"
       className={className}
     >
-      <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
-      <line x1="3" x2="21" y1="9" y2="9" />
-      <line x1="3" x2="21" y1="15" y2="15" />
-      <line x1="9" x2="9" y1="9" y2="21" />
-      <line x1="15" x2="15" y1="9" y2="21" />
+      <rect
+        width="18"
+        height="18"
+        x="3"
+        y="3"
+        rx="2"
+        ry="2"
+      />
+      <line
+        x1="3"
+        x2="21"
+        y1="9"
+        y2="9"
+      />
+      <line
+        x1="3"
+        x2="21"
+        y1="15"
+        y2="15"
+      />
+      <line
+        x1="9"
+        x2="9"
+        y1="9"
+        y2="21"
+      />
+      <line
+        x1="15"
+        x2="15"
+        y1="9"
+        y2="21"
+      />
     </svg>
   ),
 
@@ -994,7 +1245,11 @@ export const Icon = {
       strokeLinejoin="round"
       className={className}
     >
-      <circle cx="12" cy="12" r="10" />
+      <circle
+        cx="12"
+        cy="12"
+        r="10"
+      />
       <polyline points="12 6 12 12 16 14" />
     </svg>
   ),
@@ -1103,7 +1358,12 @@ export const Icon = {
     >
       <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
       <polyline points="17 8 12 3 7 8"></polyline>
-      <line x1="12" y1="3" x2="12" y2="15"></line>
+      <line
+        x1="12"
+        y1="3"
+        x2="12"
+        y2="15"
+      ></line>
     </svg>
   ),
   vim: ({ className }: IconType) => (
@@ -1197,7 +1457,14 @@ export const Icon = {
       strokeLinejoin="round"
       className={className}
     >
-      <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+      <rect
+        width="8"
+        height="4"
+        x="8"
+        y="2"
+        rx="1"
+        ry="1"
+      />
       <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
       <path d="m9 14 2 2 4-4" />
     </svg>
@@ -1216,7 +1483,12 @@ export const Icon = {
       className={className}
     >
       <path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z" />
-      <circle cx="7.5" cy="7.5" r=".5" fill="currentColor" />
+      <circle
+        cx="7.5"
+        cy="7.5"
+        r=".5"
+        fill="currentColor"
+      />
     </svg>
   ),
   folderMove: ({ className }: IconType) => (
@@ -1270,7 +1542,148 @@ export const Icon = {
       className={className}
     >
       <path d="M21 9V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10c0 1.1.9 2 2 2h4" />
-      <rect width="10" height="7" x="12" y="13" rx="2" />
+      <rect
+        width="10"
+        height="7"
+        x="12"
+        y="13"
+        rx="2"
+      />
+    </svg>
+  ),
+
+  bold: ({ className }: IconType) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M14 12a4 4 0 0 0 0-8H6v8"></path>
+      <path d="M15 20a4 4 0 0 0 0-8H6v8Z"></path>
+    </svg>
+  ),
+
+  italic: ({ className }: IconType) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      className={className}
+    >
+      <line
+        x1="19"
+        x2="10"
+        y1="4"
+        y2="4"
+      ></line>
+      <line
+        x1="14"
+        x2="5"
+        y1="20"
+        y2="20"
+      ></line>
+      <line
+        x1="15"
+        x2="9"
+        y1="4"
+        y2="20"
+      ></line>
+    </svg>
+  ),
+  underLine: ({ className }: IconType) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      className={className}
+    >
+      <path d="M6 4v6a6 6 0 0 0 12 0V4"></path>
+      <line
+        x1="4"
+        x2="20"
+        y1="20"
+        y2="20"
+      ></line>
+    </svg>
+  ),
+
+  strikethrough: ({ className }: IconType) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      className={className}
+    >
+      <path d="M16 4H9a3 3 0 0 0-2.83 4"></path>
+      <path d="M14 12a4 4 0 0 1 0 8H6"></path>
+      <line
+        x1="4"
+        x2="20"
+        y1="12"
+        y2="12"
+      ></line>
+    </svg>
+  ),
+
+  code: ({ className }: IconType) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      className={className}
+    >
+      <polyline points="16 18 22 12 16 6"></polyline>
+      <polyline points="8 6 2 12 8 18"></polyline>
+    </svg>
+  ),
+
+  codeBlock: ({ className }: IconType) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      className={className}
+    >
+      <path d="m18 16 4-4-4-4"></path>
+      <path d="m6 8-4 4 4 4"></path>
+      <path d="m14.5 4-5 16"></path>
     </svg>
   ),
 }

@@ -7,7 +7,7 @@ export const Route = createFileRoute('/notion/file')({
   component: () => (
     <>
       <Header />
-      <NotionFile />,
+      <NotionFile />
     </>
   ),
 })
