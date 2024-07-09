@@ -2,12 +2,15 @@ import axios from 'axios'
 import {
   FetchEachOneWithIdType,
   GetIdsFromGmailAPIType,
+  ThreadModifyResType,
   ThreadModifyType,
+  ThreadReplyRes,
+  ThreadReplyType,
   ThreadTrashType
 } from './Email.type'
 import { MessageType, ThreadResType } from 'controllers'
 import { GMAIL_URL } from '../../constants'
-import { on } from 'node:events'
+import base64url from 'base64url'
 
 export class Email {
   constructor() {}
@@ -103,13 +106,35 @@ export class Email {
     access_token,
     addLabelIds,
     removeLabelIds = []
-  }: ThreadModifyType): Promise<ThreadResType | null> {
+  }: ThreadModifyType): Promise<ThreadModifyResType | null> {
     try {
-      const { data } = await axios.post<ThreadResType>(
+      const { data } = await axios.post<Promise<ThreadModifyResType>>(
         `${GMAIL_URL}${distnation}`,
         {
           addLabelIds,
           removeLabelIds
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      )
+      if (!data) return null
+
+      return data
+    } catch (error) {
+      return null
+    }
+  }
+
+  static async threadTrash({ id, distnation, access_token }: ThreadTrashType) {
+    try {
+      const { data } = await axios.post<ThreadModifyResType>(
+        `${GMAIL_URL}${distnation}`,
+        {
+          id
         },
         {
           headers: {
@@ -128,12 +153,26 @@ export class Email {
     }
   }
 
-  static async threadTrash({ id, distnation, access_token }: ThreadTrashType) {
+  static async threadReply({
+    access_token,
+    distnation,
+    threadId,
+    to,
+    subject,
+    inReplyTo,
+    body
+  }: ThreadReplyType) {
+    const raw = `To: ${to}\r\nSubject: Re: ${subject}\r\nIn-Reply-To: ${inReplyTo}\r\nReferences: ${inReplyTo}\r\n\r\n${body}`
+    const encodedMessage = base64url(raw)
+
+    console.log(encodedMessage)
+
     try {
-      const { data } = await axios.post<ThreadResType>(
+      const { data } = await axios.post<Promise<ThreadReplyRes>>(
         `${GMAIL_URL}${distnation}`,
         {
-          id
+          raw: encodedMessage,
+          threadId: threadId
         },
         {
           headers: {
@@ -142,8 +181,6 @@ export class Email {
           }
         }
       )
-      console.log(data)
-
       if (!data) return null
 
       return data

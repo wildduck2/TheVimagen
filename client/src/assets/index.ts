@@ -9,3 +9,4 @@ import compelted from './imgs/completed.png'
 
 export { vim, emailIllustrate, checkMobile, changePassword, compelted }
 export * from './svgs/index'
+export * from './imgs/heading'

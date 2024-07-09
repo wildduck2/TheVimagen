@@ -24,7 +24,7 @@ import { queryClient } from '@/main'
 export const EmailDisplayInbox = () => {
   const emailSelectedId = useSelector((state: RootState) => state.email.selectedEmailId)
 
-  const { data, status } = useQuery<IEmail[]>({
+  const { data, status, fetchStatus, isError } = useQuery<IEmail[]>({
     queryKey: ['emailSelectedIdMessage', emailSelectedId[0]],
     queryFn: () => getThread({ threads_id: emailSelectedId }),
     enabled: !!emailSelectedId[0],
@@ -42,7 +42,7 @@ export const EmailDisplayInbox = () => {
   })
 
   const idx = data && 0
-  const valid = data && idx >= 0
+  const valid = !isError && data && idx >= 0
 
   return (
     <div className="email__display__inbox">
@@ -80,16 +80,20 @@ export const EmailDisplayInbox = () => {
           </div>
           <Separator />
         </>
-      ) : (
+      ) : status === 'error' ? null : (
         emailSelectedId.length > 0 && <Skeleton className="skeleton__top"></Skeleton>
       )}
 
       <ScrollArea className="email__display__inbox__content">
-        {data && status === 'success' ? (
-          data.map((item) => (
-            <EmailDisplayInboxItem inbox={item} key={item.id} single={data.length === 1 ? true : false} />
-          ))
-        ) : emailSelectedId.length > 0 ? (
+        {data ? (
+          status === 'success' ? (
+            data.map((item) => (
+              <EmailDisplayInboxItem inbox={item} key={item.id} single={data.length === 1 ? true : false} />
+            ))
+          ) : (
+            status === 'error' && <div className="email__display__inbox__not__found">Failed to get the msg</div>
+          )
+        ) : fetchStatus === 'fetching' ? (
           <Skeleton className="skeleton__content"></Skeleton>
         ) : (
           <div className="email__display__inbox__not__found">No message selected</div>

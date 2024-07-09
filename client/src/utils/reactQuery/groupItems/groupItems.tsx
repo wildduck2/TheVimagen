@@ -1,58 +1,46 @@
 import { MessageType } from '../getThread'
-
 export const groupMessagesBySender = (threads: MessageType[]) => {
-  const grouped: Record<string, Record<string, MessageType[]>> = {}
+  const grouped = new Map<string, Map<string, MessageType[]>>()
 
-  // Group messages by sender and day
   threads.forEach((message) => {
     const sender = message.payload.headers.find((header) => header.name === 'Subject')!.value
     const date = new Date(parseInt(message.internalDate))
     const dayKey = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
 
-    if (!grouped[sender]) {
-      grouped[sender] = {}
-    }
-    if (!grouped[sender][dayKey]) {
-      grouped[sender][dayKey] = []
+    if (!grouped.has(sender)) {
+      grouped.set(sender, new Map())
     }
 
-    grouped[sender][dayKey].push(message)
+    const senderMap = grouped.get(sender)!
+    if (!senderMap.has(dayKey)) {
+      senderMap.set(dayKey, [])
+    }
+
+    senderMap.get(dayKey)!.push(message)
   })
 
-  // Prepare the result array
   const result: { parentTitle: string; day: string; messages: MessageType[] }[] = []
 
-  // Sort and collect messages
-  Object.keys(grouped).forEach((sender) => {
-    Object.keys(grouped[sender]).forEach((day) => {
-      const messages = grouped[sender][day]
-
-      // Sort messages within each day by date (newest first)
-      messages.sort((a, b) => {
-        const dateA = new Date(parseInt(b.internalDate))
-        const dateB = new Date(parseInt(a.internalDate))
-        return dateA.getTime() - dateB.getTime()
-      })
-
-      // Push the latest sorted messages to result
+  // Iterate over each parent title (sender)
+  grouped.forEach((dateMap, sender) => {
+    // Iterate over each date within the sender's messages
+    dateMap.forEach((messages, date) => {
+      // Push an object representing each day and its parent title into the result array
       result.push({
         parentTitle: sender,
-        day: day,
+        day: date,
         messages: messages,
       })
     })
   })
 
-  // Sort the result array by the most recent message date (newest first)
+  // Sort the result array by day
   result.sort((a, b) => {
-    // Get the most recent date from the messages array for comparison
-    const dateA = new Date(parseInt(b.messages[0].internalDate))
-    const dateB = new Date(parseInt(a.messages[0].internalDate))
-    return dateA.getTime() - dateB.getTime()
+    // Convert day strings to Date objects for comparison
+    const dateA = new Date(a.day) as unknown as number
+    const dateB = new Date(b.day) as unknown as number
+    return dateB - dateA
   })
 
-  // Extract only the messages array from each result item
-  const final = result.map((item) => item.messages)
-
-  return final
+  return result.map((item) => item.messages)
 }

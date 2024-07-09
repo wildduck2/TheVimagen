@@ -10,7 +10,6 @@ export const getTimeEstimated = async ({ queryKey }: QueryFunctionContext) => {
       `${process.env.ROOT_URL}/email/get/time-estimated`,
       {
         user_id: 'fcb7d30c-b14a-47d3-bd9c-37ae5849c30e',
-        thread_id: '1906343e98e4780b',
         q,
         fields,
       },

@@ -1,4 +1,4 @@
-import { ThreadResType } from 'controllers'
+import { MessageType, ThreadResType } from 'controllers'
 
 export type GetIdsFromGmailAPIType = {
   access_token: string
@@ -20,10 +20,33 @@ export type ThreadModifyType = {
   removeLabelIds: string[]
 }
 
-export type ThreadModifyResType = ThreadResType
+export type ThreadModifyResType = {
+  data: ThreadResType | null
+  error: string | null
+}
 
 export type ThreadTrashType = {
   id: string
   distnation: string
   access_token: string
+}
+
+export type ThreadTrashResType = {
+  data: ThreadResType | null
+  error: string | null
+}
+
+export type ThreadReplyType = {
+  access_token: string
+  distnation: string
+  threadId: string
+  to: string
+  subject: string
+  inReplyTo: string
+  body: string
+}
+
+export type ThreadReplyRes = {
+  data: MessageType | null
+  error: string | null
 }

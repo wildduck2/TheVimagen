@@ -3,9 +3,9 @@ import dotEnv from 'dotenv'
 import { oauth_router, auth_router, email_router } from './routes'
 import cors from 'cors'
 import bodyParser from 'body-parser'
-import { prismaSession } from './utils'
+import { doubleCsrfProtection, prismaSession } from './utils'
 import cookieParser from 'cookie-parser'
-// import { csrf_token } from './middlewares';
+import { csrf_token } from './middlewares'
 // import { corsOptions } from './constants';
 
 export const app = express()
@@ -22,9 +22,8 @@ app.use(express.static('public'))
 app.use(bodyParser.json())
 app.use(cookieParser())
 app.use(prismaSession)
-// app.use(doubleCsrfProtection);
 
-// app.use(csrf_token)
+app.use(csrf_token)
 app.use(oauth_router)
 app.use(auth_router)
 app.use(email_router)

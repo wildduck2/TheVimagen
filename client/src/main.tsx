@@ -22,7 +22,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <>
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <ThemeProvider
+          defaultTheme="dark"
+          storageKey="vite-ui-theme"
+        >
           <TooltipProvider delayDuration={0}>
             <Toaster />
             <RouterProvider router={router} />
