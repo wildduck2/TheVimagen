@@ -14,12 +14,12 @@ import {
   ContextMenuSubContent,
   ContextMenuSubTrigger,
   ContextMenuTrigger,
-} from '../ContextMenu'
+  CheckboxWrapper,
+  Separator,
+} from '../..'
 import { ToggleMutationButton } from '../ToggleMutationButton'
 import { Toggle } from '../Toggle'
-import { CheckboxWrapper } from '../CheckboxWrapper'
 import { Icon } from '@/assets'
-import { Separator } from '../Spearator'
 import React from 'react'
 import { ToggleFavoriateButton } from '../ToggleFavoriateButton'
 import { TrashMutate } from '../TrashMutate'
@@ -37,13 +37,26 @@ export const ListItemWrapper = ({ children, items, item }: ListItemWrapperType) 
           <div className="email__list__wrapper__item">
             <div>
               <div className="email__list__wrapper__item__functionality__card">
-                <CheckboxWrapper checked={false} tip="Select" />
+                <CheckboxWrapper
+                  checked={false}
+                  tip="Select"
+                />
                 <Separator />
-                <ToggleFavoriateButton labelIds={item.labelIds} threadId={item.threadId} tip="Star" />
+                <ToggleFavoriateButton
+                  labelIds={item.labelIds}
+                  threadId={item.threadId}
+                  tip="Star"
+                />
                 <Separator />
-                <TrashMutate threadId={item.threadId} tip="Trash" />
+                <TrashMutate
+                  threadId={item.threadId}
+                  tip="Trash"
+                />
                 <Separator />
-                <ArchiveMutate threadId={item.threadId} tip="Archive" />
+                <ArchiveMutate
+                  threadId={item.threadId}
+                  tip="Archive"
+                />
               </div>
             </div>
             <div className={cn('email__list__wrapper__item__body', emailSelectedId[0] === ids[0] && 'active')}>

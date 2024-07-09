@@ -1,11 +1,10 @@
-import { ToggleToolTipWrapper } from '../ToggleToolTipWrapper'
 import { ToggleFavoriateButtonType } from './ToggleFavoriateButton.types'
-import { cn, MessageType, starThread, ThreadMessageType, ThreadsType } from '@/utils'
+import { cn, starThread } from '@/utils'
 import { toast } from 'sonner'
 import { useMutation } from '@tanstack/react-query'
 import { Icon } from '@/assets'
-import { queryClient } from '@/main'
 import { useState } from 'react'
+import { ToggleToolTipWrapper } from '../../notion'
 
 export const ToggleFavoriateButton = ({ labelIds, threadId, tip }: ToggleFavoriateButtonType) => {
   const [alreadyStarred, setAlreadyStarred] = useState(labelIds.includes('STARRED'))

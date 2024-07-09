@@ -1,28 +1,54 @@
 import { BubbleMenu, Editor, EditorContent, useEditor } from '@tiptap/react'
+import { StarterKit } from '@tiptap/starter-kit'
+import Bold from '@tiptap/extension-bold'
+import Italic from '@tiptap/extension-italic'
+import Underline from '@tiptap/extension-underline'
+import Strike from '@tiptap/extension-strike'
+import Code from '@tiptap/extension-code'
+import CodeBlock from '@tiptap/extension-code-block'
+import Document from '@tiptap/extension-document'
+import Paragraph from '@tiptap/extension-paragraph'
+import Text from '@tiptap/extension-text'
+import Highlight from '@tiptap/extension-highlight'
+import Link from '@tiptap/extension-link'
+import Subscript from '@tiptap/extension-subscript'
+import Superscript from '@tiptap/extension-superscript'
+import TextStyle from '@tiptap/extension-text-style'
 
 import { NotionEditorProps } from './NotionEditor.types'
-import StarterKit from '@tiptap/starter-kit'
+
 import {
   Button,
   Popover,
   PopoverTrigger,
   ScrollArea,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
   Separator,
   ToggleToolTipWrapper,
+  ToolBarToggleButtons,
 } from '@/components/ui'
 import { cn } from '@/utils'
 import { memo, useCallback, useEffect, useState } from 'react'
 import { header1, Icon, turnIntoImg } from '@/assets'
 import { PopoverAnchor, PopoverArrow, PopoverContent } from '@radix-ui/react-popover'
+import DraggableItem from './DraggableItem'
 
 export const NotionEditor = ({ description, onChange, className }: NotionEditorProps) => {
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: [
+      StarterKit,
+      DraggableItem,
+      Underline,
+      // Code,
+      // CodeBlock,
+      // Document,
+      // Text,
+      // Paragraph,
+      // Highlight,
+      // Link,
+      // TextStyle,
+      // Superscript,
+      // Subscript,
+    ],
     // content: description,
     editorProps: {
       attributes: {
@@ -34,19 +60,26 @@ export const NotionEditor = ({ description, onChange, className }: NotionEditorP
       onChange?.(html)
     },
     content: `
-      <p>
-        Hey, try to select some text here. There will popup a menu for selecting some inline styles. Remember: you have full control about content and styling of this menu.
-      </p>
+      <p>This is a boring paragraph.</p>
+      <div data-type="draggable-item">
+        <p>Followed by a fancy draggable item.</p>
+      </div>
+      <div data-type="draggable-item">
+        <p>And another draggable item.</p>
+        <div data-type="draggable-item">
+          <p>And a nested one.</p>
+          <div data-type="draggable-item">
+            <p>But can we go deeper?</p>
+          </div>
+        </div>
+      </div>
+      <p>Let’s finish with a boring paragraph.</p>
     `,
   })
 
-  // const [isEditable, setIsEditable] = useState(true)
-  //
-  // useEffect(() => {
-  //     if (editor) {
-  //         editor.setEditable(isEditable)
-  //     }
-  // }, [isEditable, editor])
+  if (!editor) {
+    return null
+  }
 
   return (
     <ScrollArea className={(cn('bg-green-500 grid h-[400px] mx-auto w-full'), className)}>
@@ -81,32 +114,7 @@ export const ToolbarTextMenu = ({ editor }: ToolBarTextMenuProps) => {
           orientation="vertical"
           className="h-[26px]"
         />
-        <div className="bubble__menu__wrapper__icons">
-          <ToggleToolTipWrapper
-            tip="Bold"
-            children={<Icon.bold />}
-          />
-          <ToggleToolTipWrapper
-            tip="Italic"
-            children={<Icon.italic />}
-          />
-          <ToggleToolTipWrapper
-            tip="Underline"
-            children={<Icon.underLine />}
-          />
-          <ToggleToolTipWrapper
-            tip="Strikethrough"
-            children={<Icon.strikethrough />}
-          />
-          <ToggleToolTipWrapper
-            tip="Code"
-            children={<Icon.code />}
-          />
-          <ToggleToolTipWrapper
-            tip="Block Code"
-            children={<Icon.codeBlock />}
-          />
-        </div>
+        <ToolBarToggleButtons editor={editor} />
       </div>
     </BubbleMenu>
   )
@@ -144,8 +152,9 @@ export const SelectPicker = ({ onChange, value }: SelectPickerProps) => {
       >
         <span>Turn into </span>
         <Separator className="mb-1" />
-        {turnIntoComponent.map((item) => (
+        {turnIntoComponent.map((item, idx) => (
           <Button
+            key={idx}
             variant="ghost"
             className="bubble__menu__wrapper__picker__content__button"
             onClick={selectSize(item.label)}
@@ -158,7 +167,7 @@ export const SelectPicker = ({ onChange, value }: SelectPickerProps) => {
 
             <div className="bubble__menu__wrapper__picker__content__button__hover__menu">
               <img
-                src={item.img}
+                src={item.discriptionImg}
                 className="w-[22px]"
               />
               <span>{item.discription}</span>
@@ -175,51 +184,121 @@ const turnIntoComponent = [
     img: turnIntoImg.text,
     label: 'Text',
     discription: 'Just start writing with plain text',
+    discriptionImg: turnIntoImg.textDesc,
   },
   {
     img: turnIntoImg.header1,
     label: 'Heading 1',
     discription: 'Just start writing with plain text',
+    discriptionImg: turnIntoImg.header1Desc,
   },
   {
     img: turnIntoImg.header2,
     label: 'Heading 2',
     discription: 'Just start writing with plain text',
+    discriptionImg: turnIntoImg.header2Desc,
   },
   {
     img: turnIntoImg.header3,
     label: 'Heading 2',
     discription: 'Just start writing with plain text',
+    discriptionImg: turnIntoImg.header3Desc,
   },
   {
     img: turnIntoImg.page,
     label: 'Page',
     discription: 'Just start writing with plain text',
+    discriptionImg: turnIntoImg.pageDesc,
   },
   {
     img: turnIntoImg.todoList,
     label: 'To-do list',
     discription: 'Just start writing with plain text',
+    discriptionImg: turnIntoImg.todoDesc,
   },
   {
     img: turnIntoImg.bullitLIst,
     label: 'bulleted list',
     discription: 'Just start writing with plain text',
+    discriptionImg: turnIntoImg.bulletedDesc,
   },
   {
     img: turnIntoImg.numbered,
     label: 'Numbered list',
     discription: 'Just start writing with plain text',
+    discriptionImg: turnIntoImg.numberedDesc,
   },
   {
     img: turnIntoImg.toggle,
     label: 'Toggle list',
     discription: 'Just start writing with plain text',
+    discriptionImg: turnIntoImg.toggleDesc,
   },
   {
     img: turnIntoImg.code,
     label: 'Code',
     discription: 'Just start writing with plain text',
+    discriptionImg: turnIntoImg.codeDesc,
+  },
+  {
+    img: turnIntoImg.quote,
+    label: 'Quote',
+    discription: 'Capture a code snippet',
+    discriptionImg: turnIntoImg.quoteDesc,
+  },
+  {
+    img: turnIntoImg.callout,
+    label: 'Callout',
+    discription: 'Make writing stand out',
+    discriptionImg: turnIntoImg.callOutDesc,
+  },
+  {
+    img: turnIntoImg.blockEquation,
+    label: 'Block equation',
+    discription: 'Display a standalone math equation',
+    discriptionImg: turnIntoImg.mathDesc,
+  },
+  {
+    img: turnIntoImg.headdding1Toggle,
+    label: 'Toggle heading 1',
+    discription: 'Hide content inside a large heading',
+    discriptionImg: turnIntoImg.toggleHeadingDesc1,
+  },
+  {
+    img: turnIntoImg.headdding2Toggle,
+    label: 'Toggle heading 2',
+    discription: 'Hide content inside a meduim heading',
+    discriptionImg: turnIntoImg.toggleHeadingDesc2,
+  },
+  {
+    img: turnIntoImg.headdding3Toggle,
+    label: 'Toggle heading 3',
+    discription: 'Hide content inside a small heading',
+    discriptionImg: turnIntoImg.toggleHeadingDesc3,
+  },
+  {
+    img: turnIntoImg.columnList,
+    label: '2 columns',
+    discription: 'Create 2 columns of blocks',
+    discriptionImg: turnIntoImg.column2,
+  },
+  {
+    img: turnIntoImg.columnList,
+    label: '3 columns',
+    discription: 'Create 3 columns of blocks',
+    discriptionImg: turnIntoImg.column2,
+  },
+  {
+    img: turnIntoImg.columnList,
+    label: '4 columns',
+    discription: 'Create 4 columns of blocks',
+    discriptionImg: turnIntoImg.column2,
+  },
+  {
+    img: turnIntoImg.columnList,
+    label: '5 columns',
+    discription: 'Create 5 columns of blocks',
+    discriptionImg: turnIntoImg.column2,
   },
 ]
 

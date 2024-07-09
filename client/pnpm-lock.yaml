@@ -89,13 +89,61 @@ importers:
       '@tiptap/core':
         specifier: ^2.4.0
         version: 2.4.0(@tiptap/pm@2.4.0)
+      '@tiptap/extension-blockquote':
+        specifier: ^2.4.0
+        version: 2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))
+      '@tiptap/extension-bold':
+        specifier: ^2.4.0
+        version: 2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))
+      '@tiptap/extension-bullet-list':
+        specifier: ^2.4.0
+        version: 2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))
+      '@tiptap/extension-code':
+        specifier: ^2.4.0
+        version: 2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))
+      '@tiptap/extension-code-block':
+        specifier: ^2.4.0
+        version: 2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))(@tiptap/pm@2.4.0)
+      '@tiptap/extension-code-block-lowlight':
+        specifier: ^2.4.0
+        version: 2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))(@tiptap/extension-code-block@2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))(@tiptap/pm@2.4.0))(@tiptap/pm@2.4.0)
       '@tiptap/extension-color':
         specifier: ^2.4.0
         version: 2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))(@tiptap/extension-text-style@2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0)))
+      '@tiptap/extension-document':
+        specifier: ^2.4.0
+        version: 2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))
+      '@tiptap/extension-highlight':
+        specifier: ^2.4.0
+        version: 2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))
+      '@tiptap/extension-italic':
+        specifier: ^2.4.0
+        version: 2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))
+      '@tiptap/extension-link':
+        specifier: ^2.4.0
+        version: 2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))(@tiptap/pm@2.4.0)
       '@tiptap/extension-list-item':
         specifier: ^2.4.0
         version: 2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))
+      '@tiptap/extension-paragraph':
+        specifier: ^2.4.0
+        version: 2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))
+      '@tiptap/extension-strike':
+        specifier: ^2.4.0
+        version: 2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))
+      '@tiptap/extension-subscript':
+        specifier: ^2.4.0
+        version: 2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))
+      '@tiptap/extension-superscript':
+        specifier: ^2.4.0
+        version: 2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))
+      '@tiptap/extension-text':
+        specifier: ^2.4.0
+        version: 2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))
       '@tiptap/extension-text-style':
+        specifier: ^2.4.0
+        version: 2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))
+      '@tiptap/extension-underline':
         specifier: ^2.4.0
         version: 2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))
       '@tiptap/pm':
@@ -122,6 +170,9 @@ importers:
       date-fns:
         specifier: ^2.30.0
         version: 2.30.0
+      extension-kit:
+        specifier: link:@/extensions/extension-kit
+        version: link:@/extensions/extension-kit
       gmail-api-parse-message-ts:
         specifier: ^2.2.33
         version: 2.2.33
@@ -140,6 +191,9 @@ importers:
       js-cookie:
         specifier: ^3.0.5
         version: 3.0.5
+      lowlight:
+        specifier: ^3.1.0
+        version: 3.1.0
       lucide-react:
         specifier: ^0.293.0
         version: 0.293.0(react@18.3.1)
@@ -2347,6 +2401,16 @@ packages:
     peerDependencies:
       '@tiptap/core': ^2.0.0
 
+  '@tiptap/extension-subscript@2.4.0':
+    resolution: {integrity: sha512-exLSmSFmYN6AVww5oyroFL3KCwstT0U+ojvVhRD6DQ+Hc81d++lBKANfsWAcllXjZVGPWeMNdE66bV7oFCtQcQ==}
+    peerDependencies:
+      '@tiptap/core': ^2.0.0
+
+  '@tiptap/extension-superscript@2.4.0':
+    resolution: {integrity: sha512-s+GsbbERNQCn/hyaw5/82y3wHQ7o5byc/eFAKYo1p3p5eESlDaHY/xVYPt3CGOX2TJWZalgSFEFqBVdTSI8mUQ==}
+    peerDependencies:
+      '@tiptap/core': ^2.0.0
+
   '@tiptap/extension-task-item@2.4.0':
     resolution: {integrity: sha512-x40vdHnmDiBbA2pjWR/92wVGb6jT13Nk2AhRUI/oP/r4ZGKpTypoB7heDnvLBgH0Y5a51dFqU+G1SFFL30u5uA==}
     peerDependencies:
@@ -2422,6 +2486,9 @@ packages:
 
   '@types/hast@2.3.10':
     resolution: {integrity: sha512-McWspRw8xx8J9HurkVBfYj0xKoE25tOFlHGdx4MJ5xORQrMGZNqJhVQWaIbm6Oyla5kYOXtDiopzKRJzEOkwJw==}
+
+  '@types/hast@3.0.4':
+    resolution: {integrity: sha512-WPs+bbQw5aCj+x6laNGWLH3wviHtoCv/P3+otBhbOhJgG8qtpdAMlTCxLtsTWA7LH1Oh/bFCHsBn0TPS5m30EQ==}
 
   '@types/hoist-non-react-statics@3.3.5':
     resolution: {integrity: sha512-SbcrWzkKBw2cdwRTwQAswfpB9g9LJWfjtUeW/jvNwbhC8cpmmNYVePa+ncbUe0rGTQ7G3Ff6mYUN2VMfLVr+Sg==}
@@ -2996,6 +3063,9 @@ packages:
   detect-node@2.1.0:
     resolution: {integrity: sha512-T0NIuQpnTvFDATNuHN5roPwSBG83rFsuO+MXXH9/3N1eFbn4wcPjttvjMLEPWJ0RGUYgQE7cGgS3tNxbqCGM7g==}
 
+  devlop@1.1.0:
+    resolution: {integrity: sha512-RWmIqhcFf1lRYBvNmr7qTNuyCt/7/ns2jbpp1+PalgE/rDQcBT0fioSMUpJ93irlUhC5hrg4cYqe6U+0ImW0rA==}
+
   didyoumean@1.2.2:
     resolution: {integrity: sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==}
 
@@ -3351,6 +3421,10 @@ packages:
   hast-util-whitespace@2.0.1:
     resolution: {integrity: sha512-nAxA0v8+vXSBDt3AnRUNjyRIQ0rD+ntpbAp4LnPkumc5M9yUbSMa4XDU9Q6etY4f1Wp4bNgvc1yjiZtsTTrSng==}
 
+  highlight.js@11.9.0:
+    resolution: {integrity: sha512-fJ7cW7fQGCYAkgv4CPfwFHrfd/cLS4Hau96JuJ+ZTOWhjnhoeN1ub1tFmALm/+lW5z4WCAuAV9bm05AP0mS6Gw==}
+    engines: {node: '>=12.0.0'}
+
   hoist-non-react-statics@3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
 
@@ -3691,6 +3765,9 @@ packages:
 
   lower-case@2.0.2:
     resolution: {integrity: sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg==}
+
+  lowlight@3.1.0:
+    resolution: {integrity: sha512-CEbNVoSikAxwDMDPjXlqlFYiZLkDJHwyGu/MfOsJnF3d7f3tds5J3z8s/l9TMXhzfsJCCJEAsD78842mwmg0PQ==}
 
   lru-cache@10.4.0:
     resolution: {integrity: sha512-bfJaPTuEiTYBu+ulDaeQ0F+uLmlfFkMgXj4cbwfuMSjgObGMzb55FMMbDvbRU0fAHZ4sLGkz2mKwcMg8Dvm8Ww==}
@@ -7092,6 +7169,14 @@ snapshots:
     dependencies:
       '@tiptap/core': 2.4.0(@tiptap/pm@2.4.0)
 
+  '@tiptap/extension-subscript@2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))':
+    dependencies:
+      '@tiptap/core': 2.4.0(@tiptap/pm@2.4.0)
+
+  '@tiptap/extension-superscript@2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))':
+    dependencies:
+      '@tiptap/core': 2.4.0(@tiptap/pm@2.4.0)
+
   '@tiptap/extension-task-item@2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))(@tiptap/pm@2.4.0)':
     dependencies:
       '@tiptap/core': 2.4.0(@tiptap/pm@2.4.0)
@@ -7206,6 +7291,10 @@ snapshots:
   '@types/estree@1.0.5': {}
 
   '@types/hast@2.3.10':
+    dependencies:
+      '@types/unist': 2.0.10
+
+  '@types/hast@3.0.4':
     dependencies:
       '@types/unist': 2.0.10
 
@@ -7898,6 +7987,10 @@ snapshots:
 
   detect-node@2.1.0: {}
 
+  devlop@1.1.0:
+    dependencies:
+      dequal: 2.0.3
+
   didyoumean@1.2.2: {}
 
   diff@5.2.0: {}
@@ -8369,6 +8462,8 @@ snapshots:
 
   hast-util-whitespace@2.0.1: {}
 
+  highlight.js@11.9.0: {}
+
   hoist-non-react-statics@3.3.2:
     dependencies:
       react-is: 16.13.1
@@ -8661,6 +8756,12 @@ snapshots:
   lower-case@2.0.2:
     dependencies:
       tslib: 2.6.3
+
+  lowlight@3.1.0:
+    dependencies:
+      '@types/hast': 3.0.4
+      devlop: 1.1.0
+      highlight.js: 11.9.0
 
   lru-cache@10.4.0: {}
 

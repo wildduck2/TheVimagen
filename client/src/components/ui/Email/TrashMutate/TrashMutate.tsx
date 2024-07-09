@@ -1,14 +1,13 @@
 import { toast } from 'sonner'
 import { useMutation } from '@tanstack/react-query'
 
-import { ToggleToolTipWrapper } from '../ToggleToolTipWrapper'
+import { PaginatedMessages, TrashMutateType } from './TrashMutate.types'
 import { getCookie, trashMessage } from '@/utils'
 import { Icon } from '@/assets'
 import { queryClient } from '@/main'
-import { ArchiveMutateType } from './ArchiveMutate.types'
-import { PaginatedMessages } from '../TrashMutate'
+import { ToggleToolTipWrapper } from '../../notion'
 
-export const ArchiveMutate = ({ threadId, tip }: ArchiveMutateType) => {
+export const TrashMutate = ({ threadId, tip }: TrashMutateType) => {
   const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
 
   const startMutation = useMutation({
@@ -28,16 +27,15 @@ export const ArchiveMutate = ({ threadId, tip }: ArchiveMutateType) => {
       toast.success(`Messages has been Deleted!`)
     },
   })
+
   return (
-    <>
-      <ToggleToolTipWrapper
-        tip={tip}
-        onClick={() => {
-          startMutation.mutate()
-        }}
-      >
-        <Icon.archive />
-      </ToggleToolTipWrapper>
-    </>
+    <ToggleToolTipWrapper
+      tip={tip}
+      onClick={() => {
+        startMutation.mutate()
+      }}
+    >
+      <Icon.trash2 />
+    </ToggleToolTipWrapper>
   )
 }

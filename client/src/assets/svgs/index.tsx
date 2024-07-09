@@ -1578,9 +1578,9 @@ export const Icon = {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       className={className}
     >
       <line
@@ -1611,9 +1611,9 @@ export const Icon = {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       className={className}
     >
       <path d="M6 4v6a6 6 0 0 0 12 0V4"></path>
@@ -1634,9 +1634,9 @@ export const Icon = {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       className={className}
     >
       <path d="M16 4H9a3 3 0 0 0-2.83 4"></path>
@@ -1658,9 +1658,9 @@ export const Icon = {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       className={className}
     >
       <polyline points="16 18 22 12 16 6"></polyline>
@@ -1676,9 +1676,9 @@ export const Icon = {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       className={className}
     >
       <path d="m18 16 4-4-4-4"></path>
