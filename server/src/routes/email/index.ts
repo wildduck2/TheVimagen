@@ -8,11 +8,13 @@ import {
 } from '../../controllers'
 import { Router } from 'express'
 import { auth_credentials_about_to_expire } from '../../middlewares'
+// import { doubleCsrfProtection } from 'utils'
 
 const email_router = Router()
 
 email_router.post(
   '/email/get/threads',
+  // doubleCsrfProtection,
   auth_credentials_about_to_expire,
   postGetThreadsHandler
 )
