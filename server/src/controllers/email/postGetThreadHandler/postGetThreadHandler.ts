@@ -25,7 +25,7 @@ export const postGetThreadHandler: RequestHandler = async (req, res) => {
     const parse = new ParseGmailApi()
     const email: IEmail[] = data.map((item) => parse.parseMessage(item))
 
-    return res.json({ error: null, data: email })
+    return res.json({ error: null, data: data })
   } catch (error) {
     return res.json({ error: 'failed to get msgs', data: null })
   }
