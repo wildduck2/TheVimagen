@@ -1,4 +1,4 @@
-import { ToggleToolTipWrapper } from '../../ui'
+import { ToggleToolTipSpanWrapper } from '@/components/ui'
 import FileMainEreaNav from './FileMainEreaNav'
 import { Icon } from '@/assets'
 
@@ -12,10 +12,10 @@ const FileMainEreaHeader = () => {
             <span>Unique</span>
           </h1>
           <div>
-            <ToggleToolTipWrapper tip="Search">
+            <ToggleToolTipSpanWrapper tip="Search">
               <Icon.search />
-            </ToggleToolTipWrapper>
-            <ToggleToolTipWrapper tip="Rate the project">
+            </ToggleToolTipSpanWrapper>
+            <ToggleToolTipSpanWrapper tip="Rate the project">
               <span
                 onClick={(e) => {
                   e.currentTarget.classList.toggle('active')
@@ -24,10 +24,10 @@ const FileMainEreaHeader = () => {
                 <Icon.search />
               </span>
               <Icon.fiStar />
-            </ToggleToolTipWrapper>
-            <ToggleToolTipWrapper tip="More">
+            </ToggleToolTipSpanWrapper>
+            <ToggleToolTipSpanWrapper tip="More">
               <Icon.dotVertical />
-            </ToggleToolTipWrapper>
+            </ToggleToolTipSpanWrapper>
           </div>
         </div>
         {/* TODO: make data and loop on the data */}

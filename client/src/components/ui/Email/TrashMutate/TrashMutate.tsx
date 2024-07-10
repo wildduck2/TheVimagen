@@ -5,7 +5,7 @@ import { PaginatedMessages, TrashMutateType } from './TrashMutate.types'
 import { getCookie, trashMessage } from '@/utils'
 import { Icon } from '@/assets'
 import { queryClient } from '@/main'
-import { ToggleToolTipWrapper } from '../../notion'
+import { ToggleToolTipSpanWrapper } from '../ToggleToolTipSpanWrapper'
 
 export const TrashMutate = ({ threadId, tip }: TrashMutateType) => {
   const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
@@ -29,13 +29,13 @@ export const TrashMutate = ({ threadId, tip }: TrashMutateType) => {
   })
 
   return (
-    <ToggleToolTipWrapper
+    <ToggleToolTipSpanWrapper
       tip={tip}
       onClick={() => {
         startMutation.mutate()
       }}
     >
       <Icon.trash2 />
-    </ToggleToolTipWrapper>
+    </ToggleToolTipSpanWrapper>
   )
 }

@@ -1,4 +1,6 @@
 export * from './ToggleFavoriateButton'
+export * from './ToggleToolTipSpanWrapper'
 export * from './ArchiveMutate'
 export * from './TrashMutate'
 export * from './ListItemWrapper'
+export * from './CheckboxWrapper'

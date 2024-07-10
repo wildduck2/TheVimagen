@@ -4,7 +4,7 @@ import { toast } from 'sonner'
 import { useMutation } from '@tanstack/react-query'
 import { Icon } from '@/assets'
 import { useState } from 'react'
-import { ToggleToolTipWrapper } from '../../notion'
+import { ToggleToolTipSpanWrapper } from '../..'
 
 export const ToggleFavoriateButton = ({ labelIds, threadId, tip }: ToggleFavoriateButtonType) => {
   const [alreadyStarred, setAlreadyStarred] = useState(labelIds.includes('STARRED'))
@@ -27,7 +27,7 @@ export const ToggleFavoriateButton = ({ labelIds, threadId, tip }: ToggleFavoria
   })
 
   return (
-    <ToggleToolTipWrapper
+    <ToggleToolTipSpanWrapper
       tip={tip}
       onClick={({ currentTarget }) => {
         startMutation.mutate()
@@ -35,6 +35,6 @@ export const ToggleFavoriateButton = ({ labelIds, threadId, tip }: ToggleFavoria
       }}
     >
       <Icon.fiStar className={cn('size-[1rem]', alreadyStarred && 'active')} />
-    </ToggleToolTipWrapper>
+    </ToggleToolTipSpanWrapper>
   )
 }
