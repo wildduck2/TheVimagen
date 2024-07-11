@@ -14,7 +14,7 @@ export const TurnIntoPicker = ({ onChange, value, commands, states }: TurnIntoPi
     <Popover>
       <PopoverTrigger
         asChild
-        className="bubble__menu__wrapper__picker__trigger"
+        className="turn__into__picker__trigger"
         value={value}
       >
         <Button
@@ -25,7 +25,7 @@ export const TurnIntoPicker = ({ onChange, value, commands, states }: TurnIntoPi
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="bubble__menu__wrapper__picker__content"
+        className="turn__into__picker__content"
         defaultValue={'Medium'}
       >
         <span>Turn into </span>
@@ -34,7 +34,7 @@ export const TurnIntoPicker = ({ onChange, value, commands, states }: TurnIntoPi
           <Button
             key={idx}
             variant="ghost"
-            className={cn('bubble__menu__wrapper__picker__content__button', states[item.value] && 'bg-red-100')}
+            className={cn('turn__into__picker__content__button', states[item.value] && 'bg-red-100')}
             onMouseDown={() => setValueState(item.label)}
             onClick={commands[item.action] as MouseEvent}
           >
@@ -44,7 +44,7 @@ export const TurnIntoPicker = ({ onChange, value, commands, states }: TurnIntoPi
             />
             <span>{item.label}</span>
 
-            <div className="bubble__menu__wrapper__picker__content__button__hover__menu">
+            <div className="turn__into__picker__content__button__hover__menu">
               <img
                 src={item.discriptionImg}
                 className="w-[22px]"

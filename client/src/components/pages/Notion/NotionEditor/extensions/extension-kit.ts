@@ -47,6 +47,7 @@ import { CodeBlockLowlight } from '@tiptap/extension-code-block-lowlight'
 import { ImageUpload } from './ImageUpload'
 // import { TableOfContentsNode } from './TableOfContentsNode'
 import { all, createLowlight } from 'lowlight'
+import { NotionEditorDraggableItem } from '../NotionEditorDraggableItem'
 const lowlight = createLowlight(all)
 
 interface ExtensionKitProps {
@@ -151,8 +152,7 @@ export const ExtensionKit = ({ provider, userId, userName = 'Maxi' }: ExtensionK
     width: 2,
     class: 'ProseMirror-dropcursor border-black',
   }),
-
-  // DraggableItem,
+  NotionEditorDraggableItem,
 ]
 
 export default ExtensionKit

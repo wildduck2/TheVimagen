@@ -24,15 +24,18 @@ export const useTextmenuStates = (editor: Editor) => {
   )
 
   return {
+    isText: editor.isActive('text'),
     isHeading1: editor.isActive('heading', { level: 1 }),
     isHeading2: editor.isActive('heading', { level: 2 }),
     isHeading3: editor.isActive('heading', { level: 3 }),
+    isHeading4: editor.isActive('heading', { level: 4 }),
+    isHeading5: editor.isActive('heading', { level: 5 }),
+    isHeading6: editor.isActive('heading', { level: 6 }),
     isTaskList: editor.isActive('taskList'),
     isBulletList: editor.isActive('bulletList'),
     isDetailList: editor.isActive('detailList'),
     isNumberedList: editor.isActive('orderedList'),
     //
-    isText: editor.isActive('text'),
     isBold: editor.isActive('bold'),
     isItalic: editor.isActive('italic'),
     isStrike: editor.isActive('strike'),

@@ -4,11 +4,11 @@ import { bubbleMenuIconsData } from '@/constants'
 export const ToolBarToggleButtons = ({ commands, states }: ToolBarToggleButtonsProps) => {
   return (
     <>
-      <div className="bubble__menu__wrapper__icons">
+      <div className="toolbar__toggle__buttons">
         {bubbleMenuIconsData.map((item, idx) => (
           <ToggleToolTipButtonWrapper
             key={idx}
-            tip="Bold"
+            tip={item.label}
             value={states[item.value]}
             onClick={commands[item.action] as MouseEvent}
             children={<item.icon />}

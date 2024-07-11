@@ -1,34 +1,35 @@
 import { cn } from '@/utils'
 import { Button, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../..'
 import { ToggleToolTipWrapperButtonProps } from './ToggleToolTipButtonWrapper.types'
+import React from 'react'
 
-const ToggleToolTipButtonWrapper: React.FC<ToggleToolTipWrapperButtonProps> = ({
-  variant,
-  children,
-  onClick,
-  tip,
-  value,
-}) => {
-  return (
-    <TooltipProvider>
-      <Tooltip delayDuration={0}>
-        <TooltipTrigger
-          asChild
-          onClick={onClick}
-        >
-          <Button
-            variant={variant || 'ghost'}
-            className={cn(value && 'active')}
+export const ToggleToolTipButtonWrapper = React.forwardRef<HTMLButtonElement, ToggleToolTipWrapperButtonProps>(
+  ({ variant, children, onClick, tip, value }, ref) => {
+    console.log(value)
+
+    return (
+      <TooltipProvider>
+        <Tooltip delayDuration={0}>
+          <TooltipTrigger
+            asChild
+            onClick={onClick}
           >
-            {children}
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>{tip}</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  )
-}
+            <Button
+              type="button"
+              variant={variant || 'ghost'}
+              className={cn(value && 'active', 'toggle__tool__tip__trigger')}
+              ref={ref}
+            >
+              {children}
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent className="toggle__tool__tip__content">
+            <p>{tip}</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    )
+  },
+)
 
-export { ToggleToolTipButtonWrapper }
+ToggleToolTipButtonWrapper.displayName = 'ToggleToolTipButtonWrapper'

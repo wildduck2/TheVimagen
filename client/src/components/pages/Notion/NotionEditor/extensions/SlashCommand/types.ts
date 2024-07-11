@@ -13,7 +13,8 @@ export interface Command {
   label: string
   description: string
   aliases?: string[]
-  iconName: keyof typeof icons
+  img: string
+  discriptionImg: string
   action: (editor: Editor) => void
   shouldBeHidden?: (editor: Editor) => boolean
 }
