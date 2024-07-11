@@ -1,0 +1,100 @@
+/*
+
+    This code is writen by Ahmed Ayob
+
+*/
+
+@use '../../../base' as *;
+@use '../../../utils' as u;
+
+/*
+
+    Notion Minimal Text Editor Toolbar Pick
+
+*/
+
+.notion__minimal__text__editor__toolbar__pick {
+  &__trigger {
+    @include u.flex(flex, center, space-between);
+    font-size: 0.77rem;
+    width: 120px;
+    gap: 0.2rem;
+    text-align: start;
+    white-space: nowrap;
+    padding: 0.9rem;
+    height: 30px;
+
+    svg {
+      width: 1.4rem;
+    }
+  }
+
+  &__content {
+    @include u.flex(grid, center);
+    gap: 0.1rem;
+    background: hsl(var(--background));
+    padding: 0.5rem;
+    border: 1px solid hsl(var(--input));
+    border-radius: 0.5rem;
+    font-size: 0.7rem;
+    margin-top: 0.5rem;
+    width: 160px;
+    margin: 0.3rem;
+
+    &* {
+      font-size: 14px;
+    }
+
+    svg {
+      width: 22px;
+      height: 20px;
+    }
+
+    & > span {
+      padding-left: 0.5rem;
+      padding-bottom: 0.1rem;
+      font-size: 12px;
+      color: hsl(var(--muted-foreground));
+    }
+
+    &__button {
+      position: relative;
+      @include u.flex(flex, space-between);
+      gap: 0.5rem;
+      padding: 0 0.5rem;
+      height: 28px;
+      width: 100%;
+      border-radius: 0.2rem;
+
+      span {
+        font-size: 12px;
+      }
+
+      &.active {
+        background: hsl(var(--accent));
+      }
+    }
+
+    &:has(.notion__minimal__text__editor__toolbar__pick__content__highlight) {
+      @include u.flex(flex, center);
+      gap: 0.5rme;
+      width: fit-content;
+    }
+
+    &__highlight {
+      @include u.flex(flex, center);
+      gap: 0.5rme;
+
+      button {
+        padding: 1rem 0.3rem;
+        border-radius: 50%;
+      }
+
+      span {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+      }
+    }
+  }
+}

@@ -62,6 +62,7 @@
         "@tiptap/extension-italic": "^2.4.0",
         "@tiptap/extension-link": "^2.4.0",
         "@tiptap/extension-list-item": "^2.4.0",
+        "@tiptap/extension-list-keymap": "^2.4.0",
         "@tiptap/extension-ordered-list": "^2.4.0",
         "@tiptap/extension-paragraph": "^2.4.0",
         "@tiptap/extension-placeholder": "^2.4.0",
