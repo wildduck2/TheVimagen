@@ -4,6 +4,7 @@ import { BubbleMenu } from '@tiptap/react'
 import {
     Button,
     MouseEvent,
+    NotionEditorHighlightColorPicker,
     NotionMinimalTextEditorToolbarPick,
     Separator,
     ToggleToolTipButtonWrapper,
@@ -13,7 +14,7 @@ import { useTextmenuCommands, useTextmenuContentTypes, useTextmenuStates } from 
 import { NotionMinimalTextEditorToolbarProps } from './NotionMinimalTextEditorToolbar.types'
 import { emailToolbarEditor, highlightButtons } from '@/constants'
 import { cn } from '@/utils'
-import { Icon } from '@/assets'
+import { colorwheel, Icon } from '@/assets'
 
 //NOTE: We memorize the button so each button is not rerendered
 // on every editor state change
@@ -103,16 +104,15 @@ export const NotionMinimalTextEditorToolbar = ({ editor }: NotionMinimalTextEdit
                     }
                     content={
                         <div className="notion__minimal__text__editor__toolbar__pick__content__highlight">
-                            <Button
-                                variant="ghost"
-                                className={cn(
-                                    'notion__minimal__text__editor__toolbar__pick__content__button',
-                                    states.currentHighlight && 'active',
-                                )}
-                                onClick={() => commands.onChangeHighlight('red')}
-                            >
-                                <span className={cn('border border-solid')} />
-                            </Button>
+                            <NotionEditorHighlightColorPicker
+                                onClick={commands.onChangeHighlight}
+                                trigger={
+                                    <img
+                                        src={colorwheel}
+                                        className="opacity-60"
+                                    />
+                                }
+                            />
 
                             {highlightButtons.map((item, idx) => (
                                 <Button
