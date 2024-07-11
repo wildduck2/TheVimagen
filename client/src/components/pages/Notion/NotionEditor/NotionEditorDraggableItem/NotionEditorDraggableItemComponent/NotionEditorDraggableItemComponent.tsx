@@ -1,15 +1,21 @@
-import { NodeViewWrapper, NodeViewContent } from '@tiptap/react'
+import { NodeViewWrapper, NodeViewContent, NodeViewProps } from '@tiptap/react'
+import { ContentItemMenu } from '../../NotionEditorContentItemMenu/NotionEditorContentItemMenu'
+import { useState } from 'react'
 
-export const DraggableItemComponent = (props) => {
+export const NotionEditorDraggableItemComponent: React.FC<NodeViewProps> = ({ editor, node, getPos }) => {
+  const [hovered, setHovered] = useState(false)
+
+  const handleMouseEnter = () => setHovered(true)
+  const handleMouseLeave = () => setHovered(false)
+
   return (
-    <NodeViewWrapper className="draggable-item">
-      <div
-        className="drag-handle"
-        contentEditable={false}
-        draggable="true"
-        data-drag-handle
-      />
-      <NodeViewContent className="content" />
+    <NodeViewWrapper
+      className="custom-node-view"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      {hovered && <ContentItemMenu editor={editor} />}
+      <NodeViewContent className="content-node" />
     </NodeViewWrapper>
   )
 }

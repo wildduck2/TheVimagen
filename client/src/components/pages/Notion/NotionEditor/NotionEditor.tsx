@@ -6,6 +6,7 @@ import { ScrollArea } from '@/components/ui'
 import { cn } from '@/utils'
 import { NotionEditorToolbarTextMenu } from './NotionEditorToolbarTextMenu'
 import ExtensionKit from './extensions/extension-kit'
+import { ContentItemMenu } from './NotionEditorContentItemMenu/NotionEditorContentItemMenu'
 
 export const NotionEditor = ({ description, onChange, className }: NotionEditorProps) => {
   const editor = useEditor({
