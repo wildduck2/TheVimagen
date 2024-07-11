@@ -48,7 +48,7 @@ export const postGetThreadsHandler: RequestHandler = async (req, res) => {
 
     // Construct final response object
     const finalResponse = {
-      // id: user_id,
+      id: user_id,
       nextPageToken: nextPageToken || null,
       messages: messagesData
     }

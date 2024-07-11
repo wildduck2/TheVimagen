@@ -91,10 +91,10 @@
         @include u.flex(grid);
         gap: 1rem;
 
-        &>textarea {
-          padding: 1rem;
-          resize: none;
-        }
+        /* &>textarea { */
+        /*   padding: 1rem; */
+        /*   resize: none; */
+        /* } */
 
         &>div {
           @include u.flex(flex, center);
