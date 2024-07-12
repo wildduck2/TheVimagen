@@ -1,5 +1,5 @@
 import { turnIntoComponent } from '@/constants/Notion/Editor'
-import { useCallback, useState } from 'react'
+import {  useState } from 'react'
 import { Button, MouseEvent, Popover, PopoverContent, PopoverTrigger, Separator } from '../..'
 import { Icon } from '@/assets'
 import { TurnIntoPickerProps } from './TurnIntoPicker.types'
