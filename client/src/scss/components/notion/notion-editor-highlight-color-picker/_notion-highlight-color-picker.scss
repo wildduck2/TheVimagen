@@ -24,7 +24,6 @@
     @include u.flex(grid, center, center);
     width: fit-content;
     gap: 0.9rem;
-    z-index: 10000;
 
     .react-colorful {
       width: 100%;
@@ -35,10 +34,9 @@
       }
     }
 
-    & > h2 {
-      font-size: 1.1rem;
-      /* text-align: center; */
-    }
+    /* &>h2 { */
+    /*   font-size: 1.1rem; */
+    /* } */
 
     &__bottom {
       @include u.flex(grid, center);
@@ -46,4 +44,8 @@
       gap: 1rem;
     }
   }
+}
+
+div[data-tippy-root] {
+  z-index: 5 !important;
 }
