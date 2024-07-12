@@ -6,11 +6,13 @@ import FontFamily from '@tiptap/extension-font-family'
 import ListKeymap from '@tiptap/extension-list-keymap'
 import Placeholder from '@tiptap/extension-placeholder'
 import TextAlign from '@tiptap/extension-text-align'
+import { Color } from '@tiptap/extension-color'
+import TextStyle from '@tiptap/extension-text-style'
 
 // import Ai from '@tiptap-pro/extension-ai'
 
 import { cn } from '@/utils'
-import { ScrollArea, Textarea } from '@/components/ui'
+import { ScrollArea } from '@/components/ui'
 import { NotionMinimalTextEditorProps } from './NotionMinimalTextEditor.types'
 import { NotionMinimalTextEditorToolbar } from './NotionMinimalTextEditorToolbar'
 import StarterKit from '@tiptap/starter-kit'
@@ -19,9 +21,18 @@ export const NotionMinimalTextEditor = ({ valid, name, editoRef, onChange }: Not
     const editor = useEditor(
         {
             extensions: [
+                TextStyle,
+                Color.configure({
+                    types: ['textStyle'],
+                }),
                 Highlight.configure({ multicolor: true }),
-                StarterKit.configure({}),
-                Link,
+                StarterKit.configure({
+                    
+                }),
+                Link.configure({
+                    openOnClick: true,
+                    autolink: true,
+                }),
                 Underline,
                 FontFamily,
                 ListKeymap,

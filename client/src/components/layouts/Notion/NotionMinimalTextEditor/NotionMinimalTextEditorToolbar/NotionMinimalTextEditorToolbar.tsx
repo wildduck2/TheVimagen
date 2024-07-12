@@ -1,25 +1,21 @@
 import { memo, useMemo } from 'react'
 import { BubbleMenu } from '@tiptap/react'
 
-import {
-    Button,
-    MouseEvent,
-    NotionEditorHighlightColorPicker,
-    NotionMinimalTextEditorToolbarPick,
-    Separator,
-    ToggleToolTipButtonWrapper,
-    ToolBarToggleButtons,
-} from '@/components/ui'
+import { Separator, ToolBarToggleButtons } from '@/components/ui'
 import { useTextmenuCommands, useTextmenuContentTypes, useTextmenuStates } from '@/hooks'
 import { NotionMinimalTextEditorToolbarProps } from './NotionMinimalTextEditorToolbar.types'
-import { emailToolbarEditor, highlightButtons } from '@/constants'
-import { cn } from '@/utils'
-import { colorwheel, Icon } from '@/assets'
+import { NotionMinimalTextEditorToolbarHighlight } from './NotionMinimalTextEditorToolbarHighlight'
+import { NotionEditorHeadingPickerWrapper } from './NotionEditorHeadingPicker'
+import { NotionEditorColorPicker } from './NotionEditorColorPicker/NotionEditorColorPicker'
+import { NotionEditorLinkManager } from './NotionEditorLinkManager'
 
 //NOTE: We memorize the button so each button is not rerendered
 // on every editor state change
 const ToolBarToggleButtonsMemo = memo(ToolBarToggleButtons)
-const NotionMinimalTextEditorToolbarPickMemo = memo(NotionMinimalTextEditorToolbarPick)
+const NotionEditorHeadingPickerMemo = memo(NotionEditorHeadingPickerWrapper)
+const NotionMinimalTextEditorToolbarHighlightMemo = memo(NotionMinimalTextEditorToolbarHighlight)
+const NotionEditorColorPickerMemo = memo(NotionEditorColorPicker)
+const NotionEditorLinkManagerMemo = memo(NotionEditorLinkManager)
 
 export const NotionMinimalTextEditorToolbar = ({ editor }: NotionMinimalTextEditorToolbarProps) => {
     const commands = useTextmenuCommands(editor)
@@ -50,38 +46,10 @@ export const NotionMinimalTextEditorToolbar = ({ editor }: NotionMinimalTextEdit
                 // />
             }
             <div className="bubble__menu__wrapper">
-                <div className="notion__minimal__text__editor__toolbar__pick">
-                    <NotionMinimalTextEditorToolbarPickMemo
-                        trigger={
-                            <Button
-                                variant="outline"
-                                className="flex justify-between"
-                            >
-                                <Icon.hIcon /> <span>heading</span> <Icon.chovrenDown className="size-[16px]" />
-                            </Button>
-                        }
-                        content={
-                            <>
-                                <span>Turn into</span>
-                                <Separator className="mb-1" />
-                                {emailToolbarEditor.map((item, idx) => (
-                                    <Button
-                                        key={idx}
-                                        variant="ghost"
-                                        className={cn(
-                                            'notion__minimal__text__editor__toolbar__pick__content__button',
-                                            item.label === activeItem.label && 'active',
-                                        )}
-                                        onClick={commands[item.action] as MouseEvent}
-                                    >
-                                        <item.icon />
-                                        <span>{item.label}</span>
-                                    </Button>
-                                ))}
-                            </>
-                        }
-                    />
-                </div>
+                <NotionEditorHeadingPickerMemo
+                    activeItem={activeItem.label || ''}
+                    commands={commands}
+                />
                 <Separator
                     orientation="vertical"
                     className="h-[26px]"
@@ -94,48 +62,23 @@ export const NotionMinimalTextEditorToolbar = ({ editor }: NotionMinimalTextEdit
                     orientation="vertical"
                     className="h-[26px]"
                 />
-                <NotionMinimalTextEditorToolbarPickMemo
-                    trigger={
-                        <ToggleToolTipButtonWrapper
-                            tip={'Highlight'}
-                            value={!states.currentHighlight}
-                            children={<Icon.highlight />}
-                        />
-                    }
-                    content={
-                        <div className="notion__minimal__text__editor__toolbar__pick__content__highlight">
-                            <NotionEditorHighlightColorPicker
-                                onClick={commands.onChangeHighlight}
-                                trigger={
-                                    <img
-                                        src={colorwheel}
-                                        className="opacity-60"
-                                    />
-                                }
-                            />
+                <NotionEditorLinkManagerMemo
+                    editor={editor}
+                    commands={commands}
+                    states={states}
+                />
 
-                            {highlightButtons.map((item, idx) => (
-                                <Button
-                                    key={idx}
-                                    variant="ghost"
-                                    className={cn(
-                                        'notion__minimal__text__editor__toolbar__pick__content__button',
-                                        item.label === activeItem.label && 'active',
-                                    )}
-                                    onClick={() => commands.onChangeHighlight(item.color)}
-                                >
-                                    <span className={cn('border border-solid', item.style)} />
-                                </Button>
-                            ))}
-                            <Button
-                                variant="ghost"
-                                className={cn('notion__minimal__text__editor__toolbar__pick__content__button')}
-                                onClick={() => commands.onClearHighlight()}
-                            >
-                                <Icon.circleOff className="opacity-60" />
-                            </Button>
-                        </div>
-                    }
+                <NotionMinimalTextEditorToolbarHighlightMemo
+                    tip="Highlight"
+                    currentHighlight={states.currentHighlight}
+                    commands={commands}
+                    activeItem={activeItem.label}
+                />
+                <NotionEditorColorPickerMemo
+                    tip="Color"
+                    currentColor={states.currentColor}
+                    commands={commands}
+                    activeItem={activeItem.label}
                 />
             </div>
         </BubbleMenu>
