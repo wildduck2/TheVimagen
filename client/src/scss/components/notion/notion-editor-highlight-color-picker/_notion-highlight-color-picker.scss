@@ -49,3 +49,9 @@
 div[data-tippy-root] {
   z-index: 5 !important;
 }
+
+button {
+  div[data-radix-popper-content-wrapper] {
+    z-index: 90009;
+  }
+}

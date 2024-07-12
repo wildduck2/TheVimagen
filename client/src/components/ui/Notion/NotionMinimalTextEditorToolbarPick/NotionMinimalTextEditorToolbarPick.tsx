@@ -1,4 +1,4 @@
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui'
+import { Popover, PopoverContent, PopoverTrigger, Tooltip, TooltipTrigger } from '@/components/ui'
 import { NotionMinimalTextEditorToolbarPickProps } from './NotionMinimalTextEditorToolbarPick.types'
 
 export const NotionMinimalTextEditorToolbarPick = ({ trigger, content }: NotionMinimalTextEditorToolbarPickProps) => {
