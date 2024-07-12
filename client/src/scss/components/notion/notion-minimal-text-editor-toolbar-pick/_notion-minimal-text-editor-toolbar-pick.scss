@@ -50,7 +50,7 @@
       height: 20px;
     }
 
-    & > span {
+    &>span {
       padding-left: 0.5rem;
       padding-bottom: 0.1rem;
       font-size: 12px;
@@ -76,18 +76,16 @@
     }
 
     &:has(.notion__minimal__text__editor__toolbar__pick__content__highlight) {
-      @include u.flex(flex, center);
-      gap: 0.5rme;
       width: fit-content;
     }
 
     &__highlight {
       @include u.flex(flex, center);
-      gap: 0.5rme;
+      gap: 0.2rem;
 
       button {
         padding: 1rem 0.3rem;
-        border-radius: 50%;
+        border-radius: 0.5rem;
       }
 
       span {

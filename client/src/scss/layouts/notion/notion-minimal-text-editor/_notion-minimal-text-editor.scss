@@ -30,6 +30,10 @@
   }
 
   .tiptap.ProseMirror {
+    * {
+      transition: font-size 0.3s ease;
+    }
+
     & tap p.is-editor-empty:first-child::before {
       color: #adb5bd;
       content: attr(data-placeholder);
@@ -39,7 +43,7 @@
       pointer-events: none;
     }
 
-    & > pre {
+    &>pre {
       background: hsl(var(--accent) / 0.4);
       /* border: 1px solid hsl(var(--input)); */
 
@@ -50,6 +54,21 @@
 
     & p {
       font-size: 0.875rem;
+    }
+
+    & h1 {
+      font-size: 2rem;
+      margin-block: 0.5rem 0.4rem;
+    }
+
+    & h2 {
+      font-size: 1.5rem;
+      margin-block: 0.5rem 0.4rem;
+    }
+
+    & h3 {
+      font-size: 1.25rem;
+      margin-block: 0.5rem 0.4rem;
     }
 
     & h4 {
@@ -64,13 +83,10 @@
       font-size: 0.8rem;
     }
 
-    & h1,
-    & h2,
-    & h3,
     & h4,
     & h5,
     & h6 {
-      margin-block: 0.5rem 0.4rem;
+      /* margin-block: 0.5rem 0.4rem; */
     }
   }
 }

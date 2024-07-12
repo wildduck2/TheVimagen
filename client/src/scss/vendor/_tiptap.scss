@@ -9,6 +9,16 @@
     TipTap 
 
 */
+
+.tiptap {
+  * {
+    /* background: red; */
+    transition-property: fon-size;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+}
+
 .tiptap p.is-editor-empty:first-child::before {
   color: #adb5bd;
   content: attr(data-placeholder);

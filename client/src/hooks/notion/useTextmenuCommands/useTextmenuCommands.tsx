@@ -27,10 +27,14 @@ export const useTextmenuCommands = (editor: Editor) => {
     const onLink = useCallback(
         (url: string, inNewTab?: boolean) =>
             chainOnFocus()
+                .extendMarkRange('link')
                 .setLink({ href: url, target: inNewTab ? '_blank' : '' })
                 .run(),
         [editor],
     )
+    const unSetLink = useCallback(() => {
+        chainOnFocus().unsetLink()
+    }, [editor])
 
     const onSetFont = useCallback(
         (font: string) => {
@@ -78,6 +82,7 @@ export const useTextmenuCommands = (editor: Editor) => {
         onBulletList,
         onDetailList,
         onNumberList,
+        unSetLink,
         //
         onBold,
         onItalic,

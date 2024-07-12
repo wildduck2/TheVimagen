@@ -24,11 +24,18 @@ h3,
 h4 {
   font-size: size(na);
   font-weight: 500;
+
+  transition-property: fon-size;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }
 
 h5,
 h6,
 p {
+  transition-property: fon-size;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
   font-size: size(md);
   font-weight: 500;
 }
