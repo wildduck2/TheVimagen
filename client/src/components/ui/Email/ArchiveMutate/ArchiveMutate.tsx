@@ -6,7 +6,7 @@ import { Icon } from '@/assets'
 import { queryClient } from '@/main'
 import { ArchiveMutateType } from './ArchiveMutate.types'
 import { PaginatedMessages } from '../TrashMutate'
-import { ToggleToolTipWrapper } from '../../notion'
+import { ToggleToolTipSpanWrapper } from '../..'
 
 export const ArchiveMutate = ({ threadId, tip }: ArchiveMutateType) => {
   const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
@@ -30,14 +30,14 @@ export const ArchiveMutate = ({ threadId, tip }: ArchiveMutateType) => {
   })
   return (
     <>
-      <ToggleToolTipWrapper
+      <ToggleToolTipSpanWrapper
         tip={tip}
         onClick={() => {
           startMutation.mutate()
         }}
       >
         <Icon.archive />
-      </ToggleToolTipWrapper>
+      </ToggleToolTipSpanWrapper>
     </>
   )
 }

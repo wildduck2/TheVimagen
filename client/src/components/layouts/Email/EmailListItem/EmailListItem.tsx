@@ -56,7 +56,10 @@ export const EmailListItem = ({ item, items }: EmailListItemType) => {
                       ) && label,
                   )
                   .map((label: string) => (
-                    <Badge key={label} variant={getBadgeVariantFromLabel(label)}>
+                    <Badge
+                      key={label}
+                      variant={getBadgeVariantFromLabel(label)}
+                    >
                       {label.replace(/_/gi, ' ').toLowerCase()}
                     </Badge>
                   ))}

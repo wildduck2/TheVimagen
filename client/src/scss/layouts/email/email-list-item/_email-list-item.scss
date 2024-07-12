@@ -51,13 +51,13 @@
       transform: translateX(0);
       border-color: hsl(var(--foreground) / 0.2);
 
-      & > div[data-orientation='horizontal'] {
+      &>div[data-orientation='horizontal'] {
         background: hsl(var(--foreground) / 0.2);
       }
     }
 
     .email__list__wrapper__item__card__labels {
-      & > div {
+      &>div {
         border-color: hsl(var(--foreground) / 0.2);
       }
     }
@@ -88,7 +88,7 @@
       }
     }
 
-    & > div:has(button) {
+    &>div:has(button) {
       width: 1.1rem !important;
       height: 1.1rem !important;
     }
@@ -123,21 +123,21 @@
       &__header {
         @include u.flex(flex, center);
 
-        & > div:first-child {
+        &>div:first-child {
           @include u.flex(flex, center);
           gap: 0.5rem;
 
-          & > div {
+          &>div {
             font-weight: 600;
 
             &.active {
-              & > svg {
+              &>svg {
                 fill: currentColor;
               }
             }
           }
 
-          & > span {
+          &>span {
             @include u.flex(flex);
             width: 0.5rem;
             height: 0.5rem;
@@ -146,7 +146,7 @@
           }
         }
 
-        & > div:nth-child(2) {
+        &>div:nth-child(2) {
           margin-left: auto;
           font-size: 0.75rem;
           line-height: 1rem;
@@ -174,7 +174,7 @@
       line-height: 1rem;
       color: hsl(var(--muted-foreground));
 
-      & > div {
+      &>div {
         @include u.flex(flex, center);
         gap: 0.5rem;
       }
@@ -184,7 +184,7 @@
       @include u.flex(flex, center);
       gap: 0.5rem;
 
-      & > div {
+      &>div {
         margin-top: 0.5rem;
       }
     }
