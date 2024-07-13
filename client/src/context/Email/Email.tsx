@@ -1,28 +1,28 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {
-  initialStateEmailTypes,
-  SearchInputIdAction,
-  SearchInputIdState,
-  SelectedEmailIdAction,
-  SelectedEmailIdState,
+    initialStateEmailTypes,
+    SearchInputIdAction,
+    SearchInputIdState,
+    SelectedEmailDataAction,
+    SelectedEmailDataState,
 } from './Email.types'
 
 const initialState: initialStateEmailTypes = {
-  selectedEmailId: [],
-  searchInput: '',
+    SelectedEmailData: { ids: [], inReplyTo: '' },
+    searchInput: '',
 }
 
 export const emailSlice = createSlice({
-  name: 'data',
-  initialState,
-  reducers: {
-    getSelectedEmailIdDispatch: (state: SelectedEmailIdState, action: SelectedEmailIdAction) => {
-      state.selectedEmailId = action.payload
+    name: 'data',
+    initialState,
+    reducers: {
+        getSelectedEmailIdDispatch: (state: SelectedEmailDataState, action: SelectedEmailDataAction) => {
+            state.SelectedEmailData = action.payload
+        },
+        getSearchInput: (state: SearchInputIdState, action: SearchInputIdAction) => {
+            state.searchInput = action.payload
+        },
     },
-    getSearchInput: (state: SearchInputIdState, action: SearchInputIdAction) => {
-      state.searchInput = action.payload
-    },
-  },
 })
 
 export const { getSelectedEmailIdDispatch, getSearchInput } = emailSlice.actions
