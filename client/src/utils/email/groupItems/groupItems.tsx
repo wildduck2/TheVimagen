@@ -41,7 +41,6 @@ export const groupMessagesBySender = (threads: MessageType[]) => {
     const dateB = new Date(b.day) as unknown as number
     return dateB - dateA
   })
-  console.log(result.map((item) => item.messages))
 
   return result.map((item) => item.messages)
 }

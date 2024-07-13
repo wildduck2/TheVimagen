@@ -14,14 +14,11 @@
 */
 
 .toggle__tool__tip__trigger {
-  background: none;
-  width: 1.85rem !important;
-  height: 1.85rem !important;
-  padding: 0;
+  @include u.buttonToolTip();
+}
 
-  svg {
-    width: 55%;
-  }
+div[data-radix-popper-content-wrapper] {
+  position: relative;
 }
 
 .toggle__tool__tip__content {}

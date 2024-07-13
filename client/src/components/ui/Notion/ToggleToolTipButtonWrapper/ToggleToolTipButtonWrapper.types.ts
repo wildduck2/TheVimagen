@@ -8,4 +8,6 @@ export interface ToggleToolTipWrapperButtonProps {
   tip?: string
   onClick?: MouseEvent | keyof typeof useTextmenuCommands
   value?: boolean | ReturnType<typeof useTextmenuStates>
+  disabled?: boolean
+  side?: 'top' | 'left' | 'right' | 'bottom'
 }
