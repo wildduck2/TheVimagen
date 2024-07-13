@@ -9,7 +9,8 @@ export const sanitizeEmailContent = (htmlContent: string) => {
       node.setAttribute('rel', 'noopener noreferrer')
     }
   })
-  const sanitizedContent = DOMPurify.sanitize(htmlContent)
+
+  const sanitizedContent = htmlContent // DOMPurify.sanitize(htmlContent)
 
   return sanitizedContent
 }
