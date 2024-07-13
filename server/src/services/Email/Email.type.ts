@@ -40,10 +40,7 @@ export type ThreadReplyType = {
   access_token: string
   distnation: string
   threadId: string
-  to: string
-  subject: string
-  inReplyTo: string
-  body: string
+  encodedMessage: string
 }
 
 export type ThreadReplyRes = {

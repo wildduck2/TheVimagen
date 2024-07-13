@@ -5,17 +5,14 @@ import { PostThreadReplyType } from './postThreadReply.types'
 
 export const postThreadReply: RequestHandler = async (req, res) => {
   const { access_token, oauth_id } = req.session.oauth_user_data as OAuthToken
-  const { threadId, to, subject, inReplyTo, body }: PostThreadReplyType =
-    req.body
+  const { threadId, encodedMessage }: PostThreadReplyType = req.body
+
   try {
     const data = await Email.threadReply({
       access_token,
       distnation: `${oauth_id}/messages/send/`,
       threadId,
-      to,
-      subject,
-      inReplyTo,
-      body
+      encodedMessage
     })
 
     if (!data)
