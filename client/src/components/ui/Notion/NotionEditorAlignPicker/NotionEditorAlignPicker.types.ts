@@ -1,9 +1,7 @@
 import { useTextmenuCommands, useTextmenuStates } from '@/hooks'
-import { Editor } from '@tiptap/react'
 
-export interface NotionEditorLinkManagerProps {
+export type NotionEditorAlignPickerProps = {
     states: ReturnType<typeof useTextmenuStates>
-
     commands: ReturnType<typeof useTextmenuCommands>
-    editor: Editor
+    tip: string
 }

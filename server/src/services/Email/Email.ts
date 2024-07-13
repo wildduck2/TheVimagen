@@ -157,16 +157,8 @@ export class Email {
     access_token,
     distnation,
     threadId,
-    to,
-    subject,
-    inReplyTo,
-    body
+    encodedMessage
   }: ThreadReplyType) {
-    const raw = `To: ${to}\r\nSubject: Re: ${subject}\r\nIn-Reply-To: ${inReplyTo}\r\nReferences: ${inReplyTo}\r\n\r\n${body}`
-    const encodedMessage = base64url(raw)
-
-    console.log(encodedMessage)
-
     try {
       const { data } = await axios.post<Promise<ThreadReplyRes>>(
         `${GMAIL_URL}${distnation}`,

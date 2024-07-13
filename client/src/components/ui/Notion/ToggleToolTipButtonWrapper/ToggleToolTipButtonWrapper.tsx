@@ -18,7 +18,7 @@ export const ToggleToolTipButtonWrapper = React.forwardRef<HTMLButtonElement, To
                         <Button
                             type="button"
                             variant={variant || 'ghost'}
-                            className={cn( 'toggle__tool__tip__trigger')}
+                            className={cn('toggle__tool__tip__trigger')}
                             ref={ref}
                         >
                             {children}

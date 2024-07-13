@@ -26,9 +26,7 @@ export const NotionMinimalTextEditor = ({ valid, name, editoRef, onChange }: Not
                     types: ['textStyle'],
                 }),
                 Highlight.configure({ multicolor: true }),
-                StarterKit.configure({
-                    
-                }),
+                StarterKit.configure({}),
                 Link.configure({
                     openOnClick: true,
                     autolink: true,
@@ -48,15 +46,14 @@ export const NotionMinimalTextEditor = ({ valid, name, editoRef, onChange }: Not
                     autocomplete: 'on',
                     autocorrect: 'on',
                     autocapitalize: 'on',
-                    // class: cn(valid && 'opacity-50 pointer-events-none'),
+                    class: cn(!valid && 'opacity-50 pointer-events-none'),
                 },
             },
             autofocus: true,
             onUpdate: ({ editor }) => {
                 const html = editor.getHTML()
-                onChange?.(html)
+                editoRef.current = html
             },
-            content: 'hi mr wild_duck',
         },
         [valid, name],
     )

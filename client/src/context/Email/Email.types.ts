@@ -1,20 +1,20 @@
 export interface initialStateEmailTypes {
-  selectedEmailId: string[]
-  searchInput: string
+    SelectedEmailData: { ids: string[]; inReplyTo: string }
+    searchInput: string
 }
 
-export type SelectedEmailIdState = {
-  selectedEmailId: string[]
+export type SelectedEmailDataState = {
+    SelectedEmailData: { ids: string[]; inReplyTo: string }
 }
 
-export type SelectedEmailIdAction = {
-  payload: string[]
+export type SelectedEmailDataAction = {
+    payload: { ids: string[]; inReplyTo: string }
 }
 
 export type SearchInputIdState = {
-  searchInput: string
+    searchInput: string
 }
 
 export type SearchInputIdAction = {
-  payload: string
+    payload: string
 }

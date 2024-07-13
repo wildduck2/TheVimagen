@@ -26,7 +26,7 @@ import { TrashMutate } from '../TrashMutate'
 import { ArchiveMutate } from '../ArchiveMutate'
 
 export const ListItemWrapper = ({ children, items, item }: ListItemWrapperType) => {
-  const emailSelectedId = useSelector((state: RootState) => state.email.selectedEmailId)
+  const emailSelectedId = useSelector((state: RootState) => state.email.SelectedEmailData)
   const dispatch = useDispatch()
   const ids = [items[0].threadId] //.map((id) => id.threadId)
 
@@ -52,19 +52,23 @@ export const ListItemWrapper = ({ children, items, item }: ListItemWrapperType) 
                   threadId={item.threadId}
                   tip="Trash"
                 />
-                <Separator />
-                <ArchiveMutate
-                  threadId={item.threadId}
-                  tip="Archive"
-                />
               </div>
             </div>
-            <div className={cn('email__list__wrapper__item__body', emailSelectedId[0] === ids[0] && 'active')}>
+            <div className={cn('email__list__wrapper__item__body', emailSelectedId.ids[0] === ids[0] && 'active')}>
               <div
                 key={item.id}
                 className={cn('email__list__wrapper__item__body__card')}
                 onClick={() => {
-                  emailSelectedId[0] !== ids[0] && dispatch(getSelectedEmailIdDispatch(ids))
+                  emailSelectedId.ids[0] !== ids[0] &&
+                    dispatch(
+                      getSelectedEmailIdDispatch({
+                        ids: ids && ids,
+                        inReplyTo:
+                          ids &&
+                          item.payload.headers.find((name) => name.name === 'Feedback-ID' || name.name === 'Message-ID')
+                            ?.value,
+                      }),
+                    )
                 }}
               >
                 {children}

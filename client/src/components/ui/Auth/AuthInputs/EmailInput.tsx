@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Input, Label } from '../..'
@@ -21,17 +21,19 @@ export const EmailInput = ({ isLoading, emailRef, emailValid, setEmailValid, ema
   const inputsValid = useSelector((state: RootState) => state.utils.inputsValid)
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    //NOTE: debouncing the input on change
-    useDebounce(() =>
-      EmailValidation({
-        inputValue: email,
-        setvalid: setEmailValid,
-        inputsValid,
-        dispatch,
-      }),
-    )
-  }, [])
+  //NOTE: debouncing the input on change
+  useCallback(
+    () =>
+      useDebounce(() =>
+        EmailValidation({
+          inputValue: email,
+          setvalid: setEmailValid,
+          inputsValid,
+          dispatch,
+        }),
+      ),
+    [],
+  )
 
   return (
     <>

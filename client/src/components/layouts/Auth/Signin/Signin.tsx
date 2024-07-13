@@ -35,7 +35,6 @@ export const Signin = ({ ...props }: UserAuthFormProps) => {
   })
 
   const { authEmail: AuthGoogle } = useSigninWithGoogle({ setIsLoading })
-  console.log(emailValid, passwordValid)
 
   useEffect(() => {
     dispatch(checkInputsValid({ password: false, email: false, userName: false, passwordConfirm: false }))
@@ -53,7 +52,10 @@ export const Signin = ({ ...props }: UserAuthFormProps) => {
           <p>Enter your data below to signin your account</p>
         </div>
 
-        <div className="auth__form signin" {...props}>
+        <div
+          className="auth__form signin"
+          {...props}
+        >
           <form onSubmit={authEmail}>
             <div>
               <EmailInput
@@ -64,15 +66,17 @@ export const Signin = ({ ...props }: UserAuthFormProps) => {
                 setEmail={setEmail}
                 email={email}
               />
-              <PasswordInput
-                isLoading={isLoading}
-                passwordRef={passwordRef}
-                password={password}
-                setPassword={setPassword}
-                setPasswordValid={setPasswordValid}
-                passwordValid={passwordValid}
-                login={true}
-              />
+              {
+                // <PasswordInput
+                //   isLoading={isLoading}
+                //   passwordRef={passwordRef}
+                //   password={password}
+                //   setPassword={setPassword}
+                //   setPasswordValid={setPasswordValid}
+                //   passwordValid={passwordValid}
+                //   login={true}
+                // />
+              }
               <Button
                 className="forget__password"
                 variant={'link'}
@@ -81,7 +85,10 @@ export const Signin = ({ ...props }: UserAuthFormProps) => {
               >
                 Forget Passowrd
               </Button>
-              <Button type="submit" disabled={isLoading || notValid}>
+              <Button
+                type="submit"
+                disabled={isLoading || notValid}
+              >
                 {isLoading && <Icons.spinner className="spin" />}
                 Sign In with Email
               </Button>
@@ -95,13 +102,18 @@ export const Signin = ({ ...props }: UserAuthFormProps) => {
               <span>Or continue with</span>
             </div>
           </div>
-          <Button variant="outline" type="button" disabled={isLoading} onClick={AuthGoogle}>
+          <Button
+            variant="outline"
+            type="button"
+            disabled={isLoading}
+            onClick={AuthGoogle}
+          >
             {isLoading ? <Icons.spinner className="animate-spin" /> : <img src={''} />}Google
           </Button>
         </div>
 
         <p>
-          By clicking continue, you agree to our <Link >Terms of Service</Link> and
+          By clicking continue, you agree to our <Link>Terms of Service</Link> and
           <Link>Privacy Policy</Link>.
         </p>
       </div>

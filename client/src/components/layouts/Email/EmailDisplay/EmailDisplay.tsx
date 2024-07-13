@@ -20,7 +20,7 @@ import { EmailDisplayProps } from './EmailDisplay.types'
 export const emailDisplayButtonData = ['Archive', 'Move to junk', 'Move to trash']
 
 export function EmailDisplay({ defaultLayout = 37 }: EmailDisplayProps) {
-  const emailSelectedId = useSelector((state: RootState) => state.email.selectedEmailId)
+  const emailSelectedId = useSelector((state: RootState) => state.email.SelectedEmailData)
 
   return (
     <ResizablePanel
@@ -32,19 +32,19 @@ export function EmailDisplay({ defaultLayout = 37 }: EmailDisplayProps) {
         <div className="flex items-center p-2">
           <div className="flex items-center gap-2">
             <EmailDisplayButton
-              emailSelectedId={emailSelectedId}
+              emailSelectedId={emailSelectedId.ids}
               label="Archive"
               icon={<Icon.archive className="h-4 w-4" />}
             />
 
             <EmailDisplayButton
-              emailSelectedId={emailSelectedId}
+              emailSelectedId={emailSelectedId.ids}
               label="Move to junk"
               icon={<Icon.archiveX className="h-4 w-4" />}
             />
 
             <EmailDisplayButton
-              emailSelectedId={emailSelectedId}
+              emailSelectedId={emailSelectedId.ids}
               label="Move to trash"
               icon={<Icon.trash2 className="h-4 w-4" />}
             />
@@ -52,23 +52,23 @@ export function EmailDisplay({ defaultLayout = 37 }: EmailDisplayProps) {
               orientation="vertical"
               className="mx-1 h-6"
             />
-            <EmailSnoozeButton emailSelectedId={emailSelectedId} />
+            <EmailSnoozeButton emailSelectedId={emailSelectedId.ids} />
           </div>
           <div className="ml-auto flex items-center gap-2">
             <EmailDisplayButton
-              emailSelectedId={emailSelectedId}
+              emailSelectedId={emailSelectedId.ids}
               label="Reply"
               icon={<Icon.reply className="h-4 w-4" />}
             />
 
             <EmailDisplayButton
-              emailSelectedId={emailSelectedId}
+              emailSelectedId={emailSelectedId.ids}
               label="Reply all"
               icon={<Icon.replyAll className="h-4 w-4" />}
             />
 
             <EmailDisplayButton
-              emailSelectedId={emailSelectedId}
+              emailSelectedId={emailSelectedId.ids}
               label="Forward"
               icon={<Icon.forward className="h-4 w-4" />}
             />
@@ -82,7 +82,7 @@ export function EmailDisplay({ defaultLayout = 37 }: EmailDisplayProps) {
               <Button
                 variant="ghost"
                 size="icon"
-                disabled={!emailSelectedId.length}
+                disabled={!emailSelectedId.ids.length}
               >
                 <Icon.moreHorizontal className="h-4 w-4" />
                 <span className="sr-only">More</span>
