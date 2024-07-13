@@ -1,4 +1,4 @@
-import { EmailList } from '..'
+import { EmailList, EmailSelectionBar } from '..'
 import { EmailListSearch, ResizablePanel, Separator, Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui'
 import { EmailSideListType } from './EmailSideList.types'
 import { getCookie } from '@/utils'
@@ -51,6 +51,7 @@ export const EmailSideList = ({ defaultLayout = 37 }: EmailSideListType) => {
               <EmailListSearch />
             </div>
           </div>
+          <EmailSelectionBar />
           <TabsContent
             value="primary"
             className="email__side__list__content"

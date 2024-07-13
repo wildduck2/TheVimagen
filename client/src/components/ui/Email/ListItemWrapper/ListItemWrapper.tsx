@@ -1,6 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux'
 
-import { getSelectedEmailIdDispatch, RootState } from '@/context'
+import {
+  getSelectedEmailIdDispatch,
+  getSelectedThreadsDispatch,
+  removeSelectedThreadsDispatch,
+  RootState,
+} from '@/context'
 import { cn } from '@/utils'
 import { ListItemWrapperType } from './ListItemWrapper.types'
 import {
@@ -39,6 +44,11 @@ export const ListItemWrapper = ({ children, items, item }: ListItemWrapperType) 
               <div className="email__list__wrapper__item__functionality__card">
                 <CheckboxWrapper
                   checked={false}
+                  action={(checked) => {
+                    checked
+                      ? dispatch(removeSelectedThreadsDispatch(items[0].threadId))
+                      : dispatch(getSelectedThreadsDispatch(items[0].threadId))
+                  }}
                   tip="Select"
                 />
                 <Separator />

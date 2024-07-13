@@ -1,19 +1,19 @@
 import { toast } from 'sonner'
 import { useMutation } from '@tanstack/react-query'
 
-import { getCookie, trashMessage } from '@/utils'
+import { archiveMessage, getCookie, trashMessage } from '@/utils'
 import { Icon } from '@/assets'
 import { queryClient } from '@/main'
 import { ArchiveMutateType } from './ArchiveMutate.types'
 import { PaginatedMessages } from '../TrashMutate'
 import { ToggleToolTipSpanWrapper } from '../..'
 
-export const ArchiveMutate = ({ threadId, tip }: ArchiveMutateType) => {
+export const ArchiveMutate = ({ disabled, threadId, tip }: ArchiveMutateType) => {
   const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
 
   const startMutation = useMutation({
-    mutationKey: ['trash-Message', { threadId }],
-    mutationFn: () => trashMessage({ threadId }),
+    mutationKey: ['Archive-Message', { threadId }],
+    mutationFn: () => archiveMessage({ threadId }),
     onSuccess: () => {
       queryClient.setQueryData<PaginatedMessages>(currentQueryKey, (oldData) => {
         if (!oldData) return { pages: [], pageParams: [] }
@@ -25,12 +25,13 @@ export const ArchiveMutate = ({ threadId, tip }: ArchiveMutateType) => {
           })),
         }
       })
-      toast.success(`Messages has been Deleted!`)
+      toast.success(`Messages has been Archived!`)
     },
   })
   return (
     <>
       <ToggleToolTipSpanWrapper
+        disabled={disabled}
         tip={tip}
         onClick={() => {
           startMutation.mutate()

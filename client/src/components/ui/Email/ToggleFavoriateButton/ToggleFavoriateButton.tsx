@@ -6,7 +6,7 @@ import { Icon } from '@/assets'
 import { useState } from 'react'
 import { ToggleToolTipSpanWrapper } from '../..'
 
-export const ToggleFavoriateButton = ({ labelIds, threadId, tip }: ToggleFavoriateButtonType) => {
+export const ToggleFavoriateButton = ({ disabled, labelIds, threadId, tip }: ToggleFavoriateButtonType) => {
   const [alreadyStarred, setAlreadyStarred] = useState(labelIds.includes('STARRED'))
 
   //INFO: staring thread
@@ -28,6 +28,7 @@ export const ToggleFavoriateButton = ({ labelIds, threadId, tip }: ToggleFavoria
 
   return (
     <ToggleToolTipSpanWrapper
+      disabled={disabled}
       tip={tip}
       onClick={({ currentTarget }) => {
         startMutation.mutate()
