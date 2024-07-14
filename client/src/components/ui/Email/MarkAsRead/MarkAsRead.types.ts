@@ -1,5 +1,5 @@
 export type MarkAsReadMutateType = {
-  threadId: string
+  threadId: string[]
   tip: string
   disabled?: boolean
 }

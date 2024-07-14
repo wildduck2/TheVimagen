@@ -1,5 +1,5 @@
 export type DeleteMutateProps = {
-  threadId: string
+  threadId: string[]
   tip: string
   disabled?: boolean
 }

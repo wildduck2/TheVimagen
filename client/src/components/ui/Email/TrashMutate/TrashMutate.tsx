@@ -7,12 +7,12 @@ import { Icon } from '@/assets'
 import { queryClient } from '@/main'
 import { ToggleToolTipSpanWrapper } from '../ToggleToolTipSpanWrapper'
 
-export const TrashMutate = ({ disabled, threadId, tip }: TrashMutateType) => {
+export const TrashMutate = ({ disabled, threadIds, tip }: TrashMutateType) => {
   const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
 
   const startMutation = useMutation({
-    mutationKey: ['trash-Message', { threadId }],
-    mutationFn: () => trashMessage({ threadId }),
+    mutationKey: ['trash-Message', { threadIds }],
+    mutationFn: () => trashMessage({ threadIds }),
     onSuccess: () => {
       queryClient.setQueryData<PaginatedMessages>(currentQueryKey, (oldData) => {
         if (!oldData) return { pages: [], pageParams: [] }
@@ -20,7 +20,7 @@ export const TrashMutate = ({ disabled, threadId, tip }: TrashMutateType) => {
           ...oldData,
           pages: oldData.pages.map((page) => ({
             ...page,
-            messages: page.messages.filter((message) => message.threadId !== threadId),
+            messages: page.messages.filter((message) => !threadIds.includes(message.threadId)),
           })),
         }
       })

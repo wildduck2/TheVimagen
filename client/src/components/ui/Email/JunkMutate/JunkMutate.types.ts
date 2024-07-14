@@ -1,5 +1,5 @@
 export type JunkMutateType = {
-  threadId: string
+  threadId: string[]
   tip: string
   disabled?: boolean
 }
