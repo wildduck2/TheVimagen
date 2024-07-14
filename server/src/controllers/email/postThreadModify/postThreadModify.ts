@@ -5,14 +5,19 @@ import { OAuthToken } from '@prisma/client'
 
 export const postThreadModify: RequestHandler = async (req, res) => {
   const { access_token, oauth_id } = req.session.oauth_user_data as OAuthToken
-  const { addLabelIds, removeLabelIds, threadId }: postThreadModifyType =
+  const { addLabelIds, removeLabelIds, threadIds }: postThreadModifyType =
     req.body
+
+  console.log(addLabelIds, removeLabelIds, threadIds)
+
   try {
-    const data = await Email.threadModify({
+    const data = await Email.threadModifyGroupLabel({
       removeLabelIds,
       addLabelIds,
       access_token,
-      distnation: `${oauth_id}/threads/${threadId}/modify`
+      distnation: `${oauth_id}/threads/`,
+      threadIds,
+      actionType: '/modify'
     })
 
     if (!data) return res.json({ error: 'failed to modify thread', data: null })

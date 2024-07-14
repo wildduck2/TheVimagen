@@ -2,6 +2,10 @@ import axios from 'axios'
 import {
   FetchEachOneWithIdType,
   GetIdsFromGmailAPIType,
+  ThreadModifyGroupLabelResType,
+  ThreadModifyGroupLabelType,
+  ThreadModifyGroupRes,
+  ThreadModifyGroupType,
   ThreadModifyResType,
   ThreadModifyType,
   ThreadReplyRes,
@@ -101,29 +105,50 @@ export class Email {
     }
   }
 
-  static async threadModify({
+  static async threadModifyGroupLabel({
     distnation,
     access_token,
     addLabelIds,
-    removeLabelIds = []
-  }: ThreadModifyType): Promise<ThreadModifyResType | null> {
+    removeLabelIds,
+    threadIds,
+    actionType
+  }: ThreadModifyGroupLabelType): Promise<
+    (ThreadModifyGroupLabelResType | null)[] | null
+  > {
     try {
-      const { data } = await axios.post<Promise<ThreadModifyResType>>(
-        `${GMAIL_URL}${distnation}`,
-        {
-          addLabelIds,
-          removeLabelIds
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-            'Content-Type': 'application/json'
-          }
-        }
-      )
-      if (!data) return null
+      const threadsModifiedAsync = threadIds.map(async (id) => {
+        try {
+          const { data } = await axios.post<
+            Promise<ThreadModifyGroupLabelResType>
+          >(
+            `${GMAIL_URL}${distnation}${id}${actionType}`,
+            {
+              addLabelIds,
+              removeLabelIds
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${access_token}`,
+                'Content-Type': 'application/json'
+              }
+            }
+          )
+          if (!data) return null
 
-      return data
+          // console.log(data)
+
+          return data
+        } catch (error) {
+          return null
+        }
+      })
+
+      // Execute all requests and preserve order
+      const results = await Promise.all(threadsModifiedAsync)
+      if (!results) return null
+      // console.log(results)
+
+      return results
     } catch (error) {
       return null
     }
@@ -176,6 +201,45 @@ export class Email {
       if (!data) return null
 
       return data
+    } catch (error) {
+      return null
+    }
+  }
+
+  static async threadModifyGroup({
+    access_token,
+    distnation,
+    threadIds,
+    actionType
+  }: ThreadModifyGroupType): Promise<(ThreadModifyGroupRes | null)[] | null> {
+    try {
+      const threadsModifiedAsync = threadIds.map(async (id) => {
+        try {
+          const { data } = await axios.post<ThreadModifyGroupRes>(
+            `${GMAIL_URL}${distnation}${id}${actionType}`,
+            {
+              // addLabelIds: ['INBOX']
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${access_token}`,
+                'Content-Type': 'application/json; charset=UTF-8'
+              }
+            }
+          )
+          if (!data) return null
+
+          return data
+        } catch (error) {
+          return null
+        }
+      })
+
+      // Execute all requests and preserve order
+      const results = await Promise.all(threadsModifiedAsync)
+      if (!results) return null
+
+      return results
     } catch (error) {
       return null
     }
