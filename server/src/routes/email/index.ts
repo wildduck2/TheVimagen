@@ -31,7 +31,7 @@ email_router.post(
 )
 
 email_router.post(
-  '/email/moify/thread',
+  '/email/modify/thread',
   auth_credentials_about_to_expire,
   postThreadModify
 )

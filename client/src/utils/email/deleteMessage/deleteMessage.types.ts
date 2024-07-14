@@ -1,5 +1,5 @@
 export type DeleteMessage = {
-  id: string
+  threadId: string
 }
 
 export type DeletedMessageRes = {

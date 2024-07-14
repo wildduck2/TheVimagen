@@ -69,11 +69,24 @@
     padding-right: 0.5rem;
     border-right: 1px solid hsl(var(--input));
 
+    button {
+      @include u.buttonToolTip();
+    }
+
+    span {
+      height: 1.2rem;
+
+      &.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+    }
+
     svg {
-      width: 1.2rem !important;
-      height: 1.2rem !important;
+      width: 1.1rem !important;
+      height: 1.1rem !important;
       stroke: hsl(var(--input));
-      stroke-width: 1px;
+      stroke-width: 2px;
       transition-property: all;
       transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
       transition-duration: 150ms;
@@ -89,17 +102,18 @@
     }
 
     &>div:has(button) {
-      width: 1.1rem !important;
-      height: 1.1rem !important;
+      width: 1.1rem;
+      height: 1.1rem;
     }
 
     button {
-      width: 1.1rem !important;
-      height: 1.1rem !important;
+      width: 1.1rem;
+      height: 1.1rem;
       border: 1px solid hsl(var(--input));
 
       &[aria-checked='true'] {
         background: hsl(var(--foreground));
+        height: 1.1rem;
       }
 
       span {
@@ -162,6 +176,10 @@
         font-size: 0.75rem;
         line-height: 1rem;
         font-weight: 500;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
       }
     }
 

@@ -1,3 +1,3 @@
 export type PostThreadTrashType = {
-  threadId: string
+  threadIds: string[]
 }

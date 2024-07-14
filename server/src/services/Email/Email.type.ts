@@ -13,14 +13,16 @@ export interface FetchEachOneWithIdType
   format: string
 }
 
-export type ThreadModifyType = {
+export type ThreadModifyGroupLabelType = {
   distnation: string
   access_token: string
   addLabelIds: string[]
   removeLabelIds: string[]
+  threadIds: string[]
+  actionType: string
 }
 
-export type ThreadModifyResType = {
+export type ThreadModifyGroupLabelResType = {
   data: ThreadResType | null
   error: string | null
 }
@@ -46,4 +48,17 @@ export type ThreadReplyType = {
 export type ThreadReplyRes = {
   data: MessageType | null
   error: string | null
+}
+
+export type ThreadModifyGroupType = {
+  access_token: string
+  distnation: string
+  threadIds: string[]
+  actionType: string
+}
+
+export type ThreadModifyGroupRes = {
+  id: string
+  threadId: string
+  labelIds: string[]
 }

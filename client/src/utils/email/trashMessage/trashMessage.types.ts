@@ -1,8 +1,8 @@
 export type TrashMessage = {
-  threadId: string
+  threadIds: string[]
 }
 
-export type DeletedMessageRes = {
+export type TrashMessageRes = {
   data: string | null
   error: string | null
 }

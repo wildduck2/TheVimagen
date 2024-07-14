@@ -1,15 +1,15 @@
 import axios from 'axios'
-import { StarThreadRsponse, StarThreadType } from './starThread.types'
+import { StarThreadRsponse, StarThreadType } from './modifyThread.types'
 
-export const starThread = async ({ addLabelIds, removeLabelIds, threadId }: StarThreadType) => {
+export const modifyThread = async ({ addLabelIds, removeLabelIds, threadIds }: StarThreadType) => {
   try {
     const { data } = await axios.post<Awaited<Promise<StarThreadRsponse>>>(
-      `${process.env.ROOT_URL}/email/moify/thread`,
+      `${process.env.ROOT_URL}/email/modify/thread`,
       {
         user_id: 'fcb7d30c-b14a-47d3-bd9c-37ae5849c30e',
         addLabelIds,
         removeLabelIds,
-        threadId,
+        threadIds,
       },
       {
         withCredentials: true,

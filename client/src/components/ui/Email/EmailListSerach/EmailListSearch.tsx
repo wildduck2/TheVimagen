@@ -1,17 +1,25 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { Input, Button, Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui'
-import { getSearchInput } from '@/context'
+import {
+  Input,
+  Button,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  ToggleToolTipButtonWrapper,
+  Checkbox,
+} from '@/components/ui'
+import { getSearchInput, RootState } from '@/context'
 import { useDebounce } from '@/hooks'
 import { Icon } from '@/assets'
 import { queryClient } from '@/main'
 import { getCookie } from '@/utils'
 
 export const EmailListSearch = () => {
+  //NOTE: should make the context slicee for the selection threads
   const [sq, setSq] = useState<string>('')
   const dispatch = useDispatch()
-  const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
 
   useDebounce(() => {
     dispatch(getSearchInput(sq))
@@ -28,21 +36,6 @@ export const EmailListSearch = () => {
             value={sq}
           />
         </div>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant="outline"
-              children={<Icon.refresh className="size-4" />}
-              onClick={(e) => {
-                e.preventDefault()
-                queryClient.refetchQueries(currentQueryKey)
-              }}
-            />
-          </TooltipTrigger>
-          <TooltipContent className="z-[1000000]">
-            <p>Refresh</p>
-          </TooltipContent>
-        </Tooltip>
       </form>
     </>
   )

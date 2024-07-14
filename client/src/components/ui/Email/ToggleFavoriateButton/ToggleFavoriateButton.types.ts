@@ -1,5 +1,6 @@
 export type ToggleFavoriateButtonType = {
   labelIds: string[]
-  threadId: string
+  threadIds: string[]
   tip: string
+  disabled?: boolean
 }

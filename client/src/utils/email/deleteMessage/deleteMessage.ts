@@ -1,11 +1,11 @@
 import axios from 'axios'
 import { DeletedMessageRes, DeleteMessage } from './deleteMessage.types'
 
-export const deleteMessage = async ({ id }: DeleteMessage): Promise<DeletedMessageRes> => {
+export const deleteMessage = async ({ threadId }: DeleteMessage): Promise<DeletedMessageRes> => {
   try {
     const { data } = await axios.post<Promise<DeletedMessageRes>>(
       `${process.env.ROOT_URL}/email/delete/thread`,
-      { id },
+      { threadId },
       {
         withCredentials: true,
         headers: {

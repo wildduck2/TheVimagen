@@ -1,13 +1,13 @@
 import axios from 'axios'
-import { DeletedMessageRes, TrashMessage } from './trashMessage.types'
+import { TrashMessageRes, TrashMessage } from './trashMessage.types'
 
-export const trashMessage = async ({ threadId }: TrashMessage): Promise<DeletedMessageRes> => {
+export const trashMessage = async ({ threadIds }: TrashMessage): Promise<TrashMessageRes> => {
   try {
-    const { data } = await axios.post<Promise<DeletedMessageRes>>(
+    const { data } = await axios.post<Promise<TrashMessageRes>>(
       `${process.env.ROOT_URL}/email/trash/thread`,
       {
         user_id: 'fcb7d30c-b14a-47d3-bd9c-37ae5849c30e',
-        threadId,
+        threadIds,
       },
       {
         withCredentials: true,

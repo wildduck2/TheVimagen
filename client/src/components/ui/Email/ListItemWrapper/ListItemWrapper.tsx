@@ -1,6 +1,12 @@
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { getSelectedEmailIdDispatch, RootState } from '@/context'
+import {
+  getSelectedEmailIdDispatch,
+  getSelectedThreadsDispatch,
+  removeSelectedThreadsDispatch,
+  RootState,
+} from '@/context'
 import { cn } from '@/utils'
 import { ListItemWrapperType } from './ListItemWrapper.types'
 import {
@@ -17,18 +23,16 @@ import {
   CheckboxWrapper,
   Separator,
 } from '../..'
-import { ToggleMutationButton } from '../ToggleMutationButton'
-import { Toggle } from '../Toggle'
 import { Icon } from '@/assets'
-import React from 'react'
 import { ToggleFavoriateButton } from '../ToggleFavoriateButton'
 import { TrashMutate } from '../TrashMutate'
-import { ArchiveMutate } from '../ArchiveMutate'
 
-export const ListItemWrapper = ({ children, items, item }: ListItemWrapperType) => {
+export const ListItemWrapper = ({ children, item }: ListItemWrapperType) => {
   const emailSelectedId = useSelector((state: RootState) => state.email.SelectedEmailData)
+
+  const selectedThreads = useSelector((state: RootState) => state.email.selectedThreads)
   const dispatch = useDispatch()
-  const ids = [items[0].threadId] //.map((id) => id.threadId)
+  const ids = [item.threadId]
 
   return (
     <>
@@ -38,18 +42,21 @@ export const ListItemWrapper = ({ children, items, item }: ListItemWrapperType) 
             <div>
               <div className="email__list__wrapper__item__functionality__card">
                 <CheckboxWrapper
-                  checked={false}
+                  checked={selectedThreads.includes(item.threadId)}
+                  action={({ checked }) => {
+                    checked ? dispatch(removeSelectedThreadsDispatch(ids)) : dispatch(getSelectedThreadsDispatch(ids))
+                  }}
                   tip="Select"
                 />
                 <Separator />
                 <ToggleFavoriateButton
                   labelIds={item.labelIds}
-                  threadId={item.threadId}
+                  threadIds={[item.threadId]}
                   tip="Star"
                 />
                 <Separator />
                 <TrashMutate
-                  threadId={item.threadId}
+                  threadIds={[item.threadId]}
                   tip="Trash"
                 />
               </div>

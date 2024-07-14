@@ -2,7 +2,14 @@ import { cn } from '@/utils'
 import { ToggleToolTipWrapperSpanProps } from './ToggleToolTipSpanWrapper.types'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../..'
 
-const ToggleToolTipSpanWrapper: React.FC<ToggleToolTipWrapperSpanProps> = ({ children, onClick, tip, value }) => {
+const ToggleToolTipSpanWrapper: React.FC<ToggleToolTipWrapperSpanProps> = ({
+  children,
+  onClick,
+  tip,
+  value,
+  side,
+  disabled,
+}) => {
   return (
     <TooltipProvider>
       <Tooltip delayDuration={0}>
@@ -10,9 +17,9 @@ const ToggleToolTipSpanWrapper: React.FC<ToggleToolTipWrapperSpanProps> = ({ chi
           asChild
           onClick={onClick}
         >
-          <span className={cn(value && 'active')}>{children}</span>
+          <span className={cn(value && 'active', disabled && 'disabled')}>{children}</span>
         </TooltipTrigger>
-        <TooltipContent>
+        <TooltipContent side={side || 'top'}>
           <p>{tip}</p>
         </TooltipContent>
       </Tooltip>

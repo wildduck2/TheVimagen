@@ -1,7 +1,7 @@
 export type StarThreadType = {
   addLabelIds?: string[]
   removeLabelIds?: string[]
-  threadId: string
+  threadIds: string[]
 }
 
 export type StarThreadRsponse = {
