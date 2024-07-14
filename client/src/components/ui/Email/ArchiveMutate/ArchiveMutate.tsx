@@ -1,7 +1,7 @@
 import { toast } from 'sonner'
 import { useMutation } from '@tanstack/react-query'
 
-import { archiveMessage, getCookie, trashMessage } from '@/utils'
+import { modifyThread, getCookie } from '@/utils'
 import { Icon } from '@/assets'
 import { queryClient } from '@/main'
 import { ArchiveMutateType } from './ArchiveMutate.types'
@@ -13,7 +13,7 @@ export const ArchiveMutate = ({ disabled, threadIds, tip }: ArchiveMutateType) =
 
   const startMutation = useMutation({
     mutationKey: ['Archive-Message', { threadIds }],
-    mutationFn: () => archiveMessage({ threadIds }),
+    mutationFn: () => modifyThread({ threadIds }),
     onSuccess: () => {
       queryClient.setQueryData<PaginatedMessages>(currentQueryKey, (oldData) => {
         if (!oldData) return { pages: [], pageParams: [] }
@@ -25,7 +25,10 @@ export const ArchiveMutate = ({ disabled, threadIds, tip }: ArchiveMutateType) =
           })),
         }
       })
-      toast.success(`Messages has been Archived!`)
+      toast.success(`Thread has been moved to Archive!`)
+    },
+    onError: () => {
+      toast.error(`Error: Thread has not been moved to Archive!`)
     },
   })
   return (

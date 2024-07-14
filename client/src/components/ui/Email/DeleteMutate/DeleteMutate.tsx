@@ -25,7 +25,7 @@ export const DeleteMutate = ({ disabled, threadId, tip }: DeleteMutateProps) => 
           })),
         }
       })
-      toast.success(`Messages has been Deleted!`)
+      toast.success(`Thread has been Deleted!`)
     },
   })
   return (

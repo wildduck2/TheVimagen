@@ -50,7 +50,7 @@ export const EmailSelectionBar = () => {
       <Separator orientation="vertical" />
       <JunkMutate
         disabled={selectedThreads.length === 0}
-        threadId={selectedThreads}
+        threadIds={selectedThreads}
         tip="Move to Junk"
       />
       <Separator orientation="vertical" />
@@ -74,14 +74,22 @@ export const EmailSelectionBar = () => {
       />
       <Separator orientation="vertical" />
       <MarkAsReadMutate
+        marktype="READ"
         disabled={selectedThreads.length === 0}
-        threadId={selectedThreads}
+        threadIds={selectedThreads}
         tip="Mark as Read"
+      />
+      <Separator orientation="vertical" />
+      <MarkAsReadMutate
+        marktype="UNREAD"
+        disabled={selectedThreads.length === 0}
+        threadIds={selectedThreads}
+        tip="Mark as Uread"
       />
       <Separator orientation="vertical" />
       <ReplyMutate
         disabled={selectedThreads.length === 0}
-        threadId={selectedThreads}
+        threadIds={selectedThreads}
         tip="Reply"
       />
       <Separator orientation="vertical" />
