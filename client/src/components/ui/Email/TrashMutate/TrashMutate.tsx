@@ -24,7 +24,10 @@ export const TrashMutate = ({ disabled, threadIds, tip }: TrashMutateType) => {
           })),
         }
       })
-      toast.success(`Messages has been Trashed!`)
+      toast.success(`Thread has been moved to Trash!`)
+    },
+    onError: () => {
+      toast.error(`Error: Thread has not been moved to Trash!`)
     },
   })
 

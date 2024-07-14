@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { PaginatedMessages, ToggleToolTipSpanWrapper } from '@/components/ui'
 import { queryClient } from '@/main'
-import { cn, getCookie, starThread } from '@/utils'
+import { cn, getCookie, modifyThread } from '@/utils'
 import { Icon } from '@/assets'
 import { ToggleFavoriateButtonType } from './ToggleFavoriateButton.types'
 import { useState } from 'react'
@@ -18,7 +18,7 @@ export const ToggleFavoriateButton = ({ disabled, labelIds, threadIds, tip }: To
 
   const startMutation = useMutation({
     mutationKey: ['starThread'],
-    mutationFn: () => starThread(invokeArgs),
+    mutationFn: () => modifyThread(invokeArgs),
     onSuccess: () => {
       setAlreadyStarred(!alreadyStarred)
       queryClient.setQueryData<PaginatedMessages>(currentQueryKey, (oldData) => {
@@ -42,10 +42,10 @@ export const ToggleFavoriateButton = ({ disabled, labelIds, threadIds, tip }: To
           })),
         }
       })
-      toast.success(`Messages have been ${alreadyStarred ? 'unstarred' : 'starred'}!`)
+      toast.success(`Thread have been ${alreadyStarred ? 'unstarred' : 'starred'}!`)
     },
     onError: () => {
-      toast.error(`Failed to ${alreadyStarred ? 'unstar' : 'star'} messages`)
+      toast.error(`Error: Failed to ${alreadyStarred ? 'unstar' : 'star'} messages`)
     },
   })
 

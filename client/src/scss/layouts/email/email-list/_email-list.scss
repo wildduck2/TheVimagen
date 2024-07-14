@@ -15,6 +15,7 @@
 
 .email__list {
   height: calc(100vh - 130px - 47px);
+  overflow: visible;
 
   &__wrapper {
     @include u.flex(flex);

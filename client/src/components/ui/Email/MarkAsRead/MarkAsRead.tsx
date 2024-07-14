@@ -1,19 +1,24 @@
 import { toast } from 'sonner'
 import { useMutation } from '@tanstack/react-query'
 
-import { archiveMessage, getCookie } from '@/utils'
+import { modifyThread, getCookie } from '@/utils'
 import { Icon } from '@/assets'
 import { queryClient } from '@/main'
 import { PaginatedMessages } from '../TrashMutate'
-import { ToggleToolTipSpanWrapper } from '../..'
+import { QueryKeyMutateType, ToggleToolTipSpanWrapper } from '../..'
 import { MarkAsReadMutateType } from './MarkAsRead.types'
 
-export const MarkAsReadMutate = ({ disabled, threadId, tip }: MarkAsReadMutateType) => {
+export const MarkAsReadMutate = ({ disabled, threadIds, tip, marktype }: MarkAsReadMutateType) => {
   const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
 
+  const querykey: QueryKeyMutateType =
+    marktype === 'READ'
+      ? { addLabelIds: [], removeLabelIds: ['UNREAD'], threadIds }
+      : { addLabelIds: ['UNREAD'], removeLabelIds: [], threadIds }
+
   const startMutation = useMutation({
-    mutationKey: ['MarkAsRead-Message', { threadId }],
-    mutationFn: () => archiveMessage({ threadId }),
+    mutationKey: ['MarkAsRead-Message', querykey],
+    mutationFn: () => modifyThread(querykey),
     onSuccess: () => {
       queryClient.setQueryData<PaginatedMessages>(currentQueryKey, (oldData) => {
         if (!oldData) return { pages: [], pageParams: [] }
@@ -21,11 +26,24 @@ export const MarkAsReadMutate = ({ disabled, threadId, tip }: MarkAsReadMutateTy
           ...oldData,
           pages: oldData.pages.map((page) => ({
             ...page,
-            messages: page.messages.filter((message) => message.threadId !== threadId),
+            messages: page.messages.map((message) => {
+              if (threadIds.includes(message.threadId)) {
+                return {
+                  ...message,
+                  labelIds: message.labelIds.includes('UNREAD')
+                    ? message.labelIds.filter((labelId) => labelId !== 'UNREAD')
+                    : [...message.labelIds, 'UNREAD'],
+                }
+              }
+              return message
+            }),
           })),
         }
       })
-      toast.success(`Messages has been Archived!`)
+      toast.success(`Thread has been marked as ${marktype === 'READ' ? 'unread' : 'read'}!`)
+    },
+    onError: () => {
+      toast.error(`Error: Thread has not been marked as ${marktype === 'READ' ? 'unread' : 'read'}!`)
     },
   })
   return (
@@ -37,7 +55,7 @@ export const MarkAsReadMutate = ({ disabled, threadId, tip }: MarkAsReadMutateTy
           startMutation.mutate()
         }}
       >
-        <Icon.emailOpen />
+        {marktype === 'READ' ? <Icon.emailOpen /> : <Icon.mail />}
       </ToggleToolTipSpanWrapper>
     </>
   )

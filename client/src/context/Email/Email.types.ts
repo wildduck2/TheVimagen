@@ -2,6 +2,7 @@ export interface initialStateEmailTypes {
   SelectedEmailData: { ids: string[]; inReplyTo: string }
   selectedThreads: string[]
   searchInput: string
+  threadsFetched: string[]
 }
 
 export type SelectedEmailDataState = {
@@ -24,6 +25,14 @@ export type SelectedThreadsState = {
   selectedThreads: string[]
 }
 
-export type SelectedThreadsActoin = {
-  payload: string
+export type SelectedThreadsAction = {
+  payload: string[]
+}
+
+export type ThreadsFetchedState = {
+  threadsFetched: string[]
+}
+
+export type ThreadsFetchedAction = {
+  payload: string[]
 }

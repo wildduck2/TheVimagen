@@ -1,7 +1,7 @@
 import { ThreadMessageType } from '@/utils'
 
 export type TrashMutateType = {
-  threadId: string
+  threadIds: string[]
   tip: string
   disabled?: boolean
 }
