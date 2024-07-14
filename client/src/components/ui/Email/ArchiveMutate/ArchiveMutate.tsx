@@ -8,12 +8,12 @@ import { ArchiveMutateType } from './ArchiveMutate.types'
 import { PaginatedMessages } from '../TrashMutate'
 import { ToggleToolTipSpanWrapper } from '../..'
 
-export const ArchiveMutate = ({ disabled, threadId, tip }: ArchiveMutateType) => {
+export const ArchiveMutate = ({ disabled, threadIds, tip }: ArchiveMutateType) => {
   const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
 
   const startMutation = useMutation({
-    mutationKey: ['Archive-Message', { threadId }],
-    mutationFn: () => archiveMessage({ threadId }),
+    mutationKey: ['Archive-Message', { threadIds }],
+    mutationFn: () => archiveMessage({ threadIds }),
     onSuccess: () => {
       queryClient.setQueryData<PaginatedMessages>(currentQueryKey, (oldData) => {
         if (!oldData) return { pages: [], pageParams: [] }
@@ -21,7 +21,7 @@ export const ArchiveMutate = ({ disabled, threadId, tip }: ArchiveMutateType) =>
           ...oldData,
           pages: oldData.pages.map((page) => ({
             ...page,
-            messages: page.messages.filter((message) => message.threadId !== threadId),
+            messages: page.messages.filter((message) => !threadIds.includes(message.threadId)),
           })),
         }
       })

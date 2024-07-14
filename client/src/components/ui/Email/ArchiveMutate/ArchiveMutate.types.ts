@@ -1,5 +1,5 @@
 export type ArchiveMutateType = {
-  threadId: string
+  threadIds: string[]
   tip: string
   disabled?: boolean
 }

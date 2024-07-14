@@ -16,7 +16,6 @@ export const EmailListItem = ({ item, items }: EmailListItemType) => {
     <>
       <ListItemWrapper
         item={item}
-        items={items}
         children={
           <>
             <div className="email__list__wrapper__item__card__top">

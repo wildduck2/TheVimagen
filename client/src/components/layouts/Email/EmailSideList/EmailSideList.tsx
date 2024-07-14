@@ -1,7 +1,8 @@
 import { EmailList, EmailSelectionBar } from '..'
 import { EmailListSearch, ResizablePanel, Separator, Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui'
-import { EmailSideListType } from './EmailSideList.types'
+import { EmailSideListType, ThreadsFetchedRefType } from './EmailSideList.types'
 import { getCookie } from '@/utils'
+import { useRef } from 'react'
 
 export const EmailSideList = ({ defaultLayout = 37 }: EmailSideListType) => {
   const defaultActive = getCookie('tabs:active') || 'primary'

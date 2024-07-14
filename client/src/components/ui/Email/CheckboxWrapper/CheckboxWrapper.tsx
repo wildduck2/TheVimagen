@@ -3,7 +3,7 @@ import { Checkbox, ToggleToolTipSpanWrapper } from '../..'
 import { CheckboxWrapperType } from './CheckboxWrapper.types'
 import { cn } from '@/utils'
 
-export const CheckboxWrapper = ({ disabled, className, action, checked, tip, perSelected }: CheckboxWrapperType) => {
+export const CheckboxWrapper = ({ disabled, className, action, checked, tip }: CheckboxWrapperType) => {
   const [check, setCheck] = useState<boolean>(checked)
   return (
     <>
@@ -13,10 +13,10 @@ export const CheckboxWrapper = ({ disabled, className, action, checked, tip, per
         children={
           <Checkbox
             id="terms"
-            checked={perSelected || check}
-            className={cn(className, 'checkbox', perSelected && 'perSelected')}
+            checked={checked}
+            className={cn(className, 'checkbox')}
             onClick={() => {
-              action(check)
+              action({ checked })
               setCheck(!check)
             }}
           />
