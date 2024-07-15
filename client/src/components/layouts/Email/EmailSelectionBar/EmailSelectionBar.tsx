@@ -1,10 +1,7 @@
 import { getSelectedThreadsDispatch, removeSelectedThreadsDispatch, RootState } from '@/context'
 import { useDispatch, useSelector } from 'react-redux'
-import { EmailSelectionBarProps } from './EmailSelectionBar.types'
 import {
   ArchiveMutate,
-  Checkbox,
-  CheckboxWrapper,
   DeleteMutate,
   EmailSnoozeButton,
   JunkMutate,

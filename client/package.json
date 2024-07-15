@@ -89,6 +89,7 @@
         "clsx": "^2.1.1",
         "date-fns": "^3.6.0",
         "dompurify": "^3.1.6",
+        "embla-carousel-react": "^8.1.6",
         "extension-kit": "link:@/extensions/extension-kit",
         "gmail-api-parse-message-ts": "^2.2.33",
         "gsap": "^3.12.5",

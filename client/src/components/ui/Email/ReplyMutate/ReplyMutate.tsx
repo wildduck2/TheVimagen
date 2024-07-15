@@ -7,6 +7,7 @@ import { queryClient } from '@/main'
 import { ReplyMutateType } from './ReplyMutate.types'
 import { PaginatedMessages } from '../TrashMutate'
 import { ToggleToolTipSpanWrapper } from '../..'
+import { EmailReplyMulti } from '@/components/layouts'
 
 export const ReplyMutate = ({ disabled, threadIds, tip }: ReplyMutateType) => {
   const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
@@ -33,15 +34,20 @@ export const ReplyMutate = ({ disabled, threadIds, tip }: ReplyMutateType) => {
   })
   return (
     <>
-      <ToggleToolTipSpanWrapper
-        disabled={disabled}
-        tip={tip}
-        onClick={() => {
-          startMutation.mutate()
-        }}
-      >
-        <Icon.reply />
-      </ToggleToolTipSpanWrapper>
+      <EmailReplyMulti
+        threads={threadIds}
+        trigger={
+          <ToggleToolTipSpanWrapper
+            disabled={disabled}
+            tip={tip}
+            onClick={() => {
+              // startMutation.mutate()
+            }}
+          >
+            <Icon.reply />
+          </ToggleToolTipSpanWrapper>
+        }
+      />
     </>
   )
 }
