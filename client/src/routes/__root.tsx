@@ -4,9 +4,9 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 export const Route = createRootRoute({
   // <TanStackRouterDevtools position="bottom-right" />
-  // <ReactQueryDevtools initialIsOpen={false} />
   component: () => (
     <>
+      <ReactQueryDevtools initialIsOpen={false} />
       <ScrollRestoration />
       <Outlet />
     </>

@@ -3,7 +3,7 @@ import { IEmail } from 'gmail-api-parse-message-ts'
 export type ThreadMessageType = {
   id: string
   nextPageToken: string
-  messages: MessageType[]
+  messages: IEmail[]
 }
 
 export type GetThreadType = {

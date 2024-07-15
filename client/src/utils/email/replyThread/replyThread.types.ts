@@ -5,7 +5,6 @@ export type ReplyThreadType = {
   from: string
   to: string
   subject: string
-  inReplyTo: string
   htmlContent: string
 }
 export type ReplyThreadRes = {

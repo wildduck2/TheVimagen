@@ -1,6 +1,6 @@
-import { MessageType } from '../getThread'
+import { IEmail } from 'gmail-api-parse-message-ts'
 
 export type SearchMessagesType = {
-  messages: MessageType[] | MessageType[][]
+  messages: IEmail[]
   searchText: string
 }

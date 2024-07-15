@@ -6,6 +6,7 @@ import {
 } from './postGetThreadsHandler.types'
 import { Email } from '../../../services/Email'
 import { MessageType, ThreadResType } from '../postGetThreadHandler'
+import { IEmail, ParseGmailApi } from 'gmail-api-parse-message-ts'
 
 export const postGetThreadsHandler: RequestHandler = async (req, res) => {
   // Getting parameters of the req [body - session]
@@ -46,11 +47,15 @@ export const postGetThreadsHandler: RequestHandler = async (req, res) => {
     if (!messagesData)
       return res.json({ error: 'Error: failed to fetch threads', data: null })
 
+    //NOTE: parsing the message to base64
+    const parse = new ParseGmailApi()
+    const email: IEmail[] = messagesData.map((item) => parse.parseMessage(item))
+
     // Construct final response object
     const finalResponse = {
       id: user_id,
       nextPageToken: nextPageToken || null,
-      messages: messagesData
+      messages: email
     }
 
     // Send response
