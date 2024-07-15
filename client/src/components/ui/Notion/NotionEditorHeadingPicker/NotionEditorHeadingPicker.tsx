@@ -1,4 +1,3 @@
-import { Icon } from '@/assets'
 import { Button, MouseEvent, NotionMinimalTextEditorToolbarPick, Popover, Separator } from '@/components/ui'
 import { emailToolbarEditor } from '@/constants'
 import { cn } from '@/utils'

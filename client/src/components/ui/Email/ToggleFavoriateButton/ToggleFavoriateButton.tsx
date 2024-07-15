@@ -10,6 +10,7 @@ import { useState } from 'react'
 export const ToggleFavoriateButton = ({ disabled, labelIds, threadIds, tip }: ToggleFavoriateButtonType) => {
   const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
   const [alreadyStarred, setAlreadyStarred] = useState<boolean>(labelIds.includes('STARRED'))
+  // console.log(threadIds)
 
   //INFO: starting thread
   const invokeArgs = alreadyStarred

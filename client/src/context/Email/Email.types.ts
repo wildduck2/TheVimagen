@@ -1,16 +1,18 @@
+import { IEmail } from 'gmail-api-parse-message-ts'
+
 export interface initialStateEmailTypes {
-  SelectedEmailData: { ids: string[]; inReplyTo: string }
-  selectedThreads: string[]
+  selectedThread: IEmail[]
+  selectedThreads: IEmail[]
   searchInput: string
-  threadsFetched: string[]
+  threadsFetched: IEmail[]
 }
 
 export type SelectedEmailDataState = {
-  SelectedEmailData: { ids: string[]; inReplyTo: string }
+  selectedThread: IEmail[]
 }
 
 export type SelectedEmailDataAction = {
-  payload: { ids: string[]; inReplyTo: string }
+  payload: IEmail[]
 }
 
 export type SearchInputIdState = {
@@ -22,17 +24,17 @@ export type SearchInputIdAction = {
 }
 
 export type SelectedThreadsState = {
-  selectedThreads: string[]
+  selectedThreads: IEmail[]
 }
 
 export type SelectedThreadsAction = {
-  payload: string[]
+  payload: IEmail[]
 }
 
 export type ThreadsFetchedState = {
-  threadsFetched: string[]
+  threadsFetched: IEmail[]
 }
 
 export type ThreadsFetchedAction = {
-  payload: string[]
+  payload: IEmail[]
 }

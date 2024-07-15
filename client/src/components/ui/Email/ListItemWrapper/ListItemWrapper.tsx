@@ -11,28 +11,25 @@ import { cn } from '@/utils'
 import { ListItemWrapperType } from './ListItemWrapper.types'
 import {
   ContextMenu,
-  ContextMenuCheckboxItem,
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuSeparator,
   ContextMenuShortcut,
-  ContextMenuSub,
-  ContextMenuSubContent,
-  ContextMenuSubTrigger,
   ContextMenuTrigger,
   CheckboxWrapper,
   Separator,
 } from '../..'
-import { Icon } from '@/assets'
 import { ToggleFavoriateButton } from '../ToggleFavoriateButton'
 import { TrashMutate } from '../TrashMutate'
+import { Icon } from '@/assets'
 
-export const ListItemWrapper = ({ children, item }: ListItemWrapperType) => {
-  const emailSelectedId = useSelector((state: RootState) => state.email.SelectedEmailData)
+export const ListItemWrapper = ({ children, items }: ListItemWrapperType) => {
+  const selectedThread = useSelector((state: RootState) => state.email.selectedThread)
 
   const selectedThreads = useSelector((state: RootState) => state.email.selectedThreads)
   const dispatch = useDispatch()
-  const ids = [item.threadId]
+
+  // console.log(selectedThreads.includes(items[0]))
 
   return (
     <>
@@ -42,40 +39,38 @@ export const ListItemWrapper = ({ children, item }: ListItemWrapperType) => {
             <div>
               <div className="email__list__wrapper__item__functionality__card">
                 <CheckboxWrapper
-                  checked={selectedThreads.includes(item.threadId)}
+                  checked={items.some((item) => selectedThreads.some((thread) => thread.threadId === item.threadId))}
                   action={({ checked }) => {
-                    checked ? dispatch(removeSelectedThreadsDispatch(ids)) : dispatch(getSelectedThreadsDispatch(ids))
+                    checked
+                      ? dispatch(removeSelectedThreadsDispatch(items))
+                      : dispatch(getSelectedThreadsDispatch(items))
                   }}
                   tip="Select"
                 />
                 <Separator />
                 <ToggleFavoriateButton
-                  labelIds={item.labelIds}
-                  threadIds={[item.threadId]}
+                  labelIds={items[0].labelIds}
+                  threadIds={items.map((item) => item.threadId)}
                   tip="Star"
                 />
                 <Separator />
                 <TrashMutate
-                  threadIds={[item.threadId]}
+                  threadIds={[items[0].threadId]}
                   tip="Trash"
                 />
               </div>
             </div>
-            <div className={cn('email__list__wrapper__item__body', emailSelectedId.ids[0] === ids[0] && 'active')}>
+            <div
+              className={cn(
+                'email__list__wrapper__item__body',
+                selectedThread.length && selectedThread[0].threadId === items[0].threadId && 'active',
+              )}
+            >
               <div
-                key={item.id}
+                key={items[0].id}
                 className={cn('email__list__wrapper__item__body__card')}
                 onClick={() => {
-                  emailSelectedId.ids[0] !== ids[0] &&
-                    dispatch(
-                      getSelectedEmailIdDispatch({
-                        ids: ids && ids,
-                        inReplyTo:
-                          ids &&
-                          item.payload.headers.find((name) => name.name === 'Feedback-ID' || name.name === 'Message-ID')
-                            ?.value,
-                      }),
-                    )
+                  selectedThread !== items && dispatch(getSelectedEmailIdDispatch(items))
                 }}
               >
                 {children}
