@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { cn, getThreads, groupMessagesBySender, MessageType, searchMessages } from '@/utils'
+import { cn, getThreads, groupMessagesBySender, searchMessages } from '@/utils'
 import { Badge, ScrollAreaChildRef, Skeleton } from '@/components/ui'
 
 import { getThreadsFetchedDispatched, RootState } from '@/context'
@@ -37,7 +37,7 @@ export function EmailList({ q, queryKey }: EmailListProps) {
   //NOTE: assigning data to the context slice to use in perselection functionality
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(getThreadsFetchedDispatched(finalData && finalData.map((item) => item[0].threadId)))
+    dispatch(getThreadsFetchedDispatched(finalData && finalData.map((item) => item[0])))
   }, [finalData])
 
   return (
@@ -54,7 +54,7 @@ export function EmailList({ q, queryKey }: EmailListProps) {
               >
                 {isFetchingNextPage ? 'Loading more...' : 'Updating...'}
               </Badge>
-              {(finalData as MessageType[][]).map((item, idx) => (
+              {finalData.map((item, idx) => (
                 <EmailListItem
                   key={idx}
                   item={item[0]}

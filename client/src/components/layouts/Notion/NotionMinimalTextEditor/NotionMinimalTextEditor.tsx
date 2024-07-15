@@ -44,7 +44,7 @@ export const NotionMinimalTextEditor = ({
           types: ['heading', 'paragraph'],
         }),
         Placeholder.configure({
-          placeholder: `Reply to ${name && name}....`,
+          placeholder: `Reply to ${name}....`,
         }),
       ],
       editorProps: {

@@ -23,11 +23,14 @@ export const EmailSelectionBar = () => {
   const threadsFetched = useSelector((state: RootState) => state.email.threadsFetched)
   const dispatch = useDispatch()
 
+  console.log(threadsFetched)
+
+  const selectedThreadsIds = selectedThreads.map((thread) => thread.threadId)
   return (
     <div className="email__selection__bar">
       <MultiCheckboxWrapper
-        dataCompare={threadsFetched || []}
-        data={selectedThreads}
+        dataCompare={threadsFetched ? threadsFetched.map((thread) => thread.threadId) : []}
+        data={selectedThreadsIds}
         action={() => {
           if (selectedThreads.length === threadsFetched.length) {
             dispatch(removeSelectedThreadsDispatch(selectedThreads))
@@ -41,56 +44,56 @@ export const EmailSelectionBar = () => {
       <Separator orientation="vertical" />
       <ArchiveMutate
         disabled={selectedThreads.length === 0}
-        threadIds={selectedThreads}
+        threadIds={selectedThreadsIds}
         tip="Archive"
       />
       <Separator orientation="vertical" />
       <JunkMutate
         disabled={selectedThreads.length === 0}
-        threadIds={selectedThreads}
+        threadIds={selectedThreadsIds}
         tip="Move to Junk"
       />
       <Separator orientation="vertical" />
       <ToggleFavoriateButton
         disabled={selectedThreads.length === 0}
         labelIds={[]}
-        threadIds={selectedThreads}
+        threadIds={selectedThreadsIds}
         tip="Star"
       />
       <Separator orientation="vertical" />
       <TrashMutate
         disabled={selectedThreads.length === 0}
-        threadIds={selectedThreads}
+        threadIds={selectedThreadsIds}
         tip="Move to Trash"
       />
       <Separator orientation="vertical" />
       <DeleteMutate
         disabled={selectedThreads.length === 0}
-        threadId={selectedThreads}
+        threadId={selectedThreadsIds}
         tip="Delete"
       />
       <Separator orientation="vertical" />
       <MarkAsReadMutate
         marktype="READ"
         disabled={selectedThreads.length === 0}
-        threadIds={selectedThreads}
+        threadIds={selectedThreadsIds}
         tip="Mark as Read"
       />
       <Separator orientation="vertical" />
       <MarkAsReadMutate
         marktype="UNREAD"
         disabled={selectedThreads.length === 0}
-        threadIds={selectedThreads}
+        threadIds={selectedThreadsIds}
         tip="Mark as Uread"
       />
       <Separator orientation="vertical" />
       <ReplyMutate
         disabled={selectedThreads.length === 0}
-        threadIds={selectedThreads}
+        threadIds={selectedThreadsIds}
         tip="Reply"
       />
       <Separator orientation="vertical" />
-      <EmailSnoozeButton emailSelectedId={selectedThreads} />
+      <EmailSnoozeButton selectedThread={selectedThreads} />
 
       <Separator orientation="vertical" />
       <ToggleToolTipButtonWrapper

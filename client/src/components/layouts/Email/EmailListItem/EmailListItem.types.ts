@@ -1,6 +1,6 @@
-import { MessageType } from '@/utils'
+import { IEmail } from 'gmail-api-parse-message-ts'
 
 export type EmailListItemType = {
-  item: MessageType
-  items?: MessageType[] | null
+  item: IEmail
+  items?: IEmail[] | null
 }

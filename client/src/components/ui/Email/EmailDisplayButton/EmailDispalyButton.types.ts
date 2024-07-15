@@ -1,7 +1,8 @@
+import { IEmail } from 'gmail-api-parse-message-ts'
 import { ReactElement } from 'react'
 
 export type EmaildispalyButtonType = {
-  emailSelectedId: string[]
+  selectedThread: IEmail[]
   label: string
   icon: ReactElement
 }
