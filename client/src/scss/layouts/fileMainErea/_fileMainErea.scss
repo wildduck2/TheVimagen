@@ -23,10 +23,10 @@
     @include u.flex(grid, center);
     gap: 0.5rem;
 
-    & > div:first-child {
+    &>div:first-child {
       @include u.flex(flex, center, space-between);
 
-      & > * {
+      &>* {
         color: u.color(primary, white-80);
       }
 
@@ -37,22 +37,22 @@
         font-weight: bold;
       }
 
-      & > div {
+      &>div {
         @include u.flex(flex, center);
         gap: 1rem;
         font-size: size(3xl);
       }
     }
 
-    & > div:last-child {
+    &>div:last-child {
       @include u.flex(flex, center);
 
-      & > div {
+      &>div {
         @include u.flex(flex, center);
         margin-left: 1.2rem;
         color: u.color(black, 300);
 
-        & > p {
+        &>p {
           @include u.flex(flex, center);
           font-size: size(na);
 
@@ -114,8 +114,4 @@
       @include u.usersRelated;
     }
   }
-}
-
-.active svg {
-  fill: white;
 }

@@ -33,8 +33,12 @@
     border-radius: 0.5rem;
     font-size: 0.7rem;
     margin-top: 0.5rem;
-    width: 140px;
     margin: 0.3rem;
+    width: fit-content;
+
+    &__wrapper {
+      width: 140px;
+    }
 
     &* {
       font-size: 14px;
@@ -79,9 +83,7 @@
 
       button {
         @include u.flex(grid, center, center);
-        width: 1.85rem !important;
-        height: 1.85rem !important;
-        padding: 0;
+        @include u.buttonToolTip();
 
         svg {
           width: 17px;

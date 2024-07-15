@@ -41,7 +41,7 @@ export const postGetThreadsHandler: RequestHandler = async (req, res) => {
       groupOfIds: threads.map((thread) => thread.id),
       distnation: `${oauth_id}/threads/`,
       fields: '',
-      format: 'metadata'
+      format: 'full'
     })
     if (!messagesData)
       return res.json({ error: 'Error: failed to fetch threads', data: null })
