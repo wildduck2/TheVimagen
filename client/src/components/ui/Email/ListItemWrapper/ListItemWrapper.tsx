@@ -7,7 +7,7 @@ import {
   removeSelectedThreadsDispatch,
   RootState,
 } from '@/context'
-import { cn } from '@/utils'
+import { cn, getCookie } from '@/utils'
 import { ListItemWrapperType } from './ListItemWrapper.types'
 import {
   ContextMenu,
@@ -25,11 +25,9 @@ import { Icon } from '@/assets'
 
 export const ListItemWrapper = ({ children, items }: ListItemWrapperType) => {
   const selectedThread = useSelector((state: RootState) => state.email.selectedThread)
-
   const selectedThreads = useSelector((state: RootState) => state.email.selectedThreads)
-  const dispatch = useDispatch()
 
-  // console.log(selectedThreads.includes(items[0]))
+  const dispatch = useDispatch()
 
   return (
     <>
@@ -42,20 +40,19 @@ export const ListItemWrapper = ({ children, items }: ListItemWrapperType) => {
                   checked={items.some((item) => selectedThreads.some((thread) => thread.threadId === item.threadId))}
                   action={({ checked }) => {
                     checked
-                      ? dispatch(removeSelectedThreadsDispatch(items))
-                      : dispatch(getSelectedThreadsDispatch(items))
+                      ? dispatch(removeSelectedThreadsDispatch([items[0]]))
+                      : dispatch(getSelectedThreadsDispatch([items[0]]))
                   }}
                   tip="Select"
                 />
                 <Separator />
                 <ToggleFavoriateButton
-                  labelIds={items[0].labelIds}
-                  threadIds={items.map((item) => item.threadId)}
+                  threads={items}
                   tip="Star"
                 />
                 <Separator />
                 <TrashMutate
-                  threadIds={[items[0].threadId]}
+                  threads={items}
                   tip="Trash"
                 />
               </div>

@@ -8,8 +8,9 @@ import { PaginatedMessages } from '../TrashMutate'
 import { QueryKeyMutateType, ToggleToolTipSpanWrapper } from '../..'
 import { MarkAsReadMutateType } from './MarkAsRead.types'
 
-export const MarkAsReadMutate = ({ disabled, threadIds, tip, marktype }: MarkAsReadMutateType) => {
+export const MarkAsReadMutate = ({ disabled, threads, tip, marktype }: MarkAsReadMutateType) => {
   const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
+  const threadIds = threads && threads.map((item) => item.threadId)
 
   const querykey: QueryKeyMutateType =
     marktype === 'READ'
@@ -40,10 +41,10 @@ export const MarkAsReadMutate = ({ disabled, threadIds, tip, marktype }: MarkAsR
           })),
         }
       })
-      toast.success(`Thread has been marked as ${marktype === 'READ' ? 'unread' : 'read'}!`)
+      toast.success(`Thread has been marked as ${marktype !== 'READ' ? 'unread' : 'read'}!`)
     },
     onError: () => {
-      toast.error(`Error: Thread has not been marked as ${marktype === 'READ' ? 'unread' : 'read'}!`)
+      toast.error(`Error: Thread has not been marked as ${marktype !== 'READ' ? 'unread' : 'read'}!`)
     },
   })
   return (
