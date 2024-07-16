@@ -1,25 +1,30 @@
 import { Icon } from '@/assets'
-import { Button, EmailInputSelect, NotionMinimalTextEditorToolbarPick } from '@/components/ui'
+import {
+  Button,
+  EmailInputSelect,
+  NotionMinimalTextEditorToolbarPick,
+  ToggleToolTipButtonWrapper,
+} from '@/components/ui'
 import { emailReplyButtonOptions } from '@/constants/Email/MailData'
-import { cn, MessageType } from '@/utils'
+import { cn } from '@/utils'
+import { EmailReplyActionPickProps } from './EmailReplyActionPick.types'
 
-export type EmailReplyActionPickProps = {
-  thread: MessageType
-}
-
-export const EmailReplyActionPick = ({ thread }: EmailReplyActionPickProps) => {
+export const EmailReplyActionPick = ({ thread, currentState, onClick }: EmailReplyActionPickProps) => {
   return (
     <>
       <div>
         <NotionMinimalTextEditorToolbarPick
           trigger={
-            <Button
+            <ToggleToolTipButtonWrapper
               variant="outline"
-              className="flex justify-between"
-            >
-              <Icon.reply />
-              <Icon.chovrenDown />
-            </Button>
+              tip={currentState.label}
+              children={
+                <>
+                  <currentState.icon />
+                  <Icon.chovrenDown />
+                </>
+              }
+            />
           }
           content={
             <>
@@ -27,8 +32,11 @@ export const EmailReplyActionPick = ({ thread }: EmailReplyActionPickProps) => {
                 <Button
                   key={idx}
                   variant="ghost"
-                  className={cn('notion__minimal__text__editor__toolbar__pick__content__button', idx === 0 && 'active')}
-                  onClick={() => {}}
+                  className={cn(
+                    'notion__minimal__text__editor__toolbar__pick__content__button',
+                    item.label === currentState.label && 'active',
+                  )}
+                  onClick={() => onClick({ label: item.label, icon: item.icon })}
                 >
                   <item.icon />
                   <span>{item.label}</span>
@@ -37,7 +45,7 @@ export const EmailReplyActionPick = ({ thread }: EmailReplyActionPickProps) => {
             </>
           }
         />
-        <EmailInputSelect email={thread.payload.headers.find((head) => head.name === 'Reply-To').value} />
+        <EmailInputSelect email={thread.from.email} />
       </div>
     </>
   )

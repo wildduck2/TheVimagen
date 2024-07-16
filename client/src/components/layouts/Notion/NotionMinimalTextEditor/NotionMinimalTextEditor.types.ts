@@ -5,5 +5,6 @@ export type NotionMinimalTextEditorProps = {
   editoRef: MutableRefObject<string | null>
   name: string
   className?: string
-  onChange: (html: string) => void
+  onChange?: (html: string) => void
+  content?: string
 }

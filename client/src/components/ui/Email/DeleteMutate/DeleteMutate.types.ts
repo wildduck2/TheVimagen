@@ -1,5 +1,7 @@
+import { IEmail } from 'gmail-api-parse-message-ts'
+
 export type DeleteMutateProps = {
-  threadId: string[]
+  threads: IEmail[]
   tip: string
   disabled?: boolean
 }

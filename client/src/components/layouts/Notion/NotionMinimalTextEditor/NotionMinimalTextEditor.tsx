@@ -7,6 +7,7 @@ import ListKeymap from '@tiptap/extension-list-keymap'
 import Placeholder from '@tiptap/extension-placeholder'
 import TextAlign from '@tiptap/extension-text-align'
 import { Color } from '@tiptap/extension-color'
+import Image from '@tiptap/extension-image'
 import TextStyle from '@tiptap/extension-text-style'
 
 // import Ai from '@tiptap-pro/extension-ai'
@@ -16,6 +17,7 @@ import { ScrollArea } from '@/components/ui'
 import { NotionMinimalTextEditorProps } from './NotionMinimalTextEditor.types'
 import { NotionMinimalTextEditorToolbar } from './NotionMinimalTextEditorToolbar'
 import StarterKit from '@tiptap/starter-kit'
+import { StyleNode } from '../../Email'
 
 export const NotionMinimalTextEditor = ({
   valid,
@@ -23,6 +25,7 @@ export const NotionMinimalTextEditor = ({
   editoRef,
   onChange,
   className,
+  content,
 }: NotionMinimalTextEditorProps) => {
   const editor = useEditor(
     {
@@ -46,6 +49,7 @@ export const NotionMinimalTextEditor = ({
         Placeholder.configure({
           placeholder: `Reply to ${name}....`,
         }),
+        Image,
       ],
       editorProps: {
         attributes: {
@@ -55,8 +59,11 @@ export const NotionMinimalTextEditor = ({
           class: cn(!valid && 'opacity-50 pointer-events-none', className),
         },
       },
+      content,
       autofocus: true,
       onUpdate: ({ editor }) => {
+        console.log(editor.getJSON())
+
         const html = editor.getHTML()
         editoRef.current = html
       },
