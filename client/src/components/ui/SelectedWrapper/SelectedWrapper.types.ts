@@ -5,7 +5,7 @@ export type OptionWithRevealProps = {
   title: string
   className: string
   slectedValuePLaceHolder: string
-  data: string[]
+  data: []
   disabled: boolean
   htmlFor: string
   setValue: setValueFunc
