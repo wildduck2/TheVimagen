@@ -7,8 +7,9 @@ import { Icon } from '@/assets'
 import { queryClient } from '@/main'
 import { ToggleToolTipSpanWrapper } from '../ToggleToolTipSpanWrapper'
 
-export const TrashMutate = ({ disabled, threadIds, tip }: TrashMutateType) => {
+export const TrashMutate = ({ disabled, threads, tip }: TrashMutateType) => {
   const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
+  const threadIds = threads && threads.map((item) => item.threadId)
 
   const startMutation = useMutation({
     mutationKey: ['trash-Message', { threadIds }],
