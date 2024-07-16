@@ -5,3 +5,14 @@ export type EmailReplyMultiProps = {
   trigger: ReactElement
   threads: IEmail[]
 }
+
+export type EmailReplyMultiChildrenProps = {
+  threads: IEmail[]
+  trigger: ReactElement
+}
+
+export type EmailReplyMultiChildrenStatesProps = {
+  thread: IEmail
+  threadsLength: number
+  idx: number
+}

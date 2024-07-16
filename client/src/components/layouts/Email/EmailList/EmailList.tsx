@@ -38,7 +38,7 @@ export function EmailList({ q, queryKey }: EmailListProps) {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getThreadsFetchedDispatched(finalData && finalData.map((item) => item[0])))
-  }, [finalData])
+  }, [finalData, data])
 
   return (
     <ScrollAreaChildRef
@@ -57,7 +57,6 @@ export function EmailList({ q, queryKey }: EmailListProps) {
               {finalData.map((item, idx) => (
                 <EmailListItem
                   key={idx}
-                  item={item[0]}
                   items={item}
                 />
               ))}
