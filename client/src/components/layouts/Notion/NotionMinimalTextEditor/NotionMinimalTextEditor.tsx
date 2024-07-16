@@ -17,7 +17,6 @@ import { ScrollArea } from '@/components/ui'
 import { NotionMinimalTextEditorProps } from './NotionMinimalTextEditor.types'
 import { NotionMinimalTextEditorToolbar } from './NotionMinimalTextEditorToolbar'
 import StarterKit from '@tiptap/starter-kit'
-import { StyleNode } from '../../Email'
 
 export const NotionMinimalTextEditor = ({
   valid,
@@ -62,8 +61,6 @@ export const NotionMinimalTextEditor = ({
       content,
       autofocus: true,
       onUpdate: ({ editor }) => {
-        console.log(editor.getJSON())
-
         const html = editor.getHTML()
         editoRef.current = html
       },
@@ -75,9 +72,7 @@ export const NotionMinimalTextEditor = ({
     return null
   }
   editoRef.current = editor.getHTML()
-  // console.log(valid)
 
-  // return <Textarea placeholder="sdfsdf" />
   return (
     <ScrollArea className={cn('notion__minimal__text__editor', valid && 'disabled')}>
       <NotionMinimalTextEditorToolbar editor={editor} />

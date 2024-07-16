@@ -1,5 +1,6 @@
 import React from 'react'
 import { useCallback, useRef, useState, memo } from 'react'
+import { format } from 'date-fns'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -32,6 +33,8 @@ import {
 import { Icon, IconType } from '@/assets'
 import { NotionMinimalTextEditor } from '../../Notion'
 import { sanitizeEmailContent } from '@/utils'
+import { useDispatch } from 'react-redux'
+import { removeSelectedThreadsDispatch } from '@/context'
 
 export const EmailReplyMulti = ({ trigger, threads }: EmailReplyMultiProps) => {
   const [state, setState] = useState<{ drawer: boolean; alert: boolean }>({ alert: false, drawer: false })
@@ -67,6 +70,7 @@ export const EmailReplyMulti = ({ trigger, threads }: EmailReplyMultiProps) => {
           <EmailReplyMultiChildren
             threads={threads}
             trigger={trigger}
+            setState={setState}
           />
         </Drawer>
         <AlertDialogContent>
@@ -88,7 +92,7 @@ export const EmailReplyMulti = ({ trigger, threads }: EmailReplyMultiProps) => {
 }
 EmailReplyMulti.displayName = 'EmailReplyMulti'
 
-const EmailReplyMultiChildren = memo(({ threads, trigger }: EmailReplyMultiChildrenProps) => {
+const EmailReplyMultiChildren = memo(({ threads, trigger, setState }: EmailReplyMultiChildrenProps) => {
   return (
     <>
       <DrawerTrigger asChild>{trigger}</DrawerTrigger>
@@ -102,7 +106,9 @@ const EmailReplyMultiChildren = memo(({ threads, trigger }: EmailReplyMultiChild
             <DialogDescription />
             {threads.map((thread, idx) => (
               <EmailReplyMultiChildrenStates
+                key={idx}
                 thread={thread}
+                setState={setState}
                 threadsLength={threads.length}
                 idx={idx}
               />
@@ -117,7 +123,13 @@ const EmailReplyMultiChildren = memo(({ threads, trigger }: EmailReplyMultiChild
 })
 EmailReplyMultiChildren.displayName = 'EmailReplyMultiChildren'
 
-const EmailReplyMultiChildrenStates = ({ thread, threadsLength, idx }: EmailReplyMultiChildrenStatesProps) => {
+const EmailReplyMultiChildrenStates = ({
+  thread,
+  threadsLength,
+  setState,
+  idx,
+}: EmailReplyMultiChildrenStatesProps) => {
+  const dispatch = useDispatch()
   const [currentState, setCurrentState] = useState<{ label: string; icon: ({ className }: IconType) => JSX.Element }>({
     label: 'Reply',
     icon: Icon.reply,
@@ -126,7 +138,7 @@ const EmailReplyMultiChildrenStates = ({ thread, threadsLength, idx }: EmailRepl
   const sanitizedContent = sanitizeEmailContent(thread.textHtml.replace(/<a /g, '<a target="_blank" '))
 
   const rawMessage = [
-    `<div contenteditable="true" style="outline: none">`,
+    `<div contenteditable="true" style="outline: none;">`,
     `<div style="margin: 1rem">`,
     `---------------------------------`,
     `<p>From: ${thread.from.email}</p>`,
@@ -137,14 +149,25 @@ const EmailReplyMultiChildrenStates = ({ thread, threadsLength, idx }: EmailRepl
     `</div>`,
     sanitizedContent,
     `</div>`,
+    `<div style="margin: 1rem">`,
+    `---------------------------------`,
+    `<p>This email was sent from ${thread.from.name} by <a style="color: blue" href="https://the-vimagen.com" target="_blank">TheVimagen</a> app</p>`,
+    `---------------------------------`,
+    `</div>`,
   ].join('')
-  const tiptapContent = convertHTMLToTiptapContent(thread.textHtml)
-  console.log(JSON.stringify(tiptapContent, null, 2))
 
   return (
     <React.Fragment>
       <div className="email__reply__multi__content__item">
-        <Icon.X />
+        <button
+          onClick={() => {
+            dispatch(removeSelectedThreadsDispatch([thread]))
+            threadsLength === 1 && setState((prevState) => ({ ...prevState, drawer: false }))
+          }}
+        >
+          <Icon.X />
+        </button>
+
         <div className="email__reply__multi__content__item__header">
           <h3>{thread.subject}</h3>
           <EmailReplyActionPick
@@ -157,20 +180,28 @@ const EmailReplyMultiChildrenStates = ({ thread, threadsLength, idx }: EmailRepl
         <form className="email__reply__multi__content__item__form">
           <div>
             <div className="editor">
-              {
-                <iframe
-                  srcDoc={`<style>* {  scrollbar-width: thin; html{ height: fit-content; }}</style>${rawMessage}`}
+              {currentState.label === 'Reply' ? (
+                <NotionMinimalTextEditor
+                  name={thread.from.email.split(' ')[0].replace(/"/g, '')}
+                  editoRef={editorContentRef}
+                  valid={true}
                 />
-                // <NotionMinimalTextEditor
-                //   content={`
-                //     <iframe
-                //       srcDoc={<style>* {  scrollbar-width: thin; html{ height: fit-content; }}</style>${rawMessage}}/>`}
-                //   name={thread.from.email.split(' ')[0].replace(/"/g, '')}
-                //   editoRef={editorContentRef}
-                //   onChange={() => {}}
-                //   valid={true}
-                // />
-              }
+              ) : (
+                currentState.label === 'Forward To' && (
+                  <iframe
+                    srcDoc={`<style>* {  scrollbar-width: thin; html{ height: fit-content;}}</style>${rawMessage}`}
+                  />
+                )
+              )}
+              {currentState.label === 'Edit Subject' && (
+                <NotionMinimalTextEditor
+                  content={rawMessage}
+                  name={thread.from.email.split(' ')[0].replace(/"/g, '')}
+                  editoRef={editorContentRef}
+                  className="adjust"
+                  valid={true}
+                />
+              )}
             </div>
             <div>
               <Label htmlFor="mute">
@@ -196,130 +227,3 @@ const EmailReplyMultiChildrenStates = ({ thread, threadsLength, idx }: EmailRepl
   )
 }
 EmailReplyMultiChildrenStates.displayName = 'EmailReplyMultiChildrenStates'
-
-import { Node, mergeAttributes } from '@tiptap/core'
-
-export const StyleNode = Node.create({
-  name: 'style',
-
-  group: 'block',
-
-  content: 'text*',
-
-  parseHTML() {
-    return [
-      {
-        tag: 'style',
-      },
-    ]
-  },
-
-  renderHTML({ HTMLAttributes }) {
-    return ['style', mergeAttributes(HTMLAttributes), 0]
-  },
-
-  addAttributes() {
-    return {
-      style: {
-        default: '',
-        parseHTML: (element) => element.getAttribute('style'),
-        renderHTML: (attributes) => {
-          return { style: attributes.style }
-        },
-      },
-    }
-  },
-})
-
-import { parse } from 'parse5'
-
-import { Parser } from 'htmlparser2'
-import { format } from 'date-fns'
-
-interface TiptapNode {
-  type: string
-  attrs?: Record<string, any>
-  content?: TiptapNode[]
-  text?: string
-}
-
-const convertHTMLToTiptapContent = (html: string): TiptapNode[] => {
-  const root: TiptapNode = { type: 'doc', content: [] }
-  let current: TiptapNode = root
-  const stack: TiptapNode[] = []
-  let styles: Record<string, string> = {}
-
-  const parser = new Parser(
-    {
-      onopentag(name, attrs) {
-        if (name === 'style') {
-          current = { type: 'style', content: [] }
-          stack.push(root)
-          root.content!.push(current)
-        } else {
-          const node: TiptapNode = { type: name, attrs, content: [] }
-          if (current.content) {
-            current.content.push(node)
-          }
-          stack.push(current)
-          current = node
-        }
-      },
-      ontext(text) {
-        if (current.type === 'style') {
-          styles = parseCSS(text)
-        } else {
-          if (current.content) {
-            current.content.push({ type: 'text', text })
-          }
-        }
-      },
-      onclosetag(name) {
-        if (name === 'style') {
-          current = stack.pop()!
-        } else {
-          current = stack.pop()!
-        }
-      },
-      onerror(error) {
-        console.error('Parser error:', error)
-      },
-    },
-    { decodeEntities: true },
-  )
-
-  try {
-    parser.write(html)
-    parser.end()
-  } catch (error) {
-    console.error('Parsing error:', error)
-  }
-
-  applyStyles(root, styles)
-
-  return root.content || []
-}
-
-const parseCSS = (cssText: string): Record<string, string> => {
-  const styleObject: Record<string, string> = {}
-  const rules = cssText.split('}')
-  rules.forEach((rule) => {
-    const [selector, style] = rule.split('{')
-    if (selector && style) {
-      styleObject[selector.trim()] = style.trim()
-    }
-  })
-  return styleObject
-}
-
-const applyStyles = (node: TiptapNode, styles: Record<string, string>) => {
-  if (node.attrs && node.attrs.style) {
-    const style = styles[node.attrs.style] || ''
-    node.attrs.style = style
-  }
-  if (node.content) {
-    node.content.forEach((child) => applyStyles(child, styles))
-  }
-}
-
-export default convertHTMLToTiptapContent

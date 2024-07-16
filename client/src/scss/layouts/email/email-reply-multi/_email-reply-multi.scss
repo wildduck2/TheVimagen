@@ -42,7 +42,7 @@
       border: 1px solid hsl(var(--border));
       border-radius: 0.5rem;
 
-      &>svg {
+      &>button>svg {
         position: absolute;
         top: 0.6rem;
         right: 0.8rem;
@@ -117,6 +117,7 @@
 
             iframe {
               width: 100%;
+              background: white;
             }
           }
         }
@@ -124,7 +125,15 @@
 
       .notion__minimal__text__editor {
         height: 100%;
-        max-height: 284px;
+        width: 100%;
+
+        .adjust {
+          max-height: 373px;
+        }
+
+        .editor {
+          max-height: 284px;
+        }
       }
     }
   }
