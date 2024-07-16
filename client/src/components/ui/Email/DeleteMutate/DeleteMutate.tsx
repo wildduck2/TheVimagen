@@ -8,12 +8,13 @@ import { PaginatedMessages } from '../TrashMutate'
 import { ToggleToolTipSpanWrapper } from '../..'
 import { DeleteMutateProps } from './DeleteMutate.types'
 
-export const DeleteMutate = ({ disabled, threadId, tip }: DeleteMutateProps) => {
+export const DeleteMutate = ({ disabled, threads, tip }: DeleteMutateProps) => {
   const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
+  const threadIds = threads && threads.map((item) => item.threadId)
 
   const startMutation = useMutation({
-    mutationKey: ['delete-Message', { threadId }],
-    mutationFn: () => trashMessage({ threadId }),
+    mutationKey: ['delete-Message', { threadIds }],
+    mutationFn: () => trashMessage({ threadIds }),
     onSuccess: () => {
       queryClient.setQueryData<PaginatedMessages>(currentQueryKey, (oldData) => {
         if (!oldData) return { pages: [], pageParams: [] }
@@ -21,7 +22,7 @@ export const DeleteMutate = ({ disabled, threadId, tip }: DeleteMutateProps) => 
           ...oldData,
           pages: oldData.pages.map((page) => ({
             ...page,
-            messages: page.messages.filter((message) => message.threadId !== threadId),
+            messages: page.messages.filter((message) => !threadIds.includes(message.threadId)),
           })),
         }
       })

@@ -7,23 +7,18 @@ import { Icon } from '@/assets'
 import { ToggleFavoriateButtonType } from './ToggleFavoriateButton.types'
 import { useState } from 'react'
 
-export const ToggleFavoriateButton = ({ disabled, labelIds, threadIds, tip }: ToggleFavoriateButtonType) => {
+export const ToggleFavoriateButton = ({ disabled, threads, tip }: ToggleFavoriateButtonType) => {
   const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
-  const [alreadyStarred, setAlreadyStarred] = useState<boolean>(labelIds.includes('STARRED'))
-
-  //INFO: starting thread
-  const invokeArgs = alreadyStarred
-    ? { removeLabelIds: ['STARRED'], threadIds }
-    : { addLabelIds: ['STARRED'], threadIds }
+  const threadIds = threads.length && threads.map((item) => item.threadId)
+  const labelIds = threads.length && threads[0].labelIds.includes('STARRED')
+  const invokeArgs = labelIds ? { removeLabelIds: ['STARRED'], threadIds } : { addLabelIds: ['STARRED'], threadIds }
 
   const startMutation = useMutation({
     mutationKey: ['starThread'],
     mutationFn: () => modifyThread(invokeArgs),
     onSuccess: () => {
-      setAlreadyStarred(!alreadyStarred)
       queryClient.setQueryData<PaginatedMessages>(currentQueryKey, (oldData) => {
         if (!oldData) return { pages: [], pageParams: [] }
-
         return {
           ...oldData,
           pages: oldData.pages.map((page) => ({
@@ -32,7 +27,7 @@ export const ToggleFavoriateButton = ({ disabled, labelIds, threadIds, tip }: To
               if (threadIds.includes(message.threadId)) {
                 return {
                   ...message,
-                  labelIds: alreadyStarred
+                  labelIds: labelIds
                     ? message.labelIds.filter((labelId) => labelId !== 'STARRED')
                     : [...message.labelIds, 'STARRED'],
                 }
@@ -42,10 +37,10 @@ export const ToggleFavoriateButton = ({ disabled, labelIds, threadIds, tip }: To
           })),
         }
       })
-      toast.success(`Thread have been ${alreadyStarred ? 'unstarred' : 'starred'}!`)
+      toast.success(`Thread has been ${labelIds ? 'unstarred' : 'starred'}!`)
     },
     onError: () => {
-      toast.error(`Error: Failed to ${alreadyStarred ? 'unstar' : 'star'} messages`)
+      toast.error(`Error: Failed to ${labelIds ? 'unstar' : 'star'} messages`)
     },
   })
 
@@ -58,7 +53,7 @@ export const ToggleFavoriateButton = ({ disabled, labelIds, threadIds, tip }: To
         currentTarget.children[0].classList.toggle('active')
       }}
     >
-      <Icon.fiStar className={cn('size-[1rem]', (labelIds.includes('STARRED') || alreadyStarred) && 'active')} />
+      <Icon.fiStar className={cn('size-[1rem]', labelIds && 'active')} />
     </ToggleToolTipSpanWrapper>
   )
 }

@@ -16,15 +16,24 @@ export const SelectedWrapper: FC<OptionWithRevealProps> = ({
   return (
     <div className={className}>
       <Label htmlFor={htmlFor}>{title}</Label>
-      <Select onValueChange={(value) => setValue(() => value)} disabled={disabled}>
-        <SelectTrigger id={id} className={error ? 'bg-red-700/5 border-red-700/35' : ''}>
+      <Select
+        onValueChange={(value) => setValue(() => value)}
+        disabled={disabled}
+      >
+        <SelectTrigger
+          id={id}
+          className={error ? 'bg-red-700/5 border-red-700/35' : ''}
+        >
           <SelectValue placeholder={slectedValuePLaceHolder} />
         </SelectTrigger>
         <SelectContent className="h-[245px]">
           <SelectGroup>
             {data.map((item, i) => {
               return (
-                <SelectItem key={i + 's'} value={item}>
+                <SelectItem
+                  key={i + 's'}
+                  value={item}
+                >
                   {item}
                 </SelectItem>
               )

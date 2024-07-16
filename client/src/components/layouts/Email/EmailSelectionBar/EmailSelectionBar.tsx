@@ -1,10 +1,7 @@
 import { getSelectedThreadsDispatch, removeSelectedThreadsDispatch, RootState } from '@/context'
 import { useDispatch, useSelector } from 'react-redux'
-import { EmailSelectionBarProps } from './EmailSelectionBar.types'
 import {
   ArchiveMutate,
-  Checkbox,
-  CheckboxWrapper,
   DeleteMutate,
   EmailSnoozeButton,
   JunkMutate,
@@ -22,15 +19,18 @@ import { getCookie } from '@/utils'
 
 export const EmailSelectionBar = () => {
   const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
+
   const selectedThreads = useSelector((state: RootState) => state.email.selectedThreads)
   const threadsFetched = useSelector((state: RootState) => state.email.threadsFetched)
   const dispatch = useDispatch()
 
+  const selectedThreadsIds = selectedThreads.map((thread) => thread.threadId)
+
   return (
     <div className="email__selection__bar">
       <MultiCheckboxWrapper
-        dataCompare={threadsFetched || []}
-        data={selectedThreads}
+        dataCompare={threadsFetched ? threadsFetched.map((thread) => thread.threadId) : []}
+        data={selectedThreadsIds}
         action={() => {
           if (selectedThreads.length === threadsFetched.length) {
             dispatch(removeSelectedThreadsDispatch(selectedThreads))
@@ -44,56 +44,55 @@ export const EmailSelectionBar = () => {
       <Separator orientation="vertical" />
       <ArchiveMutate
         disabled={selectedThreads.length === 0}
-        threadIds={selectedThreads}
+        threadIds={selectedThreadsIds}
         tip="Archive"
       />
       <Separator orientation="vertical" />
       <JunkMutate
         disabled={selectedThreads.length === 0}
-        threadIds={selectedThreads}
+        threads={threadsFetched ? threadsFetched : []}
         tip="Move to Junk"
       />
       <Separator orientation="vertical" />
       <ToggleFavoriateButton
         disabled={selectedThreads.length === 0}
-        labelIds={[]}
-        threadIds={selectedThreads}
+        threads={threadsFetched ? threadsFetched : []}
         tip="Star"
       />
       <Separator orientation="vertical" />
       <TrashMutate
         disabled={selectedThreads.length === 0}
-        threadIds={selectedThreads}
+        threads={threadsFetched ? threadsFetched : []}
         tip="Move to Trash"
       />
       <Separator orientation="vertical" />
       <DeleteMutate
         disabled={selectedThreads.length === 0}
-        threadId={selectedThreads}
+        threads={threadsFetched ? threadsFetched : []}
         tip="Delete"
       />
       <Separator orientation="vertical" />
       <MarkAsReadMutate
         marktype="READ"
         disabled={selectedThreads.length === 0}
-        threadIds={selectedThreads}
-        tip="Mark as Read"
+        threads={threadsFetched ? threadsFetched : []}
+        tip="Mark as read"
       />
       <Separator orientation="vertical" />
       <MarkAsReadMutate
         marktype="UNREAD"
         disabled={selectedThreads.length === 0}
-        threadIds={selectedThreads}
-        tip="Mark as Uread"
+        threads={threadsFetched ? threadsFetched : []}
+        tip="Mark as Unread"
       />
       <Separator orientation="vertical" />
       <ReplyMutate
         disabled={selectedThreads.length === 0}
-        threadIds={selectedThreads}
+        threads={selectedThreads.length ? selectedThreads : []}
         tip="Reply"
       />
       <Separator orientation="vertical" />
-      <EmailSnoozeButton emailSelectedId={selectedThreads} />
+      <EmailSnoozeButton selectedThread={selectedThreads} />
 
       <Separator orientation="vertical" />
       <ToggleToolTipButtonWrapper

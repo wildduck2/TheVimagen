@@ -3,11 +3,10 @@ import base64url from 'base64url'
 import { ReplyThreadRes, ReplyThreadType } from './replyThread.types'
 import { Base64 } from 'js-base64'
 
-export const replyThread = async ({ from, to, subject, threadId, inReplyTo, htmlContent }: ReplyThreadType) => {
+export const replyThread = async ({ from, to, subject, threadId, htmlContent }: ReplyThreadType) => {
   const rawMessage = [
     `From: ${from}`,
     `To: ${to}`,
-    `In-Reply-To: ${inReplyTo}`,
     `Subject: ${subject}`,
     'Content-Type: text/html; charset=UTF-8',
     'MIME-Version: 1.0',

@@ -6,42 +6,31 @@ import { cn } from '@/utils'
 
 import { EmailListItemType } from './EmailListItem.types'
 
-export const EmailListItem = ({ item, items }: EmailListItemType) => {
-  //INFO: filtering ids
-  const WANTED_HEADERS = item.payload.headers.filter(
-    (head) => head.name === 'Subject' || head.name === 'From' || head.name === 'To',
-  )
-
+export const EmailListItem = ({ items }: EmailListItemType) => {
   return (
     <>
       <ListItemWrapper
-        item={item}
+        items={items}
         children={
           <>
             <div className="email__list__wrapper__item__card__top">
               <div className="email__list__wrapper__item__card__top__header">
                 <div>
-                  <div>
-                    {WANTED_HEADERS.find((obj) => obj.name === 'From')!
-                      .value.split('<')[0]
-                      .replace(/"/gi, ' ')}
-                  </div>
-                  {item.labelIds.includes('UNREAD') && <span />}
+                  <div>{items[0].from.email.split('<')[0].replace(/"/gi, ' ')}</div>
+                  {items[0].labelIds.includes('UNREAD') && <span />}
                 </div>
                 <div className={cn('active')}>
-                  {formatDistanceToNow(new Date(+item.internalDate), {
+                  {formatDistanceToNow(new Date(+items[0].internalDate), {
                     addSuffix: true,
                   })}
                 </div>
               </div>
-              <div className="email__list__wrapper__item__card__top__subject">
-                {WANTED_HEADERS.find((obj) => obj.name === 'Subject')!.value}
-              </div>
+              <div className="email__list__wrapper__item__card__top__subject">{items[0].subject}</div>
             </div>
-            <div className="email__list__wrapper__item__card__bottom">{item.snippet}</div>
-            {item.labelIds.length && (
+            <div className="email__list__wrapper__item__card__bottom">{items[0].snippet}</div>
+            {items[0].labelIds.length && (
               <div className="email__list__wrapper__item__card__labels">
-                {item.labelIds
+                {items[0].labelIds
                   .filter(
                     (label) =>
                       !(

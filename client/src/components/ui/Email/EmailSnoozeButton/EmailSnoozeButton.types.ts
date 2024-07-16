@@ -1,3 +1,5 @@
+import { IEmail } from 'gmail-api-parse-message-ts'
+
 export type EmailSnoozeButtonType = {
-  emailSelectedId: string[]
+  selectedThread: IEmail[]
 }

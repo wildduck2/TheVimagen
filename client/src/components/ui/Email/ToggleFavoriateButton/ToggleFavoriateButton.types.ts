@@ -1,6 +1,7 @@
+import { IEmail } from 'gmail-api-parse-message-ts'
+
 export type ToggleFavoriateButtonType = {
-  labelIds: string[]
-  threadIds: string[]
+  threads: IEmail[]
   tip: string
   disabled?: boolean
 }

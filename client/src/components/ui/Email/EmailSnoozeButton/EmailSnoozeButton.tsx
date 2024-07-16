@@ -13,7 +13,7 @@ import { addDays, addHours, format, nextSaturday } from 'date-fns'
 import { useState } from 'react'
 import { EmailSnoozeButtonType } from './EmailSnoozeButton.types'
 
-export const EmailSnoozeButton = ({ emailSelectedId }: EmailSnoozeButtonType) => {
+export const EmailSnoozeButton = ({ selectedThread }: EmailSnoozeButtonType) => {
   const [date, setDate] = useState<Date | undefined>(new Date())
 
   const today = new Date()
@@ -32,7 +32,7 @@ export const EmailSnoozeButton = ({ emailSelectedId }: EmailSnoozeButtonType) =>
                 className="email__snooze__button"
                 variant="ghost"
                 size="icon"
-                disabled={!emailSelectedId.length}
+                // disabled={!selectedThread.length}
               >
                 <Icon.clock />
                 <span>Snooze</span>

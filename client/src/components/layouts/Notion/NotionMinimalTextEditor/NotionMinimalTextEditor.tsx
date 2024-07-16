@@ -7,6 +7,7 @@ import ListKeymap from '@tiptap/extension-list-keymap'
 import Placeholder from '@tiptap/extension-placeholder'
 import TextAlign from '@tiptap/extension-text-align'
 import { Color } from '@tiptap/extension-color'
+import Image from '@tiptap/extension-image'
 import TextStyle from '@tiptap/extension-text-style'
 
 // import Ai from '@tiptap-pro/extension-ai'
@@ -16,59 +17,71 @@ import { ScrollArea } from '@/components/ui'
 import { NotionMinimalTextEditorProps } from './NotionMinimalTextEditor.types'
 import { NotionMinimalTextEditorToolbar } from './NotionMinimalTextEditorToolbar'
 import StarterKit from '@tiptap/starter-kit'
+import { StyleNode } from '../../Email'
 
-export const NotionMinimalTextEditor = ({ valid, name, editoRef, onChange }: NotionMinimalTextEditorProps) => {
-    const editor = useEditor(
-        {
-            extensions: [
-                TextStyle,
-                Color.configure({
-                    types: ['textStyle'],
-                }),
-                Highlight.configure({ multicolor: true }),
-                StarterKit.configure({}),
-                Link.configure({
-                    openOnClick: true,
-                    autolink: true,
-                }),
-                Underline,
-                FontFamily,
-                ListKeymap,
-                TextAlign.configure({
-                    types: ['heading', 'paragraph'],
-                }),
-                Placeholder.configure({
-                    placeholder: `Reply to ${name && name}....`,
-                }),
-            ],
-            editorProps: {
-                attributes: {
-                    autocomplete: 'on',
-                    autocorrect: 'on',
-                    autocapitalize: 'on',
-                    class: cn(!valid && 'opacity-50 pointer-events-none'),
-                },
-            },
-            autofocus: true,
-            onUpdate: ({ editor }) => {
-                const html = editor.getHTML()
-                editoRef.current = html
-            },
+export const NotionMinimalTextEditor = ({
+  valid,
+  name,
+  editoRef,
+  onChange,
+  className,
+  content,
+}: NotionMinimalTextEditorProps) => {
+  const editor = useEditor(
+    {
+      extensions: [
+        TextStyle,
+        Color.configure({
+          types: ['textStyle'],
+        }),
+        Highlight.configure({ multicolor: true }),
+        StarterKit.configure({}),
+        Link.configure({
+          openOnClick: true,
+          autolink: true,
+        }),
+        Underline,
+        FontFamily,
+        ListKeymap,
+        TextAlign.configure({
+          types: ['heading', 'paragraph'],
+        }),
+        Placeholder.configure({
+          placeholder: `Reply to ${name}....`,
+        }),
+        Image,
+      ],
+      editorProps: {
+        attributes: {
+          autocomplete: 'on',
+          autocorrect: 'on',
+          autocapitalize: 'on',
+          class: cn(!valid && 'opacity-50 pointer-events-none', className),
         },
-        [valid, name],
-    )
+      },
+      content,
+      autofocus: true,
+      onUpdate: ({ editor }) => {
+        console.log(editor.getJSON())
 
-    if (!editor) {
-        return null
-    }
-    editoRef.current = editor.getHTML()
-    // console.log(valid)
+        const html = editor.getHTML()
+        editoRef.current = html
+      },
+    },
+    [valid, name],
+  )
 
-    // return <Textarea placeholder="sdfsdf" />
-    return (
-        <ScrollArea className={cn('notion__minimal__text__editor', valid && 'disabled')}>
-            <NotionMinimalTextEditorToolbar editor={editor} />
-            <EditorContent editor={editor} />
-        </ScrollArea>
-    )
+  if (!editor) {
+    return null
+  }
+  editoRef.current = editor.getHTML()
+  // console.log(valid)
+
+  // return <Textarea placeholder="sdfsdf" />
+  return (
+    <ScrollArea className={cn('notion__minimal__text__editor', valid && 'disabled')}>
+      <NotionMinimalTextEditorToolbar editor={editor} />
+      <EditorContent editor={editor} />
+    </ScrollArea>
+  )
 }

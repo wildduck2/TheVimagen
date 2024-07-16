@@ -8,8 +8,9 @@ import { JunkMutateType } from './JunkMutate.types'
 import { PaginatedMessages } from '../TrashMutate'
 import { QueryKeyMutateType, ToggleToolTipSpanWrapper } from '../..'
 
-export const JunkMutate = ({ disabled, threadIds, tip }: JunkMutateType) => {
+export const JunkMutate = ({ disabled, threads, tip }: JunkMutateType) => {
   const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
+  const threadIds = threads && threads.map((item) => item.threadId)
 
   const querykey: QueryKeyMutateType = { addLabelIds: ['SPAM'], removeLabelIds: ['INBOX'], threadIds }
   const startMutation = useMutation({

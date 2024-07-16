@@ -12,7 +12,7 @@ import {
 } from './Email.types'
 
 const initialState: initialStateEmailTypes = {
-  SelectedEmailData: { ids: [], inReplyTo: '' },
+  selectedThread: [],
   selectedThreads: [],
   searchInput: '',
   threadsFetched: [],
@@ -24,7 +24,7 @@ export const emailSlice = createSlice({
   reducers: {
     //NOTE: getting email clicked
     getSelectedEmailIdDispatch: (state: SelectedEmailDataState, action: SelectedEmailDataAction) => {
-      state.SelectedEmailData = action.payload
+      state.selectedThread = action.payload
     },
 
     //NOTE: getting search q
@@ -43,8 +43,9 @@ export const emailSlice = createSlice({
     },
 
     removeSelectedThreadsDispatch: (state: SelectedThreadsState, action: SelectedThreadsAction) => {
-      const threadIds = action.payload
-      state.selectedThreads = state.selectedThreads.filter((id) => !threadIds.includes(id))
+      const emailsToRemove = action.payload
+      const threadIdsToRemove = emailsToRemove.map((email) => email.threadId)
+      state.selectedThreads = state.selectedThreads.filter((email) => !threadIdsToRemove.includes(email.threadId))
     },
 
     //NOTE: gettign threads fetched ids

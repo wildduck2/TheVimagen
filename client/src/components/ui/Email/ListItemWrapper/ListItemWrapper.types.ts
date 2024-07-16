@@ -1,7 +1,7 @@
-import { MessageType } from '@/utils'
+import { IEmail } from 'gmail-api-parse-message-ts'
 import { ReactElement } from 'react'
 
 export type ListItemWrapperType = {
-  item: MessageType
+  items: IEmail[]
   children: ReactElement
 }
