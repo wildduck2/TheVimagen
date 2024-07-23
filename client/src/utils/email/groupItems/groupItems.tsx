@@ -4,7 +4,7 @@ export const groupMessagesBySender = (threads: IEmail[]) => {
   const grouped = new Map<string, IEmail[]>()
 
   // Group messages by threadId
-  threads.forEach((message) => {
+  threads?.forEach((message) => {
     const threadId = message.threadId
 
     if (!grouped.has(threadId)) {
@@ -15,7 +15,7 @@ export const groupMessagesBySender = (threads: IEmail[]) => {
   })
 
   // Sort messages within each thread by internalDate in descending order
-  grouped.forEach((messages, threadId) => {
+  grouped?.forEach((messages, threadId) => {
     messages.sort((a, b) => a.internalDate - b.internalDate)
   })
 

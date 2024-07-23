@@ -1,11 +1,9 @@
+import { IEmail } from 'gmail-api-parse-message-ts'
 import { MessageType } from '../getThread'
 
 export type ReplyThreadType = {
-  threadId: string
-  from: string
-  to: string
-  subject: string
   htmlContent: string
+  thread: IEmail
 }
 export type ReplyThreadRes = {
   data: MessageType | null

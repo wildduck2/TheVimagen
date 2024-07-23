@@ -3,6 +3,7 @@ import { QueryFunctionContext } from '@tanstack/react-query'
 
 import { GetThreadsRes, QueryKeyType } from './getThreads.types'
 import { ThreadMessageType } from '../getThread/getThread.types'
+import { Navigate } from '@tanstack/react-router'
 
 export const getThreads = async ({ queryKey }: QueryFunctionContext): Promise<ThreadMessageType> => {
   const [, { q }] = queryKey as QueryKeyType
@@ -14,7 +15,7 @@ export const getThreads = async ({ queryKey }: QueryFunctionContext): Promise<Th
         thread_id: '1906343e98e4780b',
         q,
         fields: 'threads(id),nextPageToken',
-        maxResults: 2,
+        maxResults: 1,
       },
       {
         withCredentials: true,
@@ -23,7 +24,10 @@ export const getThreads = async ({ queryKey }: QueryFunctionContext): Promise<Th
         },
       },
     )
-    if (!data) return null
+
+    if (!data.data) {
+      return null
+    }
 
     document.cookie = `query:key=${JSON.stringify(queryKey)}`
     return data.data

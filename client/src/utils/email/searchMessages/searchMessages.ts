@@ -6,7 +6,7 @@ export function searchMessages({ messages, searchText }: SearchMessagesType): IE
   const lowercasedSearchText = searchText.toLowerCase()
 
   // Filter messages that contain the search text in any relevant field
-  return messages.filter((message) => {
+  return messages?.filter((message) => {
     const { subject, snippet, textPlain, textHtml, from, to, cc, bcc } = message
 
     // Function to check if an email address matches the search text

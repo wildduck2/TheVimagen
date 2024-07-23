@@ -1,5 +1,5 @@
 import { Button, Tooltip, TooltipContent, TooltipTrigger, buttonVariants } from '..'
-import { cn } from '../../../utils'
+import { cn } from '@/utils'
 import { TooltipButtonProps } from './TooltipButton.types'
 
 const TooltipButton = ({ button, id = 0, isCollapsed, onClick }: TooltipButtonProps) => {

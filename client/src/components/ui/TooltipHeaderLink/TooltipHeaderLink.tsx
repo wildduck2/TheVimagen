@@ -1,6 +1,6 @@
 import { Tooltip, TooltipContent, TooltipTrigger, buttonVariants } from '..'
 import { Link } from '@tanstack/react-router'
-import { cn } from '../../../utils'
+import { cn } from '@/utils'
 import { TooltipHeaderLinkProps } from './TooltipHeaderLink.types'
 
 const activeHeader =
