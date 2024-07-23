@@ -18,7 +18,7 @@ export function EmailList({ q, queryKey }: EmailListProps) {
       queryKey: [queryKey, { q }],
       queryFn: getThreads,
       initialPageParam: '',
-      getNextPageParam: (prev) => prev.nextPageToken,
+      getNextPageParam: (prev) => prev?.nextPageToken,
       refetchOnWindowFocus: false,
     })
 
@@ -27,7 +27,7 @@ export function EmailList({ q, queryKey }: EmailListProps) {
   const finalData =
     data &&
     data.pages.flatMap((item) =>
-      groupMessagesBySender(searchMessages({ searchText: searchId, messages: item.messages })),
+      groupMessagesBySender(searchMessages({ searchText: searchId, messages: item?.messages })),
     )
 
   //INFO: handling scroll and refetch next page

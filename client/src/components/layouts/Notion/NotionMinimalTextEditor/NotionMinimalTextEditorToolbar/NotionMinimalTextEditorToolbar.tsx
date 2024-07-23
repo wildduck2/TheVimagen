@@ -59,7 +59,7 @@ export const NotionMinimalTextEditorToolbar = ({ editor }: NotionMinimalTextEdit
         />
         <NotionEditorHeadingPickerMemo
           trigger={<Icon.hIcon />}
-          activeItem={activeItem.label || ''}
+          activeItem={activeItem?.label || ''}
           commands={commands}
         />
         <Separator
@@ -83,13 +83,13 @@ export const NotionMinimalTextEditorToolbar = ({ editor }: NotionMinimalTextEdit
           tip="Highlight"
           currentHighlight={states.currentHighlight}
           commands={commands}
-          activeItem={activeItem.label}
+          activeItem={activeItem?.label}
         />
         <NotionEditorColorPickerMemo
           tip="Color"
           currentColor={states.currentColor}
           commands={commands}
-          activeItem={activeItem.label}
+          activeItem={activeItem?.label}
         />
       </div>
     </BubbleMenu>

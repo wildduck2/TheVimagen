@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 
-import { EmailHeader } from '@/components/layouts'
+import { EmailHeader, RequireAuth } from '@/components/layouts'
 import { ResizablePanelGroup } from '@/components/ui'
 import { getCookie } from '@/utils'
 
@@ -13,6 +13,7 @@ export const Route = createFileRoute('/email/_email')({
     const defaultCollapsed = collapsed ? JSON.parse(collapsed) : undefined
 
     return (
+      // <RequireAuth>
       <>
         <ResizablePanelGroup
           direction="horizontal"
@@ -20,10 +21,14 @@ export const Route = createFileRoute('/email/_email')({
             document.cookie = `react-resizable-panels:layout=${JSON.stringify(sizes)}`
           }}
         >
-          <EmailHeader defaultLayout={defaultLayout ? defaultLayout[0] : null} defaultCollapsed={defaultCollapsed} />
+          <EmailHeader
+            defaultLayout={defaultLayout ? defaultLayout[0] : null}
+            defaultCollapsed={defaultCollapsed}
+          />
           <Outlet />
         </ResizablePanelGroup>
       </>
+      // </RequireAuth>
     )
   },
 })

@@ -59,7 +59,7 @@ export const EmailSideList = ({ defaultLayout = 37 }: EmailSideListType) => {
           >
             <EmailList
               queryKey="primary"
-              q="label:inbox category:primary"
+              q="label:inbox category:primary -label:TRASH"
             />
           </TabsContent>
           <TabsContent

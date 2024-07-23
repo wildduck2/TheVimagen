@@ -2,7 +2,7 @@ import * as React from 'react'
 import { addDays, format } from 'date-fns'
 import { DateRange } from 'react-day-picker'
 import { Button, Calendar, Popover, PopoverContent, PopoverTrigger } from '..'
-import { cn } from '../../../utils'
+import { cn } from '@/utils'
 import { Icon } from '@/assets'
 
 export interface DatePickerWithRangeProps extends React.HTMLAttributes<HTMLDivElement> {}

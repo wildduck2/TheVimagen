@@ -1,12 +1,20 @@
- 
-import { Popover, PopoverContent, PopoverTrigger } from '../Popover'
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '../Command'
-import { Button } from '../Button'
 import { cn } from '@/utils'
 import { CommandWrapperType } from './CommandWrapper.types'
-import { Label } from '../Label'
 import { Icon } from '@/assets'
 import React from 'react'
+import {
+  Button,
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  Label,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui'
 
 export const CommandWrapper: React.FC<CommandWrapperType> = ({
   data,
@@ -23,7 +31,10 @@ export const CommandWrapper: React.FC<CommandWrapperType> = ({
     <>
       <div className={className}>
         <Label htmlFor={title}>{title}</Label>
-        <Popover open={open} onOpenChange={setOpen}>
+        <Popover
+          open={open}
+          onOpenChange={setOpen}
+        >
           <PopoverTrigger asChild>
             <Button
               variant="outline"
@@ -36,9 +47,15 @@ export const CommandWrapper: React.FC<CommandWrapperType> = ({
               <Icon.chevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-auto p-0 h-[345px]" id={title}>
+          <PopoverContent
+            className="w-auto p-0 h-[345px]"
+            id={title}
+          >
             <Command>
-              <CommandInput placeholder="Search one..." required />
+              <CommandInput
+                placeholder="Search one..."
+                required
+              />
               <CommandList>
                 <CommandEmpty>No framework found.</CommandEmpty>
                 <CommandGroup className="overflow-y-scroll">

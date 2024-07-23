@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { EditorContent, useEditor } from '@tiptap/react'
 import Highlight from '@tiptap/extension-highlight'
 import Link from '@tiptap/extension-link'
@@ -17,7 +18,6 @@ import { ScrollArea } from '@/components/ui'
 import { NotionMinimalTextEditorProps } from './NotionMinimalTextEditor.types'
 import { NotionMinimalTextEditorToolbar } from './NotionMinimalTextEditorToolbar'
 import StarterKit from '@tiptap/starter-kit'
-import { StyleNode } from '../../Email'
 
 export const NotionMinimalTextEditor = ({
   valid,
@@ -26,6 +26,7 @@ export const NotionMinimalTextEditor = ({
   onChange,
   className,
   content,
+  type,
 }: NotionMinimalTextEditorProps) => {
   const editor = useEditor(
     {
@@ -62,10 +63,11 @@ export const NotionMinimalTextEditor = ({
       content,
       autofocus: true,
       onUpdate: ({ editor }) => {
-        console.log(editor.getJSON())
-
         const html = editor.getHTML()
-        editoRef.current = html
+        if (type === 'reply') {
+          return (editoRef.current.reply = html)
+        }
+        editoRef.current.editSubject = html
       },
     },
     [valid, name],
@@ -74,10 +76,7 @@ export const NotionMinimalTextEditor = ({
   if (!editor) {
     return null
   }
-  editoRef.current = editor.getHTML()
-  // console.log(valid)
 
-  // return <Textarea placeholder="sdfsdf" />
   return (
     <ScrollArea className={cn('notion__minimal__text__editor', valid && 'disabled')}>
       <NotionMinimalTextEditorToolbar editor={editor} />
