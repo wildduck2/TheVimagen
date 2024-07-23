@@ -1,5 +1,4 @@
-import { Label } from '../Label'
-import { Textarea } from '../TextArea'
+import { Label, Textarea } from '@/components/ui'
 import { TextAreaWrapperType } from './TextAreaWrapper.types'
 
 export const TextAreaWrapper = ({ label, value, setValue, error }: TextAreaWrapperType) => {

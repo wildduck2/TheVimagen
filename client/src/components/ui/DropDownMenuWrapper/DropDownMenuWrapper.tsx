@@ -11,7 +11,7 @@ import {
     DropdownMenuTrigger,
     buttonVariants,
 } from '..'
-import { cn, signoutAsync } from '../../../utils'
+import { cn, signoutAsync } from '@/utils'
 import { DropdownMenuGroupProps, DropDownMenuWrapperType } from './DropDownMenuWrapper.types'
 import { Icon } from '@/assets'
 
