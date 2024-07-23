@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../ui'
-import { cn } from '../../../utils'
+import { cn } from '@/utils'
 import { AccountSwitcherProps } from './AccountSwitcher.types'
 
 export function AccountSwitcher({ isCollapsed, accounts }: AccountSwitcherProps) {

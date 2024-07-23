@@ -1,37 +1,24 @@
 import { format } from 'date-fns'
-import { IEmail } from 'gmail-api-parse-message-ts'
 
 import { Avatar, AvatarFallback, AvatarImage, Button, Label, ScrollArea, Separator, Switch } from '@/components/ui'
 
 import { EmailDisplayInboxItem } from '../EmailDisplayInboxItem'
 import { NotionMinimalTextEditor } from '../../Notion'
 import { memo, useRef } from 'react'
-import { replyThread } from '@/utils/email/replyThread'
 import { EmailDisplayInboxProps } from './EmailDisplayInbox.types'
+import { useEmailReplyThread } from '@/hooks'
 
 const EmailDisplayInboxItemMemo = memo(EmailDisplayInboxItem)
 
 export const EmailDisplayInbox = ({ selectedThread }: EmailDisplayInboxProps) => {
-  const editorContentRef = useRef<string | null>(null)
-
-  const SendMessagerHandler = (e: React.FormEvent<HTMLFormElement>, body: string, selectedThread: IEmail[]) => {
-    e.preventDefault()
-    const { from, threadId, to, subject } = selectedThread[0]
-
-    replyThread({
-      from: from.email,
-      to: to[0].email,
-      threadId: threadId,
-      htmlContent: body,
-      subject: 'RE:' + subject,
-    })
-  }
+  const editorContentRef = useRef({ reply: '', editSubject: '' })
+  const invokeReply = useEmailReplyThread()
 
   const valid = selectedThread.length
 
   return (
     <div className="email__display__inbox">
-      {valid && (
+      {valid ? (
         <>
           <div className="email__display__inbox__wrapper">
             <div className="email__display__inbox__wrapper__top">
@@ -64,8 +51,7 @@ export const EmailDisplayInbox = ({ selectedThread }: EmailDisplayInboxProps) =>
           </div>
           <Separator />
         </>
-      )}
-
+      ) : null}
       <ScrollArea className="email__display__inbox__content">
         {valid ? (
           selectedThread.map((item) => (
@@ -80,15 +66,16 @@ export const EmailDisplayInbox = ({ selectedThread }: EmailDisplayInboxProps) =>
         )}
       </ScrollArea>
       <Separator className="mt-auto" />
-
       <div className="email__display__inbox__bottom">
-        <form onSubmit={(e) => SendMessagerHandler(e, editorContentRef.current, selectedThread)}>
+        <form onSubmit={(e) => invokeReply(e, editorContentRef.current.reply, selectedThread)}>
           <div>
             <NotionMinimalTextEditor
               name={valid ? selectedThread[0].from.name : 'Someone'}
               editoRef={editorContentRef}
               onChange={() => {}}
               valid={true}
+              type="reply"
+              content=""
             />
             <div>
               <Label htmlFor="mute">

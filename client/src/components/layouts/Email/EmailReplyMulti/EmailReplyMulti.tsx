@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { MutableRefObject, useEffect } from 'react'
 import { useCallback, useRef, useState, memo } from 'react'
 import { format } from 'date-fns'
 import {
@@ -26,18 +26,23 @@ import {
   Switch,
 } from '@/components/ui'
 import {
+  EmailreplyContent,
   EmailReplyMultiChildrenProps,
   EmailReplyMultiChildrenStatesProps,
   EmailReplyMultiProps,
+  ThreadsReplyContentRef,
 } from './EmailReplyMulti.types'
 import { Icon, IconType } from '@/assets'
 import { NotionMinimalTextEditor } from '../../Notion'
 import { sanitizeEmailContent } from '@/utils'
 import { useDispatch } from 'react-redux'
 import { removeSelectedThreadsDispatch } from '@/context'
+import { useEmailReplyThread } from '@/hooks'
 
 export const EmailReplyMulti = ({ trigger, threads }: EmailReplyMultiProps) => {
   const [state, setState] = useState<{ drawer: boolean; alert: boolean }>({ alert: false, drawer: false })
+  // const threadsReplyContentRef = useRef<ThreadsReplyContentRef>([])
+  const threadsReplyContentRef = useRef([])
 
   const handleAlertCancel = useCallback(() => {
     setState((prevState) => ({ ...prevState, alert: false, drawer: true }))
@@ -45,6 +50,9 @@ export const EmailReplyMulti = ({ trigger, threads }: EmailReplyMultiProps) => {
 
   const handleAlertContinue = useCallback(() => {
     setState((prevState) => ({ ...prevState, alert: false, drawer: false }))
+    console.log(threadsReplyContentRef.current)
+
+    threadsReplyContentRef.current = []
     //NOTE: will do the draft actions
     //NOTE: show the popup on the side to notify that there's some messages are drafted if you
     //wanna back to them and continue
@@ -71,14 +79,15 @@ export const EmailReplyMulti = ({ trigger, threads }: EmailReplyMultiProps) => {
             threads={threads}
             trigger={trigger}
             setState={setState}
+            threadsReplyContentRef={threadsReplyContentRef}
           />
         </Drawer>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your account and remove your data from our
-              servers.
+              This action will consider these replies as Drafts, you can delete, adjust and send from Drafts section on
+              the side header.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -92,41 +101,47 @@ export const EmailReplyMulti = ({ trigger, threads }: EmailReplyMultiProps) => {
 }
 EmailReplyMulti.displayName = 'EmailReplyMulti'
 
-const EmailReplyMultiChildren = memo(({ threads, trigger, setState }: EmailReplyMultiChildrenProps) => {
-  return (
-    <>
-      <DrawerTrigger asChild>{trigger}</DrawerTrigger>
-      <DrawerContent>
-        <Carousel
-          opts={{ align: 'end' }}
-          className="w-full email__reply__multi"
-        >
-          <CarouselContent className="email__reply__multi__content m-0">
-            <DialogTitle />
-            <DialogDescription />
-            {threads.map((thread, idx) => (
-              <EmailReplyMultiChildrenStates
-                key={idx}
-                thread={thread}
-                setState={setState}
-                threadsLength={threads.length}
-                idx={idx}
-              />
-            ))}
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
-      </DrawerContent>
-    </>
-  )
-})
+const EmailReplyMultiChildren = memo(
+  ({ threads, trigger, setState, threadsReplyContentRef }: EmailReplyMultiChildrenProps) => {
+    return (
+      <>
+        <DrawerTrigger asChild>{trigger}</DrawerTrigger>
+        <DrawerContent>
+          <Carousel
+            opts={{ align: 'end' }}
+            className="w-full email__reply__multi"
+          >
+            <CarouselContent className="email__reply__multi__content m-0">
+              <DialogTitle />
+              <DialogDescription />
+              {threads.map((thread, idx) => {
+                return (
+                  <EmailReplyMultiChildrenStates
+                    key={idx}
+                    idx={idx}
+                    thread={thread}
+                    setState={setState}
+                    threadsLength={threads.length}
+                    threadsReplyContentRef={threadsReplyContentRef}
+                  />
+                )
+              })}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+        </DrawerContent>
+      </>
+    )
+  },
+)
 EmailReplyMultiChildren.displayName = 'EmailReplyMultiChildren'
 
 const EmailReplyMultiChildrenStates = ({
   thread,
   threadsLength,
   setState,
+  threadsReplyContentRef,
   idx,
 }: EmailReplyMultiChildrenStatesProps) => {
   const dispatch = useDispatch()
@@ -134,7 +149,8 @@ const EmailReplyMultiChildrenStates = ({
     label: 'Reply',
     icon: Icon.reply,
   })
-  const editorContentRef = useRef<string | null>(null)
+  const editorContentRef = useRef({ reply: '', editSubject: '' })
+  const iframeRef = useRef<HTMLIFrameElement | null>(null)
   const sanitizedContent = sanitizeEmailContent(thread.textHtml.replace(/<a /g, '<a target="_blank" '))
 
   const rawMessage = [
@@ -156,8 +172,18 @@ const EmailReplyMultiChildrenStates = ({
     `</div>`,
   ].join('')
 
+  useEffect(() => {
+    const currentContent = currentState.label === 'Forward To' ? iframeRef.current?.srcdoc : editorContentRef.current
+    console.log('Updated Content:', {
+      threadId: thread.threadId,
+      content: currentContent,
+    })
+  }, [currentState.label, iframeRef.current, editorContentRef.current])
+
+  const invokeReply = useEmailReplyThread()
+
   return (
-    <React.Fragment>
+    <div>
       <div className="email__reply__multi__content__item">
         <button
           onClick={() => {
@@ -183,12 +209,14 @@ const EmailReplyMultiChildrenStates = ({
               {currentState.label === 'Reply' ? (
                 <NotionMinimalTextEditor
                   name={thread.from.email.split(' ')[0].replace(/"/g, '')}
-                  editoRef={editorContentRef}
+                  editoRef={editorContentRef as unknown as React.MutableRefObject<EmailreplyContent>}
                   valid={true}
+                  type="reply"
                 />
               ) : (
                 currentState.label === 'Forward To' && (
                   <iframe
+                    ref={iframeRef}
                     srcDoc={`<style>* {  scrollbar-width: thin; html{ height: fit-content;}}</style>${rawMessage}`}
                   />
                 )
@@ -197,9 +225,10 @@ const EmailReplyMultiChildrenStates = ({
                 <NotionMinimalTextEditor
                   content={rawMessage}
                   name={thread.from.email.split(' ')[0].replace(/"/g, '')}
-                  editoRef={editorContentRef}
+                  editoRef={editorContentRef as unknown as React.MutableRefObject<EmailreplyContent>}
                   className="adjust"
                   valid={true}
+                  type="editSubject"
                 />
               )}
             </div>
@@ -215,6 +244,15 @@ const EmailReplyMultiChildrenStates = ({
               <Button
                 size="sm"
                 disabled={false}
+                onClick={(e) =>
+                  invokeReply(
+                    e,
+                    currentState.label === 'reply'
+                      ? editorContentRef.current.reply
+                      : editorContentRef.current.editSubject,
+                    [thread],
+                  )
+                }
               >
                 Send
               </Button>
@@ -223,7 +261,7 @@ const EmailReplyMultiChildrenStates = ({
         </form>
       </div>
       {threadsLength > 1 && idx < threadsLength - 1 && <Separator orientation="vertical" />}
-    </React.Fragment>
+    </div>
   )
 }
 EmailReplyMultiChildrenStates.displayName = 'EmailReplyMultiChildrenStates'
