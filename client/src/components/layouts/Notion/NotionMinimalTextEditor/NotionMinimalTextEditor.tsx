@@ -18,15 +18,18 @@ import { ScrollArea } from '@/components/ui'
 import { NotionMinimalTextEditorProps } from './NotionMinimalTextEditor.types'
 import { NotionMinimalTextEditorToolbar } from './NotionMinimalTextEditorToolbar'
 import StarterKit from '@tiptap/starter-kit'
+import { debounceValue, useDebounce2 } from '@/hooks'
+import { useEffect, useRef } from 'react'
 
 export const NotionMinimalTextEditor = ({
   valid,
   name,
-  editoRef,
-  onChange,
   className,
   content,
   type,
+  editorContentRef,
+  setEditorContent,
+  onChange,
 }: NotionMinimalTextEditorProps) => {
   const editor = useEditor(
     {
@@ -64,14 +67,28 @@ export const NotionMinimalTextEditor = ({
       autofocus: true,
       onUpdate: ({ editor }) => {
         const html = editor.getHTML()
-        if (type === 'reply') {
-          return (editoRef.current.reply = html)
-        }
-        editoRef.current.editSubject = html
+        // if (!type) {
+        //  return setEditorContent({})
+        //   return
+        // }
       },
     },
     [valid, name],
   )
+  const updateEditorContent = useDebounce2((html: string) => {
+    if (type === 'reply') {
+      setEditorContent({ reply: type === 'reply' && html, editSubject: type !== 'reply' && html })
+    }
+  }, 500)
+
+  useEffect(() => {
+    if (editor) {
+      editor.on('update', ({ editor }) => {
+        const html = editor.getHTML()
+        updateEditorContent(html)
+      })
+    }
+  }, [editor, type, updateEditorContent])
 
   if (!editor) {
     return null
@@ -80,7 +97,10 @@ export const NotionMinimalTextEditor = ({
   return (
     <ScrollArea className={cn('notion__minimal__text__editor', valid && 'disabled')}>
       <NotionMinimalTextEditorToolbar editor={editor} />
-      <EditorContent editor={editor} />
+      <EditorContent
+        editor={editor}
+        ref={editorContentRef}
+      />
     </ScrollArea>
   )
 }

@@ -6,7 +6,12 @@ export type getThreads = {
   messages: MessageType[]
 }
 
-export type GetThreadsRes = Awaited<Promise<{ error: string | null; data: ThreadMessageType }>>
+export type GetThreadsRes = Awaited<
+  Promise<{
+    error: string | null
+    data: ThreadMessageType
+  }>
+>
 
 export type ThreadsType = {
   threads: GetThreadType[]

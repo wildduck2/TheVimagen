@@ -15,6 +15,7 @@ import {
   CarouselContent,
   CarouselNext,
   CarouselPrevious,
+  currentStateType,
   DialogDescription,
   DialogTitle,
   Drawer,
@@ -30,44 +31,62 @@ import {
   EmailReplyMultiChildrenProps,
   EmailReplyMultiChildrenStatesProps,
   EmailReplyMultiProps,
+  StateType,
   ThreadsReplyContentRef,
 } from './EmailReplyMulti.types'
 import { Icon, IconType } from '@/assets'
 import { NotionMinimalTextEditor } from '../../Notion'
-import { sanitizeEmailContent } from '@/utils'
+import { createDraftThread, sanitizeEmailContent } from '@/utils'
 import { useDispatch } from 'react-redux'
 import { removeSelectedThreadsDispatch } from '@/context'
 import { useEmailReplyThread } from '@/hooks'
+import { toast } from 'sonner'
 
 export const EmailReplyMulti = ({ trigger, threads }: EmailReplyMultiProps) => {
-  const [state, setState] = useState<{ drawer: boolean; alert: boolean }>({ alert: false, drawer: false })
-  // const threadsReplyContentRef = useRef<ThreadsReplyContentRef>([])
-  const threadsReplyContentRef = useRef([])
+  const [state, setState] = useState<StateType>({ alert: false, drawer: false })
+  const threadsReplyContentRef = useRef<ThreadsReplyContentRef[]>([])
 
   const handleAlertCancel = useCallback(() => {
     setState((prevState) => ({ ...prevState, alert: false, drawer: true }))
   }, [])
 
   const handleAlertContinue = useCallback(() => {
-    setState((prevState) => ({ ...prevState, alert: false, drawer: false }))
-    console.log(threadsReplyContentRef.current)
+    const someThreadsHasContent = threadsReplyContentRef.current.some((threadContent) => threadContent.content !== '')
+    if (someThreadsHasContent) {
+      setState((prevState) => ({ ...prevState, alert: false, drawer: false }))
+      // console.log(threadsReplyContentRef.current)
+    }
 
-    threadsReplyContentRef.current = []
+    // toast.info('Messages moved to draft successfuly!')
+
     //NOTE: will do the draft actions
+
+    const res = createDraftThread({})
+
     //NOTE: show the popup on the side to notify that there's some messages are drafted if you
     //wanna back to them and continue
+    threadsReplyContentRef.current = []
   }, [])
 
   const handleDrawerOpenChange = useCallback(
     (drawerState: boolean) => {
+      // Check if there's any thread content that is not an empty string
+      const hasContentInThreads = threadsReplyContentRef.current.some((threadContent) => {
+        const content = threadContent.content
+        // Ensure content is a string and not empty after trimming
+        return typeof content === 'string' && content.trim() !== ''
+      })
+
+      console.log(hasContentInThreads)
+      console.log(threadsReplyContentRef.current)
+
       setState((prevState) => ({
-        alert: threads.length > 0 && !drawerState ? true : prevState.alert,
+        alert: !drawerState && hasContentInThreads && threads.length > 0,
         drawer: drawerState,
       }))
     },
     [threads.length],
   )
-
   return (
     <>
       <AlertDialog open={state.alert}>
@@ -145,12 +164,13 @@ const EmailReplyMultiChildrenStates = ({
   idx,
 }: EmailReplyMultiChildrenStatesProps) => {
   const dispatch = useDispatch()
-  const [currentState, setCurrentState] = useState<{ label: string; icon: ({ className }: IconType) => JSX.Element }>({
+  const [currentState, setCurrentState] = useState<currentStateType>({
     label: 'Reply',
     icon: Icon.reply,
   })
-  const editorContentRef = useRef({ reply: '', editSubject: '' })
+  const [editorContent, setEditorContent] = useState<EmailreplyContent>({ reply: '', editSubject: '' })
   const iframeRef = useRef<HTMLIFrameElement | null>(null)
+
   const sanitizedContent = sanitizeEmailContent(thread.textHtml.replace(/<a /g, '<a target="_blank" '))
 
   const rawMessage = [
@@ -164,21 +184,33 @@ const EmailReplyMultiChildrenStates = ({
     `---------------------------------`,
     `</div>`,
     sanitizedContent,
-    `</div>`,
-    `<div style="margin: 1rem">`,
-    `---------------------------------`,
-    `<p>This email was sent from ${thread.from.name} by <a style="color: blue" href="https://the-vimagen.com" target="_blank">TheVimagen</a> app</p>`,
-    `---------------------------------`,
-    `</div>`,
   ].join('')
 
+  console.log('hi')
+
   useEffect(() => {
-    const currentContent = currentState.label === 'Forward To' ? iframeRef.current?.srcdoc : editorContentRef.current
-    console.log('Updated Content:', {
+    const currentContent =
+      currentState.label === 'Forward To'
+        ? iframeRef.current?.srcdoc
+        : currentState.label === 'Reply'
+          ? editorContent.reply
+          : editorContent.editSubject
+
+    // console.log(currentState.label)
+
+    const replyContent = {
       threadId: thread.threadId,
       content: currentContent,
-    })
-  }, [currentState.label, iframeRef.current, editorContentRef.current])
+    }
+
+    const index = threadsReplyContentRef.current.findIndex((item) => item.threadId === thread.threadId)
+
+    if (index !== -1) {
+      threadsReplyContentRef.current[index] = replyContent
+    } else {
+      threadsReplyContentRef.current.push(replyContent)
+    }
+  }, [currentState.label, editorContent])
 
   const invokeReply = useEmailReplyThread()
 
@@ -209,7 +241,7 @@ const EmailReplyMultiChildrenStates = ({
               {currentState.label === 'Reply' ? (
                 <NotionMinimalTextEditor
                   name={thread.from.email.split(' ')[0].replace(/"/g, '')}
-                  editoRef={editorContentRef as unknown as React.MutableRefObject<EmailreplyContent>}
+                  setEditorContent={setEditorContent}
                   valid={true}
                   type="reply"
                 />
@@ -225,7 +257,7 @@ const EmailReplyMultiChildrenStates = ({
                 <NotionMinimalTextEditor
                   content={rawMessage}
                   name={thread.from.email.split(' ')[0].replace(/"/g, '')}
-                  editoRef={editorContentRef as unknown as React.MutableRefObject<EmailreplyContent>}
+                  setEditorContent={setEditorContent}
                   className="adjust"
                   valid={true}
                   type="editSubject"
@@ -245,13 +277,9 @@ const EmailReplyMultiChildrenStates = ({
                 size="sm"
                 disabled={false}
                 onClick={(e) =>
-                  invokeReply(
-                    e,
-                    currentState.label === 'reply'
-                      ? editorContentRef.current.reply
-                      : editorContentRef.current.editSubject,
-                    [thread],
-                  )
+                  invokeReply(e, currentState.label === 'reply' ? editorContent.reply : editorContent.editSubject, [
+                    thread,
+                  ])
                 }
               >
                 Send

@@ -6,20 +6,22 @@ export type EmailReplyMultiProps = {
   threads: IEmail[]
 }
 
-export type SetState = React.Dispatch<
-  React.SetStateAction<{
-    drawer: boolean
-    alert: boolean
-  }>
->
+export type StateType = {
+  drawer: boolean
+  alert: boolean
+}
 
-export type ThreadsReplyContentRef = { threadId: string; content: string }[]
+export type SetState = React.Dispatch<React.SetStateAction<StateType>>
 
+export type ThreadsReplyContentRef = {
+  threadId: string
+  content: string | EmailreplyContent
+}
 export type EmailReplyMultiChildrenProps = {
   threads: IEmail[]
   trigger: ReactElement
   setState: SetState
-  threadsReplyContentRef: MutableRefObject<ThreadsReplyContentRef>
+  threadsReplyContentRef: MutableRefObject<ThreadsReplyContentRef[]>
 }
 
 export type EmailReplyMultiChildrenStatesProps = {
@@ -27,10 +29,10 @@ export type EmailReplyMultiChildrenStatesProps = {
   threadsLength: number
   idx: number
   setState: SetState
-  threadsReplyContentRef: MutableRefObject<ThreadsReplyContentRef>
+  threadsReplyContentRef: MutableRefObject<ThreadsReplyContentRef[]>
 }
 
 export type EmailreplyContent = {
-  reply: string | null
-  editSubject: string | null
+  reply: string
+  editSubject: string
 }

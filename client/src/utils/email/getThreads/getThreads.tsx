@@ -3,7 +3,6 @@ import { QueryFunctionContext } from '@tanstack/react-query'
 
 import { GetThreadsRes, QueryKeyType } from './getThreads.types'
 import { ThreadMessageType } from '../getThread/getThread.types'
-import { Navigate } from '@tanstack/react-router'
 
 export const getThreads = async ({ queryKey }: QueryFunctionContext): Promise<ThreadMessageType> => {
   const [, { q }] = queryKey as QueryKeyType
