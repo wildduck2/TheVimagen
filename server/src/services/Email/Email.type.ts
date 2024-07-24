@@ -1,4 +1,4 @@
-import { MessageType, ThreadResType } from 'controllers'
+import { EncodedMessagesType, MessageType, ThreadResType } from 'controllers'
 
 export type GetIdsFromGmailAPIType = {
   access_token: string
@@ -61,4 +61,10 @@ export type ThreadModifyGroupRes = {
   id: string
   threadId: string
   labelIds: string[]
+}
+
+export type ThreadCreateHandlerType = {
+  access_token: string
+  distnation: string
+  encodedMessages: EncodedMessagesType[]
 }

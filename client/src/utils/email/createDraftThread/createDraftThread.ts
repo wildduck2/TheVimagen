@@ -1,17 +1,21 @@
 import axios from 'axios'
+import { toast } from 'sonner'
+import { CreateDraftTHreadRes, CreateDraftTHreadType } from './createDraftThread.types'
+import { encodeMessage } from '@/utils'
 
-export type CreateDraftTHreadRes = {
-  data: string | null
-  error: string | null
-}
-export type CreateDraftTHreadType = {}
+export const createDraftThread = async ({ threadsReplyContent }: CreateDraftTHreadType) => {
+  const encodedMessages = threadsReplyContent.map((thread) => {
+    return {
+      threadId: thread.thread.threadId,
+      encodeMessage: encodeMessage({ thread: thread.thread, htmlContent: thread.content as string }),
+    }
+  })
 
-export const createDraftThread = async () => {
   try {
     const { data } = await axios.post<Awaited<Promise<CreateDraftTHreadRes>>>(
-      `${process.env.ROOT_URL}/email/modify/thread`,
+      `${process.env.ROOT_URL}/email/draft/thread`,
       {
-        user_id: 'fcb7d30c-b14a-47d3-bd9c-37ae5849c30e',
+        encodedMessages,
       },
       {
         withCredentials: true,
@@ -20,10 +24,15 @@ export const createDraftThread = async () => {
         },
       },
     )
-    if (!data) return null
+    if (!data) {
+      toast.info('Messages failed to draft successfuly!')
+      return null
+    }
 
+    toast.info('Messages moved to draft successfuly!')
     return data
   } catch (error) {
+    toast.info('Messages failed to draft successfuly!')
     return null
   }
 }

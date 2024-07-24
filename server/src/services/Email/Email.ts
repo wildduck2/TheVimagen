@@ -2,19 +2,17 @@ import axios from 'axios'
 import {
   FetchEachOneWithIdType,
   GetIdsFromGmailAPIType,
+  ThreadCreateHandlerType,
   ThreadModifyGroupLabelResType,
   ThreadModifyGroupLabelType,
   ThreadModifyGroupRes,
   ThreadModifyGroupType,
-  ThreadModifyResType,
-  ThreadModifyType,
   ThreadReplyRes,
   ThreadReplyType,
   ThreadTrashType
 } from './Email.type'
 import { MessageType, ThreadResType } from 'controllers'
 import { GMAIL_URL } from '../../constants'
-import base64url from 'base64url'
 
 export class Email {
   constructor() {}
@@ -135,8 +133,6 @@ export class Email {
           )
           if (!data) return null
 
-          // console.log(data)
-
           return data
         } catch (error) {
           return null
@@ -149,30 +145,6 @@ export class Email {
       // console.log(results)
 
       return results
-    } catch (error) {
-      return null
-    }
-  }
-
-  static async threadTrash({ id, distnation, access_token }: ThreadTrashType) {
-    try {
-      const { data } = await axios.post<ThreadModifyResType>(
-        `${GMAIL_URL}${distnation}`,
-        {
-          id
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-            'Content-Type': 'application/json'
-          }
-        }
-      )
-      console.log(data)
-
-      if (!data) return null
-
-      return data
     } catch (error) {
       return null
     }
@@ -237,6 +209,48 @@ export class Email {
 
       // Execute all requests and preserve order
       const results = await Promise.all(threadsModifiedAsync)
+      if (!results) return null
+
+      return results
+    } catch (error) {
+      return null
+    }
+  }
+
+  static async threadCreateThreadHandler({
+    access_token,
+    distnation,
+    encodedMessages
+  }: ThreadCreateHandlerType) {
+    try {
+      const draftsRequests = encodedMessages.map(
+        async ({ encodeMessage, threadId }) => {
+          try {
+            const { data } = await axios.post<ThreadModifyGroupRes>(
+              `${GMAIL_URL}${distnation}`,
+              {
+                message: {
+                  raw: encodeMessage,
+                  threadId: threadId
+                }
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${access_token}`,
+                  'Content-Type': 'application/json; charset=UTF-8'
+                }
+              }
+            )
+            if (!data) return null
+            return data
+          } catch (error) {
+            return null
+          }
+        }
+      )
+
+      // Execute all requests and preserve order
+      const results = await Promise.all(draftsRequests)
       if (!results) return null
 
       return results

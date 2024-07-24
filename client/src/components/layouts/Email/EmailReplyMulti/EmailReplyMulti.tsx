@@ -34,13 +34,12 @@ import {
   StateType,
   ThreadsReplyContentRef,
 } from './EmailReplyMulti.types'
-import { Icon, IconType } from '@/assets'
+import { Icon } from '@/assets'
 import { NotionMinimalTextEditor } from '../../Notion'
-import { createDraftThread, sanitizeEmailContent } from '@/utils'
 import { useDispatch } from 'react-redux'
 import { removeSelectedThreadsDispatch } from '@/context'
 import { useEmailReplyThread } from '@/hooks'
-import { toast } from 'sonner'
+import { createDraftThread, sanitizeEmailContent } from '@/utils'
 
 export const EmailReplyMulti = ({ trigger, threads }: EmailReplyMultiProps) => {
   const [state, setState] = useState<StateType>({ alert: false, drawer: false })
@@ -51,17 +50,15 @@ export const EmailReplyMulti = ({ trigger, threads }: EmailReplyMultiProps) => {
   }, [])
 
   const handleAlertContinue = useCallback(() => {
-    const someThreadsHasContent = threadsReplyContentRef.current.some((threadContent) => threadContent.content !== '')
-    if (someThreadsHasContent) {
-      setState((prevState) => ({ ...prevState, alert: false, drawer: false }))
-      // console.log(threadsReplyContentRef.current)
+    const hasContentInThreads = threadsReplyContentRef.current.some((threadContent) => {
+      const content = threadContent.content
+      return typeof content === 'string' && content.trim() !== ''
+    })
+
+    setState((prevState) => ({ ...prevState, alert: false, drawer: false }))
+    if (hasContentInThreads) {
+      const res = createDraftThread({ threadsReplyContent: threadsReplyContentRef.current })
     }
-
-    // toast.info('Messages moved to draft successfuly!')
-
-    //NOTE: will do the draft actions
-
-    const res = createDraftThread({})
 
     //NOTE: show the popup on the side to notify that there's some messages are drafted if you
     //wanna back to them and continue
@@ -70,18 +67,8 @@ export const EmailReplyMulti = ({ trigger, threads }: EmailReplyMultiProps) => {
 
   const handleDrawerOpenChange = useCallback(
     (drawerState: boolean) => {
-      // Check if there's any thread content that is not an empty string
-      const hasContentInThreads = threadsReplyContentRef.current.some((threadContent) => {
-        const content = threadContent.content
-        // Ensure content is a string and not empty after trimming
-        return typeof content === 'string' && content.trim() !== ''
-      })
-
-      console.log(hasContentInThreads)
-      console.log(threadsReplyContentRef.current)
-
-      setState((prevState) => ({
-        alert: !drawerState && hasContentInThreads && threads.length > 0,
+      setState(() => ({
+        alert: drawerState && threads.length > 0 ? false : true,
         drawer: drawerState,
       }))
     },
@@ -186,8 +173,6 @@ const EmailReplyMultiChildrenStates = ({
     sanitizedContent,
   ].join('')
 
-  console.log('hi')
-
   useEffect(() => {
     const currentContent =
       currentState.label === 'Forward To'
@@ -196,14 +181,12 @@ const EmailReplyMultiChildrenStates = ({
           ? editorContent.reply
           : editorContent.editSubject
 
-    // console.log(currentState.label)
-
     const replyContent = {
-      threadId: thread.threadId,
+      thread: thread,
       content: currentContent,
     }
 
-    const index = threadsReplyContentRef.current.findIndex((item) => item.threadId === thread.threadId)
+    const index = threadsReplyContentRef.current.findIndex((item) => item.thread.threadId === thread.threadId)
 
     if (index !== -1) {
       threadsReplyContentRef.current[index] = replyContent

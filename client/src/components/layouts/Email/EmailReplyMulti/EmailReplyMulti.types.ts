@@ -14,7 +14,7 @@ export type StateType = {
 export type SetState = React.Dispatch<React.SetStateAction<StateType>>
 
 export type ThreadsReplyContentRef = {
-  threadId: string
+  thread: IEmail
   content: string | EmailreplyContent
 }
 export type EmailReplyMultiChildrenProps = {

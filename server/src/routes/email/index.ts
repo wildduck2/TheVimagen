@@ -2,6 +2,7 @@ import {
   getGetSizeEsitmatedHandler,
   postGetThreadHandler,
   postGetThreadsHandler,
+  postThreadDraftCreateHanlder,
   postThreadModify,
   postThreadReply,
   postThreadTrash
@@ -46,6 +47,12 @@ email_router.post(
   '/email/reply/thread',
   auth_credentials_about_to_expire,
   postThreadReply
+)
+
+email_router.post(
+  '/email/draft/thread',
+  auth_credentials_about_to_expire,
+  postThreadDraftCreateHanlder
 )
 
 export { email_router }
