@@ -3,9 +3,10 @@ import { EncodeMEssageType } from './encodeMessage.types'
 
 export const encodeMessage = ({ thread, htmlContent }: EncodeMEssageType) => {
   const { from, id, to, subject } = thread
+
   const rawMessage = [
-    `From: ${from}`,
-    `To: ${to}`,
+    `From: ${to[0].email}`,
+    `To: ${from.email}`,
     `Subject: RE: ${subject}`,
     `In-Reply-To: ${id}`,
     'Content-Type: text/html; charset=utf-8',

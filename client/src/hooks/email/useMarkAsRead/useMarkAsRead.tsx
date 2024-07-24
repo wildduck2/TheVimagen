@@ -44,7 +44,6 @@ export const useMarkAsRead = ({ marktype, threads }: UseMarkAsReadProps) => {
       toast.error(`Error: Thread has not been marked as ${marktype !== 'READ' ? 'unread' : 'read'}!`)
     },
   })
-  console.log(startMutation.status)
 
   return { startMutation }
 }

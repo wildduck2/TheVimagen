@@ -200,7 +200,7 @@ const EmailReplyMultiChildrenStates = ({
                 currentState.label === 'Forward To' && (
                   <iframe
                     ref={iframeRef}
-                    srcDoc={`<style>* {  scrollbar-width: thin; html{ height: fit-content;}}</style>${rawMessage}`}
+                    srcDoc={`<style type="text/css">* {  scrollbar-width: thin; html{ height: fit-content;}}</style>${rawMessage}`}
                   />
                 )
               )}

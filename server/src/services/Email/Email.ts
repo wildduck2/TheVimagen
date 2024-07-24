@@ -251,6 +251,8 @@ export class Email {
 
       // Execute all requests and preserve order
       const results = await Promise.all(draftsRequests)
+      console.log(results)
+
       if (!results) return null
 
       return results

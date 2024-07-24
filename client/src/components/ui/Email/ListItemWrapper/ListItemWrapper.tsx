@@ -7,7 +7,7 @@ import {
   removeSelectedThreadsDispatch,
   RootState,
 } from '@/context'
-import { cn, getCookie } from '@/utils'
+import { cn } from '@/utils'
 import { ListItemWrapperType } from './ListItemWrapper.types'
 import {
   ContextMenu,

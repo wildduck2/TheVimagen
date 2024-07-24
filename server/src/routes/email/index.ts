@@ -3,13 +3,13 @@ import {
   postGetThreadHandler,
   postGetThreadsHandler,
   postThreadDraftCreateHanlder,
+  postThreadDraftScheduleHanlder,
   postThreadModify,
   postThreadReply,
   postThreadTrash
 } from '../../controllers'
 import { Router } from 'express'
 import { auth_credentials_about_to_expire } from '../../middlewares'
-// import { doubleCsrfProtection } from 'utils'
 
 const email_router = Router()
 
@@ -53,6 +53,12 @@ email_router.post(
   '/email/draft/thread',
   auth_credentials_about_to_expire,
   postThreadDraftCreateHanlder
+)
+
+email_router.post(
+  '/email/schedule/thread',
+  auth_credentials_about_to_expire,
+  postThreadDraftScheduleHanlder
 )
 
 export { email_router }
