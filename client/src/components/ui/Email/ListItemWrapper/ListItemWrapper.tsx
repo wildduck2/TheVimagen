@@ -22,10 +22,13 @@ import {
 import { ToggleFavoriateButton } from '../ToggleFavoriateButton'
 import { TrashMutate } from '../TrashMutate'
 import { Icon } from '@/assets'
+import { useMarkAsRead } from '@/hooks'
 
 export const ListItemWrapper = ({ children, items }: ListItemWrapperType) => {
   const selectedThread = useSelector((state: RootState) => state.email.selectedThread)
   const selectedThreads = useSelector((state: RootState) => state.email.selectedThreads)
+
+  const { startMutation } = useMarkAsRead({ marktype: 'READ', threads: items })
 
   const dispatch = useDispatch()
 
@@ -67,7 +70,12 @@ export const ListItemWrapper = ({ children, items }: ListItemWrapperType) => {
                 key={items[0].id}
                 className={cn('email__list__wrapper__item__body__card')}
                 onClick={() => {
-                  selectedThread !== items && dispatch(getSelectedEmailIdDispatch(items))
+                  if (selectedThread !== items) {
+                    if (items[0].labelIds.includes('UNREAD')) {
+                      startMutation.mutate()
+                    }
+                    dispatch(getSelectedEmailIdDispatch(items))
+                  }
                 }}
               >
                 {children}

@@ -22,85 +22,79 @@ import { debounceValue, useDebounce2 } from '@/hooks'
 import { useEffect, useRef } from 'react'
 
 export const NotionMinimalTextEditor = ({
-  valid,
-  name,
-  className,
-  content,
-  type,
-  editorContentRef,
-  setEditorContent,
-  onChange,
+    valid,
+    name,
+    className,
+    content,
+    type,
+    editorContentRef,
+    setEditorContent,
+    onChange,
 }: NotionMinimalTextEditorProps) => {
-  const editor = useEditor(
-    {
-      extensions: [
-        TextStyle,
-        Color.configure({
-          types: ['textStyle'],
-        }),
-        Highlight.configure({ multicolor: true }),
-        StarterKit.configure({}),
-        Link.configure({
-          openOnClick: true,
-          autolink: true,
-        }),
-        Underline,
-        FontFamily,
-        ListKeymap,
-        TextAlign.configure({
-          types: ['heading', 'paragraph'],
-        }),
-        Placeholder.configure({
-          placeholder: `Reply to ${name}....`,
-        }),
-        Image,
-      ],
-      editorProps: {
-        attributes: {
-          autocomplete: 'on',
-          autocorrect: 'on',
-          autocapitalize: 'on',
-          class: cn(!valid && 'opacity-50 pointer-events-none', className),
+    const editor = useEditor(
+        {
+            extensions: [
+                TextStyle,
+                Color.configure({
+                    types: ['textStyle'],
+                }),
+                Highlight.configure({ multicolor: true }),
+                StarterKit.configure({}),
+                Link.configure({
+                    openOnClick: true,
+                    autolink: true,
+                }),
+                Underline,
+                FontFamily,
+                ListKeymap,
+                TextAlign.configure({
+                    types: ['heading', 'paragraph'],
+                }),
+                Placeholder.configure({
+                    placeholder: `Reply to ${name}....`,
+                }),
+                Image,
+            ],
+            editorProps: {
+                attributes: {
+                    autocomplete: 'on',
+                    autocorrect: 'on',
+                    autocapitalize: 'on',
+                    class: cn(!valid && 'opacity-50 pointer-events-none', className),
+                },
+            },
+            content,
+            autofocus: true,
+            onUpdate: ({ editor }) => {
+                const html = editor.getHTML()
+                editorContentRef.current = html
+            },
         },
-      },
-      content,
-      autofocus: true,
-      onUpdate: ({ editor }) => {
-        const html = editor.getHTML()
-        // if (!type) {
-        //  return setEditorContent({})
-        //   return
-        // }
-      },
-    },
-    [valid, name],
-  )
-  const updateEditorContent = useDebounce2((html: string) => {
-    if (type === 'reply') {
-      setEditorContent({ reply: type === 'reply' && html, editSubject: type !== 'reply' && html })
+        [valid, name],
+    )
+    const updateEditorContent = useDebounce2((html: string) => {
+        if (type === 'reply') {
+            setEditorContent({ reply: type === 'reply' && html, editSubject: type !== 'reply' && html })
+        }
+    }, 500)
+
+    useEffect(() => {
+        if (editor) {
+            editor.on('update', ({ editor }) => {
+                const html = editor.getHTML()
+                updateEditorContent(html)
+            })
+        }
+    }, [editor, type, updateEditorContent])
+
+    if (!editor) {
+        return null
     }
-  }, 500)
 
-  useEffect(() => {
-    if (editor) {
-      editor.on('update', ({ editor }) => {
-        const html = editor.getHTML()
-        updateEditorContent(html)
-      })
-    }
-  }, [editor, type, updateEditorContent])
-
-  if (!editor) {
-    return null
-  }
-
-  return (
-    <ScrollArea className={cn('notion__minimal__text__editor', valid && 'disabled')}>
-      <NotionMinimalTextEditorToolbar editor={editor} />
-      <EditorContent
-        editor={editor}
-        ref={editorContentRef}
-      />
-    </ScrollArea>
-  )
+    return (
+        <ScrollArea className={cn('notion__minimal__text__editor', valid && 'disabled')}>
+            <NotionMinimalTextEditorToolbar editor={editor} />
+            <EditorContent editor={editor} />
+        </ScrollArea>
+    )
 }
