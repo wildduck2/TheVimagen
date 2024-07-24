@@ -242,7 +242,7 @@ export class Email {
               }
             )
             if (!data) return null
-            return data
+            return data || true
           } catch (error) {
             return null
           }
