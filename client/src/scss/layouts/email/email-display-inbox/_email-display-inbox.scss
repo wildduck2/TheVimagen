@@ -61,18 +61,16 @@
   }
 
   &__content {
-    height: calc(100vh - 314px);
     padding: 1rem;
 
     div[data-radix-scroll-area-viewport]>div {
       display: grid !important;
       gap: 0.5rem;
-      /* display: none; */
     }
 
     iframe {
       width: 100%;
-      height: 61.88vh;
+      height: 55vh;
       background-color: white !important;
       color: black !important;
 

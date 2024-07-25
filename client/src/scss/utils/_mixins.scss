@@ -157,6 +157,23 @@ profile_img
     width: 1.1rem !important;
     height: 1.1rem !important;
   }
+
+  &:hover {
+    botton {
+      border-color: hsl(var(--foreground) / 0.6);
+    }
+
+    svg {
+      stroke: hsl(var(--foreground) / 0.6);
+      stroke-width: 2;
+    }
+  }
+
+  &.disabled {
+    svg {
+      stroke: currentColor;
+    }
+  }
 }
 
 @mixin ghostButton {
@@ -181,7 +198,8 @@ profile_img
     outline-offset: 2px;
   }
 
-  &:disabled {
+  &:disabled,
+  &.disabled {
     pointer-events: none;
     opacity: 0.5;
   }

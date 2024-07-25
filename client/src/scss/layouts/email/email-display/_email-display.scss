@@ -12,3 +12,28 @@
     Email Display
 
 */
+.email__dispaly {
+  @include u.flex(flex);
+  flex-direction: column;
+  height: 100vh;
+
+  &__top {
+    @include u.flex(flex, center);
+    padding: 0.5rem;
+
+    &__content {
+      @include u.flex(flex, center);
+
+      &>div:not([data-orientation='vertical']) {
+        @include u.flex(flex, center);
+        padding-inline-start: 0.5rem;
+        gap: 0.75rem;
+        margin-right: 0.25rem;
+      }
+
+      &>.toggle__tooltip__span__wrapper {
+        margin-left: 0.25rem;
+      }
+    }
+  }
+}
