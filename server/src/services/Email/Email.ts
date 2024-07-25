@@ -13,6 +13,7 @@ import {
 } from './Email.type'
 import { MessageType, ThreadResType } from 'controllers'
 import { GMAIL_URL } from '../../constants'
+import { log } from 'console'
 
 export class Email {
   constructor() {}
@@ -150,30 +151,46 @@ export class Email {
     }
   }
 
+  //NOTE: full
   static async threadReply({
     access_token,
     distnation,
-    threadId,
-    encodedMessage
+    encodedMessages
   }: ThreadReplyType) {
     try {
-      const { data } = await axios.post<Promise<ThreadReplyRes>>(
-        `${GMAIL_URL}${distnation}`,
-        {
-          raw: encodedMessage,
-          threadId: threadId
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-            'Content-Type': 'application/json'
+      const threadsSentAsync = encodedMessages.map(
+        async ({ encodedMessage, threadId }) => {
+          try {
+            const { data } = await axios.post<Promise<ThreadReplyRes>>(
+              `${GMAIL_URL}${distnation}`,
+              {
+                raw: encodedMessage,
+                threadId
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${access_token}`,
+                  'Content-Type': 'application/json'
+                }
+              }
+            )
+            if (!data) return null
+
+            return data
+          } catch (error) {
+            console.log(error)
+            return null
           }
         }
       )
-      if (!data) return null
 
-      return data
+      // Execute all requests and preserve order
+      const results = await Promise.all(threadsSentAsync)
+      if (!results) return null
+
+      return results
     } catch (error) {
+      console.log(error)
       return null
     }
   }
@@ -224,14 +241,14 @@ export class Email {
   }: ThreadCreateHandlerType) {
     try {
       const draftsRequests = encodedMessages.map(
-        async ({ encodeMessage, threadId }) => {
+        async ({ encodeMessage, email }) => {
           try {
             const { data } = await axios.post<ThreadModifyGroupRes>(
               `${GMAIL_URL}${distnation}`,
               {
                 message: {
-                  raw: encodeMessage,
-                  threadId: threadId
+                  raw: encodeMessage
+                  // threadId: threadId
                 }
               },
               {
@@ -251,8 +268,6 @@ export class Email {
 
       // Execute all requests and preserve order
       const results = await Promise.all(draftsRequests)
-      console.log(results)
-
       if (!results) return null
 
       return results

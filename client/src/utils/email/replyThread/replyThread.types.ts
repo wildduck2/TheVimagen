@@ -4,6 +4,7 @@ import { MessageType } from '../getThread'
 export type ReplyThreadType = {
   htmlContent: string
   thread: IEmail
+  emails: string[]
 }
 export type ReplyThreadRes = {
   data: MessageType | null

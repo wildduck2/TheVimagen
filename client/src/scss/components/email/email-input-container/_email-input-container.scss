@@ -41,7 +41,7 @@
     }
 
     &__footer {
-      &>form {
+      &>div {
         @include u.flex(flex, center, space-between);
         gap: 0.5rem;
 
@@ -60,17 +60,30 @@
 
   &__badges {
     @include u.flex(flex);
-    gap: 0.25rem;
-    flex-wrap: wrap;
-    max-width: 304px;
+    gap: 0.5rem;
+
+    .toggle__tooltip__span__wrapper {
+      border: 1px solid hsl(var(--border));
+    }
+
+    &>div:first-child {
+      max-width: 400px;
+
+      &>div,
+      .wrapper {
+        @include u.flex(flex, center);
+        gap: 0.5rem;
+      }
+    }
 
     &__badge {
       @include u.flex(flex, center);
-      gap: 0.5rem;
+      gap: 0.25rem;
       width: fit-content;
+      height: 26px;
 
       svg {
-        width: 0.9rem;
+        width: 0.9rem !important;
         cursor: pointer;
       }
     }

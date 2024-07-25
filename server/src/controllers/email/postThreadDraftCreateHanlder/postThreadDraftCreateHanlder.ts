@@ -3,8 +3,9 @@ import { Email } from '@services/Email'
 import { RequestHandler } from 'express'
 
 export type EncodedMessagesType = {
+  email: string
+  encodedMessage: string
   threadId: string
-  encodeMessage: string
 }
 
 export type PostThreadDraftCreateHanlderBodyType = {

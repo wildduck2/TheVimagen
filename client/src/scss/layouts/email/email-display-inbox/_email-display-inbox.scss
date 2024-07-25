@@ -61,6 +61,9 @@
   }
 
   &__content {
+    height: calc(100vh - 385px);
+    @include u.flex(grid);
+    gap: 0.5rem;
     padding: 1rem;
 
     div[data-radix-scroll-area-viewport]>div {
@@ -82,9 +85,12 @@
   }
 
   &__bottom {
+    position: relative;
     padding: 1rem;
 
     &>form {
+      position: relative;
+
       &>div {
         @include u.flex(grid);
         gap: 1rem;
@@ -95,7 +101,7 @@
         /* } */
 
         &>div {
-          @include u.flex(flex, center);
+          @include u.flex(flex, center, space-between);
 
           &>label {
             @include u.flex(flex, center);
@@ -105,9 +111,24 @@
             font-weight: 400;
           }
 
-          &>button {
-            margin-left: auto;
-            width: 120px;
+          &>div {
+            &:not([data-radix-scroll-area-viewport]) {
+              @include u.flex(flex, center);
+              gap: 1rem;
+            }
+
+            &>button:first-child {
+              border-radius: 100%;
+
+              &:hover>svg {
+                stroke: currentColor;
+              }
+            }
+
+            &>button:last-child {
+              margin-left: auto;
+              width: 120px;
+            }
           }
 
           .data-\[state\=checked\]\:translate-x-5[data-state='checked'] {
@@ -133,5 +154,5 @@
   @include u.flex(flex, center, center);
   color: hsl(var(--muted-foreground));
   padding: 2rem;
-  height: calc(100vh - 315px + 94px);
+  height: calc(100vh - 324px);
 }

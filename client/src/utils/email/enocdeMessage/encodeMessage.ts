@@ -1,12 +1,12 @@
 import { Base64 } from 'js-base64'
 import { EncodeMEssageType } from './encodeMessage.types'
 
-export const encodeMessage = ({ thread, htmlContent }: EncodeMEssageType) => {
-  const { from, id, to, subject } = thread
+export const encodeMessage = ({ thread, htmlContent, to }: EncodeMEssageType) => {
+  const { to: from, id, subject } = thread
 
   const rawMessage = [
-    `From: ${to[0].email}`,
-    `To: ${from.email}`,
+    `From: ${from[0].name} <${from[0].email}>`,
+    `To: ${to.name} <${to.email}>`,
     `Subject: RE: ${subject}`,
     `In-Reply-To: ${id}`,
     'Content-Type: text/html; charset=utf-8',

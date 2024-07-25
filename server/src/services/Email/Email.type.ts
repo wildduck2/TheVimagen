@@ -41,8 +41,7 @@ export type ThreadTrashResType = {
 export type ThreadReplyType = {
   access_token: string
   distnation: string
-  threadId: string
-  encodedMessage: string
+  encodedMessages: EncodedMessagesType[]
 }
 
 export type ThreadReplyRes = {
