@@ -10,7 +10,6 @@ export const auth_credentials_about_to_expire: RequestHandler = async (
 ) => {
   try {
     const user_id = req.session.oauth_user_data?.user_id as string
-    console.log(user_id)
 
     //NOTE: get oauth data from db
     const oauth_user_data = await User.get_oauth_data({

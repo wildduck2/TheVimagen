@@ -13,7 +13,7 @@ import {
 } from './Email.type'
 import { MessageType, ThreadResType } from 'controllers'
 import { GMAIL_URL } from '../../constants'
-import { log } from 'console'
+import { i } from 'vitest/dist/reporters-yx5ZTtEV'
 
 export class Email {
   constructor() {}
@@ -104,6 +104,7 @@ export class Email {
     }
   }
 
+  //NOTE: full
   static async threadModifyGroupLabel({
     distnation,
     access_token,
@@ -195,45 +196,6 @@ export class Email {
     }
   }
 
-  static async threadModifyGroup({
-    access_token,
-    distnation,
-    threadIds,
-    actionType
-  }: ThreadModifyGroupType): Promise<(ThreadModifyGroupRes | null)[] | null> {
-    try {
-      const threadsModifiedAsync = threadIds.map(async (id) => {
-        try {
-          const { data } = await axios.post<ThreadModifyGroupRes>(
-            `${GMAIL_URL}${distnation}${id}${actionType}`,
-            {
-              // addLabelIds: ['INBOX']
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${access_token}`,
-                'Content-Type': 'application/json; charset=UTF-8'
-              }
-            }
-          )
-          if (!data) return null
-
-          return data
-        } catch (error) {
-          return null
-        }
-      })
-
-      // Execute all requests and preserve order
-      const results = await Promise.all(threadsModifiedAsync)
-      if (!results) return null
-
-      return results
-    } catch (error) {
-      return null
-    }
-  }
-
   static async threadCreateThreadHandler({
     access_token,
     distnation,
@@ -241,14 +203,14 @@ export class Email {
   }: ThreadCreateHandlerType) {
     try {
       const draftsRequests = encodedMessages.map(
-        async ({ encodeMessage, email }) => {
+        async ({ encodedMessage, email, threadId }) => {
           try {
             const { data } = await axios.post<ThreadModifyGroupRes>(
               `${GMAIL_URL}${distnation}`,
               {
                 message: {
-                  raw: encodeMessage
-                  // threadId: threadId
+                  raw: encodedMessage,
+                  threadId: threadId
                 }
               },
               {
@@ -272,6 +234,7 @@ export class Email {
 
       return results
     } catch (error) {
+      // console.log(error)
       return null
     }
   }

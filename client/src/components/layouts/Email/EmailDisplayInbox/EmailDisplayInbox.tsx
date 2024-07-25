@@ -5,7 +5,6 @@ import {
   AvatarFallback,
   AvatarImage,
   Button,
-  EmailInputSelect,
   Label,
   ReplyToWrapper,
   ScrollArea,
@@ -15,7 +14,7 @@ import {
 
 import { EmailDisplayInboxItem } from '../EmailDisplayInboxItem'
 import { NotionMinimalTextEditor } from '../../Notion'
-import { memo, MutableRefObject, useRef } from 'react'
+import { memo, useRef } from 'react'
 import { EmailDisplayInboxProps } from './EmailDisplayInbox.types'
 import { useEmailReplyThread } from '@/hooks'
 

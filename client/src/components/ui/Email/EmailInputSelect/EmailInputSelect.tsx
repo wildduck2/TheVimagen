@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import {
   Badge,
   Button,
@@ -15,7 +15,6 @@ import { handleAddEmailSubmit, handleRemoveEmail } from '@/utils'
 
 export const EmailInputSelect = ({ emails, setEmails, side }: EmailinputSelectProps) => {
   const emailRef = useRef<HTMLInputElement>(null)
-  console.log(emails)
 
   return (
     <div className="email__input__container">
