@@ -1,14 +1,5 @@
 import { Icon } from '@/assets'
-import {
-  Button,
-  Calendar,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '@/components/ui'
+import { Button, Calendar, NotionMinimalTextEditorToolbarPick, ToggleToolTipSpanWrapper } from '@/components/ui'
 import { addDays, addHours, format, nextSaturday } from 'date-fns'
 import { useState } from 'react'
 import { EmailSnoozeButtonType } from './EmailSnoozeButton.types'
@@ -24,22 +15,20 @@ export const EmailSnoozeButton = ({ selectedThread }: EmailSnoozeButtonType) => 
 
   return (
     <>
-      <Tooltip>
-        <Popover>
-          <PopoverTrigger asChild>
-            <TooltipTrigger asChild>
-              <Button
-                className="email__snooze__button"
-                variant="ghost"
-                size="icon"
-                // disabled={!selectedThread.length}
-              >
+      <NotionMinimalTextEditorToolbarPick
+        trigger={
+          <ToggleToolTipSpanWrapper
+            disabled={!selectedThread.length}
+            tip="Snooze"
+            children={
+              <>
                 <Icon.clock />
-                <span>Snooze</span>
-              </Button>
-            </TooltipTrigger>
-          </PopoverTrigger>
-          <PopoverContent className="email__snooze__content">
+              </>
+            }
+          />
+        }
+        content={
+          <div className="email__snooze__content">
             <div className="email__snooze__content__left">
               <h4>Snooze until</h4>
               <div className="grid min-w-[250px] gap-1">
@@ -81,10 +70,9 @@ export const EmailSnoozeButton = ({ selectedThread }: EmailSnoozeButtonType) => 
                 className="email__snooze__content__right__calendar"
               />
             </div>
-          </PopoverContent>
-        </Popover>
-        <TooltipContent>Snooze</TooltipContent>
-      </Tooltip>
+          </div>
+        }
+      />
     </>
   )
 }

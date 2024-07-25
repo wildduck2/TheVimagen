@@ -6,10 +6,13 @@ import { getCookie, trashMessage } from '@/utils'
 import { Icon } from '@/assets'
 import { queryClient } from '@/main'
 import { ToggleToolTipSpanWrapper } from '../ToggleToolTipSpanWrapper'
+import { getSelectedEmailIdDispatch } from '@/context'
+import { useDispatch } from 'react-redux'
 
 export const TrashMutate = ({ disabled, threads, tip }: TrashMutateType) => {
   const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
   const threadIds = threads && threads.map((item) => item.threadId)
+  const dispatch = useDispatch()
 
   const startMutation = useMutation({
     mutationKey: ['trash-Message', { threadIds }],
@@ -26,6 +29,7 @@ export const TrashMutate = ({ disabled, threads, tip }: TrashMutateType) => {
         }
       })
       toast.success(`Thread has been moved to Trash!`)
+      dispatch(getSelectedEmailIdDispatch([]))
     },
     onError: () => {
       toast.error(`Error: Thread has not been moved to Trash!`)

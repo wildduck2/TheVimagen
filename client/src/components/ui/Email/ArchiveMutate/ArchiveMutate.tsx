@@ -7,9 +7,13 @@ import { queryClient } from '@/main'
 import { ArchiveMutateType } from './ArchiveMutate.types'
 import { PaginatedMessages } from '../TrashMutate'
 import { ToggleToolTipSpanWrapper } from '../..'
+import { useDispatch } from 'react-redux'
+import { getSelectedEmailIdDispatch } from '@/context'
 
-export const ArchiveMutate = ({ disabled, threadIds, tip }: ArchiveMutateType) => {
+export const ArchiveMutate = ({ disabled, threads, tip }: ArchiveMutateType) => {
   const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
+  const threadIds = threads && threads.map((item) => item.threadId)
+  const dispatch = useDispatch()
 
   const startMutation = useMutation({
     mutationKey: ['Archive-Message', { threadIds }],
@@ -26,6 +30,7 @@ export const ArchiveMutate = ({ disabled, threadIds, tip }: ArchiveMutateType) =
         }
       })
       toast.success(`Thread has been moved to Archive!`)
+      dispatch(getSelectedEmailIdDispatch([]))
     },
     onError: () => {
       toast.error(`Error: Thread has not been moved to Archive!`)

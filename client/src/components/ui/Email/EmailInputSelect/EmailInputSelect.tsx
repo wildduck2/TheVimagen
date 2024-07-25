@@ -53,9 +53,12 @@ export const EmailInputSelect = ({ email }: EmailinputSelectProps) => {
               <form
                 onSubmit={(e) => handleAddEmailSubmit({ e, email: emailRef.current.value.trim(), emails, setEmails })}
               >
-                <Input ref={emailRef} />
+                <Input
+                  ref={emailRef}
+                  placeholder="Enter valid email..."
+                />
                 <Button
-                  variant="outline"
+                  variant="default"
                   type="submit"
                   children={'Apply'}
                 />

@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux'
 
 import {
+  ArchiveMutate,
   Button,
   DropdownMenu,
   DropdownMenuContent,
@@ -8,8 +9,10 @@ import {
   DropdownMenuTrigger,
   EmailDisplayButton,
   EmailSnoozeButton,
+  JunkMutate,
   ResizablePanel,
   Separator,
+  TrashMutate,
 } from '@/components/ui'
 import { Icon } from '@/assets'
 import { RootState } from '@/context'
@@ -28,26 +31,26 @@ export function EmailDisplay({ defaultLayout = 37 }: EmailDisplayProps) {
       defaultSize={defaultLayout}
       minSize={40}
     >
-      <div className="flex h-full flex-col">
-        <div className="flex items-center p-2">
-          <div className="flex items-center gap-2">
-            <EmailDisplayButton
-              selectedThread={selectedThread}
-              label="Archive"
-              icon={<Icon.archive className="h-4 w-4" />}
-            />
-
-            <EmailDisplayButton
-              selectedThread={selectedThread}
-              label="Move to junk"
-              icon={<Icon.archiveX className="h-4 w-4" />}
-            />
-
-            <EmailDisplayButton
-              selectedThread={selectedThread}
-              label="Move to trash"
-              icon={<Icon.trash2 className="h-4 w-4" />}
-            />
+      <div className="email__dispaly">
+        <div className="email__dispaly__top">
+          <div className="email__dispaly__top__content">
+            <div>
+              <ArchiveMutate
+                disabled={selectedThread.length === 0}
+                threads={selectedThread ? selectedThread : []}
+                tip="Archive"
+              />
+              <JunkMutate
+                disabled={selectedThread.length === 0}
+                threads={selectedThread ? selectedThread : []}
+                tip="Move to Junk"
+              />
+              <TrashMutate
+                disabled={selectedThread.length === 0}
+                threads={selectedThread ? selectedThread : []}
+                tip="Move to Trash"
+              />
+            </div>
             <Separator
               orientation="vertical"
               className="mx-1 h-6"

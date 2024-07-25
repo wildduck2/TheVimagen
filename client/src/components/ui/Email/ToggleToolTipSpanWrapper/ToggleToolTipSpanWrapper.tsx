@@ -14,7 +14,7 @@ export const ToggleToolTipSpanWrapper = React.forwardRef<HTMLButtonElement, Togg
           >
             <span
               ref={ref}
-              className={cn(value && 'active', disabled && 'disabled')}
+              className={cn(value && 'active', disabled && 'disabled', 'toggle__tooltip__span__wrapper')}
             >
               {children}
             </span>
