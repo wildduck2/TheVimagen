@@ -1,10 +1,21 @@
 import { format } from 'date-fns'
 
-import { Avatar, AvatarFallback, AvatarImage, Button, Label, ScrollArea, Separator, Switch } from '@/components/ui'
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Button,
+  EmailInputSelect,
+  Label,
+  ReplyToWrapper,
+  ScrollArea,
+  Separator,
+  Switch,
+} from '@/components/ui'
 
 import { EmailDisplayInboxItem } from '../EmailDisplayInboxItem'
 import { NotionMinimalTextEditor } from '../../Notion'
-import { memo, useRef } from 'react'
+import { memo, MutableRefObject, useRef } from 'react'
 import { EmailDisplayInboxProps } from './EmailDisplayInbox.types'
 import { useEmailReplyThread } from '@/hooks'
 
@@ -12,6 +23,7 @@ const EmailDisplayInboxItemMemo = memo(EmailDisplayInboxItem)
 
 export const EmailDisplayInbox = ({ selectedThread }: EmailDisplayInboxProps) => {
   const editorContentRef = useRef('')
+  const replyToEmails = useRef<string[]>()
   const invokeReply = useEmailReplyThread()
 
   const valid = selectedThread.length
@@ -52,22 +64,22 @@ export const EmailDisplayInbox = ({ selectedThread }: EmailDisplayInboxProps) =>
           <Separator />
         </>
       ) : null}
-      <div className="email__display__inbox__content">
+      <ScrollArea className="email__display__inbox__content">
         {valid ? (
-          selectedThread.map((item) => (
+          selectedThread.map((thread) => (
             <EmailDisplayInboxItemMemo
-              inbox={item}
-              key={item.id}
+              inbox={thread}
+              key={thread.id}
               single={selectedThread.length === 1 ? true : false}
             />
           ))
         ) : (
           <div className="email__display__inbox__not__found">No message selected</div>
         )}
-      </div>
+      </ScrollArea>
       <Separator className="mt-auto" />
       <div className="email__display__inbox__bottom">
-        <form onSubmit={(e) => invokeReply(e, editorContentRef.current, selectedThread)}>
+        <form onSubmit={(e) => invokeReply(e, editorContentRef.current, replyToEmails.current, selectedThread)}>
           <div>
             <NotionMinimalTextEditor
               name={valid ? selectedThread[0].from.name : 'Someone'}
@@ -85,12 +97,24 @@ export const EmailDisplayInbox = ({ selectedThread }: EmailDisplayInboxProps) =>
                 />
                 Mute this thread
               </Label>
-              <Button
-                size="sm"
-                disabled={valid ? false : true}
-              >
-                Send
-              </Button>
+
+              <div>
+                {selectedThread[0] ? (
+                  <ReplyToWrapper
+                    thread={selectedThread[0]}
+                    replyToEmails={replyToEmails}
+                  />
+                ) : (
+                  <div />
+                )}
+
+                <Button
+                  size="sm"
+                  disabled={valid ? false : true}
+                >
+                  Send
+                </Button>
+              </div>
             </div>
           </div>
         </form>

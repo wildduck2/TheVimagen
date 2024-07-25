@@ -21,7 +21,7 @@ export const EmailDisplayInboxItem = ({ inbox, single }: EmailDisplayInboxItemTy
       <AccordionItem value="open">
         <AccordionTriggerWithoutChovernDown className="email__display__inbox__item__trigger">
           <div>
-            <div>{inbox.from.name}</div>
+            <div>{inbox.from.name || inbox.from.email.split('@')[0]}</div>
             <div>{inbox.subject}</div>
           </div>
           <div>{format(new Date(inbox.sentDate), 'PPpp')}</div>

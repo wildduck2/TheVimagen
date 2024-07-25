@@ -1,3 +1,5 @@
 export type EmailinputSelectProps = {
-  email: string
+  emails: string[]
+  setEmails: React.Dispatch<React.SetStateAction<string[]>>
+  side?: 'top' | 'right' | 'bottom' | 'left'
 }
