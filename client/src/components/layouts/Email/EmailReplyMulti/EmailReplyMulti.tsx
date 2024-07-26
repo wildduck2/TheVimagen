@@ -126,7 +126,7 @@ const EmailReplyMultiChildrenStates = ({
   })
   const [editorContent, setEditorContent] = useState<EmailreplyContent>({ reply: '', editSubject: '' })
   const iframeRef = useRef<HTMLIFrameElement | null>(null)
-  const replyToEmails = useRef<string[]>()
+  const replyToEmails = useRef<string[]>([])
 
   const sanitizedContent = sanitizeEmailContent(thread.textHtml.replace(/<a /g, '<a target="_blank" '))
 
@@ -230,7 +230,6 @@ const EmailReplyMultiChildrenStates = ({
               </Label>
               <Button
                 size="sm"
-                disabled={false}
                 onClick={(e) =>
                   invokeReply(
                     e,

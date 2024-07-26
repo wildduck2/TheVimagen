@@ -21,8 +21,6 @@ export const handleAddEmailSubmit = ({ emailRef, setEmails, emails }: HandleAddE
 }
 
 export const handleRemoveEmail = ({ emails, idx, setEmails }: HandleRemoveEmailProps) => {
-  console.log('hi')
-
   setEmails(emails.filter((_, i) => i !== idx))
 }
 

@@ -12,16 +12,28 @@ import {
 } from '@/components/ui'
 import { Icon } from '@/assets'
 import { handleAddEmailSubmit, handleRemoveEmail } from '@/utils'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/context'
 
 export const EmailInputSelect = ({ emails, setEmails, side }: EmailinputSelectProps) => {
+  const replyStatus = useSelector((state: RootState) => state.email.replyStatus)
   const emailRef = useRef<HTMLInputElement>(null)
+  const emailFiltered = emails.filter((email, idx) => {
+    if (!replyStatus.forward === false) {
+      if (idx !== 0) {
+        return email
+      }
+    } else {
+      return email
+    }
+  })
 
   return (
     <div className="email__input__container">
       <div className="email__input__container__badges">
         <ScrollArea>
           <div className="wrapper">
-            {emails.map((email, idx) => (
+            {emailFiltered.map((email, idx) => (
               <EmailProfile
                 side={side || 'bottom'}
                 key={idx}
@@ -34,7 +46,7 @@ export const EmailInputSelect = ({ emails, setEmails, side }: EmailinputSelectPr
                   >
                     <span>{email}</span>
                     {idx ? (
-                      <span onClick={() => handleRemoveEmail({ emails, idx, setEmails })}>
+                      <span onClick={() => handleRemoveEmail({ emails: emailFiltered, idx, setEmails })}>
                         <Icon.X />
                       </span>
                     ) : null}
@@ -65,11 +77,12 @@ export const EmailInputSelect = ({ emails, setEmails, side }: EmailinputSelectPr
                     placeholder="Enter valid email..."
                   />
                   <Button
-                    onClick={() => handleAddEmailSubmit({ emailRef, emails, setEmails })}
+                    onClick={() => handleAddEmailSubmit({ emailRef, emails: emailFiltered, setEmails })}
                     variant="default"
                     type="submit"
-                    children={'Apply'}
-                  />
+                  >
+                    Apply
+                  </Button>
                 </div>
               </div>
             </div>

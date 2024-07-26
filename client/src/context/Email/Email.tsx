@@ -21,7 +21,7 @@ const initialState: initialStateEmailTypes = {
   searchInput: '',
   threadsFetched: [],
   multiReply: { alert: false, drawer: false },
-  replyStatus: { replyALl: false, forward: false },
+  replyStatus: { replyAll: false, forward: false, attachment: false },
 }
 
 export const emailSlice = createSlice({

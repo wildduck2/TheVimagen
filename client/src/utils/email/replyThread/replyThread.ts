@@ -5,7 +5,7 @@ import { encodeMessage } from '@/utils'
 export const replyThread = async ({ thread, emails, htmlContent, replyStatus }: ReplyThreadType) => {
   const { threadId, from } = thread
 
-  console.log(replyStatus)
+  //TODO: should me the attachment here
   const messages = emails.map((item) => {
     const email = { email: item, name: thread.from.name }
     return {

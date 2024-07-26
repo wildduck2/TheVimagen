@@ -8,7 +8,7 @@ export interface initialStateEmailTypes {
   multiReply: MultiReplyType
   replyStatus: ReplyStatusType
 }
-export type ReplyStatusType = { replyAll: boolean; forward: boolean }
+export type ReplyStatusType = { replyAll: boolean; forward: boolean; attachment: boolean }
 export type MultiReplyType = { alert: boolean; drawer: boolean }
 
 export type MultiReplyState = {

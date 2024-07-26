@@ -87,18 +87,19 @@ export const ListItemWrapper = ({ children, items }: ListItemWrapperType) => {
             </div>
           </div>
         </ContextMenuTrigger>
-        <ContextMenuContent className="w-64">
+        <ContextMenuContent>
           {emailItemContextMenu.map((item, idx) => {
             return (
               <React.Fragment key={idx}>
                 {item.map(({ shortcut, icon, label, onClick }, idx) => (
                   <ContextMenuItem
                     key={idx}
+                    className="gap-5 w-full"
                     onClick={() => onClick({ dispatch, items })}
                   >
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-4 whitespace-nowrap">
                       {icon({ className: 'size-4' })}
-                      {label}
+                      <span>{label}</span>
                     </div>
                     <ContextMenuShortcut>{shortcut}</ContextMenuShortcut>
                   </ContextMenuItem>
@@ -134,71 +135,81 @@ export const emailItemContextMenu = [
       onClick: ({ dispatch, items }: OnClickType) => {
         dispatch(getMultiReplyState({ alert: false, drawer: true }))
         dispatch(getSelectedThreadsDispatch([items[0]]))
-        dispatch(getReplyStatusState({ replyAll: true, forward: false }))
+        dispatch(getReplyStatusState({ replyAll: true, forward: false, attachment: false }))
       },
     },
-    // {
-    //   icon: Icon.forward,
-    //   label: 'Forward',
-    //   shortcut: '⌘af',
-    // },
-    // {
-    //   icon: Icon.file,
-    //   label: 'Forward as attachment',
-    //   shortcut: '⌘afa',
-    // },
+    {
+      icon: Icon.forward,
+      label: 'Forward',
+      shortcut: '⌘af',
+      onClick: ({ dispatch, items }: OnClickType) => {
+        dispatch(getMultiReplyState({ alert: false, drawer: true }))
+        dispatch(getSelectedThreadsDispatch([items[0]]))
+        dispatch(getReplyStatusState({ replyAll: false, forward: true, attachment: false }))
+      },
+    },
+    {
+      icon: Icon.file,
+      label: 'Forward as attachment',
+      shortcut: '⌘afa',
+      onClick: ({ dispatch, items }: OnClickType) => {
+        dispatch(getMultiReplyState({ alert: false, drawer: true }))
+        dispatch(getSelectedThreadsDispatch([items[0]]))
+        dispatch(getReplyStatusState({ replyAll: false, forward: true, attachment: true }))
+      },
+    },
   ],
   [
-    //   {
-    //     icon: Icon.fiStar,
-    //     label: 'Archive',
-    //     shortcut: '⌘aa',
-    //   },
-    //
-    //   {
-    //     icon: Icon.trash2,
-    //     label: 'Delete',
-    //     shortcut: '⌘ad',
-    //   },
-    //   {
-    //     icon: Icon.emailOpen,
-    //     label: 'Make as read',
-    //     shortcut: '⌘ar',
-    //   },
-    //   {
-    //     icon: Icon.clock,
-    //     label: 'Snooze',
-    //     shortcut: '⌘as',
-    //   },
-    //   {
-    //     icon: Icon.clipboardChecked,
-    //     label: 'Add to Tasks',
-    //     shortcut: '⌘at',
-    //   },
-    // ],
-    // [
-    //   {
-    //     icon: Icon.folderMove,
-    //     label: 'Move to',
-    //     shortcut: '⌘ac',
-    //   },
-    //
-    //   {
-    //     icon: Icon.tag,
-    //     label: 'Label as',
-    //     shortcut: '⌘al',
-    //   },
-    //   {
-    //     icon: Icon.notfOff,
-    //     label: 'Mute',
-    //     shortcut: '⌘am',
-    //   },
-    // ],
-    // [
-    //   {
-    //     icon: Icon.popup,
-    //     label: 'Open in popup',
-    //     shortcut: '⌘op',
-    //   },
+    {
+      icon: Icon.fiStar,
+      label: 'Archive',
+      shortcut: '⌘aa',
+    },
+
+    {
+      icon: Icon.trash2,
+      label: 'Delete',
+      shortcut: '⌘ad',
+    },
+    {
+      icon: Icon.emailOpen,
+      label: 'Make as read',
+      shortcut: '⌘ar',
+    },
+    {
+      icon: Icon.clock,
+      label: 'Snooze',
+      shortcut: '⌘as',
+    },
+    {
+      icon: Icon.clipboardChecked,
+      label: 'Add to Tasks',
+      shortcut: '⌘at',
+    },
+  ],
+  [
+    {
+      icon: Icon.folderMove,
+      label: 'Move to',
+      shortcut: '⌘ac',
+    },
+
+    {
+      icon: Icon.tag,
+      label: 'Label as',
+      shortcut: '⌘al',
+    },
+    {
+      icon: Icon.notfOff,
+      label: 'Mute',
+      shortcut: '⌘am',
+    },
+  ],
+  [
+    {
+      icon: Icon.popup,
+      label: 'Open in popup',
+      shortcut: '⌘op',
+    },
   ],
 ]
