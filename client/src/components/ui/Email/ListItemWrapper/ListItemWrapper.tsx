@@ -24,7 +24,7 @@ import {
 import { ToggleFavoriateButton } from '../ToggleFavoriateButton'
 import { TrashMutate } from '../TrashMutate'
 import { Icon } from '@/assets'
-import { useMarkAsRead, useToggleFavoriate } from '@/hooks'
+import { useArchiveMutate, useDeleteMutate, useMarkAsRead, useToggleFavoriate, useTrashMutate } from '@/hooks'
 import { IEmail } from 'gmail-api-parse-message-ts'
 import { UnknownAction } from 'redux'
 
@@ -34,6 +34,9 @@ export const ListItemWrapper = ({ children, items }: ListItemWrapperType) => {
 
   const { startMutation: startMarkAsRead } = useMarkAsRead({ marktype: 'READ', threads: items })
   const { startMutation: startFavoriate } = useToggleFavoriate({ threads: items })
+  const { startMutation: startTrash } = useTrashMutate({ threads: items })
+  const { startMutation: startArchive } = useArchiveMutate({ threads: items })
+  const { startMutation: startDelete } = useDeleteMutate({ threads: items })
 
   const actions: Record<string, (props: OnClickType) => void> = {
     Reply: ({ dispatch, items }: OnClickType) => {
@@ -56,16 +59,23 @@ export const ListItemWrapper = ({ children, items }: ListItemWrapperType) => {
       dispatch(getReplyStatusState({ replyAll: false, forward: true, attachment: true }))
     },
     Archive: () => {
-      startFavoriate.mutate()
+      startArchive.mutate()
     },
     Trash: () => {
-      startFavoriate.mutate()
+      startTrash.mutate()
     },
     Star: () => {
-      startFavoriate.mutate()
+      if (!items[0].labelIds.includes('STARRED')) {
+        startFavoriate.mutate()
+      }
+    },
+    Delete: () => {
+      startDelete.mutate()
     },
     Read: () => {
-      startMarkAsRead.mutate()
+      if (items[0].labelIds.includes('UNREAD')) {
+        startMarkAsRead.mutate()
+      }
     },
   }
 
@@ -201,6 +211,7 @@ export const emailItemContextMenu = [
     {
       icon: Icon.trash2,
       label: 'Delete',
+      key: 'Delete',
       shortcut: '⌘ad',
     },
     {
