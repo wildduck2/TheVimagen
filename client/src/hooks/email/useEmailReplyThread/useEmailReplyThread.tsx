@@ -1,13 +1,13 @@
 import { RootState } from '@/context'
 import { replyThread } from '@/utils'
-import { IEmail } from 'gmail-api-parse-message-ts'
 import { useSelector } from 'react-redux'
 import { toast } from 'sonner'
+import { EmailReplyThreadProps } from './useEmailReplyThread.types'
 
 export const useEmailReplyThread = () => {
   const replyStatus = useSelector((state: RootState) => state.email.replyStatus)
 
-  return (e: React.FormEvent<HTMLElement>, body: string, emails: string[], selectedThread: IEmail[]) => {
+  return ({ emails, e, selectedThread, body }: EmailReplyThreadProps) => {
     e.preventDefault()
     const emailFiltered = emails.filter((email, idx) => {
       if (!replyStatus.forward === false) {

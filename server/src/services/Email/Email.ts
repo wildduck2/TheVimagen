@@ -144,7 +144,6 @@ export class Email {
       // Execute all requests and preserve order
       const results = await Promise.all(threadsModifiedAsync)
       if (!results) return null
-      // console.log(results)
 
       return results
     } catch (error) {

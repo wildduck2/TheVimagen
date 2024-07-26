@@ -24,7 +24,7 @@ import {
 import { ToggleFavoriateButton } from '../ToggleFavoriateButton'
 import { TrashMutate } from '../TrashMutate'
 import { Icon } from '@/assets'
-import { useMarkAsRead } from '@/hooks'
+import { useMarkAsRead, useToggleFavoriate } from '@/hooks'
 import { IEmail } from 'gmail-api-parse-message-ts'
 import { UnknownAction } from 'redux'
 
@@ -32,7 +32,42 @@ export const ListItemWrapper = ({ children, items }: ListItemWrapperType) => {
   const selectedThread = useSelector((state: RootState) => state.email.selectedThread)
   const selectedThreads = useSelector((state: RootState) => state.email.selectedThreads)
 
-  const { startMutation } = useMarkAsRead({ marktype: 'READ', threads: items })
+  const { startMutation: startMarkAsRead } = useMarkAsRead({ marktype: 'READ', threads: items })
+  const { startMutation: startFavoriate } = useToggleFavoriate({ threads: items })
+
+  const actions: Record<string, (props: OnClickType) => void> = {
+    Reply: ({ dispatch, items }: OnClickType) => {
+      dispatch(getMultiReplyState({ alert: false, drawer: true }))
+      dispatch(getSelectedThreadsDispatch([items[0]]))
+    },
+    ReplyAll: ({ dispatch, items }: OnClickType) => {
+      dispatch(getMultiReplyState({ alert: false, drawer: true }))
+      dispatch(getSelectedThreadsDispatch([items[0]]))
+      dispatch(getReplyStatusState({ replyAll: true, forward: false, attachment: false }))
+    },
+    Forward: ({ dispatch, items }: OnClickType) => {
+      dispatch(getMultiReplyState({ alert: false, drawer: true }))
+      dispatch(getReplyStatusState({ replyAll: false, forward: true, attachment: false }))
+      dispatch(getSelectedThreadsDispatch([items[0]]))
+    },
+    ForwardAttachment: ({ dispatch, items }: OnClickType) => {
+      dispatch(getMultiReplyState({ alert: false, drawer: true }))
+      dispatch(getSelectedThreadsDispatch([items[0]]))
+      dispatch(getReplyStatusState({ replyAll: false, forward: true, attachment: true }))
+    },
+    Archive: () => {
+      startFavoriate.mutate()
+    },
+    Trash: () => {
+      startFavoriate.mutate()
+    },
+    Star: () => {
+      startFavoriate.mutate()
+    },
+    Read: () => {
+      startMarkAsRead.mutate()
+    },
+  }
 
   const dispatch = useDispatch()
 
@@ -76,7 +111,7 @@ export const ListItemWrapper = ({ children, items }: ListItemWrapperType) => {
                 onClick={() => {
                   if (selectedThread !== items) {
                     if (items[0].labelIds.includes('UNREAD')) {
-                      startMutation.mutate()
+                      startMarkAsRead.mutate()
                     }
                     dispatch(getSelectedEmailDispatch(items))
                   }
@@ -88,14 +123,14 @@ export const ListItemWrapper = ({ children, items }: ListItemWrapperType) => {
           </div>
         </ContextMenuTrigger>
         <ContextMenuContent>
-          {emailItemContextMenu.map((item, idx) => {
+          {emailItemContextMenu.map((item, idx1) => {
             return (
-              <React.Fragment key={idx}>
-                {item.map(({ shortcut, icon, label, onClick }, idx) => (
+              <React.Fragment key={idx1}>
+                {item.map(({ shortcut, icon, label, key }, idx2) => (
                   <ContextMenuItem
-                    key={idx}
+                    key={idx2}
                     className="gap-5 w-full"
-                    onClick={() => onClick({ dispatch, items })}
+                    onClick={() => actions[key]({ dispatch, items })}
                   >
                     <div className="flex items-center gap-4 whitespace-nowrap">
                       {icon({ className: 'size-4' })}
@@ -104,7 +139,7 @@ export const ListItemWrapper = ({ children, items }: ListItemWrapperType) => {
                     <ContextMenuShortcut>{shortcut}</ContextMenuShortcut>
                   </ContextMenuItem>
                 ))}
-                {idx !== emailItemContextMenu.length - 1 && <ContextMenuSeparator />}
+                {idx1 !== emailItemContextMenu.length - 1 && <ContextMenuSeparator />}
               </React.Fragment>
             )
           })}
@@ -121,51 +156,48 @@ export const emailItemContextMenu = [
     {
       icon: Icon.reply,
       label: 'Reply',
+      key: 'Reply',
       shortcut: '⌘ar',
-      onClick: ({ dispatch, items }: OnClickType) => {
-        dispatch(getMultiReplyState({ alert: false, drawer: true }))
-        dispatch(getSelectedThreadsDispatch([items[0]]))
-      },
     },
 
     {
       icon: Icon.replyAll,
       label: 'Reply all',
+      key: 'ReplyAll',
       shortcut: '⌘ara',
-      onClick: ({ dispatch, items }: OnClickType) => {
-        dispatch(getMultiReplyState({ alert: false, drawer: true }))
-        dispatch(getSelectedThreadsDispatch([items[0]]))
-        dispatch(getReplyStatusState({ replyAll: true, forward: false, attachment: false }))
-      },
     },
     {
       icon: Icon.forward,
       label: 'Forward',
+      key: 'Forward',
       shortcut: '⌘af',
-      onClick: ({ dispatch, items }: OnClickType) => {
-        dispatch(getMultiReplyState({ alert: false, drawer: true }))
-        dispatch(getSelectedThreadsDispatch([items[0]]))
-        dispatch(getReplyStatusState({ replyAll: false, forward: true, attachment: false }))
-      },
     },
     {
       icon: Icon.file,
       label: 'Forward as attachment',
+      key: 'ForwardAttachment',
       shortcut: '⌘afa',
-      onClick: ({ dispatch, items }: OnClickType) => {
-        dispatch(getMultiReplyState({ alert: false, drawer: true }))
-        dispatch(getSelectedThreadsDispatch([items[0]]))
-        dispatch(getReplyStatusState({ replyAll: false, forward: true, attachment: true }))
-      },
     },
   ],
   [
     {
-      icon: Icon.fiStar,
+      icon: Icon.archive,
       label: 'Archive',
+      key: 'Archive',
       shortcut: '⌘aa',
     },
-
+    {
+      icon: Icon.archiveX,
+      label: 'Trash',
+      key: 'Trash',
+      shortcut: '⌘ax',
+    },
+    {
+      icon: Icon.fiStar,
+      label: 'Add to favorites',
+      key: 'Star',
+      shortcut: '⌘ad',
+    },
     {
       icon: Icon.trash2,
       label: 'Delete',
@@ -174,11 +206,13 @@ export const emailItemContextMenu = [
     {
       icon: Icon.emailOpen,
       label: 'Make as read',
+      key: 'Read',
       shortcut: '⌘ar',
     },
     {
       icon: Icon.clock,
       label: 'Snooze',
+      key: 'Snooze',
       shortcut: '⌘as',
     },
     {

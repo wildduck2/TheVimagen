@@ -78,7 +78,11 @@ export const EmailDisplayInbox = ({ selectedThread }: EmailDisplayInboxProps) =>
       </ScrollArea>
       <Separator className="mt-auto" />
       <div className="email__display__inbox__bottom">
-        <form onSubmit={(e) => invokeReply(e, editorContentRef.current, replyToEmails.current, selectedThread)}>
+        <form
+          onSubmit={(e) =>
+            invokeReply({ e, body: editorContentRef.current, emails: replyToEmails.current, selectedThread })
+          }
+        >
           <div>
             <NotionMinimalTextEditor
               name={valid ? selectedThread[0].from.name : 'Someone'}

@@ -231,12 +231,12 @@ const EmailReplyMultiChildrenStates = ({
               <Button
                 size="sm"
                 onClick={(e) =>
-                  invokeReply(
+                  invokeReply({
                     e,
-                    currentState.label === 'reply' ? editorContent.reply : editorContent.editSubject,
-                    replyToEmails.current,
-                    [thread],
-                  )
+                    body: currentState.label === 'reply' ? editorContent.reply : editorContent.editSubject,
+                    emails: replyToEmails.current,
+                    selectedThread: [thread],
+                  })
                 }
               >
                 Send
