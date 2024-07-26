@@ -7,7 +7,7 @@ import { queryClient } from '@/main'
 import { PaginatedMessages } from '../TrashMutate'
 import { ToggleToolTipSpanWrapper } from '../..'
 import { DeleteMutateProps } from './DeleteMutate.types'
-import { getSelectedEmailIdDispatch } from '@/context'
+import { getSelectedEmailDispatch } from '@/context'
 import { useDispatch } from 'react-redux'
 
 export const DeleteMutate = ({ disabled, threads, tip }: DeleteMutateProps) => {
@@ -30,7 +30,7 @@ export const DeleteMutate = ({ disabled, threads, tip }: DeleteMutateProps) => {
         }
       })
       toast.success(`Thread has been Deleted!`)
-      dispatch(getSelectedEmailIdDispatch([]))
+      dispatch(getSelectedEmailDispatch([]))
     },
   })
   return (

@@ -1,43 +1,51 @@
 import { StateType, ThreadsReplyContentRef } from '@/components/layouts'
 import { createDraftThread } from '@/utils'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { UserReplyMultiProps } from './useReplyMulti.types'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/context'
 
 export const useReplyMulti = ({ threads }: UserReplyMultiProps) => {
-    const [state, setState] = useState<StateType>({ alert: false, drawer: false })
-    const threadsReplyContentRef = useRef<ThreadsReplyContentRef[]>([])
-    const handleAlertCancel = useCallback(() => {
-        setState((prevState) => ({ ...prevState, alert: false, drawer: true }))
-    }, [])
+  const multiReply = useSelector((state: RootState) => state.email.multiReply)
+  const [state, setState] = useState<StateType>(multiReply)
+  const threadsReplyContentRef = useRef<ThreadsReplyContentRef[]>([])
 
-    const handleAlertContinue = useCallback(() => {
-        const hasContentInThreads = threadsReplyContentRef.current.some((threadContent) => {
-            const content = threadContent.content
-            return typeof content === 'string' && content.trim() !== ''
-        })
+  useEffect(() => {
+    setState(multiReply)
+  }, [multiReply])
 
-        setState((prevState) => ({ ...prevState, alert: false, drawer: false }))
-        if (hasContentInThreads) createDraftThread({ threadsReplyContent: threadsReplyContentRef.current })
+  const handleAlertCancel = useCallback(() => {
+    setState((prevState) => ({ ...prevState, alert: false, drawer: true }))
+  }, [])
 
-        threadsReplyContentRef.current = []
-    }, [])
+  const handleAlertContinue = useCallback(() => {
+    const hasContentInThreads = threadsReplyContentRef.current.some((threadContent) => {
+      const content = threadContent.content
+      return typeof content === 'string' && content.trim() !== ''
+    })
 
-    const handleDrawerOpenChange = useCallback(
-        (drawerState: boolean) => {
-            setState(() => ({
-                alert: drawerState && threads.length > 0 ? false : true,
-                drawer: drawerState,
-            }))
-        },
-        [threads.length],
-    )
+    setState((prevState) => ({ ...prevState, alert: false, drawer: false }))
+    if (hasContentInThreads) createDraftThread({ threadsReplyContent: threadsReplyContentRef.current })
 
-    return {
-        state,
-        setState,
-        handleDrawerOpenChange,
-        handleAlertContinue,
-        handleAlertCancel,
-        threadsReplyContentRef,
-    }
+    threadsReplyContentRef.current = []
+  }, [])
+
+  const handleDrawerOpenChange = useCallback(
+    (drawerState: boolean) => {
+      setState(() => ({
+        alert: drawerState && threads.length > 0 ? false : true,
+        drawer: drawerState,
+      }))
+    },
+    [threads.length],
+  )
+
+  return {
+    state,
+    setState,
+    handleDrawerOpenChange,
+    handleAlertContinue,
+    handleAlertCancel,
+    threadsReplyContentRef,
+  }
 }

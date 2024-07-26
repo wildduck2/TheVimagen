@@ -7,7 +7,7 @@ import { getCookie, modifyThread } from '@/utils'
 import { JunkMutateType } from './JunkMutate.types'
 import { PaginatedMessages } from '../TrashMutate'
 import { QueryKeyMutateType, ToggleToolTipSpanWrapper } from '../..'
-import { getSelectedEmailIdDispatch } from '@/context'
+import { getSelectedEmailDispatch } from '@/context'
 import { useDispatch } from 'react-redux'
 
 export const JunkMutate = ({ disabled, threads, tip }: JunkMutateType) => {
@@ -31,7 +31,7 @@ export const JunkMutate = ({ disabled, threads, tip }: JunkMutateType) => {
         }
       })
       toast.success(`Thread has been moved to Junk!`)
-      dispatch(getSelectedEmailIdDispatch([]))
+      dispatch(getSelectedEmailDispatch([]))
     },
     onError: () => {
       toast.error(`Error: Thread has not been moved to Junk!`)

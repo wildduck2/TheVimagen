@@ -44,7 +44,7 @@ export const EmailSelectionBar = () => {
       <Separator orientation="vertical" />
       <ArchiveMutate
         disabled={selectedThreads.length === 0}
-        threads={threadsFetched ? threadsFetched : []}
+        threadIds={selectedThreadsIds}
         tip="Archive"
       />
       <Separator orientation="vertical" />

@@ -2,7 +2,9 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import {
-  getSelectedEmailIdDispatch,
+  getMultiReplyState,
+  getReplyStatusState,
+  getSelectedEmailDispatch,
   getSelectedThreadsDispatch,
   removeSelectedThreadsDispatch,
   RootState,
@@ -23,6 +25,8 @@ import { ToggleFavoriateButton } from '../ToggleFavoriateButton'
 import { TrashMutate } from '../TrashMutate'
 import { Icon } from '@/assets'
 import { useMarkAsRead } from '@/hooks'
+import { IEmail } from 'gmail-api-parse-message-ts'
+import { UnknownAction } from 'redux'
 
 export const ListItemWrapper = ({ children, items }: ListItemWrapperType) => {
   const selectedThread = useSelector((state: RootState) => state.email.selectedThread)
@@ -74,7 +78,7 @@ export const ListItemWrapper = ({ children, items }: ListItemWrapperType) => {
                     if (items[0].labelIds.includes('UNREAD')) {
                       startMutation.mutate()
                     }
-                    dispatch(getSelectedEmailIdDispatch(items))
+                    dispatch(getSelectedEmailDispatch(items))
                   }
                 }}
               >
@@ -87,11 +91,16 @@ export const ListItemWrapper = ({ children, items }: ListItemWrapperType) => {
           {emailItemContextMenu.map((item, idx) => {
             return (
               <React.Fragment key={idx}>
-                {item.map((mini, idx) => (
-                  <ContextMenuItem key={idx}>
-                    {mini.icon({ className: 'size-4 mr-2' })}
-                    {mini.label}
-                    <ContextMenuShortcut>{mini.shortcut}</ContextMenuShortcut>
+                {item.map(({ shortcut, icon, label, onClick }, idx) => (
+                  <ContextMenuItem
+                    key={idx}
+                    onClick={() => onClick({ dispatch, items })}
+                  >
+                    <div className="flex items-center gap-4">
+                      {icon({ className: 'size-4' })}
+                      {label}
+                    </div>
+                    <ContextMenuShortcut>{shortcut}</ContextMenuShortcut>
                   </ContextMenuItem>
                 ))}
                 {idx !== emailItemContextMenu.length - 1 && <ContextMenuSeparator />}
@@ -104,81 +113,92 @@ export const ListItemWrapper = ({ children, items }: ListItemWrapperType) => {
   )
 }
 
+export type OnClickType = { dispatch: React.Dispatch<UnknownAction>; items: IEmail[] }
+
 export const emailItemContextMenu = [
   [
     {
       icon: Icon.reply,
       label: 'Reply',
       shortcut: '⌘ar',
+      onClick: ({ dispatch, items }: OnClickType) => {
+        dispatch(getMultiReplyState({ alert: false, drawer: true }))
+        dispatch(getSelectedThreadsDispatch([items[0]]))
+      },
     },
 
     {
       icon: Icon.replyAll,
       label: 'Reply all',
       shortcut: '⌘ara',
+      onClick: ({ dispatch, items }: OnClickType) => {
+        dispatch(getMultiReplyState({ alert: false, drawer: true }))
+        dispatch(getSelectedThreadsDispatch([items[0]]))
+        dispatch(getReplyStatusState({ replyAll: true, forward: false }))
+      },
     },
-    {
-      icon: Icon.forward,
-      label: 'Forward',
-      shortcut: '⌘af',
-    },
-    {
-      icon: Icon.file,
-      label: 'Forward as attachment',
-      shortcut: '⌘afa',
-    },
+    // {
+    //   icon: Icon.forward,
+    //   label: 'Forward',
+    //   shortcut: '⌘af',
+    // },
+    // {
+    //   icon: Icon.file,
+    //   label: 'Forward as attachment',
+    //   shortcut: '⌘afa',
+    // },
   ],
   [
-    {
-      icon: Icon.fiStar,
-      label: 'Archive',
-      shortcut: '⌘aa',
-    },
-
-    {
-      icon: Icon.trash2,
-      label: 'Delete',
-      shortcut: '⌘ad',
-    },
-    {
-      icon: Icon.emailOpen,
-      label: 'Make as read',
-      shortcut: '⌘ar',
-    },
-    {
-      icon: Icon.clock,
-      label: 'Snooze',
-      shortcut: '⌘as',
-    },
-    {
-      icon: Icon.clipboardChecked,
-      label: 'Add to Tasks',
-      shortcut: '⌘at',
-    },
-  ],
-  [
-    {
-      icon: Icon.folderMove,
-      label: 'Move to',
-      shortcut: '⌘ac',
-    },
-
-    {
-      icon: Icon.tag,
-      label: 'Label as',
-      shortcut: '⌘al',
-    },
-    {
-      icon: Icon.notfOff,
-      label: 'Mute',
-      shortcut: '⌘am',
-    },
-  ],
-  [
-    {
-      icon: Icon.popup,
-      label: 'Open in popup',
-      shortcut: '⌘op',
-    },
+    //   {
+    //     icon: Icon.fiStar,
+    //     label: 'Archive',
+    //     shortcut: '⌘aa',
+    //   },
+    //
+    //   {
+    //     icon: Icon.trash2,
+    //     label: 'Delete',
+    //     shortcut: '⌘ad',
+    //   },
+    //   {
+    //     icon: Icon.emailOpen,
+    //     label: 'Make as read',
+    //     shortcut: '⌘ar',
+    //   },
+    //   {
+    //     icon: Icon.clock,
+    //     label: 'Snooze',
+    //     shortcut: '⌘as',
+    //   },
+    //   {
+    //     icon: Icon.clipboardChecked,
+    //     label: 'Add to Tasks',
+    //     shortcut: '⌘at',
+    //   },
+    // ],
+    // [
+    //   {
+    //     icon: Icon.folderMove,
+    //     label: 'Move to',
+    //     shortcut: '⌘ac',
+    //   },
+    //
+    //   {
+    //     icon: Icon.tag,
+    //     label: 'Label as',
+    //     shortcut: '⌘al',
+    //   },
+    //   {
+    //     icon: Icon.notfOff,
+    //     label: 'Mute',
+    //     shortcut: '⌘am',
+    //   },
+    // ],
+    // [
+    //   {
+    //     icon: Icon.popup,
+    //     label: 'Open in popup',
+    //     shortcut: '⌘op',
+    //   },
   ],
 ]
