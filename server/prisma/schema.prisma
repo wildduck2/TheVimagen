@@ -14,11 +14,11 @@ datasource db {
 }
 
 model User {
-    id                 String        @id @default(uuid()) @db.Char(36)
+    id                 String          @id @default(uuid()) @db.Char(36)
     first_name         String?
     last_name          String?
-    user_name          String        @unique
-    email              String        @unique
+    user_name          String          @unique
+    email              String          @unique
     address            Json?
     age                Int?
     bio                String?
@@ -29,13 +29,14 @@ model User {
     lastLogin_ip       String?
     password           String
     verified_email     Boolean?
-    created_at         DateTime      @default(now())
-    updated_at         DateTime      @updatedAt
+    created_at         DateTime        @default(now())
+    updated_at         DateTime        @updatedAt
     OAuthToken         OAuthToken?
     EmailLog           EmailLog?
     sessions           Session?
     Otp                Otp?
     recoveryData       RecoveryData?
+    SnoozedThread      SnoozedThread[]
 
     @@index([user_name, email], map: "_IDX_UESR")
 }
@@ -91,4 +92,23 @@ model Otp {
     created_at DateTime @default(now())
     expires_at DateTime
     user       User?    @relation(fields: [user_id], references: [id])
+
+    @@index([expires_at], map: "IDX_otp_expires_at")
+}
+
+model SnoozedThread {
+    id           String   @id @default(uuid()) @db.Char(36)
+    user_id      String
+    thread_id    String   @unique
+    snooze_until DateTime
+    status       Status   @default(pending)
+    created_at   DateTime @default(now())
+    user         User?    @relation(fields: [user_id], references: [id])
+
+    @@index([snooze_until], map: "IDX_snoozed_thread")
+}
+
+enum Status {
+    pending
+    notified
 }
