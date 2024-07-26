@@ -12,6 +12,7 @@ import {
   JunkMutate,
   ResizablePanel,
   Separator,
+  ToggleToolTipButtonWrapper,
   TrashMutate,
 } from '@/components/ui'
 import { Icon } from '@/assets'
@@ -19,11 +20,13 @@ import { RootState } from '@/context'
 
 import { EmailDisplayInbox } from '../EmailDisplayInbox'
 import { EmailDisplayProps } from './EmailDisplay.types'
+import { useThreadAction } from '@/hooks'
 
 export const emailDisplayButtonData = ['Archive', 'Move to junk', 'Move to trash']
 
 export function EmailDisplay({ defaultLayout = 37 }: EmailDisplayProps) {
   const selectedThread = useSelector((state: RootState) => state.email.selectedThread)
+  const { selectedThreads, dispatch, actions, selectedThread: selected } = useThreadAction({ items: selectedThread })
 
   return (
     <ResizablePanel
@@ -58,22 +61,24 @@ export function EmailDisplay({ defaultLayout = 37 }: EmailDisplayProps) {
             <EmailSnoozeButton selectedThread={selectedThread} />
           </div>
           <div className="ml-auto flex items-center gap-2">
-            <EmailDisplayButton
-              selectedThread={selectedThread}
-              label="Reply"
-              icon={<Icon.reply className="h-4 w-4" />}
+            <ToggleToolTipButtonWrapper
+              disabled={selectedThread.length === 0}
+              tip="Reply"
+              onClick={() => actions.Reply({ dispatch, items: selectedThread })}
+              children={<Icon.forward className="h-4 w-4" />}
             />
 
-            <EmailDisplayButton
-              selectedThread={selectedThread}
-              label="Reply all"
-              icon={<Icon.replyAll className="h-4 w-4" />}
+            <ToggleToolTipButtonWrapper
+              disabled={selectedThread.length === 0}
+              tip="Reply All"
+              onClick={() => actions.ReplyAll({ dispatch, items: selectedThread })}
+              children={<Icon.replyAll className="h-4 w-4" />}
             />
-
-            <EmailDisplayButton
-              selectedThread={selectedThread}
-              label="Forward"
-              icon={<Icon.forward className="h-4 w-4" />}
+            <ToggleToolTipButtonWrapper
+              disabled={selectedThread.length === 0}
+              tip="Forward"
+              onClick={() => actions.Forward({ dispatch, items: selectedThread })}
+              children={<Icon.forward className="h-4 w-4" />}
             />
           </div>
           <Separator
@@ -92,8 +97,8 @@ export function EmailDisplay({ defaultLayout = 37 }: EmailDisplayProps) {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem>Mark as unread</DropdownMenuItem>
-              <DropdownMenuItem>Star thread</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => actions.Unread()}>Mark as unread</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => actions.Star()}>Move to Favorites</DropdownMenuItem>
               <DropdownMenuItem>Add label</DropdownMenuItem>
               <DropdownMenuItem>Mute thread</DropdownMenuItem>
             </DropdownMenuContent>

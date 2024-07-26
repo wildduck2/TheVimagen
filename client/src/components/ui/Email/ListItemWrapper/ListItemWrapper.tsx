@@ -24,62 +24,13 @@ import {
 import { ToggleFavoriateButton } from '../ToggleFavoriateButton'
 import { TrashMutate } from '../TrashMutate'
 import { Icon } from '@/assets'
-import { useArchiveMutate, useDeleteMutate, useMarkAsRead, useToggleFavoriate, useTrashMutate } from '@/hooks'
+import { useMarkAsRead, useThreadAction } from '@/hooks'
 import { IEmail } from 'gmail-api-parse-message-ts'
 import { UnknownAction } from 'redux'
 
 export const ListItemWrapper = ({ children, items }: ListItemWrapperType) => {
-  const selectedThread = useSelector((state: RootState) => state.email.selectedThread)
-  const selectedThreads = useSelector((state: RootState) => state.email.selectedThreads)
-
-  const { startMutation: startMarkAsRead } = useMarkAsRead({ marktype: 'READ', threads: items })
-  const { startMutation: startFavoriate } = useToggleFavoriate({ threads: items })
-  const { startMutation: startTrash } = useTrashMutate({ threads: items })
-  const { startMutation: startArchive } = useArchiveMutate({ threads: items })
-  const { startMutation: startDelete } = useDeleteMutate({ threads: items })
-
-  const actions: Record<string, (props: OnClickType) => void> = {
-    Reply: ({ dispatch, items }: OnClickType) => {
-      dispatch(getMultiReplyState({ alert: false, drawer: true }))
-      dispatch(getSelectedThreadsDispatch([items[0]]))
-    },
-    ReplyAll: ({ dispatch, items }: OnClickType) => {
-      dispatch(getMultiReplyState({ alert: false, drawer: true }))
-      dispatch(getSelectedThreadsDispatch([items[0]]))
-      dispatch(getReplyStatusState({ replyAll: true, forward: false, attachment: false }))
-    },
-    Forward: ({ dispatch, items }: OnClickType) => {
-      dispatch(getMultiReplyState({ alert: false, drawer: true }))
-      dispatch(getReplyStatusState({ replyAll: false, forward: true, attachment: false }))
-      dispatch(getSelectedThreadsDispatch([items[0]]))
-    },
-    ForwardAttachment: ({ dispatch, items }: OnClickType) => {
-      dispatch(getMultiReplyState({ alert: false, drawer: true }))
-      dispatch(getSelectedThreadsDispatch([items[0]]))
-      dispatch(getReplyStatusState({ replyAll: false, forward: true, attachment: true }))
-    },
-    Archive: () => {
-      startArchive.mutate()
-    },
-    Trash: () => {
-      startTrash.mutate()
-    },
-    Star: () => {
-      if (!items[0].labelIds.includes('STARRED')) {
-        startFavoriate.mutate()
-      }
-    },
-    Delete: () => {
-      startDelete.mutate()
-    },
-    Read: () => {
-      if (items[0].labelIds.includes('UNREAD')) {
-        startMarkAsRead.mutate()
-      }
-    },
-  }
-
-  const dispatch = useDispatch()
+  const { selectedThreads, dispatch, actions, selectedThread } = useThreadAction({ items })
+  const { startMutation } = useMarkAsRead({ marktype: 'READ', threads: items })
 
   return (
     <>
@@ -121,7 +72,7 @@ export const ListItemWrapper = ({ children, items }: ListItemWrapperType) => {
                 onClick={() => {
                   if (selectedThread !== items) {
                     if (items[0].labelIds.includes('UNREAD')) {
-                      startMarkAsRead.mutate()
+                      startMutation.mutate()
                     }
                     dispatch(getSelectedEmailDispatch(items))
                   }
@@ -140,7 +91,7 @@ export const ListItemWrapper = ({ children, items }: ListItemWrapperType) => {
                   <ContextMenuItem
                     key={idx2}
                     className="gap-5 w-full"
-                    onClick={() => actions[key]({ dispatch, items })}
+                    onClick={() => actions[key as keyof typeof actions]({ dispatch, items })}
                   >
                     <div className="flex items-center gap-4 whitespace-nowrap">
                       {icon({ className: 'size-4' })}
