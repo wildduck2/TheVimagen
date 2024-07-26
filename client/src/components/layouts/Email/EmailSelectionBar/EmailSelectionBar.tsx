@@ -44,45 +44,45 @@ export const EmailSelectionBar = () => {
       <Separator orientation="vertical" />
       <ArchiveMutate
         disabled={selectedThreads.length === 0}
-        threadIds={selectedThreadsIds}
+        threads={selectedThreads ? selectedThreads : []}
         tip="Archive"
       />
       <Separator orientation="vertical" />
       <JunkMutate
         disabled={selectedThreads.length === 0}
-        threads={threadsFetched ? threadsFetched : []}
+        threads={selectedThreads ? selectedThreads : []}
         tip="Move to Junk"
       />
       <Separator orientation="vertical" />
       <ToggleFavoriateButton
         disabled={selectedThreads.length === 0}
-        threads={threadsFetched ? threadsFetched : []}
+        threads={selectedThreads ? selectedThreads : []}
         tip="Star"
       />
       <Separator orientation="vertical" />
       <TrashMutate
         disabled={selectedThreads.length === 0}
-        threads={threadsFetched ? threadsFetched : []}
+        threads={selectedThreads ? selectedThreads : []}
         tip="Move to Trash"
       />
       <Separator orientation="vertical" />
       <DeleteMutate
         disabled={selectedThreads.length === 0}
-        threads={threadsFetched ? threadsFetched : []}
+        threads={selectedThreads ? selectedThreads : []}
         tip="Delete"
       />
       <Separator orientation="vertical" />
       <MarkAsReadMutate
         marktype="READ"
         disabled={selectedThreads.length === 0}
-        threads={threadsFetched ? threadsFetched : []}
+        threads={selectedThreads ? selectedThreads : []}
         tip="Mark as read"
       />
       <Separator orientation="vertical" />
       <MarkAsReadMutate
         marktype="UNREAD"
         disabled={selectedThreads.length === 0}
-        threads={threadsFetched ? threadsFetched : []}
+        threads={selectedThreads ? selectedThreads : []}
         tip="Mark as Unread"
       />
       <Separator orientation="vertical" />

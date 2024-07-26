@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {
   initialStateEmailTypes,
+  MultiReplyAction,
+  MultiReplyState,
+  ReplyStatusAction,
+  ReplyStatusState,
   SearchInputIdAction,
   SearchInputIdState,
   SelectedEmailDataAction,
@@ -16,6 +20,8 @@ const initialState: initialStateEmailTypes = {
   selectedThreads: [],
   searchInput: '',
   threadsFetched: [],
+  multiReply: { alert: false, drawer: false },
+  replyStatus: { replyAll: false, forward: false, attachment: false },
 }
 
 export const emailSlice = createSlice({
@@ -23,7 +29,7 @@ export const emailSlice = createSlice({
   initialState,
   reducers: {
     //NOTE: getting email clicked
-    getSelectedEmailIdDispatch: (state: SelectedEmailDataState, action: SelectedEmailDataAction) => {
+    getSelectedEmailDispatch: (state: SelectedEmailDataState, action: SelectedEmailDataAction) => {
       state.selectedThread = action.payload
     },
 
@@ -36,7 +42,7 @@ export const emailSlice = createSlice({
     getSelectedThreadsDispatch: (state: SelectedThreadsState, action: SelectedThreadsAction) => {
       const threadIds = action.payload
       threadIds.forEach((threadId) => {
-        if (!state.selectedThreads.includes(threadId)) {
+        if (!state.selectedThreads.some((item) => item.threadId === threadId.threadId)) {
           state.selectedThreads.push(threadId)
         }
       })
@@ -52,15 +58,27 @@ export const emailSlice = createSlice({
     getThreadsFetchedDispatched: (state: ThreadsFetchedState, action: ThreadsFetchedAction) => {
       state.threadsFetched = action.payload
     },
+
+    //NOTE: gettign threads fetched ids
+    getMultiReplyState: (state: MultiReplyState, action: MultiReplyAction) => {
+      state.multiReply = action.payload
+    },
+
+    //NOTE: getting reply all state
+    getReplyStatusState: (state: ReplyStatusState, action: ReplyStatusAction) => {
+      state.replyStatus = action.payload
+    },
   },
 })
 
 export const {
-  getSelectedEmailIdDispatch,
+  getSelectedEmailDispatch,
   getSearchInput,
   getSelectedThreadsDispatch,
   removeSelectedThreadsDispatch,
   getThreadsFetchedDispatched,
+  getMultiReplyState,
+  getReplyStatusState,
 } = emailSlice.actions
 
 export default emailSlice.reducer

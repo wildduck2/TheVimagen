@@ -1,0 +1,19 @@
+/*
+
+    This code is writen by Ahmed Ayob
+
+*/
+
+@use '../../../base' as *;
+@use '../../../utils' as u;
+
+/*
+
+    Toggle Tooltip Span Wrapper 
+    
+*/
+
+.toggle__tooltip__span__wrapper {
+  @include u.ghostButton();
+  @include u.buttonToolTip();
+}

@@ -7,10 +7,13 @@ import { getCookie, modifyThread } from '@/utils'
 import { JunkMutateType } from './JunkMutate.types'
 import { PaginatedMessages } from '../TrashMutate'
 import { QueryKeyMutateType, ToggleToolTipSpanWrapper } from '../..'
+import { getSelectedEmailDispatch } from '@/context'
+import { useDispatch } from 'react-redux'
 
 export const JunkMutate = ({ disabled, threads, tip }: JunkMutateType) => {
   const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
   const threadIds = threads && threads.map((item) => item.threadId)
+  const dispatch = useDispatch()
 
   const querykey: QueryKeyMutateType = { addLabelIds: ['SPAM'], removeLabelIds: ['INBOX'], threadIds }
   const startMutation = useMutation({
@@ -28,6 +31,7 @@ export const JunkMutate = ({ disabled, threads, tip }: JunkMutateType) => {
         }
       })
       toast.success(`Thread has been moved to Junk!`)
+      dispatch(getSelectedEmailDispatch([]))
     },
     onError: () => {
       toast.error(`Error: Thread has not been moved to Junk!`)

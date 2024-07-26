@@ -2,19 +2,18 @@ import axios from 'axios'
 import {
   FetchEachOneWithIdType,
   GetIdsFromGmailAPIType,
+  ThreadCreateHandlerType,
   ThreadModifyGroupLabelResType,
   ThreadModifyGroupLabelType,
   ThreadModifyGroupRes,
   ThreadModifyGroupType,
-  ThreadModifyResType,
-  ThreadModifyType,
   ThreadReplyRes,
   ThreadReplyType,
   ThreadTrashType
 } from './Email.type'
 import { MessageType, ThreadResType } from 'controllers'
 import { GMAIL_URL } from '../../constants'
-import base64url from 'base64url'
+import { i } from 'vitest/dist/reporters-yx5ZTtEV'
 
 export class Email {
   constructor() {}
@@ -105,6 +104,7 @@ export class Email {
     }
   }
 
+  //NOTE: full
   static async threadModifyGroupLabel({
     distnation,
     access_token,
@@ -135,8 +135,6 @@ export class Email {
           )
           if (!data) return null
 
-          // console.log(data)
-
           return data
         } catch (error) {
           return null
@@ -146,7 +144,6 @@ export class Email {
       // Execute all requests and preserve order
       const results = await Promise.all(threadsModifiedAsync)
       if (!results) return null
-      // console.log(results)
 
       return results
     } catch (error) {
@@ -154,93 +151,89 @@ export class Email {
     }
   }
 
-  static async threadTrash({ id, distnation, access_token }: ThreadTrashType) {
-    try {
-      const { data } = await axios.post<ThreadModifyResType>(
-        `${GMAIL_URL}${distnation}`,
-        {
-          id
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-            'Content-Type': 'application/json'
-          }
-        }
-      )
-      console.log(data)
-
-      if (!data) return null
-
-      return data
-    } catch (error) {
-      return null
-    }
-  }
-
+  //NOTE: full
   static async threadReply({
     access_token,
     distnation,
-    threadId,
-    encodedMessage
+    encodedMessages
   }: ThreadReplyType) {
     try {
-      const { data } = await axios.post<Promise<ThreadReplyRes>>(
-        `${GMAIL_URL}${distnation}`,
-        {
-          raw: encodedMessage,
-          threadId: threadId
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-            'Content-Type': 'application/json'
+      const threadsSentAsync = encodedMessages.map(
+        async ({ encodedMessage, threadId }) => {
+          try {
+            const { data } = await axios.post<Promise<ThreadReplyRes>>(
+              `${GMAIL_URL}${distnation}`,
+              {
+                raw: encodedMessage,
+                threadId
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${access_token}`,
+                  'Content-Type': 'application/json'
+                }
+              }
+            )
+            if (!data) return null
+
+            return data
+          } catch (error) {
+            console.log(error)
+            return null
           }
         }
       )
-      if (!data) return null
-
-      return data
-    } catch (error) {
-      return null
-    }
-  }
-
-  static async threadModifyGroup({
-    access_token,
-    distnation,
-    threadIds,
-    actionType
-  }: ThreadModifyGroupType): Promise<(ThreadModifyGroupRes | null)[] | null> {
-    try {
-      const threadsModifiedAsync = threadIds.map(async (id) => {
-        try {
-          const { data } = await axios.post<ThreadModifyGroupRes>(
-            `${GMAIL_URL}${distnation}${id}${actionType}`,
-            {
-              // addLabelIds: ['INBOX']
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${access_token}`,
-                'Content-Type': 'application/json; charset=UTF-8'
-              }
-            }
-          )
-          if (!data) return null
-
-          return data
-        } catch (error) {
-          return null
-        }
-      })
 
       // Execute all requests and preserve order
-      const results = await Promise.all(threadsModifiedAsync)
+      const results = await Promise.all(threadsSentAsync)
       if (!results) return null
 
       return results
     } catch (error) {
+      console.log(error)
+      return null
+    }
+  }
+
+  static async threadCreateThreadHandler({
+    access_token,
+    distnation,
+    encodedMessages
+  }: ThreadCreateHandlerType) {
+    try {
+      const draftsRequests = encodedMessages.map(
+        async ({ encodedMessage, email, threadId }) => {
+          try {
+            const { data } = await axios.post<ThreadModifyGroupRes>(
+              `${GMAIL_URL}${distnation}`,
+              {
+                message: {
+                  raw: encodedMessage,
+                  threadId: threadId
+                }
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${access_token}`,
+                  'Content-Type': 'application/json; charset=UTF-8'
+                }
+              }
+            )
+            if (!data) return null
+            return data || true
+          } catch (error) {
+            return null
+          }
+        }
+      )
+
+      // Execute all requests and preserve order
+      const results = await Promise.all(draftsRequests)
+      if (!results) return null
+
+      return results
+    } catch (error) {
+      // console.log(error)
       return null
     }
   }

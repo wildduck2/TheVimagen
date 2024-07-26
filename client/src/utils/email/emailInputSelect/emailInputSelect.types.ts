@@ -1,6 +1,5 @@
 export type HandleAddEmailSubmitProps = {
-  e: React.FormEvent<HTMLFormElement>
-  email: string
+  emailRef: React.MutableRefObject<HTMLInputElement>
   emails: string[]
   setEmails: React.Dispatch<React.SetStateAction<string[]>>
 }

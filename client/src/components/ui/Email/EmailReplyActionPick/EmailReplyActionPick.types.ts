@@ -6,4 +6,5 @@ export type EmailReplyActionPickProps = {
   thread: IEmail
   currentState: currentStateType
   onClick: ({ label, icon }: currentStateType) => void
+  replyToEmails: React.MutableRefObject<string[]>
 }

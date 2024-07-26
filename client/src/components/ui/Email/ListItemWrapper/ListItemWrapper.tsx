@@ -2,12 +2,14 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import {
-  getSelectedEmailIdDispatch,
+  getMultiReplyState,
+  getReplyStatusState,
+  getSelectedEmailDispatch,
   getSelectedThreadsDispatch,
   removeSelectedThreadsDispatch,
   RootState,
 } from '@/context'
-import { cn, getCookie } from '@/utils'
+import { cn } from '@/utils'
 import { ListItemWrapperType } from './ListItemWrapper.types'
 import {
   ContextMenu,
@@ -22,12 +24,13 @@ import {
 import { ToggleFavoriateButton } from '../ToggleFavoriateButton'
 import { TrashMutate } from '../TrashMutate'
 import { Icon } from '@/assets'
+import { useMarkAsRead, useThreadAction } from '@/hooks'
+import { IEmail } from 'gmail-api-parse-message-ts'
+import { UnknownAction } from 'redux'
 
 export const ListItemWrapper = ({ children, items }: ListItemWrapperType) => {
-  const selectedThread = useSelector((state: RootState) => state.email.selectedThread)
-  const selectedThreads = useSelector((state: RootState) => state.email.selectedThreads)
-
-  const dispatch = useDispatch()
+  const { selectedThreads, dispatch, actions, selectedThread } = useThreadAction({ items })
+  const { startMutation } = useMarkAsRead({ marktype: 'READ', threads: items })
 
   return (
     <>
@@ -67,7 +70,12 @@ export const ListItemWrapper = ({ children, items }: ListItemWrapperType) => {
                 key={items[0].id}
                 className={cn('email__list__wrapper__item__body__card')}
                 onClick={() => {
-                  selectedThread !== items && dispatch(getSelectedEmailIdDispatch(items))
+                  if (selectedThread !== items) {
+                    if (items[0].labelIds.includes('UNREAD')) {
+                      startMutation.mutate()
+                    }
+                    dispatch(getSelectedEmailDispatch(items))
+                  }
                 }}
               >
                 {children}
@@ -75,18 +83,24 @@ export const ListItemWrapper = ({ children, items }: ListItemWrapperType) => {
             </div>
           </div>
         </ContextMenuTrigger>
-        <ContextMenuContent className="w-64">
-          {emailItemContextMenu.map((item, idx) => {
+        <ContextMenuContent>
+          {emailItemContextMenu.map((item, idx1) => {
             return (
-              <React.Fragment key={idx}>
-                {item.map((mini, idx) => (
-                  <ContextMenuItem key={idx}>
-                    {mini.icon({ className: 'size-4 mr-2' })}
-                    {mini.label}
-                    <ContextMenuShortcut>{mini.shortcut}</ContextMenuShortcut>
+              <React.Fragment key={idx1}>
+                {item.map(({ shortcut, icon, label, key }, idx2) => (
+                  <ContextMenuItem
+                    key={idx2}
+                    className="gap-5 w-full"
+                    onClick={() => actions[key as keyof typeof actions]({ dispatch, items })}
+                  >
+                    <div className="flex items-center gap-4 whitespace-nowrap">
+                      {icon({ className: 'size-4' })}
+                      <span>{label}</span>
+                    </div>
+                    <ContextMenuShortcut>{shortcut}</ContextMenuShortcut>
                   </ContextMenuItem>
                 ))}
-                {idx !== emailItemContextMenu.length - 1 && <ContextMenuSeparator />}
+                {idx1 !== emailItemContextMenu.length - 1 && <ContextMenuSeparator />}
               </React.Fragment>
             )
           })}
@@ -96,50 +110,71 @@ export const ListItemWrapper = ({ children, items }: ListItemWrapperType) => {
   )
 }
 
+export type OnClickType = { dispatch: React.Dispatch<UnknownAction>; items: IEmail[] }
+
 export const emailItemContextMenu = [
   [
     {
       icon: Icon.reply,
       label: 'Reply',
+      key: 'Reply',
       shortcut: '⌘ar',
     },
 
     {
       icon: Icon.replyAll,
       label: 'Reply all',
+      key: 'ReplyAll',
       shortcut: '⌘ara',
     },
     {
       icon: Icon.forward,
       label: 'Forward',
+      key: 'Forward',
       shortcut: '⌘af',
     },
     {
       icon: Icon.file,
       label: 'Forward as attachment',
+      key: 'ForwardAttachment',
       shortcut: '⌘afa',
     },
   ],
   [
     {
-      icon: Icon.fiStar,
+      icon: Icon.archive,
       label: 'Archive',
+      key: 'Archive',
       shortcut: '⌘aa',
     },
-
+    {
+      icon: Icon.archiveX,
+      label: 'Trash',
+      key: 'Trash',
+      shortcut: '⌘ax',
+    },
+    {
+      icon: Icon.fiStar,
+      label: 'Add to favorites',
+      key: 'Star',
+      shortcut: '⌘ad',
+    },
     {
       icon: Icon.trash2,
       label: 'Delete',
+      key: 'Delete',
       shortcut: '⌘ad',
     },
     {
       icon: Icon.emailOpen,
       label: 'Make as read',
+      key: 'Read',
       shortcut: '⌘ar',
     },
     {
       icon: Icon.clock,
       label: 'Snooze',
+      key: 'Snooze',
       shortcut: '⌘as',
     },
     {

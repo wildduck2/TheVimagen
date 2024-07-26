@@ -71,6 +71,15 @@
 
     button {
       @include u.buttonToolTip();
+      background: none;
+    }
+
+    .toggle__tooltip__span__wrapper {
+      width: fit-content;
+
+      &:hover {
+        background: none !important;
+      }
     }
 
     span {

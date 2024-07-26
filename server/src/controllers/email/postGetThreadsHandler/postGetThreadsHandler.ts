@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express'
+import { simpleParser } from 'mailparser'
 import { OAuthToken } from '@prisma/client'
 import {
   postGetThreadsHandlerType,

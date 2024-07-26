@@ -1,4 +1,5 @@
+import { EncodedMessagesType } from '../postThreadDraftCreateHanlder'
+
 export type PostThreadReplyType = {
-  threadId: string
-  encodedMessage: string
+  encodedMessages: EncodedMessagesType[]
 }

@@ -19,7 +19,10 @@ export const MultiCheckboxWrapper = ({
           <Checkbox
             id="terms"
             checked={
-              data.length === dataCompare.length || data.length === dataCompare.length
+              data.length === dataCompare.length &&
+              data.length === dataCompare.length &&
+              dataCompare.length > 0 &&
+              data.length > 0
                 ? true
                 : data.length > 0 && data.length < dataCompare.length
                   ? 'indeterminate'

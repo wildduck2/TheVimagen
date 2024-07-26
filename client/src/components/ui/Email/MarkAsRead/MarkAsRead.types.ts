@@ -4,5 +4,5 @@ export type MarkAsReadMutateType = {
   threads: IEmail[]
   tip: string
   disabled?: boolean
-  marktype: string
+  marktype: 'READ' | 'UNREAD'
 }

@@ -8,8 +8,15 @@ import {
 import { emailReplyButtonOptions } from '@/constants/Email/MailData'
 import { cn } from '@/utils'
 import { EmailReplyActionPickProps } from './EmailReplyActionPick.types'
+import { useEffect, useState } from 'react'
 
-export const EmailReplyActionPick = ({ thread, currentState, onClick }: EmailReplyActionPickProps) => {
+export const EmailReplyActionPick = ({ thread, currentState, replyToEmails, onClick }: EmailReplyActionPickProps) => {
+  const [emails, setEmails] = useState([thread?.from.email])
+
+  useEffect(() => {
+    replyToEmails.current = emails
+  }, [emails])
+
   return (
     <>
       <div>
@@ -45,7 +52,10 @@ export const EmailReplyActionPick = ({ thread, currentState, onClick }: EmailRep
             </>
           }
         />
-        <EmailInputSelect email={thread.from.email} />
+        <EmailInputSelect
+          emails={emails}
+          setEmails={setEmails}
+        />
       </div>
     </>
   )

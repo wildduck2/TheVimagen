@@ -7,7 +7,9 @@ export const postThreadTrash: RequestHandler = async (req, res) => {
   const { access_token, oauth_id } = req.session.oauth_user_data as OAuthToken
   const { threadIds }: PostThreadTrashType = req.body
   try {
-    const data = await Email.threadModifyGroup({
+    const data = await Email.threadModifyGroupLabel({
+      addLabelIds: [],
+      removeLabelIds: [],
       access_token,
       distnation: `${oauth_id}/threads/`,
       threadIds,

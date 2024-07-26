@@ -1,6 +1,16 @@
 import { format } from 'date-fns'
 
-import { Avatar, AvatarFallback, AvatarImage, Button, Label, ScrollArea, Separator, Switch } from '@/components/ui'
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Button,
+  Label,
+  ReplyToWrapper,
+  ScrollArea,
+  Separator,
+  Switch,
+} from '@/components/ui'
 
 import { EmailDisplayInboxItem } from '../EmailDisplayInboxItem'
 import { NotionMinimalTextEditor } from '../../Notion'
@@ -11,7 +21,8 @@ import { useEmailReplyThread } from '@/hooks'
 const EmailDisplayInboxItemMemo = memo(EmailDisplayInboxItem)
 
 export const EmailDisplayInbox = ({ selectedThread }: EmailDisplayInboxProps) => {
-  const editorContentRef = useRef({ reply: '', editSubject: '' })
+  const editorContentRef = useRef('')
+  const replyToEmails = useRef<string[]>()
   const invokeReply = useEmailReplyThread()
 
   const valid = selectedThread.length
@@ -54,10 +65,10 @@ export const EmailDisplayInbox = ({ selectedThread }: EmailDisplayInboxProps) =>
       ) : null}
       <ScrollArea className="email__display__inbox__content">
         {valid ? (
-          selectedThread.map((item) => (
+          selectedThread.map((thread) => (
             <EmailDisplayInboxItemMemo
-              inbox={item}
-              key={item.id}
+              inbox={thread}
+              key={thread.id}
               single={selectedThread.length === 1 ? true : false}
             />
           ))
@@ -67,14 +78,17 @@ export const EmailDisplayInbox = ({ selectedThread }: EmailDisplayInboxProps) =>
       </ScrollArea>
       <Separator className="mt-auto" />
       <div className="email__display__inbox__bottom">
-        <form onSubmit={(e) => invokeReply(e, editorContentRef.current.reply, selectedThread)}>
+        <form
+          onSubmit={(e) =>
+            invokeReply({ e, body: editorContentRef.current, emails: replyToEmails.current, selectedThread })
+          }
+        >
           <div>
             <NotionMinimalTextEditor
               name={valid ? selectedThread[0].from.name : 'Someone'}
-              editoRef={editorContentRef}
+              editorContentRef={editorContentRef}
               onChange={() => {}}
-              valid={true}
-              type="reply"
+              valid={!valid ? false : true}
               content=""
             />
             <div>
@@ -82,16 +96,28 @@ export const EmailDisplayInbox = ({ selectedThread }: EmailDisplayInboxProps) =>
                 <Switch
                   id="mute"
                   aria-label="Mute thread"
-                  disabled={false}
+                  disabled={valid ? false : true}
                 />
                 Mute this thread
               </Label>
-              <Button
-                size="sm"
-                disabled={false}
-              >
-                Send
-              </Button>
+
+              <div>
+                {selectedThread[0] ? (
+                  <ReplyToWrapper
+                    thread={selectedThread[0]}
+                    replyToEmails={replyToEmails}
+                  />
+                ) : (
+                  <div />
+                )}
+
+                <Button
+                  size="sm"
+                  disabled={valid ? false : true}
+                >
+                  Send
+                </Button>
+              </div>
             </div>
           </div>
         </form>

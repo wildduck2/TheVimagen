@@ -1,13 +1,13 @@
-import { useTextmenuCommands, useTextmenuStates } from '@/hooks'
+import { useTextmenuCommands } from '@/hooks'
+import { HTMLAttributes } from 'react'
 
 export type MouseEvent = React.MouseEventHandler<HTMLButtonElement>
 
-export interface ToggleToolTipWrapperButtonProps {
-  variant?: 'link' | 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost'
-  children?: React.ReactNode
+export interface ToggleToolTipWrapperButtonProps extends HTMLAttributes<HTMLButtonElement> {
   tip?: string
-  onClick?: MouseEvent | keyof typeof useTextmenuCommands
-  value?: boolean | ReturnType<typeof useTextmenuStates>
-  disabled?: boolean
+  variant?: 'link' | 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost'
   side?: 'top' | 'left' | 'right' | 'bottom'
+  children?: React.ReactNode
+  onClick?: MouseEvent | keyof typeof useTextmenuCommands
+  disabled?: boolean
 }

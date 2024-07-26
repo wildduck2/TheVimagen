@@ -5,6 +5,18 @@ export interface initialStateEmailTypes {
   selectedThreads: IEmail[]
   searchInput: string
   threadsFetched: IEmail[]
+  multiReply: MultiReplyType
+  replyStatus: ReplyStatusType
+}
+export type ReplyStatusType = { replyAll: boolean; forward: boolean; attachment: boolean }
+export type MultiReplyType = { alert: boolean; drawer: boolean }
+
+export type MultiReplyState = {
+  multiReply: MultiReplyType
+}
+
+export type MultiReplyAction = {
+  payload: MultiReplyType
 }
 
 export type SelectedEmailDataState = {
@@ -37,4 +49,12 @@ export type ThreadsFetchedState = {
 
 export type ThreadsFetchedAction = {
   payload: IEmail[]
+}
+
+export type ReplyStatusState = {
+  replyStatus: ReplyStatusType
+}
+
+export type ReplyStatusAction = {
+  payload: ReplyStatusType
 }

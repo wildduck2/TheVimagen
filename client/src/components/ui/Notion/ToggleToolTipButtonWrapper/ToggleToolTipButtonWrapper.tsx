@@ -4,7 +4,7 @@ import { ToggleToolTipWrapperButtonProps } from './ToggleToolTipButtonWrapper.ty
 import React, { useState } from 'react'
 
 export const ToggleToolTipButtonWrapper = React.forwardRef<HTMLButtonElement, ToggleToolTipWrapperButtonProps>(
-  ({ variant, children, onClick, side, tip, disabled }, ref) => {
+  ({ variant, className, onMouseUp, onMouseMove, children, onClick, side, tip, disabled }, ref) => {
     const [value, setValue] = useState<boolean>(false)
 
     return (
@@ -14,12 +14,14 @@ export const ToggleToolTipButtonWrapper = React.forwardRef<HTMLButtonElement, To
             asChild
             onMouseDown={() => setValue(!value)}
             onClick={onClick}
+            onMouseMove={onMouseMove}
+            onMouseUp={onMouseUp}
           >
             <Button
               type="button"
               variant={variant || 'ghost'}
               disabled={disabled}
-              className={cn('toggle__tool__tip__trigger')}
+              className={cn('toggle__tool__tip__trigger', className)}
               ref={ref}
             >
               {children}
