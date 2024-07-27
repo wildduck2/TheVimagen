@@ -15,6 +15,7 @@ import { EncodedMessagesType, MessageType, ThreadResType } from 'controllers'
 import { GMAIL_URL } from '../../constants'
 import { i } from 'vitest/dist/reporters-yx5ZTtEV'
 import { env } from 'config'
+import { prisma } from 'utils'
 
 export class Email {
   constructor() {}
@@ -116,15 +117,6 @@ export class Email {
   }: ThreadModifyGroupLabelType): Promise<
     (ThreadModifyGroupLabelResType | null)[] | null
   > {
-    console.log(
-      threadIds,
-      distnation,
-      access_token,
-      addLabelIds,
-      removeLabelIds,
-      actionType
-    )
-
     try {
       const threadsModifiedAsync = threadIds.map(async (id) => {
         try {
@@ -287,7 +279,7 @@ export class Email {
         'https://www.googleapis.com/gmail/v1/users/me/labels',
         {
           name: label_name,
-          labelListVisibility: 'labelHide',
+          labelListVisibility: 'labelShow',
           messageListVisibility: 'hide',
           type: 'system'
         },
@@ -298,7 +290,6 @@ export class Email {
           }
         }
       )
-      console.log(`Label '${label_name}' created successfully`)
       return response.data.id
     } catch (error) {
       console.error('Error creating label', error)
@@ -318,10 +309,8 @@ export class Email {
     const labelNames = labels
       .map((label: LabelType) => label.name)
       .find((label) => label === label_name)!
-    console.log(labelNames)
 
     if (labelNames?.includes(label_name)) {
-      console.log(`Label '${label_name}' already exists`)
       return labels.find((label) => label.name === label_name)!.id
     } else {
       return await this.createLabel({ access_token, label_name })
@@ -329,47 +318,29 @@ export class Email {
   }
 
   static async scheduleEmail({
-    thread_ids,
-    snoozed_until,
-    distnation,
-    access_token,
-    addLabelIds,
-    removeLabelIds
+    thread_id,
+    user_id,
+    snooze_until
   }: ScheduleEmailType) {
-    const currentTime = new Date().getTime()
-    const delay = new Date(snoozed_until).getTime() - currentTime
-
     try {
-      const data = await this.threadModifyGroupLabel({
-        distnation,
-        access_token,
-        addLabelIds,
-        removeLabelIds,
-        threadIds: thread_ids,
-        actionType: '/modify'
+      const snoozed = prisma.snoozedThread.upsert({
+        where: {
+          thread_id,
+          user_id
+        },
+        update: {
+          snooze_until
+        },
+        create: {
+          thread_id,
+          user_id,
+          status: 'pending',
+          snooze_until
+        }
       })
-      if (!data) return null
+      if (!snoozed) return null
 
-      // setTimeout(async () => {
-      //   try {
-      //     const data = await this.threadModifyGroupLabel({
-      //       distnation,
-      //       access_token,
-      //       addLabelIds,
-      //       removeLabelIds,
-      //       threadIds: [thread_id],
-      //       actionType: 'modify'
-      //     })
-      //     if (!data) return null
-      //
-      //     console.log('Message unsnoozed successfully')
-      //     this.sendNotification({ thread_id })
-      //   } catch (error) {
-      //     console.error('Error unsnoozing message', error)
-      //     return null
-      //   }
-      // }, 20000)
-      return data
+      return snoozed
     } catch (error) {
       console.error('Error snoozing message', error)
       return null
@@ -382,12 +353,9 @@ export class Email {
 }
 
 export type ScheduleEmailType = {
-  thread_ids: string[]
-  distnation: string
-  snoozed_until: string
-  access_token: string
-  addLabelIds: string[]
-  removeLabelIds: string[]
+  thread_id: string
+  user_id: string
+  snooze_until: Date
 }
 
 export type LabelType = {

@@ -14,7 +14,7 @@ export const snoozeEmail = async ({ date, threads }: SnoozeEmailType) => {
         addLabelIds: ['SNOOZED'],
         removeLabelIds: ['INBOX'],
         thread_ids,
-        snoozeUntil: date,
+        snooze_until: date,
       },
       {
         withCredentials: true,
@@ -23,13 +23,8 @@ export const snoozeEmail = async ({ date, threads }: SnoozeEmailType) => {
         },
       },
     )
+    if (!data.messages) return null
 
-    if (!data.messages) {
-      toast.error('Thread is not snoozed')
-      return null
-    }
-
-    toast.success('Thread is snoozed successfully')
     return data.messages
   } catch (error) {
     toast.error('Thread is not snoozed')

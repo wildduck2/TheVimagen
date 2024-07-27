@@ -4,6 +4,7 @@ import { addDays, addHours, addMonths, format, nextSaturday } from 'date-fns'
 import { useState } from 'react'
 import { EmailSnoozeButtonType } from './EmailSnoozeButton.types'
 import { snoozeEmail } from '@/utils'
+import { useMutation } from '@tanstack/react-query'
 
 export const EmailSnoozeButton = ({ selectedThread }: EmailSnoozeButtonType) => {
   const [date, setDate] = useState<Date | undefined>(new Date())
@@ -14,6 +15,11 @@ export const EmailSnoozeButton = ({ selectedThread }: EmailSnoozeButtonType) => 
   const thisWeekend = nextSaturday(today)
   const nextWeek = addDays(today, 7)
   const nextMonth = addMonths(today, 1)
+
+  const mutation = useMutation({
+    mutationKey: ['snoozeEmail'],
+    mutationFn: () => snoozeEmail({ date, threads: selectedThread }),
+  })
 
   const actions = [
     {
@@ -67,7 +73,7 @@ export const EmailSnoozeButton = ({ selectedThread }: EmailSnoozeButtonType) => 
                     <span>{format(action.action, 'E, h:m b')}</span>
                   </Button>
                 ))}
-                <Button onClick={() => snoozeEmail({ date, threads: selectedThread })}> Snooze</Button>
+                <Button onClick={() => mutation.mutate()}> Snooze</Button>
               </div>
             </div>
             <div className="email__snooze__content__right">

@@ -8,8 +8,6 @@ export const postThreadModify: RequestHandler = async (req, res) => {
   const { addLabelIds, removeLabelIds, threadIds }: postThreadModifyType =
     req.body
 
-  console.log(addLabelIds, removeLabelIds, threadIds)
-
   try {
     const data = await Email.threadModifyGroupLabel({
       removeLabelIds,
