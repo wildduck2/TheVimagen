@@ -1,13 +1,26 @@
 import { Icon } from '@/assets'
-import { Button, Calendar, NotionMinimalTextEditorToolbarPick, ToggleToolTipSpanWrapper } from '@/components/ui'
+import {
+  Button,
+  Calendar,
+  NotionMinimalTextEditorToolbarPick,
+  PaginatedMessages,
+  ToggleToolTipSpanWrapper,
+} from '@/components/ui'
 import { addDays, addHours, addMonths, format, nextSaturday } from 'date-fns'
 import { useState } from 'react'
 import { EmailSnoozeButtonType } from './EmailSnoozeButton.types'
-import { snoozeEmail } from '@/utils'
+import { getCookie, snoozeEmail } from '@/utils'
 import { useMutation } from '@tanstack/react-query'
+import { toast } from 'sonner'
+import { queryClient } from '@/main'
+import { getSelectedEmailDispatch } from '@/context'
+import { useDispatch } from 'react-redux'
 
 export const EmailSnoozeButton = ({ selectedThread }: EmailSnoozeButtonType) => {
+  const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
+  const threadIds = selectedThread.map((item) => item.threadId)
   const [date, setDate] = useState<Date | undefined>(new Date())
+  const dispatch = useDispatch()
 
   const today = new Date()
   const laterThisDay = addHours(today, 4)
@@ -19,6 +32,24 @@ export const EmailSnoozeButton = ({ selectedThread }: EmailSnoozeButtonType) => 
   const mutation = useMutation({
     mutationKey: ['snoozeEmail'],
     mutationFn: () => snoozeEmail({ date, threads: selectedThread }),
+    onSuccess: () => {
+      queryClient.setQueryData<PaginatedMessages>(currentQueryKey, (oldData) => {
+        if (!oldData) return { pages: [], pageParams: [] }
+        return {
+          ...oldData,
+          pages: oldData.pages.map((page) => ({
+            ...page,
+            messages: page.messages.filter((message) => !threadIds.includes(message.threadId)),
+          })),
+        }
+      })
+
+      toast.success('Thread is snoozed successfully')
+      dispatch(getSelectedEmailDispatch([]))
+    },
+    onError: () => {
+      toast.error('Thread is not snoozed')
+    },
   })
 
   const actions = [
