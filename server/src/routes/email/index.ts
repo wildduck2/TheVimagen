@@ -6,6 +6,7 @@ import {
   postThreadDraftScheduleHanlder,
   postThreadModify,
   postThreadReply,
+  postThreadSnoozeHanlder,
   postThreadTrash
 } from '../../controllers'
 import { Router } from 'express'
@@ -56,9 +57,9 @@ email_router.post(
 )
 
 email_router.post(
-  '/email/schedule/thread',
+  '/email/snooze/thread',
   auth_credentials_about_to_expire,
-  postThreadDraftScheduleHanlder
+  postThreadSnoozeHanlder
 )
 
 export { email_router }

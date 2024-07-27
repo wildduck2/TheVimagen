@@ -58,7 +58,7 @@
       min-width: 250px;
       gap: 0.25rem;
 
-      &>button {
+      &>button:not(:last-child) {
         justify-content: flex-start;
         font-weight: 400;
 
