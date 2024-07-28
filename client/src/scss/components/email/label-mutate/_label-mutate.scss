@@ -1,0 +1,89 @@
+/*
+
+    This code is writen by Ahmed Ayob
+
+*/
+
+@use '../../../base' as *;
+@use '../../../utils' as u;
+
+/*
+
+    Label Mutat 
+    
+*/
+
+.label__content {
+  width: 22rem;
+  padding: 1rme;
+  margin: 0.25rem;
+
+  &__wrapper {
+    @include u.flex(grid, center);
+    gap: 1rem;
+    margin-top: calc(0.5rem * calc(1));
+    margin-bottom: calc(0.5rem * 0);
+
+    &>div {
+      @include u.flex(grid, center);
+      gap: 0.5rem;
+
+      &>h4 {
+        font-size: 1rem;
+        font-weight: 500;
+        line-height: 1;
+      }
+
+      &>p {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        color: hsl(var(--muted-foreground));
+      }
+
+      &>div {
+        &>input {
+          height: 2rem;
+          font-weight: 400;
+          font-size: 0.9rem;
+          border-width: 1px;
+        }
+      }
+
+      &:last-child {
+        @include u.flex(flex, center, space-between);
+        gap: 0.5rem;
+
+        &>button {
+          @include u.flex(flex, center, center);
+          gap: 0.5rem;
+          width: 100%;
+        }
+      }
+    }
+
+    &__scroll {
+      height: 15rem;
+
+      &__list {
+        height: 100%;
+
+        li {
+          @include u.flex(flex, center, space-between);
+          gap: 0.5rem;
+          padding: 0.5rem;
+
+          &:hover {
+            background: hsl(var(--muted-background));
+          }
+
+          &>div {
+            @include u.flex(flex, center, center);
+            gap: 0.5rem;
+            margin-right: 0.5rem;
+            margin-left: 0.5rem;
+          }
+        }
+      }
+    }
+  }
+}
