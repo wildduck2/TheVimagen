@@ -24,7 +24,10 @@ const initialState: initialStateEmailTypes = {
   threadsFetched: [],
   multiReply: { alert: false, drawer: false },
   replyStatus: { replyAll: false, forward: false, attachment: false },
-  snoozeButtonStatus: false,
+  snoozeButtonStatus: {
+    snoozeButtonStatus: false,
+    onTheFlySnooze: false,
+  },
 }
 
 export const emailSlice = createSlice({

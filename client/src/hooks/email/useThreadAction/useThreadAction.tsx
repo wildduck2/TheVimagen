@@ -67,7 +67,7 @@ export const useThreadAction = ({ items }: UseThreadActionType) => {
     },
     Snooze: () => {
       dispatch(getSelectedThreadsDispatch([items[0]]))
-      dispatch(getSnoozeButtonStatus(true))
+      dispatch(getSnoozeButtonStatus({ snoozeButtonStatus: true, onTheFlySnooze: true }))
     },
   }
 

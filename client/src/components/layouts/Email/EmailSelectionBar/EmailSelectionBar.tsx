@@ -4,6 +4,7 @@ import {
   ArchiveMutate,
   DeleteMutate,
   JunkMutate,
+  LabelMutate,
   MarkAsReadMutate,
   MultiCheckboxWrapper,
   ReplyMutate,
@@ -84,6 +85,12 @@ export const EmailSelectionBar = () => {
         disabled={selectedThreads.length === 0}
         threads={selectedThreads ? selectedThreads : []}
         tip="Mark as Unread"
+      />
+      <Separator orientation="vertical" />
+      <LabelMutate
+        disabled={selectedThreads.length === 0}
+        threads={selectedThreads ? selectedThreads : []}
+        tip="Label as"
       />
       <Separator orientation="vertical" />
       <ReplyMutate

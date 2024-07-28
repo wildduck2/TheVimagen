@@ -35,10 +35,7 @@ export const EmailSnoozeButton = ({ selectedThread }: EmailSnoozeButtonType) => 
         open={open}
         onOpenChange={setOpen}
       >
-        <PopoverTrigger
-          asChild
-          className="notion__minimal__text__editor__toolbar__pick__trigger"
-        >
+        <PopoverTrigger asChild>
           <ToggleToolTipSpanWrapper
             disabled={!selectedThread.length}
             tip="Snooze"
@@ -112,15 +109,15 @@ export const EmailSnoozeDropdown = ({ startMutation, date, setDate, setOpen }: E
 
 export const SnoozeButtonMutateWireless = ({ selectedThreads }: UseSnoozeMutateType) => {
   const { startMutation, setDate, dispatch, date } = useSnoozeMutate({ selectedThreads: selectedThreads })
-  const snoozeButtonStatus = useSelector((state: RootState) => state.email.snoozeButtonStatus)
+  const { snoozeButtonStatus, onTheFlySnooze } = useSelector((state: RootState) => state.email.snoozeButtonStatus)
 
   return (
     <Popover
       open={snoozeButtonStatus}
-      onOpenChange={(state) => dispatch(getSnoozeButtonStatus(!state))}
+      onOpenChange={(state) => dispatch(getSnoozeButtonStatus({ snoozeButtonStatus: onTheFlySnooze ? !state : state }))}
     >
       <PopoverTrigger
-        onClick={() => dispatch(getSnoozeButtonStatus(true))}
+        onClick={() => dispatch(getSnoozeButtonStatus({ snoozeButtonStatus: true, onTheFlySnooze: false }))}
         asChild
         className="notion__minimal__text__editor__toolbar__pick__trigger"
       >
@@ -138,7 +135,7 @@ export const SnoozeButtonMutateWireless = ({ selectedThreads }: UseSnoozeMutateT
         startMutation={startMutation}
         date={date}
         setDate={setDate}
-        setOpen={() => dispatch(getSnoozeButtonStatus(false))}
+        setOpen={() => dispatch(getSnoozeButtonStatus({ snoozeButtonStatus: false, onTheFlySnooze: false }))}
       />
     </Popover>
   )
