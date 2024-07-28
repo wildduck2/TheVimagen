@@ -1,7 +1,7 @@
 import { Icon } from '@/assets'
 import { IEmail } from 'gmail-api-parse-message-ts'
 import { Input, Popover, PopoverContent, PopoverTrigger, ToggleToolTipSpanWrapper } from '../..'
-import { UseLabelMutate } from '@/hooks'
+import { UseLabelMutate, useLabelQuery } from '@/hooks'
 
 export type ModifyLabelProps = {
   threads: IEmail[]
@@ -9,6 +9,7 @@ export type ModifyLabelProps = {
 
 export const LabelMutate = ({ threads }: ModifyLabelProps) => {
   const { startMutation, threadsIds } = UseLabelMutate({ threads })
+  const { labelQueryReq } = useLabelQuery()
 
   return (
     <>

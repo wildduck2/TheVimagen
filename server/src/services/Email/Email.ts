@@ -249,15 +249,12 @@ export class Email {
     access_token: string
   }): Promise<LabelType[]> {
     try {
-      const { data } = await axios.get(
-        'https://www.googleapis.com/gmail/v1/users/me/labels',
-        {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-            'Content-Type': 'application/json'
-          }
+      const { data } = await axios.get(`${GMAIL_URL}me/labels`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          'Content-Type': 'application/json'
         }
-      )
+      })
       if (!data) return []
 
       return data.labels
@@ -276,7 +273,7 @@ export class Email {
   }): Promise<string> {
     try {
       const response = await axios.post(
-        'https://www.googleapis.com/gmail/v1/users/me/labels',
+        `${GMAIL_URL}/me/labels`,
         {
           name: label_name,
           labelListVisibility: 'labelShow',

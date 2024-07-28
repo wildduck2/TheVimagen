@@ -1,5 +1,6 @@
 import {
   getGetSizeEsitmatedHandler,
+  getLabels,
   postGetThreadHandler,
   postGetThreadsHandler,
   postThreadDraftCreateHanlder,
@@ -60,6 +61,12 @@ email_router.post(
   '/email/snooze/thread',
   auth_credentials_about_to_expire,
   postThreadSnoozeHanlder
+)
+
+email_router.get(
+  '/email/get/labels',
+  auth_credentials_about_to_expire,
+  getLabels
 )
 
 export { email_router }

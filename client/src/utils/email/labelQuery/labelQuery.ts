@@ -6,7 +6,7 @@ export type LabelQueryRes = {
   error: string | null
 }
 
-export const lableQuery = async () => {
+export const labelQuery = async () => {
   try {
     const { data } = await axios.get<LabelQueryRes>(`${process.env.ROOT_URL}/email/get/labels`, {
       withCredentials: true,
