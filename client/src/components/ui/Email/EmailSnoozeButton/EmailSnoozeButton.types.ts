@@ -25,3 +25,8 @@ export type EmailSnoozeDropdownType = {
 export type UseSnoozeMutateType = {
   selectedThreads: IEmail[]
 }
+
+export type SnoozeButtonCustomTimeType = {
+  date: Date
+  setDate: React.Dispatch<React.SetStateAction<Date>>
+}

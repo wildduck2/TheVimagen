@@ -1,20 +1,10 @@
 import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
-import {
-  Input,
-  Button,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-  ToggleToolTipButtonWrapper,
-  Checkbox,
-} from '@/components/ui'
-import { getSearchInput, RootState } from '@/context'
+import { Input } from '@/components/ui'
+import { getSearchInput } from '@/context'
 import { useDebounce } from '@/hooks'
 import { Icon } from '@/assets'
-import { queryClient } from '@/main'
-import { getCookie } from '@/utils'
 
 export const EmailListSearch = () => {
   //NOTE: should make the context slicee for the selection threads
