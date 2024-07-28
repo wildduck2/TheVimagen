@@ -1,14 +1,6 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
-import {
-  getMultiReplyState,
-  getReplyStatusState,
-  getSelectedEmailDispatch,
-  getSelectedThreadsDispatch,
-  removeSelectedThreadsDispatch,
-  RootState,
-} from '@/context'
+import { getSelectedEmailDispatch, getSelectedThreadsDispatch, removeSelectedThreadsDispatch } from '@/context'
 import { cn } from '@/utils'
 import { ListItemWrapperType } from './ListItemWrapper.types'
 import {

@@ -1,21 +1,26 @@
-import { getSelectedThreadsDispatch, removeSelectedThreadsDispatch, RootState } from '@/context'
+import { getSelectedThreadsDispatch, getSnoozeButtonStatus, removeSelectedThreadsDispatch, RootState } from '@/context'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   ArchiveMutate,
   DeleteMutate,
-  EmailSnoozeButton,
+  EmailSnoozeDropdown,
   JunkMutate,
   MarkAsReadMutate,
   MultiCheckboxWrapper,
+  Popover,
+  PopoverTrigger,
   ReplyMutate,
   Separator,
   ToggleFavoriateButton,
   ToggleToolTipButtonWrapper,
+  ToggleToolTipSpanWrapper,
   TrashMutate,
 } from '@/components/ui'
 import { Icon } from '@/assets'
 import { queryClient } from '@/main'
 import { getCookie } from '@/utils'
+import { useSnoozeMutate } from '@/hooks'
+import { IEmail } from 'gmail-api-parse-message-ts'
 
 export const EmailSelectionBar = () => {
   const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
@@ -92,7 +97,7 @@ export const EmailSelectionBar = () => {
         tip="Reply"
       />
       <Separator orientation="vertical" />
-      <EmailSnoozeButton selectedThread={selectedThreads} />
+      <SnoozeButtonMutateWireless selectedThreads={selectedThreads} />
 
       <Separator orientation="vertical" />
       <ToggleToolTipButtonWrapper

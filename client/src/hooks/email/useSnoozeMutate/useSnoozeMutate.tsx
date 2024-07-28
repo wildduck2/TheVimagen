@@ -1,20 +1,22 @@
 import { PaginatedMessages } from '@/components/ui'
+import { setSelectedThreadsDispatch } from '@/context'
 import { queryClient } from '@/main'
-import { getCookie, trashMessage } from '@/utils'
+import { getCookie, snoozeEmail } from '@/utils'
 import { useMutation } from '@tanstack/react-query'
+import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { toast } from 'sonner'
-import { TrashMutateType } from './useTrashMutate.types'
-import { setSelectedThreadsDispatch } from '@/context'
+import { UseSnoozeMutateType } from './useSnoozeMutate.types'
 
-export const useTrashMutate = ({ threads }: TrashMutateType) => {
+export const useSnoozeMutate = ({ selectedThreads: selectedThread }: UseSnoozeMutateType) => {
   const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
-  const threadIds = threads && threads.map((item) => item.threadId)
-  const dispatch = useDispatch()
+  const threadIds = selectedThread.map((item) => item.threadId)
 
+  const [date, setDate] = useState<Date | undefined>(new Date())
+  const dispatch = useDispatch()
   const startMutation = useMutation({
-    mutationKey: ['trash-Message', { threadIds }],
-    mutationFn: () => trashMessage({ threadIds }),
+    mutationKey: ['snoozeEmail'],
+    mutationFn: () => snoozeEmail({ date, threads: selectedThread }),
     onSuccess: () => {
       queryClient.setQueryData<PaginatedMessages>(currentQueryKey, (oldData) => {
         if (!oldData) return { pages: [], pageParams: [] }
@@ -26,13 +28,13 @@ export const useTrashMutate = ({ threads }: TrashMutateType) => {
           })),
         }
       })
-      toast.success(`Thread has been moved to Trash!`)
+
+      toast.success('Thread is snoozed successfully')
       dispatch(setSelectedThreadsDispatch([]))
     },
     onError: () => {
-      toast.error(`Error: Thread has not been moved to Trash!`)
+      toast.error('Thread is not snoozed')
     },
   })
-
-  return { startMutation }
+  return { startMutation, threadIds, dispatch, setDate, date }
 }

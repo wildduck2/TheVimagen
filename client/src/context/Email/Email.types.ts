@@ -7,6 +7,7 @@ export interface initialStateEmailTypes {
   threadsFetched: IEmail[]
   multiReply: MultiReplyType
   replyStatus: ReplyStatusType
+  snoozeButtonStatus: boolean
 }
 export type ReplyStatusType = { replyAll: boolean; forward: boolean; attachment: boolean }
 export type MultiReplyType = { alert: boolean; drawer: boolean }
@@ -57,4 +58,11 @@ export type ReplyStatusState = {
 
 export type ReplyStatusAction = {
   payload: ReplyStatusType
+}
+
+export type SnoozeButtonStatusAction = {
+  payload: boolean
+}
+export type SnoozeButtonStatusState = {
+  snoozeButtonStatus: boolean
 }

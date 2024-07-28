@@ -1,11 +1,11 @@
 import { getCookie, trashMessage } from '@/utils'
 import { UseDeleteMutateType } from './useDeleteMutate.types'
-import { getSelectedEmailDispatch } from '@/context'
 import { toast } from 'sonner'
 import { queryClient } from '@/main'
 import { PaginatedMessages } from '@/components/ui'
 import { useDispatch } from 'react-redux'
 import { useMutation } from '@tanstack/react-query'
+import { setSelectedThreadsDispatch } from '@/context'
 
 export const useDeleteMutate = ({ threads }: UseDeleteMutateType) => {
   const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
@@ -27,7 +27,7 @@ export const useDeleteMutate = ({ threads }: UseDeleteMutateType) => {
         }
       })
       toast.success(`Thread has been Deleted!`)
-      dispatch(getSelectedEmailDispatch([]))
+      dispatch(setSelectedThreadsDispatch([]))
     },
   })
 

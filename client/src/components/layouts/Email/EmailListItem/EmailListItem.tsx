@@ -16,7 +16,7 @@ export const EmailListItem = ({ items }: EmailListItemType) => {
             <div className="email__list__wrapper__item__card__top">
               <div className="email__list__wrapper__item__card__top__header">
                 <div>
-                  <div>{items[0].from.email.split('<')[0].replace(/"/gi, ' ')}</div>
+                  <div>{items[0].from.name}</div>
                   {items[0].labelIds.includes('UNREAD') && <span />}
                 </div>
                 <div className={cn('active')}>

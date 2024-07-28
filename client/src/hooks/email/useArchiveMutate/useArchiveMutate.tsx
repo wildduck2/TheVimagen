@@ -1,11 +1,11 @@
 import { PaginatedMessages } from '@/components/ui'
-import { getSelectedEmailDispatch } from '@/context'
 import { queryClient } from '@/main'
 import { getCookie, modifyThread } from '@/utils'
 import { useMutation } from '@tanstack/react-query'
 import { useDispatch } from 'react-redux'
 import { toast } from 'sonner'
 import { UseArchiveMutateType } from './useArchiveMutate.types'
+import { setSelectedThreadsDispatch } from '@/context'
 
 export const useArchiveMutate = ({ threads }: UseArchiveMutateType) => {
   const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
@@ -27,7 +27,7 @@ export const useArchiveMutate = ({ threads }: UseArchiveMutateType) => {
         }
       })
       toast.success(`Thread has been moved to Archive!`)
-      dispatch(getSelectedEmailDispatch([]))
+      dispatch(setSelectedThreadsDispatch([]))
     },
     onError: () => {
       toast.error(`Error: Thread has not been moved to Archive!`)

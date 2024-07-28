@@ -11,6 +11,8 @@ import {
   SelectedEmailDataState,
   SelectedThreadsAction,
   SelectedThreadsState,
+  SnoozeButtonStatusAction,
+  SnoozeButtonStatusState,
   ThreadsFetchedAction,
   ThreadsFetchedState,
 } from './Email.types'
@@ -22,6 +24,7 @@ const initialState: initialStateEmailTypes = {
   threadsFetched: [],
   multiReply: { alert: false, drawer: false },
   replyStatus: { replyAll: false, forward: false, attachment: false },
+  snoozeButtonStatus: false,
 }
 
 export const emailSlice = createSlice({
@@ -48,6 +51,10 @@ export const emailSlice = createSlice({
       })
     },
 
+    setSelectedThreadsDispatch: (state: SelectedThreadsState, action: SelectedThreadsAction) => {
+      state.selectedThreads = action.payload
+    },
+
     removeSelectedThreadsDispatch: (state: SelectedThreadsState, action: SelectedThreadsAction) => {
       const emailsToRemove = action.payload
       const threadIdsToRemove = emailsToRemove.map((email) => email.threadId)
@@ -68,6 +75,10 @@ export const emailSlice = createSlice({
     getReplyStatusState: (state: ReplyStatusState, action: ReplyStatusAction) => {
       state.replyStatus = action.payload
     },
+
+    getSnoozeButtonStatus: (state: SnoozeButtonStatusState, action: SnoozeButtonStatusAction) => {
+      state.snoozeButtonStatus = action.payload
+    },
   },
 })
 
@@ -79,6 +90,8 @@ export const {
   getThreadsFetchedDispatched,
   getMultiReplyState,
   getReplyStatusState,
+  getSnoozeButtonStatus,
+  setSelectedThreadsDispatch,
 } = emailSlice.actions
 
 export default emailSlice.reducer

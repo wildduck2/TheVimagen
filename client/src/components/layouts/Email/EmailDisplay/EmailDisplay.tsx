@@ -7,7 +7,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  EmailDisplayButton,
   EmailSnoozeButton,
   JunkMutate,
   ResizablePanel,
@@ -26,7 +25,7 @@ export const emailDisplayButtonData = ['Archive', 'Move to junk', 'Move to trash
 
 export function EmailDisplay({ defaultLayout = 37 }: EmailDisplayProps) {
   const selectedThread = useSelector((state: RootState) => state.email.selectedThread)
-  const { selectedThreads, dispatch, actions, selectedThread: selected } = useThreadAction({ items: selectedThread })
+  const { dispatch, actions } = useThreadAction({ items: selectedThread })
 
   return (
     <ResizablePanel

@@ -1,12 +1,14 @@
 import { OnClickType } from '@/components/ui'
-import { getMultiReplyState, getReplyStatusState, getSelectedThreadsDispatch, RootState } from '@/context'
+import {
+  getMultiReplyState,
+  getReplyStatusState,
+  getSelectedThreadsDispatch,
+  getSnoozeButtonStatus,
+  RootState,
+} from '@/context'
 import { useDispatch, useSelector } from 'react-redux'
-import { useDeleteMutate } from '../useDeleteMutate'
-import { useArchiveMutate } from '../useArchiveMutate'
-import { useTrashMutate } from '../useTrashMutate'
-import { useToggleFavoriate } from '../useToggleFavoriate'
-import { useMarkAsRead } from '../useMarkAsRead'
 import { UseThreadActionType } from './useThreadAction.types'
+import { useArchiveMutate, useDeleteMutate, useMarkAsRead, useToggleFavoriate, useTrashMutate } from '@/hooks'
 
 export const useThreadAction = ({ items }: UseThreadActionType) => {
   const selectedThread = useSelector((state: RootState) => state.email.selectedThread)
@@ -62,6 +64,10 @@ export const useThreadAction = ({ items }: UseThreadActionType) => {
       if (!items[0].labelIds.includes('UNREAD')) {
         startMarkAsUnRead.mutate()
       }
+    },
+    Snooze: () => {
+      dispatch(getSelectedThreadsDispatch([items[0]]))
+      dispatch(getSnoozeButtonStatus(true))
     },
   }
 
