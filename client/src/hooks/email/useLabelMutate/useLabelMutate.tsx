@@ -4,12 +4,19 @@ import { getCookie, modifyThread } from '@/utils'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { UseLabelMutateProps } from './useLabelMutate.types'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/context'
 
 export const UseLabelMutate = ({ threads }: UseLabelMutateProps) => {
+  const { label, type } = useSelector((state: RootState) => state.email.labelModificationSelected)
+
   const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
   const threadsIds = threads && threads.map((item) => item.threadId)
 
-  const querykey: QueryKeyMutateType = { addLabelIds: [], removeLabelIds: [], threadIds: threadsIds }
+  const addLabelIds = label && type === 'add' ? [label.id] : []
+  const removeLabelIds = label && label.name === 'SNOOZED' ? ['INBOX'] : type === 'remove' ? [label.id] : []
+
+  const querykey: QueryKeyMutateType = { addLabelIds, removeLabelIds, threadIds: threadsIds }
   const startMutation = useMutation({
     mutationKey: ['Modify-Label', querykey],
     mutationFn: () => modifyThread(querykey),

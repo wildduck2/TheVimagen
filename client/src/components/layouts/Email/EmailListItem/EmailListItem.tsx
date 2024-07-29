@@ -34,6 +34,7 @@ export const EmailListItem = ({ items }: EmailListItemType) => {
                   .filter(
                     (label) =>
                       !(
+                        label.includes('Label_') ||
                         label === 'INBOX' ||
                         label === 'UNREAD' ||
                         label === 'CATEGORY_UPDATES' ||

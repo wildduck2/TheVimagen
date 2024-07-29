@@ -1,8 +1,9 @@
 import axios from 'axios'
 import { toast } from 'sonner'
+import { LabelType } from '@/components/ui'
 
 export type LabelQueryRes = {
-  data: {} | null
+  data: LabelType[] | null
   error: string | null
 }
 

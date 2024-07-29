@@ -15,18 +15,22 @@
 
 .label__content {
   width: 22rem;
-  padding: 1rme;
+  padding: 1rem;
   margin: 0.25rem;
 
   &__wrapper {
     @include u.flex(grid, center);
-    gap: 1rem;
-    margin-top: calc(0.5rem * calc(1));
-    margin-bottom: calc(0.5rem * 0);
+    margin-top: calc(0.5rem);
+    margin-bottom: 0;
+
+    div[cmdk-root] {
+      width: 100%;
+    }
 
     &>div {
       @include u.flex(grid, center);
       gap: 0.5rem;
+      margin-bottom: calc(0.5rem);
 
       &>h4 {
         font-size: 1rem;
@@ -40,13 +44,10 @@
         color: hsl(var(--muted-foreground));
       }
 
-      &>div {
-        &>input {
-          height: 2rem;
-          font-weight: 400;
-          font-size: 0.9rem;
-          border-width: 1px;
-        }
+      &:nth-child(2) {
+        border: 1px solid hsl(var(--border));
+        border-radius: 0.5rem;
+        margin-bottom: 0.5rem;
       }
 
       &:last-child {
@@ -62,27 +63,12 @@
     }
 
     &__scroll {
-      height: 15rem;
+      height: 12rem;
 
-      &__list {
-        height: 100%;
-
-        li {
-          @include u.flex(flex, center, space-between);
-          gap: 0.5rem;
-          padding: 0.5rem;
-
-          &:hover {
-            background: hsl(var(--muted-background));
-          }
-
-          &>div {
-            @include u.flex(flex, center, center);
-            gap: 0.5rem;
-            margin-right: 0.5rem;
-            margin-left: 0.5rem;
-          }
-        }
+      div>div>div {
+        opacity: 1 !important;
+        pointer-events: all !important;
+        text-transform: capitalize;
       }
     }
   }

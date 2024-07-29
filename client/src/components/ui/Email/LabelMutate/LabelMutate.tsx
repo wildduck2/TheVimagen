@@ -2,40 +2,41 @@ import { Icon } from '@/assets'
 import { IEmail } from 'gmail-api-parse-message-ts'
 import {
   Button,
-  Checkbox,
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
-  Input,
+  CommandList,
   Popover,
   PopoverContent,
   PopoverTrigger,
+  ScrollArea,
   ToggleToolTipSpanWrapper,
 } from '../..'
 import { UseLabelMutate, useLabelQuery } from '@/hooks'
-import { ScrollArea } from '@radix-ui/react-scroll-area'
+import { useEffect, useState } from 'react'
+
 import { Check } from 'lucide-react'
 import { cn } from '@/utils'
-import { useState } from 'react'
+import { getLabelModificationSelected, RootState } from '@/context'
+import { useDispatch, useSelector } from 'react-redux'
 
 export type ModifyLabelProps = {
   threads: IEmail[]
 }
 
 export const LabelMutate = ({ threads }: ModifyLabelProps) => {
-  const { startMutation, threadsIds } = UseLabelMutate({ threads })
-
+  const [open, setOpen] = useState(false)
   return (
     <>
       <Popover
-      // open={open}
-      // onOpenChange={setOpen}
+        open={open}
+        onOpenChange={setOpen}
       >
         <PopoverTrigger asChild>
           <ToggleToolTipSpanWrapper
-            // disabled={!threads.length}
+            disabled={!threads.length}
             tip={'Label as'}
             children={
               <>
@@ -44,20 +45,54 @@ export const LabelMutate = ({ threads }: ModifyLabelProps) => {
             }
           />
         </PopoverTrigger>
-        <LabelMutateContent />
+        <LabelMutateContent
+          threads={threads}
+          setOpen={setOpen}
+        />
       </Popover>
     </>
   )
 }
 
-export const LabelMutateContent = () => {
-  const { labelQueryReq: labelQuery } = useLabelQuery()
-  const excludedLabels = ['CHAT', 'SENT', 'INBOX', 'IMPORTANT', 'DRAFT', 'SPAM', 'STARRED', 'UNREAD', 'TRASH']
+export type LabelMutateContentProps = {
+  threads: IEmail[]
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
 
+export const LabelMutateContent = ({ threads, setOpen }: LabelMutateContentProps) => {
+  const { startMutation } = UseLabelMutate({ threads })
+  const { labelQueryReq: labelQuery } = useLabelQuery()
+  const { label } = useSelector((state: RootState) => state.email.labelModificationSelected)
+  const dispatch = useDispatch()
+
+  const excludedLabels = [
+    'CHAT',
+    'SENT',
+    'INBOX',
+    'IMPORTANT',
+    'DRAFT',
+    'SPAM',
+    'STARRED',
+    'UNREAD',
+    'TRASH',
+    'CATEGORY_PERSONAL',
+  ]
   const labels = labelQuery.data?.filter((label) => !excludedLabels.includes(label.name))
-  console.log(labels)
-  const [open, setOpen] = useState(false)
-  const [value, setValue] = useState('')
+
+  const onselectHandler = (currentValue: string) => {
+    dispatch(
+      getLabelModificationSelected({
+        label: labels?.find((label) => label.name === currentValue),
+        type: threads.some((thread) => thread.labelIds?.includes(currentValue)) ? 'remove' : 'add',
+      }),
+    )
+    setOpen(false)
+  }
+
+  useEffect(() => {
+    label && startMutation.mutate()
+  }, [label])
+
   return (
     <PopoverContent className="label__content">
       <div className="label__content__wrapper">
@@ -66,35 +101,32 @@ export const LabelMutateContent = () => {
           <p>Select label to assign to emails</p>
         </div>
         <div>
-          <div>
-            <Input placeholder="Serach for label" />
-          </div>
-          <Command>
-            <CommandInput placeholder="Search framework..." />
-            <CommandEmpty>No framework found.</CommandEmpty>
-            <ScrollArea className="label__content__wrapper__scroll">
-              <CommandGroup>
-                {labels &&
-                  labels?.map((label, idx) => {
-                    return (
-                      <CommandItem
-                        key={idx}
-                        // value={(label.name as string).slice(label.name.indexOf('_') + 1, -1)}
-                        // onSelect={(currentValue) => {
-                        //   setValue(currentValue === value ? '' : currentValue)
-                        //   // setOpen(false)
-                        // }}
-                      >
-                        ///
-                        {
-                          //<Check className={cn('mr-2 h-4 w-4', value === label.name ? 'opacity-100' : 'opacity-0')} />
-                          //(label.name as string).slice(label.name.indexOf('_') + 1, -1)
-                        }
-                      </CommandItem>
-                    )
-                  })}
+          <Command className="w-full">
+            <CommandInput placeholder="Type a label or search..." />
+            <CommandList>
+              <CommandEmpty>No labels found.</CommandEmpty>
+              <CommandGroup heading="Labels">
+                <ScrollArea className="label__content__wrapper__scroll">
+                  {labels?.map((item) => (
+                    <CommandItem
+                      key={item.id}
+                      value={item.name}
+                      onSelect={onselectHandler}
+                      data-disabled={false}
+                      aria-selected={label?.name === item.name}
+                    >
+                      <Check
+                        className={cn(
+                          'mr-2 h-4 w-4',
+                          threads.some((thread) => thread.labelIds?.includes(item.name)) ? 'opacity-100' : 'opacity-0',
+                        )}
+                      />
+                      {item.name.slice(item.name.indexOf('_') + 1).toLowerCase()}
+                    </CommandItem>
+                  ))}
+                </ScrollArea>
               </CommandGroup>
-            </ScrollArea>
+            </CommandList>
           </Command>
         </div>
         <div>
@@ -123,10 +155,11 @@ export type LabelMutateWirelessProps = {
 }
 
 export const LabelMutateWireless = ({ threads }: LabelMutateWirelessProps) => {
+  const [open, setOpen] = useState(false)
   return (
     <Popover
-    // open={open}
-    // onOpenChange={setOpen}
+      open={open}
+      onOpenChange={setOpen}
     >
       <PopoverTrigger asChild>
         <ToggleToolTipSpanWrapper

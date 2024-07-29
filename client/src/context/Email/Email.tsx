@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {
   initialStateEmailTypes,
+  LabelModificationSelectedAction,
+  LabelModificationSelectedState,
   MultiReplyAction,
   MultiReplyState,
   ReplyStatusAction,
@@ -28,6 +30,7 @@ const initialState: initialStateEmailTypes = {
     snoozeButtonStatus: false,
     onTheFlySnooze: false,
   },
+  labelModificationSelected: { type: null, label: null },
 }
 
 export const emailSlice = createSlice({
@@ -82,6 +85,9 @@ export const emailSlice = createSlice({
     getSnoozeButtonStatus: (state: SnoozeButtonStatusState, action: SnoozeButtonStatusAction) => {
       state.snoozeButtonStatus = action.payload
     },
+    getLabelModificationSelected: (state: LabelModificationSelectedState, action: LabelModificationSelectedAction) => {
+      state.labelModificationSelected = action.payload
+    },
   },
 })
 
@@ -95,6 +101,7 @@ export const {
   getReplyStatusState,
   getSnoozeButtonStatus,
   setSelectedThreadsDispatch,
+  getLabelModificationSelected,
 } = emailSlice.actions
 
 export default emailSlice.reducer
