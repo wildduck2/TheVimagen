@@ -32,7 +32,7 @@ const initialState: initialStateEmailTypes = {
     snoozeButtonStatus: false,
     onTheFlyAction: false,
   },
-  labelButtonStatus: { labelButtonStatus: false, onTheFlyAction: false },
+  labelButtonStatus: { labelButtonStatus: false, onTheFlyAction: false, move: false },
   labelModificationSelected: { type: null, label: null },
 }
 

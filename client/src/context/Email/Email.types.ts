@@ -16,6 +16,7 @@ export interface initialStateEmailTypes {
 export type LabelButtonStatusType = {
   labelButtonStatus: boolean
   onTheFlyAction?: boolean
+  move?: boolean
 }
 
 export type LabelModificationSelectedType = {

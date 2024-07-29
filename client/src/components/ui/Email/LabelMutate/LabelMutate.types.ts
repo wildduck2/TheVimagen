@@ -1,4 +1,6 @@
+import { LabelButtonStatusType } from '@/context'
 import { IEmail } from 'gmail-api-parse-message-ts'
+import { AnyAction, Dispatch } from 'redux'
 
 export type LabelType = {
   id: string
@@ -18,7 +20,8 @@ export type LabelType = {
 
 export type LabelMutateContentProps = {
   threads: IEmail[]
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setOpen: () => void
+  move: boolean
 }
 
 export type LabelMutateWirelessProps = {

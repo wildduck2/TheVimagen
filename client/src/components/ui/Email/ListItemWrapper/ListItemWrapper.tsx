@@ -12,6 +12,9 @@ import {
   ContextMenuTrigger,
   CheckboxWrapper,
   Separator,
+  ContextMenuSubTrigger,
+  ContextMenuSubContent,
+  ContextMenuSub,
 } from '../..'
 import { ToggleFavoriateButton } from '../ToggleFavoriateButton'
 import { TrashMutate } from '../TrashMutate'
@@ -41,15 +44,9 @@ export const ListItemWrapper = ({ children, items }: ListItemWrapperType) => {
                   tip="Select"
                 />
                 <Separator />
-                <ToggleFavoriateButton
-                  threads={items}
-                  tip="Star"
-                />
+                <ToggleFavoriateButton threads={items} />
                 <Separator />
-                <TrashMutate
-                  threads={items}
-                  tip="Trash"
-                />
+                <TrashMutate threads={items} />
               </div>
             </div>
             <div
@@ -180,6 +177,7 @@ export const emailItemContextMenu = [
     {
       icon: Icon.folderMove,
       label: 'Move to',
+      key: 'Move',
       shortcut: '⌘ac',
     },
 

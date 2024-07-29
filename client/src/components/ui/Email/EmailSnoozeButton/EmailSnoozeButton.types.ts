@@ -9,7 +9,7 @@ export type EmailSnoozeDropdownType = {
   date: Date
   startMutation: UseMutationResult<ModifyThreadType[], Error, void, unknown>
   setDate: React.Dispatch<React.SetStateAction<Date>>
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setOpen: () => void
 }
 
 export type UseSnoozeMutateType = {

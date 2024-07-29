@@ -6,6 +6,7 @@ import React, { useState } from 'react'
 export const ToggleToolTipButtonWrapper = React.forwardRef<HTMLButtonElement, ToggleToolTipWrapperButtonProps>(
   ({ variant, className, onMouseUp, onMouseMove, children, onClick, side, tip, disabled }, ref) => {
     const [value, setValue] = useState<boolean>(false)
+    console.log(className)
 
     return (
       <TooltipProvider>

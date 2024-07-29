@@ -39,6 +39,7 @@ export const EmailSnoozeButton = ({ selectedThread }: EmailSnoozeButtonType) => 
           <ToggleToolTipSpanWrapper
             disabled={!selectedThread.length}
             tip="Snooze"
+            className={open ? 'active' : ''}
             children={
               <>
                 <Icon.clock />
@@ -47,7 +48,7 @@ export const EmailSnoozeButton = ({ selectedThread }: EmailSnoozeButtonType) => 
           />
         </PopoverTrigger>
         <EmailSnoozeDropdown
-          setOpen={setOpen}
+          setOpen={() => setOpen(false)}
           startMutation={startMutation}
           date={date}
           setDate={setDate}
@@ -81,7 +82,7 @@ export const EmailSnoozeDropdown = ({ startMutation, date, setDate, setOpen }: E
             <Button
               size="sm"
               onClick={() => {
-                setOpen(false)
+                setOpen()
                 startMutation.mutate()
               }}
             >
@@ -126,6 +127,7 @@ export const SnoozeButtonMutateWireless = ({ selectedThreads }: UseSnoozeMutateT
         <ToggleToolTipSpanWrapper
           disabled={!selectedThreads.length}
           tip="Snooze"
+          value={snoozeButtonStatus ? true : false}
           children={
             <>
               <Icon.clock />
