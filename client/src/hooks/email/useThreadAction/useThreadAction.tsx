@@ -1,5 +1,6 @@
 import { OnClickType } from '@/components/ui'
 import {
+  getLabelButtonStatus,
   getMultiReplyState,
   getReplyStatusState,
   getSelectedThreadsDispatch,
@@ -8,7 +9,14 @@ import {
 } from '@/context'
 import { useDispatch, useSelector } from 'react-redux'
 import { UseThreadActionType } from './useThreadAction.types'
-import { useArchiveMutate, useDeleteMutate, useMarkAsRead, useToggleFavoriate, useTrashMutate } from '@/hooks'
+import {
+  useArchiveMutate,
+  useDeleteMutate,
+  UseLabelMutate,
+  useMarkAsRead,
+  useToggleFavoriate,
+  useTrashMutate,
+} from '@/hooks'
 
 export const useThreadAction = ({ items }: UseThreadActionType) => {
   const selectedThread = useSelector((state: RootState) => state.email.selectedThread)
@@ -67,7 +75,11 @@ export const useThreadAction = ({ items }: UseThreadActionType) => {
     },
     Snooze: () => {
       dispatch(getSelectedThreadsDispatch([items[0]]))
-      dispatch(getSnoozeButtonStatus({ snoozeButtonStatus: true, onTheFlySnooze: true }))
+      dispatch(getSnoozeButtonStatus({ snoozeButtonStatus: true, onTheFlyAction: true }))
+    },
+    Label: () => {
+      dispatch(getSelectedThreadsDispatch([items[0]]))
+      dispatch(getLabelButtonStatus({ labelButtonStatus: true, onTheFlyAction: true }))
     },
   }
 

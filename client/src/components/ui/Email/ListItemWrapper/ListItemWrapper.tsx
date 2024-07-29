@@ -172,6 +172,7 @@ export const emailItemContextMenu = [
     {
       icon: Icon.clipboardChecked,
       label: 'Add to Tasks',
+      key: 'Task',
       shortcut: '⌘at',
     },
   ],
@@ -185,6 +186,7 @@ export const emailItemContextMenu = [
     {
       icon: Icon.tag,
       label: 'Label as',
+      key: 'Label',
       shortcut: '⌘al',
     },
     {

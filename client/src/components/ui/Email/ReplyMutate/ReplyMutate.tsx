@@ -3,15 +3,15 @@ import { ReplyMutateType } from './ReplyMutate.types'
 import { ToggleToolTipSpanWrapper } from '../..'
 import { EmailReplyMulti } from '@/components/layouts'
 
-export const ReplyMutate = ({ disabled, threads, tip }: ReplyMutateType) => {
+export const ReplyMutate = ({ threads }: ReplyMutateType) => {
   return (
     <>
       <EmailReplyMulti
         threads={threads}
         trigger={
           <ToggleToolTipSpanWrapper
-            disabled={disabled}
-            tip={tip}
+            disabled={!threads.length}
+            tip={'Reply'}
           >
             <Icon.reply />
           </ToggleToolTipSpanWrapper>

@@ -3,14 +3,14 @@ import { ArchiveMutateType } from './ArchiveMutate.types'
 import { ToggleToolTipSpanWrapper } from '../..'
 import { useArchiveMutate } from '@/hooks'
 
-export const ArchiveMutate = ({ disabled, threads, tip }: ArchiveMutateType) => {
+export const ArchiveMutate = ({ threads }: ArchiveMutateType) => {
   const { startMutation } = useArchiveMutate({ threads })
 
   return (
     <>
       <ToggleToolTipSpanWrapper
-        disabled={disabled}
-        tip={tip}
+        disabled={!threads.length}
+        tip={'Archive'}
         onClick={() => {
           startMutation.mutate()
         }}

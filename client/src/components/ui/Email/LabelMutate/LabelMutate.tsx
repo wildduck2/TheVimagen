@@ -8,6 +8,8 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
+  LabelMutateContentProps,
+  LabelMutateWirelessProps,
   Popover,
   PopoverContent,
   PopoverTrigger,
@@ -15,11 +17,11 @@ import {
   ToggleToolTipSpanWrapper,
 } from '../..'
 import { UseLabelMutate, useLabelQuery } from '@/hooks'
-import { useEffect, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
 
 import { Check } from 'lucide-react'
 import { cn } from '@/utils'
-import { getLabelModificationSelected, RootState } from '@/context'
+import { getLabelButtonStatus, getLabelModificationSelected, getSnoozeButtonStatus, RootState } from '@/context'
 import { useDispatch, useSelector } from 'react-redux'
 
 export type ModifyLabelProps = {
@@ -28,6 +30,7 @@ export type ModifyLabelProps = {
 
 export const LabelMutate = ({ threads }: ModifyLabelProps) => {
   const [open, setOpen] = useState(false)
+
   return (
     <>
       <Popover
@@ -52,11 +55,6 @@ export const LabelMutate = ({ threads }: ModifyLabelProps) => {
       </Popover>
     </>
   )
-}
-
-export type LabelMutateContentProps = {
-  threads: IEmail[]
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const LabelMutateContent = ({ threads, setOpen }: LabelMutateContentProps) => {
@@ -150,16 +148,16 @@ export const LabelMutateContent = ({ threads, setOpen }: LabelMutateContentProps
   )
 }
 
-export type LabelMutateWirelessProps = {
-  threads: IEmail[]
-}
-
 export const LabelMutateWireless = ({ threads }: LabelMutateWirelessProps) => {
-  const [open, setOpen] = useState(false)
+  const { labelButtonStatus: snoozeButtonStatus, onTheFlyAction: onTheFlySnooze } = useSelector(
+    (state: RootState) => state.email.labelButtonStatus,
+  )
+  const dispatch = useDispatch()
+
   return (
     <Popover
-      open={open}
-      onOpenChange={setOpen}
+      open={snoozeButtonStatus}
+      onOpenChange={(state) => dispatch(getLabelButtonStatus({ labelButtonStatus: onTheFlySnooze ? !state : state }))}
     >
       <PopoverTrigger asChild>
         <ToggleToolTipSpanWrapper
@@ -167,11 +165,15 @@ export const LabelMutateWireless = ({ threads }: LabelMutateWirelessProps) => {
           tip="Snooze"
           children={
             <>
-              <Icon.clock />
+              <Icon.tags />
             </>
           }
         />
       </PopoverTrigger>
+      <LabelMutateContent
+        threads={threads}
+        setOpen={() => dispatch(getLabelButtonStatus({ labelButtonStatus: false, onTheFlyAction: false }))}
+      />
     </Popover>
   )
 }

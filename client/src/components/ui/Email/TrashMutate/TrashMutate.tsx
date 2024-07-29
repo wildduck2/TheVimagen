@@ -3,13 +3,13 @@ import { Icon } from '@/assets'
 import { ToggleToolTipSpanWrapper } from '../ToggleToolTipSpanWrapper'
 import { useTrashMutate } from '@/hooks'
 
-export const TrashMutate = ({ disabled, threads, tip }: TrashMutateType) => {
+export const TrashMutate = ({ threads }: TrashMutateType) => {
   const { startMutation } = useTrashMutate({ threads })
 
   return (
     <ToggleToolTipSpanWrapper
-      disabled={disabled}
-      tip={tip}
+      disabled={!threads.length}
+      tip={'Move to Trash'}
       onClick={() => {
         startMutation.mutate()
       }}

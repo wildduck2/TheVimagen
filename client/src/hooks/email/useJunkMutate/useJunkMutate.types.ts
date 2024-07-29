@@ -1,6 +1,5 @@
 import { IEmail } from 'gmail-api-parse-message-ts'
 
-export type MarkAsReadMutateType = {
+export type UseJunkMutateProps = {
   threads: IEmail[]
-  marktype: 'READ' | 'UNREAD'
 }

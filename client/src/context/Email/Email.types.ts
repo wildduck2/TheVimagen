@@ -9,7 +9,13 @@ export interface initialStateEmailTypes {
   multiReply: MultiReplyType
   replyStatus: ReplyStatusType
   snoozeButtonStatus: SnoozeButtonStatusType
+  labelButtonStatus: LabelButtonStatusType
   labelModificationSelected: LabelModificationSelectedType
+}
+
+export type LabelButtonStatusType = {
+  labelButtonStatus: boolean
+  onTheFlyAction?: boolean
 }
 
 export type LabelModificationSelectedType = {
@@ -19,7 +25,7 @@ export type LabelModificationSelectedType = {
 
 export type SnoozeButtonStatusType = {
   snoozeButtonStatus: boolean
-  onTheFlySnooze: boolean
+  onTheFlyAction?: boolean
 }
 
 export type ReplyStatusType = { replyAll: boolean; forward: boolean; attachment: boolean }
@@ -86,4 +92,11 @@ export type LabelModificationSelectedState = {
 
 export type LabelModificationSelectedAction = {
   payload: LabelModificationSelectedType
+}
+
+export type LabelButtonStatusState = {
+  labelButtonStatus: LabelButtonStatusType
+}
+export type LabelButtonStatusAction = {
+  payload: LabelButtonStatusType
 }

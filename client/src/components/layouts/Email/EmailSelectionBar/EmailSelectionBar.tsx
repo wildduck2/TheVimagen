@@ -5,6 +5,7 @@ import {
   DeleteMutate,
   JunkMutate,
   LabelMutate,
+  LabelMutateWireless,
   MarkAsReadMutate,
   MultiCheckboxWrapper,
   ReplyMutate,
@@ -39,33 +40,16 @@ export const EmailSelectionBar = () => {
             dispatch(getSelectedThreadsDispatch(threadsFetched))
           }
         }}
-        tip="Select"
       />
 
       <Separator orientation="vertical" />
-      <ArchiveMutate
-        disabled={selectedThreads.length === 0}
-        threads={selectedThreads ? selectedThreads : []}
-        tip="Archive"
-      />
+      <ArchiveMutate threads={selectedThreads ? selectedThreads : []} />
       <Separator orientation="vertical" />
-      <JunkMutate
-        disabled={selectedThreads.length === 0}
-        threads={selectedThreads ? selectedThreads : []}
-        tip="Move to Junk"
-      />
+      <JunkMutate threads={selectedThreads ? selectedThreads : []} />
       <Separator orientation="vertical" />
-      <ToggleFavoriateButton
-        disabled={selectedThreads.length === 0}
-        threads={selectedThreads ? selectedThreads : []}
-        tip="Star"
-      />
+      <ToggleFavoriateButton threads={selectedThreads ? selectedThreads : []} />
       <Separator orientation="vertical" />
-      <TrashMutate
-        disabled={selectedThreads.length === 0}
-        threads={selectedThreads ? selectedThreads : []}
-        tip="Move to Trash"
-      />
+      <TrashMutate threads={selectedThreads ? selectedThreads : []} />
       <Separator orientation="vertical" />
       <DeleteMutate
         disabled={selectedThreads.length === 0}
@@ -75,29 +59,17 @@ export const EmailSelectionBar = () => {
       <Separator orientation="vertical" />
       <MarkAsReadMutate
         marktype="READ"
-        disabled={selectedThreads.length === 0}
         threads={selectedThreads ? selectedThreads : []}
-        tip="Mark as read"
       />
       <Separator orientation="vertical" />
       <MarkAsReadMutate
         marktype="UNREAD"
-        disabled={selectedThreads.length === 0}
         threads={selectedThreads ? selectedThreads : []}
-        tip="Mark as Unread"
       />
       <Separator orientation="vertical" />
-      <LabelMutate
-        disabled={selectedThreads.length === 0}
-        threads={selectedThreads ? selectedThreads : []}
-        tip="Label as"
-      />
+      <LabelMutateWireless threads={selectedThreads ? selectedThreads : []} />
       <Separator orientation="vertical" />
-      <ReplyMutate
-        disabled={selectedThreads.length === 0}
-        threads={selectedThreads.length ? selectedThreads : []}
-        tip="Reply"
-      />
+      <ReplyMutate threads={selectedThreads.length ? selectedThreads : []} />
       <Separator orientation="vertical" />
       <SnoozeButtonMutateWireless selectedThreads={selectedThreads} />
 

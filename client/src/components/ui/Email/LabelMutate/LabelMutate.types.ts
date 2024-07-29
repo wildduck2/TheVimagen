@@ -1,3 +1,5 @@
+import { IEmail } from 'gmail-api-parse-message-ts'
+
 export type LabelType = {
   id: string
   name: string
@@ -12,4 +14,13 @@ export type LabelType = {
     textColor: string
     backgroundColor: string
   }
+}
+
+export type LabelMutateContentProps = {
+  threads: IEmail[]
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export type LabelMutateWirelessProps = {
+  threads: IEmail[]
 }
