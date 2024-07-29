@@ -6,8 +6,8 @@ import { z } from 'zod'
 import { useSigninWithGoogleProps } from './useSigninWithGoogle.types'
 
 export const useSigninWithGoogle = ({ setIsLoading }: useSigninWithGoogleProps) => {
-  // const dispatch = useDispatch()
-  // const route = useNavigate()
+  const dispatch = useDispatch()
+  const route = useNavigate()
 
   const authEmail = async (e: React.SyntheticEvent) => {
     e.preventDefault()
@@ -17,7 +17,7 @@ export const useSigninWithGoogle = ({ setIsLoading }: useSigninWithGoogleProps) 
     const left = (screen.width - width) / 2
     const top = (screen.height - height) / 2
 
-    const promise = new Promise((_, reject) => {
+    const promise = new Promise((resolve, reject) => {
       const cb = async () => {
         try {
           //NOTE: Making the req to the server with the credentials
@@ -36,19 +36,21 @@ export const useSigninWithGoogle = ({ setIsLoading }: useSigninWithGoogleProps) 
 
           //NOTE: opening widnow with the url to make perform the signin within popup window
           // const popupWindow: Window | null =
-          window.open(data.url, '_blank', `width=${width},height=${height}, left=${left}, top=${top}`)
+          const popupWindow = window.open(
+            data.url,
+            '_blank',
+            `width=${width},height=${height}, left=${left}, top=${top}`,
+          )
 
-          // console.log(data)
-          //
           // //NOTE: handing errors if rejected
-          // setIsLoading(false)
-          // if (data?.user || data.error) return reject(false)
-          //
+          setIsLoading(false)
+          if (data?.user || data.error) return reject(false)
+
           // //NOTE: closing the window and routing with dispatch to the data
-          // resolve(true)
-          // popupWindow?.close()
+          resolve(true)
+          popupWindow?.close()
           // dispatch(getUserData(data.user as User))
-          // route({ to: '/email/inbox' })
+          route({ to: '/email/inbox' })
         } catch (error) {
           setIsLoading(false)
           if (error instanceof z.ZodError) {

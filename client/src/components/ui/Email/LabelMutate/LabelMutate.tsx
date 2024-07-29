@@ -64,7 +64,6 @@ export const LabelMutateContent = ({ threads, setOpen, move }: LabelMutateConten
   const { labelQueryReq: labelQuery } = useLabelQuery()
   const { label } = useSelector((state: RootState) => state.email.labelModificationSelected)
   const dispatch = useDispatch()
-  console.log(move)
 
   const excludedLabels = [
     'CHAT',
@@ -92,8 +91,6 @@ export const LabelMutateContent = ({ threads, setOpen, move }: LabelMutateConten
     )
     setOpen()
   }
-
-  console.log(move, labelsMove)
 
   useEffect(() => {
     label && startMutation.mutate()

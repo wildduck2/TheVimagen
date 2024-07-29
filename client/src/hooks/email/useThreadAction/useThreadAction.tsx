@@ -78,6 +78,19 @@ export const useThreadAction = ({ items }: UseThreadActionType) => {
       dispatch(getSelectedThreadsDispatch([items[0]]))
       dispatch(getLabelButtonStatus({ labelButtonStatus: true, onTheFlyAction: true, move: true }))
     },
+    Popup: () => {
+      localStorage.setItem('emailSelected', JSON.stringify(items))
+      const width = 600
+      const height = 600
+      const left = (screen.width - width) / 2
+      const top = (screen.height - height) / 2
+
+      window.open(
+        'http://localhost:5173/email/popup?email=',
+        '_blank',
+        `width=${width},height=${height}, left=${left}, top=${top}`,
+      )
+    },
   }
 
   const dispatch = useDispatch()

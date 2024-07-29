@@ -12,9 +12,6 @@ import {
   ContextMenuTrigger,
   CheckboxWrapper,
   Separator,
-  ContextMenuSubTrigger,
-  ContextMenuSubContent,
-  ContextMenuSub,
 } from '../..'
 import { ToggleFavoriateButton } from '../ToggleFavoriateButton'
 import { TrashMutate } from '../TrashMutate'
@@ -197,6 +194,7 @@ export const emailItemContextMenu = [
     {
       icon: Icon.popup,
       label: 'Open in popup',
+      key: 'Popup',
       shortcut: '⌘op',
     },
   ],
