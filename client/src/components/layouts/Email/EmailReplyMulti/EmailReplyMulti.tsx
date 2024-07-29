@@ -38,6 +38,7 @@ import { useDispatch } from 'react-redux'
 import { removeSelectedThreadsDispatch } from '@/context'
 import { useEmailReplyThread, useReplyMulti } from '@/hooks'
 import { sanitizeEmailContent } from '@/utils'
+import generatePDF from 'react-to-pdf'
 
 export const EmailReplyMulti = ({ trigger, threads }: EmailReplyMultiProps) => {
   const { handleAlertCancel, handleAlertContinue, handleDrawerOpenChange, setState, state, threadsReplyContentRef } =
@@ -167,14 +168,21 @@ const EmailReplyMultiChildrenStates = ({
   }, [currentState.label, editorContent])
 
   const invokeReply = useEmailReplyThread()
+  const targetRef = useRef()
+
+  const parser = new DOMParser()
+  const doc = parser.parseFromString(thread.textHtml, 'text/html')
+
+  generatePDF(targetRef, { filename: 'page.pdf' })
 
   return (
     <div>
       <div className="email__reply__multi__content__item">
         <button
           onClick={() => {
-            dispatch(removeSelectedThreadsDispatch([thread]))
-            threadsLength === 1 && setState((prevState) => ({ ...prevState, drawer: false }))
+            generatePDF(targetRef, { filename: 'page.pdf' })
+            // dispatch(removeSelectedThreadsDispatch([thread]))
+            // threadsLength === 1 && setState((prevState) => ({ ...prevState, drawer: false }))
           }}
         >
           <Icon.X />
@@ -192,7 +200,10 @@ const EmailReplyMultiChildrenStates = ({
         <Separator />
         <form className="email__reply__multi__content__item__form">
           <div>
-            <div className="editor">
+            <div
+              className="editor"
+              ref={targetRef}
+            >
               {currentState.label === 'Reply' ? (
                 <NotionMinimalTextEditor
                   name={thread.from.email.split(' ')[0].replace(/"/g, '')}

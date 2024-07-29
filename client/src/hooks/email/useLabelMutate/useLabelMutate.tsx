@@ -20,7 +20,7 @@ export const UseLabelMutate = ({ threads }: UseLabelMutateProps) => {
   const startMutation = useMutation({
     mutationKey: ['Modify-Label', querykey],
     mutationFn: () => modifyThread(querykey),
-    onSuccess: () => {
+    onSuccess: (updatedThreadData) => {
       queryClient.setQueryData<PaginatedMessages>(currentQueryKey, (oldData) => {
         if (!oldData) return { pages: [], pageParams: [] }
         return {
@@ -28,13 +28,11 @@ export const UseLabelMutate = ({ threads }: UseLabelMutateProps) => {
           pages: oldData.pages.map((page) => ({
             ...page,
             messages: page.messages.map((message) => {
-              if (querykey.threadIds.includes(message.threadId)) {
-                const newLabelIds = new Set(message.labelIds)
-                querykey.addLabelIds.forEach((label) => newLabelIds.add(label))
-                querykey.removeLabelIds.forEach((label) => newLabelIds.delete(label))
+              const updatedMessage = updatedThreadData.find((updatedMsg) => updatedMsg.threadId === message.threadId)
+              if (updatedMessage) {
                 return {
                   ...message,
-                  labelIds: Array.from(newLabelIds),
+                  labelIds: updatedMessage.labelIds,
                 }
               }
               return message

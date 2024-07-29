@@ -34,6 +34,7 @@ const initialState: initialStateEmailTypes = {
   },
   labelButtonStatus: { labelButtonStatus: false, onTheFlyAction: false, move: false },
   labelModificationSelected: { type: null, label: null },
+  forwawrdEmailPdfFile: null,
 }
 
 export const emailSlice = createSlice({

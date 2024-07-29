@@ -176,30 +176,30 @@ export const LabelMutateContent = ({ threads, setOpen, move }: LabelMutateConten
 }
 
 export const LabelMutateWireless = ({ threads }: LabelMutateWirelessProps) => {
-  const {
-    labelButtonStatus: labelButtonStatuasa,
-    onTheFlyAction: onTheFlySnooze,
-    move,
-  } = useSelector((state: RootState) => state.email.labelButtonStatus)
+  const { labelButtonStatus, onTheFlyAction, move } = useSelector((state: RootState) => state.email.labelButtonStatus)
   const dispatch = useDispatch()
 
   return (
     <Popover
-      open={labelButtonStatuasa}
+      open={labelButtonStatus}
+      modal={true}
       onOpenChange={(state) =>
+        state === false &&
         dispatch(
           getLabelButtonStatus({
-            labelButtonStatus: onTheFlySnooze ? !state : state,
-            move: onTheFlySnooze && move ? true : false,
+            labelButtonStatus: false,
           }),
         )
       }
     >
       <PopoverTrigger asChild>
         <ToggleToolTipSpanWrapper
+          onClick={() =>
+            dispatch(getLabelButtonStatus({ labelButtonStatus: true, onTheFlyAction: false, move: false }))
+          }
           disabled={!threads.length}
           tip="Snooze"
-          value={labelButtonStatuasa ? true : false}
+          value={labelButtonStatus ? true : false}
           children={
             <>
               <Icon.tags />

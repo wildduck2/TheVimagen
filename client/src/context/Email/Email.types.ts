@@ -11,6 +11,7 @@ export interface initialStateEmailTypes {
   snoozeButtonStatus: SnoozeButtonStatusType
   labelButtonStatus: LabelButtonStatusType
   labelModificationSelected: LabelModificationSelectedType
+  forwawrdEmailPdfFile: File | null
 }
 
 export type LabelButtonStatusType = {
@@ -100,4 +101,11 @@ export type LabelButtonStatusState = {
 }
 export type LabelButtonStatusAction = {
   payload: LabelButtonStatusType
+}
+
+export type ForwawrdEmailPdfFileState = {
+  forwawrdEmailPdfFile: File | null
+}
+export type ForwawrdEmailPdfFileAction = {
+  payload: File | null
 }

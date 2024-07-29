@@ -10,6 +10,8 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import { UseThreadActionType } from './useThreadAction.types'
 import { useArchiveMutate, useDeleteMutate, useMarkAsRead, useToggleFavoriate, useTrashMutate } from '@/hooks'
+import jspdf, { jsPDF } from 'jspdf'
+import html2canvas from 'html2canvas'
 
 export const useThreadAction = ({ items }: UseThreadActionType) => {
   const selectedThread = useSelector((state: RootState) => state.email.selectedThread)
@@ -38,9 +40,64 @@ export const useThreadAction = ({ items }: UseThreadActionType) => {
       dispatch(getSelectedThreadsDispatch([items[0]]))
     },
     ForwardAttachment: ({ dispatch, items }: OnClickType) => {
-      dispatch(getMultiReplyState({ alert: false, drawer: true }))
-      dispatch(getSelectedThreadsDispatch([items[0]]))
-      dispatch(getReplyStatusState({ replyAll: false, forward: true, attachment: true }))
+      const container = document.createElement('div')
+      container.innerHTML = items[0].textHtml
+      document.body.appendChild(container)
+
+      const images = container.getElementsByTagName('img')
+      let imagesLoaded = 0
+
+      function checkIfAllImagesLoaded() {
+        imagesLoaded++
+        if (imagesLoaded === images.length) {
+          generatePDF(container)
+        }
+      }
+
+      for (let i = 0; i < images.length; i++) {
+        if (images[i].complete) {
+          checkIfAllImagesLoaded()
+        } else {
+          images[i].addEventListener('load', checkIfAllImagesLoaded)
+          images[i].addEventListener('error', checkIfAllImagesLoaded)
+        }
+      }
+
+      if (images.length === 0) {
+        generatePDF(container)
+      }
+
+      function generatePDF(container) {
+        html2canvas(container).then(function (canvas) {
+          const imgData = canvas.toDataURL('image/png')
+          const pdf = new jsPDF('p', 'mm', 'a4')
+          const imgWidth = 210
+          const pageHeight = 297
+          const imgHeight = (canvas.height * imgWidth) / canvas.width
+          let heightLeft = imgHeight
+
+          let position = 0
+
+          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
+          heightLeft -= pageHeight
+
+          while (heightLeft >= 0) {
+            position = heightLeft - imgHeight
+            pdf.addPage()
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight)
+            heightLeft -= pageHeight
+          }
+
+          pdf.save('download.pdf')
+
+          // Remove the temporary container
+          document.body.removeChild(container)
+        })
+      }
+
+      // dispatch(getMultiReplyState({ alert: false, drawer: true }))
+      // dispatch(getReplyStatusState({ replyAll: false, forward: true, attachment: true }))
+      // dispatch(getSelectedThreadsDispatch([items[0]]))
     },
     Archive: () => {
       startArchive.mutate()
