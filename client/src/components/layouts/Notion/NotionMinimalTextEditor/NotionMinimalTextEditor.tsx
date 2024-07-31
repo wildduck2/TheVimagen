@@ -18,8 +18,8 @@ import { ScrollArea } from '@/components/ui'
 import { NotionMinimalTextEditorProps } from './NotionMinimalTextEditor.types'
 import { NotionMinimalTextEditorToolbar } from './NotionMinimalTextEditorToolbar'
 import StarterKit from '@tiptap/starter-kit'
-import { debounceValue, useDebounce2 } from '@/hooks'
-import { useEffect, useRef } from 'react'
+import { useDebounceCallback } from '@/hooks'
+import { useEffect } from 'react'
 
 export const NotionMinimalTextEditor = ({
   valid,
@@ -72,11 +72,16 @@ export const NotionMinimalTextEditor = ({
     },
     [valid, name],
   )
-  const updateEditorContent = useDebounce2((html: string) => {
-    if (type === 'reply') {
-      setEditorContent({ reply: type === 'reply' && html, editSubject: type !== 'reply' && html })
+  const updateEditorContent = useDebounceCallback((html: string) => {
+    const content = { reply: type === 'reply' && html, editSubject: type !== 'reply' && html }
+    return setEditorContent && setEditorContent(content)
+  }, 300)
+
+  useEffect(() => {
+    if (editor) {
+      updateEditorContent(content)
     }
-  }, 500)
+  }, [])
 
   useEffect(() => {
     if (editor) {

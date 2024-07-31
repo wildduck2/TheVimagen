@@ -4,7 +4,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../..'
 import React from 'react'
 
 export const ToggleToolTipSpanWrapper = React.forwardRef<HTMLButtonElement, ToggleToolTipWrapperSpanProps>(
-  ({ children, onClick, tip, value, side, disabled }, ref) => {
+  ({ children, onClick, className, tip, value, side, disabled }, ref) => {
     return (
       <TooltipProvider>
         <Tooltip delayDuration={0}>

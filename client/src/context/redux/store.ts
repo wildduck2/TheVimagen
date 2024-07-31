@@ -4,6 +4,7 @@ import dataReduceer from '../Data/Data'
 import utilsReducer from '../Utils/Utils'
 import userReducer from '../User/User'
 import emailReducer from '../Email/Email'
+import { createStateSyncMiddleware, initMessageListener } from 'redux-state-sync'
 
 export type RootState = ReturnType<typeof rootReducer>
 
@@ -21,4 +22,8 @@ export const store = configureStore({
     utils: utilsReducer,
     email: emailReducer,
   },
+
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(createStateSyncMiddleware({})),
 })
+
+initMessageListener(store)

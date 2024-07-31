@@ -1,11 +1,11 @@
 import { PaginatedMessages } from '@/components/ui'
-import { getSelectedEmailDispatch } from '@/context'
 import { queryClient } from '@/main'
 import { getCookie, trashMessage } from '@/utils'
 import { useMutation } from '@tanstack/react-query'
 import { useDispatch } from 'react-redux'
 import { toast } from 'sonner'
 import { TrashMutateType } from './useTrashMutate.types'
+import { setSelectedThreadsDispatch } from '@/context'
 
 export const useTrashMutate = ({ threads }: TrashMutateType) => {
   const currentQueryKey = JSON.parse(getCookie('query:key')) || ['primary', { q: 'label:inbox category:primary' }]
@@ -27,7 +27,7 @@ export const useTrashMutate = ({ threads }: TrashMutateType) => {
         }
       })
       toast.success(`Thread has been moved to Trash!`)
-      dispatch(getSelectedEmailDispatch([]))
+      dispatch(setSelectedThreadsDispatch([]))
     },
     onError: () => {
       toast.error(`Error: Thread has not been moved to Trash!`)

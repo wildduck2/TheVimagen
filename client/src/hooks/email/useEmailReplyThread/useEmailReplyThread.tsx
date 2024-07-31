@@ -18,6 +18,7 @@ export const useEmailReplyThread = () => {
         return email
       }
     })
+    console.log(body)
 
     emailFiltered.length === 0 && toast.error('Please select at least one email')
     emailFiltered.length > 0 &&

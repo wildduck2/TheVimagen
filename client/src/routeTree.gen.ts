@@ -15,6 +15,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRoute } from './routes/__root'
 import { Route as FilesIndexImport } from './routes/files/index'
 import { Route as NotionFileImport } from './routes/notion/file'
+import { Route as EmailPopupImport } from './routes/email/popup'
 import { Route as EmailEmailImport } from './routes/email/_email'
 import { Route as DashboardDashboardImport } from './routes/dashboard/_dashboard'
 import { Route as EmailEmailIndexImport } from './routes/email/_email.index'
@@ -128,6 +129,11 @@ const AuthCompleteAccountInformationLazyRoute =
 const NotionFileRoute = NotionFileImport.update({
   path: '/notion/file',
   getParentRoute: () => rootRoute,
+} as any)
+
+const EmailPopupRoute = EmailPopupImport.update({
+  path: '/popup',
+  getParentRoute: () => EmailRoute,
 } as any)
 
 const EmailEmailRoute = EmailEmailImport.update({
@@ -275,6 +281,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/email'
       preLoaderRoute: typeof EmailEmailImport
       parentRoute: typeof EmailRoute
+    }
+    '/email/popup': {
+      id: '/email/popup'
+      path: '/popup'
+      fullPath: '/email/popup'
+      preLoaderRoute: typeof EmailPopupImport
+      parentRoute: typeof EmailImport
     }
     '/notion/file': {
       id: '/notion/file'
@@ -458,6 +471,7 @@ export const routeTree = rootRoute.addChildren({
       EmailEmailUpdatesLazyRoute,
       EmailEmailIndexRoute,
     }),
+    EmailPopupRoute,
   }),
   NotionFileRoute,
   AuthCompleteAccountInformationLazyRoute,
@@ -511,7 +525,8 @@ export const routeTree = rootRoute.addChildren({
     "/email": {
       "filePath": "email",
       "children": [
-        "/email/_email"
+        "/email/_email",
+        "/email/popup"
       ]
     },
     "/email/_email": {
@@ -531,6 +546,10 @@ export const routeTree = rootRoute.addChildren({
         "/email/_email/updates",
         "/email/_email/"
       ]
+    },
+    "/email/popup": {
+      "filePath": "email/popup.tsx",
+      "parent": "/email"
     },
     "/notion/file": {
       "filePath": "notion/file.tsx"

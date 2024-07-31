@@ -2,19 +2,12 @@ import { Checkbox, ToggleToolTipSpanWrapper } from '../..'
 import { cn } from '@/utils'
 import { MultiCheckboxWrapperType } from './MultiCheckboxWrapper.types'
 
-export const MultiCheckboxWrapper = ({
-  disabled,
-  className,
-  action,
-  tip,
-  data,
-  dataCompare,
-}: MultiCheckboxWrapperType) => {
+export const MultiCheckboxWrapper = ({ disabled, className, action, data, dataCompare }: MultiCheckboxWrapperType) => {
   return (
     <>
       <ToggleToolTipSpanWrapper
         disabled={disabled}
-        tip={tip}
+        tip={'Select'}
         children={
           <Checkbox
             id="terms"

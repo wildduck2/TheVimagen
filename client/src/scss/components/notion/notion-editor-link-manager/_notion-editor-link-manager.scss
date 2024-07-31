@@ -18,6 +18,10 @@
 }
 
 .notion__editor__link__manager__content {
+  p {
+    color: hsl(var(--muted-foreground));
+  }
+
   &__footer {
     @include u.flex(grid, center);
     grid-template-columns: 1fr 1fr;

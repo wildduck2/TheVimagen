@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {
   initialStateEmailTypes,
+  LabelButtonStatusAction,
+  LabelButtonStatusState,
+  LabelModificationSelectedAction,
+  LabelModificationSelectedState,
   MultiReplyAction,
   MultiReplyState,
   ReplyStatusAction,
@@ -11,6 +15,8 @@ import {
   SelectedEmailDataState,
   SelectedThreadsAction,
   SelectedThreadsState,
+  SnoozeButtonStatusAction,
+  SnoozeButtonStatusState,
   ThreadsFetchedAction,
   ThreadsFetchedState,
 } from './Email.types'
@@ -22,6 +28,13 @@ const initialState: initialStateEmailTypes = {
   threadsFetched: [],
   multiReply: { alert: false, drawer: false },
   replyStatus: { replyAll: false, forward: false, attachment: false },
+  snoozeButtonStatus: {
+    snoozeButtonStatus: false,
+    onTheFlyAction: false,
+  },
+  labelButtonStatus: { labelButtonStatus: false, onTheFlyAction: false, move: false },
+  labelModificationSelected: { type: null, label: null },
+  forwawrdEmailPdfFile: null,
 }
 
 export const emailSlice = createSlice({
@@ -48,6 +61,10 @@ export const emailSlice = createSlice({
       })
     },
 
+    setSelectedThreadsDispatch: (state: SelectedThreadsState, action: SelectedThreadsAction) => {
+      state.selectedThreads = action.payload
+    },
+
     removeSelectedThreadsDispatch: (state: SelectedThreadsState, action: SelectedThreadsAction) => {
       const emailsToRemove = action.payload
       const threadIdsToRemove = emailsToRemove.map((email) => email.threadId)
@@ -68,6 +85,16 @@ export const emailSlice = createSlice({
     getReplyStatusState: (state: ReplyStatusState, action: ReplyStatusAction) => {
       state.replyStatus = action.payload
     },
+
+    getSnoozeButtonStatus: (state: SnoozeButtonStatusState, action: SnoozeButtonStatusAction) => {
+      state.snoozeButtonStatus = action.payload
+    },
+    getLabelModificationSelected: (state: LabelModificationSelectedState, action: LabelModificationSelectedAction) => {
+      state.labelModificationSelected = action.payload
+    },
+    getLabelButtonStatus: (state: LabelButtonStatusState, action: LabelButtonStatusAction) => {
+      state.labelButtonStatus = action.payload
+    },
   },
 })
 
@@ -79,6 +106,10 @@ export const {
   getThreadsFetchedDispatched,
   getMultiReplyState,
   getReplyStatusState,
+  getSnoozeButtonStatus,
+  setSelectedThreadsDispatch,
+  getLabelModificationSelected,
+  getLabelButtonStatus,
 } = emailSlice.actions
 
 export default emailSlice.reducer

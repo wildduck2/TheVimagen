@@ -61,6 +61,9 @@ export const passwordhasuppercase = z.string().regex(/(?=.*[A-Z])/)
 export const passwordhaslowercase = z.string().regex(/(?=.*[a-z])/)
 export const passwordhasnumber = z.string().regex(/(?=.*\d)/)
 export const passwordhasspecialcharacter = z.string().regex(/(?=.*[@$!%*?&])/)
+export const dateSchema = z.date().refine((date) => !isNaN(date.getTime()), {
+  message: 'Invalid date',
+})
 
 export const passwordrules = [
   {

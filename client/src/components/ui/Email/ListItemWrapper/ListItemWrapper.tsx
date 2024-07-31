@@ -1,14 +1,6 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
-import {
-  getMultiReplyState,
-  getReplyStatusState,
-  getSelectedEmailDispatch,
-  getSelectedThreadsDispatch,
-  removeSelectedThreadsDispatch,
-  RootState,
-} from '@/context'
+import { getSelectedEmailDispatch, getSelectedThreadsDispatch, removeSelectedThreadsDispatch } from '@/context'
 import { cn } from '@/utils'
 import { ListItemWrapperType } from './ListItemWrapper.types'
 import {
@@ -49,15 +41,9 @@ export const ListItemWrapper = ({ children, items }: ListItemWrapperType) => {
                   tip="Select"
                 />
                 <Separator />
-                <ToggleFavoriateButton
-                  threads={items}
-                  tip="Star"
-                />
+                <ToggleFavoriateButton threads={items} />
                 <Separator />
-                <TrashMutate
-                  threads={items}
-                  tip="Trash"
-                />
+                <TrashMutate threads={items} />
               </div>
             </div>
             <div
@@ -180,6 +166,7 @@ export const emailItemContextMenu = [
     {
       icon: Icon.clipboardChecked,
       label: 'Add to Tasks',
+      key: 'Task',
       shortcut: '⌘at',
     },
   ],
@@ -187,12 +174,14 @@ export const emailItemContextMenu = [
     {
       icon: Icon.folderMove,
       label: 'Move to',
+      key: 'Move',
       shortcut: '⌘ac',
     },
 
     {
       icon: Icon.tag,
       label: 'Label as',
+      key: 'Label',
       shortcut: '⌘al',
     },
     {
@@ -205,6 +194,7 @@ export const emailItemContextMenu = [
     {
       icon: Icon.popup,
       label: 'Open in popup',
+      key: 'Popup',
       shortcut: '⌘op',
     },
   ],

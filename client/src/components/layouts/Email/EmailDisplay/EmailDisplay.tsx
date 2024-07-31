@@ -7,7 +7,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  EmailDisplayButton,
   EmailSnoozeButton,
   JunkMutate,
   ResizablePanel,
@@ -25,8 +24,10 @@ import { useThreadAction } from '@/hooks'
 export const emailDisplayButtonData = ['Archive', 'Move to junk', 'Move to trash']
 
 export function EmailDisplay({ defaultLayout = 37 }: EmailDisplayProps) {
-  const selectedThread = useSelector((state: RootState) => state.email.selectedThread)
-  const { selectedThreads, dispatch, actions, selectedThread: selected } = useThreadAction({ items: selectedThread })
+  const reduxSelectedThread = useSelector((state: RootState) => state.email.selectedThread)
+  const localSelectedThread = JSON.parse(localStorage.getItem('emailSelected'))
+  const selectedThread = reduxSelectedThread.length > 0 ? reduxSelectedThread : localSelectedThread
+  const { dispatch, actions } = useThreadAction({ items: selectedThread })
 
   return (
     <ResizablePanel
@@ -38,21 +39,9 @@ export function EmailDisplay({ defaultLayout = 37 }: EmailDisplayProps) {
         <div className="email__dispaly__top">
           <div className="email__dispaly__top__content">
             <div>
-              <ArchiveMutate
-                disabled={selectedThread.length === 0}
-                threads={selectedThread ? selectedThread : []}
-                tip="Archive"
-              />
-              <JunkMutate
-                disabled={selectedThread.length === 0}
-                threads={selectedThread ? selectedThread : []}
-                tip="Move to Junk"
-              />
-              <TrashMutate
-                disabled={selectedThread.length === 0}
-                threads={selectedThread ? selectedThread : []}
-                tip="Move to Trash"
-              />
+              <ArchiveMutate threads={selectedThread ? selectedThread : []} />
+              <JunkMutate threads={selectedThread ? selectedThread : []} />
+              <TrashMutate threads={selectedThread ? selectedThread : []} />
             </div>
             <Separator
               orientation="vertical"
@@ -99,7 +88,7 @@ export function EmailDisplay({ defaultLayout = 37 }: EmailDisplayProps) {
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={() => actions.Unread()}>Mark as unread</DropdownMenuItem>
               <DropdownMenuItem onClick={() => actions.Star()}>Move to Favorites</DropdownMenuItem>
-              <DropdownMenuItem>Add label</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => actions.Label()}>Add label</DropdownMenuItem>
               <DropdownMenuItem>Mute thread</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

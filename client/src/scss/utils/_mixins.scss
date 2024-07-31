@@ -173,6 +173,14 @@ profile_img
       stroke: currentColor;
     }
   }
+
+  &.active {
+    background: hsl(var(--foreground) / 0.1);
+
+    svg {
+      stroke: currentColor;
+    }
+  }
 }
 
 @mixin ghostButton {

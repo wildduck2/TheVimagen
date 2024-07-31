@@ -35,9 +35,9 @@ import {
 import { Icon } from '@/assets'
 import { NotionMinimalTextEditor } from '../../Notion'
 import { useDispatch } from 'react-redux'
-import { removeSelectedThreadsDispatch } from '@/context'
-import { useEmailReplyThread, useReplyMulti } from '@/hooks'
+import { useEmailReplyMultiChildrenStates, useEmailReplyThread, useReplyMulti } from '@/hooks'
 import { sanitizeEmailContent } from '@/utils'
+import { removeSelectedThreadsDispatch } from '@/context'
 
 export const EmailReplyMulti = ({ trigger, threads }: EmailReplyMultiProps) => {
   const { handleAlertCancel, handleAlertContinue, handleDrawerOpenChange, setState, state, threadsReplyContentRef } =
@@ -119,64 +119,22 @@ const EmailReplyMultiChildrenStates = ({
   setState,
   threadsReplyContentRef,
 }: EmailReplyMultiChildrenStatesProps) => {
-  const dispatch = useDispatch()
-  const [currentState, setCurrentState] = useState<currentStateType>({
-    label: 'Reply',
-    icon: Icon.reply,
-  })
-  const [editorContent, setEditorContent] = useState<EmailreplyContent>({ reply: '', editSubject: '' })
-  const iframeRef = useRef<HTMLIFrameElement | null>(null)
-  const replyToEmails = useRef<string[]>([])
-
-  const sanitizedContent = sanitizeEmailContent(thread.textHtml.replace(/<a /g, '<a target="_blank" '))
-
-  const rawMessage = [
-    `<div contenteditable="true" style="outline: none;">`,
-    `<div style="margin: 1rem">`,
-    `---------------------------------`,
-    `<p>From: ${thread.from.email}</p>`,
-    `<p>Date: ${format(new Date(thread.sentDate), 'PPpp')}</p>`,
-    `<p>Subject: ${thread.subject}</p>`,
-    `<p>To: ${thread.to[0].email}</p>`,
-    `---------------------------------`,
-    `</div>`,
-    sanitizedContent,
-  ].join('')
-
-  useEffect(() => {
-    const currentContent =
-      currentState.label === 'Forward To'
-        ? iframeRef.current?.srcdoc
-        : currentState.label === 'Reply'
-          ? editorContent.reply
-          : editorContent.editSubject
-
-    const replyContent = {
-      thread: thread,
-      emails: replyToEmails.current,
-      content: currentContent,
-    }
-
-    const index = threadsReplyContentRef.current.findIndex((item) => item.thread.threadId === thread.threadId)
-
-    if (index !== -1) {
-      threadsReplyContentRef.current[index] = replyContent
-    } else {
-      threadsReplyContentRef.current.push(replyContent)
-    }
-  }, [currentState.label, editorContent])
-
-  const invokeReply = useEmailReplyThread()
+  const {
+    rawMessage,
+    currentState,
+    replyToEmails,
+    replyToContent,
+    iframeRef,
+    closeThreadHandler,
+    invokeReply,
+    setCurrentState,
+    setEditorContent,
+  } = useEmailReplyMultiChildrenStates({ idx, thread, threadsLength, setState, threadsReplyContentRef })
 
   return (
     <div>
       <div className="email__reply__multi__content__item">
-        <button
-          onClick={() => {
-            dispatch(removeSelectedThreadsDispatch([thread]))
-            threadsLength === 1 && setState((prevState) => ({ ...prevState, drawer: false }))
-          }}
-        >
+        <button onClick={() => closeThreadHandler()}>
           <Icon.X />
         </button>
 
@@ -196,6 +154,7 @@ const EmailReplyMultiChildrenStates = ({
               {currentState.label === 'Reply' ? (
                 <NotionMinimalTextEditor
                   name={thread.from.email.split(' ')[0].replace(/"/g, '')}
+                  content={replyToContent}
                   setEditorContent={setEditorContent}
                   valid={true}
                   type="reply"
@@ -230,14 +189,16 @@ const EmailReplyMultiChildrenStates = ({
               </Label>
               <Button
                 size="sm"
-                onClick={(e) =>
+                onClick={(e) => {
+                  closeThreadHandler()
+
                   invokeReply({
                     e,
-                    body: currentState.label === 'reply' ? editorContent.reply : editorContent.editSubject,
+                    body: threadsReplyContentRef.current[idx].content as string,
                     emails: replyToEmails.current,
                     selectedThread: [thread],
                   })
-                }
+                }}
               >
                 Send
               </Button>
