@@ -13,6 +13,7 @@
         "build-storybook": "storybook build"
     },
     "dependencies": {
+        "@ahmedayob/email-toolkit": "^0.1.5",
         "@hocuspocus/provider": "^2.13.5",
         "@hookform/resolvers": "^3.9.0",
         "@radix-ui/react-accordion": "^1.2.0",
@@ -96,13 +97,11 @@
         "gmail-api-parse-message-ts": "^2.2.33",
         "gsap": "^3.12.5",
         "headless": "link:@tippyjs/react/headless",
-        "html2canvas": "^1.4.1",
         "input-otp": "^1.2.4",
         "install": "^0.13.0",
         "jotai": "^2.9.1",
         "js-base64": "^3.7.7",
         "js-cookie": "^3.0.5",
-        "jspdf": "^2.5.1",
         "lowlight": "^3.1.0",
         "lucide-react": "^0.407.0",
         "next-themes": "^0.3.0",

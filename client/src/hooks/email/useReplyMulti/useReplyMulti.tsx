@@ -32,9 +32,17 @@ export const useReplyMulti = ({ threads }: UserReplyMultiProps) => {
 
   const handleDrawerOpenChange = useCallback(
     (drawerState: boolean) => {
+      const hasContentInThreads = threadsReplyContentRef.current.some((threadContent) => {
+        const content = threadContent.content
+        return typeof content === 'string' && content.trim() !== ''
+      })
+
+      const threadsLength = threads.length > 0
+      const showAlert = !drawerState && hasContentInThreads && threadsLength
+
       setState(() => ({
-        alert: drawerState && threads.length > 0 ? false : true,
-        drawer: drawerState,
+        alert: showAlert,
+        drawer: threadsLength ? drawerState : false, // Close the drawer if there are no threads
       }))
     },
     [threads.length],

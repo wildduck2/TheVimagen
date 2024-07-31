@@ -1,28 +1,26 @@
-import { Base64 } from 'js-base64'
 import { EncodeMEssageType } from './encodeMessage.types'
+import { Base64, EmailBuilder, ValueType } from '@ahmedayob/email-toolkit'
 
 export const encodeMessage = ({ thread, htmlContent, to, replyStatus }: EncodeMEssageType) => {
   const { forward, replyAll } = replyStatus
   const { to: from, id, subject, cc } = thread
 
-  const rawMessage = [
-    `From: ${from.map((item) => item.email).join(', ') || ''}`,
-    `To: ${to.name} <${to.email}>`,
-    replyAll ? `Cc: ${cc?.map((item) => item.email).join(', ') || ''}` : '',
-    `Subject: ${forward ? 'FWD' : 'RE'}: ${subject}`,
-    `In-Reply-To: ${id}`,
-    'Content-Type: text/html; charset=utf-8',
-    '',
-    htmlContent,
-    `</div>`,
-    `<div style="margin: 1rem">`,
-    `---------------------------------`,
-    `<p>This email was sent from ${thread.from.name} by <a style="color: blue" href="https://github.com/wildduck2/" target="_blank">TheVimagen</a> app</p>`,
-    `---------------------------------`,
-    `</div>`,
-  ].join('\r\n')
+  const msg = new EmailBuilder()
 
-  console.log(rawMessage)
+  msg.addMessage({
+    headers: {
+      From: `${from[0].name} <${from[0].email as ValueType}>`,
+      To: `${to.name} <${to.email as ValueType}>`,
+      Subject: `${forward ? 'FWD' : 'RE'}: ${subject}`,
+      Cc: `${cc[0].name} <${cc[0].email as ValueType}>`,
+      'In-Reply-To': id,
+      'Content-Transfer-Encoding': 'base64',
+      'Content-Type': 'text/html',
+    },
+    charset: 'utf-8',
+    contentType: 'text/html',
+    data: 'asdfasdfasdlkasjdfklasdjf;asldkfj;',
+  })
 
-  return Base64.encode(rawMessage)
+  return msg.asEncoded()
 }

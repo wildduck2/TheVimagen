@@ -15,24 +15,26 @@ export const replyThread = async ({ thread, emails, htmlContent, replyStatus }: 
     }
   })
 
-  // try {
-  //   const { data } = await axios.post<ReplyThreadRes>(
-  //     `${process.env.ROOT_URL}/email/reply/thread`,
-  //     {
-  //       user_id: 'fcb7d30c-b14a-47d3-bd9c-37ae5849c30e',
-  //       encodedMessages: messages,
-  //     },
-  //     {
-  //       withCredentials: true,
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //     },
-  //   )
-  //
-  //   if (!data) return null
-  //   return data
-  // } catch (error) {
-  //   return null
-  // }
+  console.log(messages)
+
+  try {
+    const { data } = await axios.post<ReplyThreadRes>(
+      `${process.env.ROOT_URL}/email/reply/thread`,
+      {
+        user_id: 'fcb7d30c-b14a-47d3-bd9c-37ae5849c30e',
+        encodedMessages: messages,
+      },
+      {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    )
+
+    if (!data) return null
+    return data
+  } catch (error) {
+    return null
+  }
 }

@@ -73,10 +73,15 @@ export const NotionMinimalTextEditor = ({
     [valid, name],
   )
   const updateEditorContent = useDebounceCallback((html: string) => {
-    if (type === 'reply') {
-      setEditorContent({ reply: type === 'reply' && html, editSubject: type !== 'reply' && html })
+    const content = { reply: type === 'reply' && html, editSubject: type !== 'reply' && html }
+    return setEditorContent && setEditorContent(content)
+  }, 300)
+
+  useEffect(() => {
+    if (editor) {
+      updateEditorContent(content)
     }
-  }, 500)
+  }, [])
 
   useEffect(() => {
     if (editor) {
