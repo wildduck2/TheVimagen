@@ -1,0 +1,32 @@
+/*
+
+    This code is written by Ahmed Ayob
+
+*/
+
+@use '../../../base' as *;
+@use '../../../utils' as u;
+
+/*
+
+    Email Reply To Button
+    
+*/
+
+.email__reply__to__button {
+  &__trigger {
+    right: 0.75rem;
+    bottom: 4rem;
+    z-index: 10;
+  }
+
+  &__content {
+    @include u.flex(flex, center);
+    width: fit-content;
+    gap: 0.5rem;
+    background-color: hsl(var(--background));
+    border: 1px solid hsl(var(--border));
+    padding: 0.5rem;
+    border-radius: var(--radius);
+  }
+}

@@ -1,0 +1,70 @@
+/*
+
+    This code is written by Ahmed Ayob
+
+*/
+
+@use '../../../base' as *;
+@use '../../../utils' as u;
+
+/*
+
+    Email Reply Attachment Button 
+    
+*/
+.email__reply__attachment__button {
+  &__trigger {
+    right: 0.75rem;
+    bottom: 4rem;
+    z-index: 10;
+  }
+
+  &__content {
+    @include u.flex(flex, center);
+    width: fit-content;
+    gap: 0.5rem;
+    background-color: hsl(var(--background));
+    border-radius: var(--radius);
+
+    &__card {
+      width: 250px;
+      height: 50px;
+      @include u.flex(flex, center);
+      cursor: pointer;
+
+      border-radius: var(--radius);
+      padding-inline: 0.5rem;
+
+      &>div {
+        padding: 0.5rem;
+
+        &>h3 {
+          font-size: 0.8rem;
+          font-weight: 500;
+        }
+
+        p {
+          font-size: 0.7rem;
+          line-height: 1.2rem;
+          margin-top: 0 !important;
+        }
+      }
+    }
+  }
+}
+
+.scroll__area {
+  @include u.flex(grid, center);
+  gap: 0.5rem;
+
+  &>div {
+    scroll-behavior: smooth;
+    max-height: 224px;
+
+    &>div>div {
+      pointer-events: none;
+      display: grid !important;
+      gap: 0.5rem;
+    }
+  }
+}
