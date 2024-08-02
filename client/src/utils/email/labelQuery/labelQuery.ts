@@ -16,7 +16,6 @@ export const labelQuery = async () => {
       },
     })
 
-    toast.success('labels fetched successfully')
     return data.data
   } catch (error) {
     toast.error('Error: Failed to fetch labels')

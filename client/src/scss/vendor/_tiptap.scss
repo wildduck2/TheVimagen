@@ -1,6 +1,6 @@
 /*
 
-    This code is writen by Ahmed Ayob
+    This code is written by Ahmed Ayob
 
 */
 
@@ -16,6 +16,10 @@
     transition-property: fon-size;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
+  }
+
+  code {
+    border-radius: 0.2rem;
   }
 }
 

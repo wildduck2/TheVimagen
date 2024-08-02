@@ -10,11 +10,17 @@ export const Log = ({ type }: LogProps) => {
     <>
       <div className="auth">
         {type !== 'signin' ? (
-          <Link to="/auth/signin" className={cn(buttonVariants({ variant: 'ghost' }), 'auth__link')}>
+          <Link
+            to="/auth/signin"
+            className={cn(buttonVariants({ variant: 'ghost' }), 'auth__link')}
+          >
             Signin
           </Link>
         ) : (
-          <Link to="/auth/signup" className={cn(buttonVariants({ variant: 'ghost' }), 'auth__link')}>
+          <Link
+            to="/auth/signup"
+            className={cn(buttonVariants({ variant: 'ghost' }), 'auth__link')}
+          >
             Signup
           </Link>
         )}

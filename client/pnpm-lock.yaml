@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@ahmedayob/email-toolkit':
-        specifier: ^0.1.5
-        version: 0.1.5
+        specifier: ^0.1.7
+        version: 0.1.7
       '@hocuspocus/provider':
         specifier: ^2.13.5
         version: 2.13.5(y-protocols@1.0.6(yjs@13.6.18))(yjs@13.6.18)
@@ -450,8 +450,8 @@ importers:
 
 packages:
 
-  '@ahmedayob/email-toolkit@0.1.5':
-    resolution: {integrity: sha512-Pp8cxxU1qNl2UgbVcenGjIS974VialqwocABhYWGyHxJgLtRkXwS4B7pxZZOhTRUyg9I3NfkwM/XJtcF9LjCjA==}
+  '@ahmedayob/email-toolkit@0.1.7':
+    resolution: {integrity: sha512-k+9gBeFJn/PQ/E/tkl4jLW2WYCfDSUDA6Ld52MTbKrfsl6u3eVK1gCorAkxaVaG/b2mHXq/JqYc/KwAj6EGM3Q==}
 
   '@alloc/quick-lru@5.2.0':
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
@@ -5316,7 +5316,7 @@ packages:
 
 snapshots:
 
-  '@ahmedayob/email-toolkit@0.1.5': {}
+  '@ahmedayob/email-toolkit@0.1.7': {}
 
   '@alloc/quick-lru@5.2.0': {}
 

@@ -1,6 +1,6 @@
 /*
 
-    This code is writen by Ahmed Ayob
+    This code is written by Ahmed Ayob
 
 */
 
@@ -99,42 +99,6 @@
         /*   padding: 1rem; */
         /*   resize: none; */
         /* } */
-
-        &>div {
-          @include u.flex(flex, center, space-between);
-
-          &>label {
-            @include u.flex(flex, center);
-            gap: 1rem;
-            font-size: 0.75rem;
-            line-height: 1rem;
-            font-weight: 400;
-          }
-
-          &>div {
-            &:not([data-radix-scroll-area-viewport]) {
-              @include u.flex(flex, center);
-              gap: 1rem;
-            }
-
-            &>button:first-child {
-              border-radius: 100%;
-
-              &:hover>svg {
-                stroke: currentColor;
-              }
-            }
-
-            &>button:last-child {
-              margin-left: auto;
-              width: 120px;
-            }
-          }
-
-          .data-\[state\=checked\]\:translate-x-5[data-state='checked'] {
-            --tw-translate-x: 1.34rem;
-          }
-        }
       }
     }
   }

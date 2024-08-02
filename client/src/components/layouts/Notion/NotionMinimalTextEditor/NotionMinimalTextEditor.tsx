@@ -29,7 +29,7 @@ export const NotionMinimalTextEditor = ({
   type,
   editorContentRef,
   setEditorContent,
-  onChange,
+  // onChange,
 }: NotionMinimalTextEditorProps) => {
   const editor = useEditor(
     {
@@ -73,8 +73,10 @@ export const NotionMinimalTextEditor = ({
     [valid, name],
   )
   const updateEditorContent = useDebounceCallback((html: string) => {
-    const content = { reply: type === 'reply' && html, editSubject: type !== 'reply' && html }
-    return setEditorContent && setEditorContent(content)
+    return (
+      setEditorContent &&
+      setEditorContent({ replyContent: type === 'reply' && html, aditSubject: type !== 'reply' && html })
+    )
   }, 300)
 
   useEffect(() => {

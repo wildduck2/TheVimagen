@@ -38,19 +38,9 @@ export const useThreadAction = ({ items }: UseThreadActionType) => {
       dispatch(getSelectedThreadsDispatch([items[0]]))
     },
     ForwardAttachment: ({ dispatch, items }: OnClickType) => {
-      // const msg = createMimeMessage()
-      // msg.setSender({ name: 'Lorem Ipsum', addr: 'lorem@ipsum.com' })
-      // msg.setRecipient('foobor@test.com')
-      // msg.setSubject('🚀 Issue 49!')
-      // msg.addMessage({
-      //   contentType: 'text/plain',
-      //   data: `Hi, I'm a simple text.`,
-      // })
-      // const raw = msg.asRaw()
-      // console.log(raw)
-      // dispatch(getMultiReplyState({ alert: false, drawer: true }))
-      // dispatch(getReplyStatusState({ replyAll: false, forward: true, attachment: true }))
-      // dispatch(getSelectedThreadsDispatch([items[0]]))
+      dispatch(getMultiReplyState({ alert: false, drawer: true }))
+      dispatch(getReplyStatusState({ replyAll: false, forward: true, attachment: true }))
+      dispatch(getSelectedThreadsDispatch([items[0]]))
     },
     Archive: () => {
       startArchive.mutate()

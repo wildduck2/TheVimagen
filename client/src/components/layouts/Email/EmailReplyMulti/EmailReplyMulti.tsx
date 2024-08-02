@@ -1,6 +1,4 @@
-import { useEffect } from 'react'
-import { useRef, useState, memo } from 'react'
-import { format } from 'date-fns'
+import { memo } from 'react'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,34 +8,30 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  Button,
   Carousel,
   CarouselContent,
   CarouselNext,
   CarouselPrevious,
-  currentStateType,
   DialogDescription,
   DialogTitle,
   Drawer,
   DrawerContent,
   DrawerTrigger,
   EmailReplyActionPick,
-  Label,
+  EmailReplyBottom,
   Separator,
-  Switch,
 } from '@/components/ui'
 import {
-  EmailreplyContent,
   EmailReplyMultiChildrenProps,
   EmailReplyMultiChildrenStatesProps,
   EmailReplyMultiProps,
 } from './EmailReplyMulti.types'
 import { Icon } from '@/assets'
 import { NotionMinimalTextEditor } from '../../Notion'
-import { useDispatch } from 'react-redux'
-import { useEmailReplyMultiChildrenStates, useEmailReplyThread, useReplyMulti } from '@/hooks'
-import { sanitizeEmailContent } from '@/utils'
-import { removeSelectedThreadsDispatch } from '@/context'
+import { useEmailReplyMultiChildrenStates, useReplyMulti } from '@/hooks'
+import { EmailBuilder, ValueType } from '@ahmedayob/email-toolkit'
+import { RootState } from '@/context'
+import { useSelector } from 'react-redux'
 
 export const EmailReplyMulti = ({ trigger, threads }: EmailReplyMultiProps) => {
   const { handleAlertCancel, handleAlertContinue, handleDrawerOpenChange, setState, state, threadsReplyContentRef } =
@@ -130,6 +124,49 @@ const EmailReplyMultiChildrenStates = ({
     setCurrentState,
     setEditorContent,
   } = useEmailReplyMultiChildrenStates({ idx, thread, threadsLength, setState, threadsReplyContentRef })
+  const { to, from, id, subject, cc } = thread
+
+  const msg = new EmailBuilder()
+
+  const replyStatus = useSelector((state: RootState) => state.email.replyStatus)
+
+  msg.addMessage({
+    headers: {
+      From: `${from?.name} <${from?.email as ValueType}>`,
+      To: `${to[0]?.name} <${to[0]?.email as ValueType}>`,
+      Subject: `${replyStatus?.forward ? 'FWD' : 'RE'}: ${subject}`,
+      Cc: `${cc[0]?.name} <${cc[0]?.email as ValueType}>`,
+      'In-Reply-To': id,
+      'Content-Transfer-Encoding': 'base64',
+      'Content-Type': 'text/html',
+    },
+    charset: 'utf-8',
+    contentType: 'text/html',
+    data: 'asdfasdfasdlkasjdfklasdjf;asldkfj;',
+  })
+
+  const files = [
+    msg.createFileWithMessage(),
+    msg.createFileWithMessage(),
+    msg.createFileWithMessage(),
+    msg.createFileWithMessage(),
+    msg.createFileWithMessage(),
+    msg.createFileWithMessage(),
+    msg.createFileWithMessage(),
+    msg.createFileWithMessage(),
+  ]
+
+  const replyFormSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    closeThreadHandler()
+
+    invokeReply({
+      e,
+      body: threadsReplyContentRef.current[idx].content as string,
+      emails: replyToEmails.current,
+      selectedThread: [thread],
+    })
+  }
 
   return (
     <div>
@@ -148,7 +185,10 @@ const EmailReplyMultiChildrenStates = ({
           />
         </div>
         <Separator />
-        <form className="email__reply__multi__content__item__form">
+        <form
+          className="email__reply__multi__content__item__form"
+          onSubmit={replyFormSubmitHandler}
+        >
           <div>
             <div className="editor">
               {currentState.label === 'Reply' ? (
@@ -178,31 +218,14 @@ const EmailReplyMultiChildrenStates = ({
                 />
               )}
             </div>
-            <div>
-              <Label htmlFor="mute">
-                <Switch
-                  id="mute"
-                  aria-label="Mute thread"
-                  disabled={false}
-                />
-                Mute this thread
-              </Label>
-              <Button
-                size="sm"
-                onClick={(e) => {
-                  closeThreadHandler()
 
-                  invokeReply({
-                    e,
-                    body: threadsReplyContentRef.current[idx].content as string,
-                    emails: replyToEmails.current,
-                    selectedThread: [thread],
-                  })
-                }}
-              >
-                Send
-              </Button>
-            </div>
+            <EmailReplyBottom
+              files={files}
+              valid={false}
+              replyToEmails={replyToEmails}
+              selectedThread={thread}
+              showReplyIcon={false}
+            />
           </div>
         </form>
       </div>

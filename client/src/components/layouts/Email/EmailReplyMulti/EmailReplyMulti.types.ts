@@ -34,6 +34,6 @@ export type EmailReplyMultiChildrenStatesProps = {
 }
 
 export type EmailreplyContent = {
-  reply: string
+  replyContent: string
   aditSubject: string
 }

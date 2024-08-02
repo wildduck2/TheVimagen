@@ -49,7 +49,7 @@ export const userData = z.object({
   age: z
     .number()
     .min(18, { message: 'Password must be at least 18 characters long' }),
-  years_of_exprience: z
+  years_of_experience: z
     .number()
     .min(0, { message: 'Password must be at least 0 characters long' })
 })

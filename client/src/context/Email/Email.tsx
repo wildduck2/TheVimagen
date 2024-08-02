@@ -71,12 +71,12 @@ export const emailSlice = createSlice({
       state.selectedThreads = state.selectedThreads.filter((email) => !threadIdsToRemove.includes(email.threadId))
     },
 
-    //NOTE: gettign threads fetched ids
+    //NOTE: getting threads fetched ids
     getThreadsFetchedDispatched: (state: ThreadsFetchedState, action: ThreadsFetchedAction) => {
       state.threadsFetched = action.payload
     },
 
-    //NOTE: gettign threads fetched ids
+    //NOTE: getting threads fetched ids
     getMultiReplyState: (state: MultiReplyState, action: MultiReplyAction) => {
       state.multiReply = action.payload
     },
@@ -111,5 +111,4 @@ export const {
   getLabelModificationSelected,
   getLabelButtonStatus,
 } = emailSlice.actions
-
 export default emailSlice.reducer

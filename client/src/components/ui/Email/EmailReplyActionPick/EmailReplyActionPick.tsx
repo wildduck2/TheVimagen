@@ -43,7 +43,9 @@ export const EmailReplyActionPick = ({ thread, currentState, replyToEmails, onCl
                     'notion__minimal__text__editor__toolbar__pick__content__button',
                     item.label === currentState.label && 'active',
                   )}
-                  onClick={() => onClick({ label: item.label, icon: item.icon })}
+                  onClick={() => {
+                    onClick({ label: item.label, icon: item.icon })
+                  }}
                 >
                   <item.icon />
                   <span>{item.label}</span>

@@ -1,5 +1,5 @@
 import { OAuthToken } from '@prisma/client'
-import { Decimal, JsonValue } from '@prisma/client/runtime/library'
+import { Decimal, JsonValue } from '@prisma/client'
 import 'express-session'
 
 declare module 'express-session' {

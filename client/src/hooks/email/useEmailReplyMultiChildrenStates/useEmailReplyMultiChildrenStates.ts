@@ -41,7 +41,7 @@ export const useEmailReplyMultiChildrenStates = ({
     icon: Icon.reply,
   })
   const [editorContent, setEditorContent] = useState<EmailreplyContent>({
-    reply: replyToContent,
+    replyContent: replyToContent,
     aditSubject: '',
   })
   const iframeRef = useRef<HTMLIFrameElement>(null)
@@ -67,7 +67,7 @@ export const useEmailReplyMultiChildrenStates = ({
       currentState.label === 'Forward To'
         ? iframeRef.current?.srcdoc
         : currentState.label === 'Reply'
-          ? editorContent.reply
+          ? editorContent.replyContent
           : editorContent.aditSubject
     const replyContent = {
       thread: thread,
@@ -85,15 +85,16 @@ export const useEmailReplyMultiChildrenStates = ({
 
     if (currentState.label === 'Forward To') {
       localStorage.setItem(`forwardContent-${idx}`, JSON.stringify(iframeRef.current?.srcdoc))
+    } else if (currentState.label === 'Reply') {
+      localStorage.setItem(`replyContent-${idx}`, JSON.stringify(editorContent.replyContent))
     }
-
-    console.log(editorContent.aditSubject)
   }, [currentState.label, editorContent])
 
   const invokeReply = useEmailReplyThread()
 
   const closeThreadHandler = () => {
     localStorage.setItem(`replyContent-${idx}`, '')
+    localStorage.setItem(`forwardContent-${idx}`, '')
 
     dispatch(removeSelectedThreadsDispatch([thread]))
     threadsLength === 1 && setState((prevState) => ({ ...prevState, drawer: false }))

@@ -1,40 +1,22 @@
 {
-    "compilerOptions": {
-        "target": "ES2020",
-        "module": "commonjs",
-        "strict": true,
-        "esModuleInterop": true,
-        "skipLibCheck": true,
-        "forceConsistentCasingInFileNames": true,
-        "moduleResolution": "node",
-        "baseUrl": "./src",
-        "outDir": "./dist",
-        "rootDir": "./src",
-        "paths": {
-            "@services/*": [
-                "services/*"
-            ],
-            "@middlewares/*": [
-                "middlewares/*"
-            ]
-        },
-        "typeRoots": [
-            "./types",
-            "./node_modules/@types"
-        ],
-        "types": [
-            "node",
-            "vitest",
-            "express-session"
-        ]
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "baseUrl": "./src",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "paths": {
+      "@services/*": ["services/*"],
+      "@middlewares/*": ["middlewares/*"]
     },
-    "include": [
-        "src/**/*",
-        "tests/**/*",
-        "types"
-    ],
-    "exclude": [
-        "node_modules",
-        "dist"
-    ]
+    "typeRoots": ["./types", "./node_modules/@types"],
+    "types": ["node", "vitest", "express-session"]
+  },
+  "include": ["src", "tests", "types"],
+  "exclude": ["node_modules", "dist"]
 }

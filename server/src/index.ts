@@ -3,7 +3,7 @@ import dotEnv from 'dotenv'
 import { oauth_router, auth_router, email_router } from './routes'
 import cors from 'cors'
 import bodyParser from 'body-parser'
-import { doubleCsrfProtection, prismaSession } from './utils'
+import { prismaSession } from './utils'
 import cookieParser from 'cookie-parser'
 import { csrf_token } from './middlewares'
 // import { corsOptions } from './constants';

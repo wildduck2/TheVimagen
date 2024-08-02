@@ -1,16 +1,6 @@
 import { format } from 'date-fns'
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-  Button,
-  Label,
-  ReplyToWrapper,
-  ScrollArea,
-  Separator,
-  Switch,
-} from '@/components/ui'
+import { Avatar, AvatarFallback, AvatarImage, EmailReplyBottom, ScrollArea, Separator } from '@/components/ui'
 
 import { EmailDisplayInboxItem } from '../EmailDisplayInboxItem'
 import { NotionMinimalTextEditor } from '../../Notion'
@@ -91,34 +81,11 @@ export const EmailDisplayInbox = ({ selectedThread }: EmailDisplayInboxProps) =>
               valid={!valid ? false : true}
               content=""
             />
-            <div>
-              <Label htmlFor="mute">
-                <Switch
-                  id="mute"
-                  aria-label="Mute thread"
-                  disabled={valid ? false : true}
-                />
-                Mute this thread
-              </Label>
-
-              <div>
-                {selectedThread[0] ? (
-                  <ReplyToWrapper
-                    thread={selectedThread[0]}
-                    replyToEmails={replyToEmails}
-                  />
-                ) : (
-                  <div />
-                )}
-
-                <Button
-                  size="sm"
-                  disabled={valid ? false : true}
-                >
-                  Send
-                </Button>
-              </div>
-            </div>
+            <EmailReplyBottom
+              valid={!valid ? false : true}
+              replyToEmails={replyToEmails}
+              selectedThread={selectedThread[0]}
+            />
           </div>
         </form>
       </div>
