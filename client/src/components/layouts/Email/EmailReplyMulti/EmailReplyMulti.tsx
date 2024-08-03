@@ -163,46 +163,22 @@ const EmailReplyMultiChildrenStates = ({
     'Content-Transfer-Encoding: 7biy',
     'Content-Disposition: attachment; filename="message.html"',
     '',
-    thread.attachments[0].attachmentId,
+    thread.textHtml,
     '--' + 'boundary' + '--',
   ]
 
-  // ANGjdJ - yxjHrBZlwtisRviWDcU_ - K1F1Xs90L38 - SgTPMVT9Y3UujFyzt8ud6JnLBWsjnNXrWmHJmKBi1zatJ6JkK8rePOxd - RtKe0Xv3lDOTVCCc1eNqHVcumeZ7YLrqV0rtd4snKAPyXSPh2UpXtY64o7BIRxePxo - 7VgyKnG5xTC9MJ98 - d5uyAXmZXx1TXDmw81TZZF17Gfqpq4tPgEFbVgE3pqHS7r7Q0pz72iuR5971IEqcYvLZ - U5O4YIHaX5PLgvfzI_uH4enVTfR7UuSZYxhi4kW3U1_CyFBV1lLVEpYuBNITthAniZPWGs1jX61QD2dyIQpcP1beajSjRDA5v5zUWUsrApTCJh62IuqSwCC - ORJ8q - HY5zj5M
-  // ANGjdJ - yxjHrBZlwtisRviWDcU_ - K1F1Xs90L38 - SgTPMVT9Y3UujFyzt8ud6JnLBWsjnNXrWmHJmKBi1zatJ6JkK8rePOxd - RtKe0Xv3lDOTVCCc1eNqHVcumeZ7YLrqV0rtd4snKAPyXSPh2UpXtY64o7BIRxePxo - 7VgyKnG5xTC9MJ98 - d5uyAXmZXx1TXDmw81TZZF17Gfqpq4tPgEFbVgE3pqHS7r7Q0pz72iuR5971IEqcYvLZ - U5O4YIHaX5PLgvfzI_uH4enVTfR7UuSZYxhi4kW3U1_CyFBV1lLVEpYuBNITthAniZPWGs1jX61QD2dyIQpcP1beajSjRDA5v5zUWUsrApTCJh62IuqSwCC - ORJ8q - HY5zj5M
-
   const hi = parseMail(emailParts.join('\n'))
-  const test = new TextEncoder().encode(thread.attachments[0].attachmentId)
-  const his = Base64.encodeToBase64(thread.attachments[0].attachmentId)
-  const hiest = Base64.decodeToBuffer(his)
-  const textData = new TextDecoder('utf-8').decode(hiest)
+  // const test = new TextEncoder().encode(thread.attachments[0].attachmentId)
+  // const his = Base64.encodeToBase64(hi.attachments[0].content)
+  // const hiest = Base64.decodeToBuffer(his)
+  // const blob = new Blob([hiest], { type: 'text/html' })
+  // const url = URL.createObjectURL(blob)
+  const textData = new TextDecoder('utf-8').decode(hi.attachments[0].content)
 
-  console.log(hi)
+  console.log(textData)
 
-  // Ensure you have valid Base64 data for HTML
-  const base64Data = thread.attachments[0].content
-
-  const decodeBase64 = (base64: string): Uint8Array => {
-    try {
-      // Clean up the Base64 string if needed
-      const cleanBase64 = base64.replace(/[^A-Za-z0-9+/=]/g, '')
-      const binaryString = atob(cleanBase64)
-      const bytes = new Uint8Array(binaryString.length)
-
-      for (let i = 0; i < binaryString.length; i++) {
-        bytes[i] = binaryString.charCodeAt(i)
-      }
-
-      return bytes
-    } catch (error) {
-      console.error('Failed to decode Base64:', error)
-      return new Uint8Array() // Return an empty array or handle the error appropriately
-    }
-  }
-
-  // Decode Base64 content and create a Blob
-  const bytes = decodeBase64(base64Data)
-  const blob = new Blob([bytes], { type: 'text/html' })
-  const url = URL.createObjectURL(blob)
+  // const files = [msg.createFileWithMessage()]
+  const files = thread.attachments
 
   const replyFormSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -216,66 +192,69 @@ const EmailReplyMultiChildrenStates = ({
     })
   }
 
-  return <div>{url}</div>
+  return (
+    <div>
+      <div className="email__reply__multi__content__item">
+        <button onClick={() => closeThreadHandler()}>
+          <Icon.X />
+        </button>
+
+        <div className="email__reply__multi__content__item__header">
+          <h3>{thread.subject}</h3>
+          <EmailReplyActionPick
+            replyToEmails={replyToEmails}
+            onClick={(data) => setCurrentState(data)}
+            thread={thread}
+            currentState={currentState}
+          />
+        </div>
+        <Separator />
+        <form
+          className="email__reply__multi__content__item__form"
+          onSubmit={replyFormSubmitHandler}
+        >
+          <div>
+            <div className="editor">
+              {currentState.label === 'Reply' ? (
+                <NotionMinimalTextEditor
+                  name={thread.from.email.split(' ')[0].replace(/"/g, '')}
+                  content={replyToContent}
+                  setEditorContent={setEditorContent}
+                  valid={true}
+                  type="reply"
+                />
+              ) : (
+                currentState.label === 'Forward To' && (
+                  <iframe
+                    ref={iframeRef}
+                    srcDoc={`<style type="text/css">* {  scrollbar-width: thin; html{ height: fit-content;}}</style>${rawMessage}`}
+                  />
+                )
+              )}
+              {currentState.label === 'Edit Subject' && (
+                <NotionMinimalTextEditor
+                  content={rawMessage}
+                  name={thread.from.email.split(' ')[0].replace(/"/g, '')}
+                  setEditorContent={setEditorContent}
+                  className="adjust"
+                  valid={true}
+                  type="editSubject"
+                />
+              )}
+            </div>
+
+            <EmailReplyBottom
+              files={files}
+              valid={false}
+              replyToEmails={replyToEmails}
+              selectedThread={thread}
+              showReplyIcon={false}
+            />
+          </div>
+        </form>
+      </div>
+      {threadsLength > 1 && idx < threadsLength - 1 && <Separator orientation="vertical" />}
+    </div>
+  )
 }
 EmailReplyMultiChildrenStates.displayName = 'EmailReplyMultiChildrenStates'
-//     <div className="email__reply__multi__content__item">
-//         <button onClick={() => closeThreadHandler()}>
-//             <Icon.X />
-//             </button>
-//
-//             <div className="email__reply__multi__content__item__header">
-//                 <h3>{thread.subject}</h3>
-//                     <EmailReplyActionPick
-// replyToEmails={replyToEmails}
-// onClick={(data) => setCurrentState(data)}
-// thread={thread}
-// currentState={currentState}
-//     />
-//         </div>
-//     <Separator />
-//         <form
-// className="email__reply__multi__content__item__form"
-// onSubmit={replyFormSubmitHandler}
-// >
-//     <div>
-//         <div className="editor">
-//             {currentState.label === 'Reply' ? (
-//                 <NotionMinimalTextEditor
-//                     name={thread.from.email.split(' ')[0].replace(/"/g, '')}
-//                     content={replyToContent}
-//                     setEditorContent={setEditorContent}
-//                     valid={true}
-//                     type="reply"
-//                 />
-//             ) : (
-//                     currentState.label === 'Forward To' && (
-//                         <iframe
-//                             ref={iframeRef}
-//                             srcDoc={`<style type="text/css">* {  scrollbar-width: thin; html{ height: fit-content;}}</style>${rawMessage}`}
-//                         />
-//                     )
-//                 )}
-//             {currentState.label === 'Edit Subject' && (
-//                 <NotionMinimalTextEditor
-//                     content={rawMessage}
-//                     name={thread.from.email.split(' ')[0].replace(/"/g, '')}
-//                     setEditorContent={setEditorContent}
-//                     className="adjust"
-//                     valid={true}
-//                     type="editSubject"
-//                 />
-//             )}
-//         </div>
-//
-//             <EmailReplyBottom
-//             files={files}
-//             valid={false}
-//             replyToEmails={replyToEmails}
-//             selectedThread={thread}
-//             showReplyIcon={false}
-//         />
-//         </div>
-//     </form>
-//       </div>
-//                         {threadsLength > 1 && idx < threadsLength - 1 && <Separator orientation="vertical" />}

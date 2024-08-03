@@ -25,26 +25,25 @@ export const encodeMessage = ({ thread, htmlContent, to, replyStatus }: EncodeME
   //
   // return msg.asEncoded()
 
-  const boundary = 'boundary123'
   const emailParts = [
     `To: wezonaser50@gmail.com`,
     `From: wezonaser50@gmail.com`,
     `Subject: Hello mr duck`,
-    'Content-Type: multipart/mixed; boundary="' + boundary + '"',
+    'Content-Type: multipart/mixed; boundary="' + 'boundary' + '"',
     '',
-    '--' + boundary,
+    '--' + 'boundary',
     'Content-Type: text/plain; charset="UTF-8"',
     'Content-Transfer-Encoding: 7bit',
     '',
     'Hello mr duck what do you want to eat',
     '',
-    '--' + boundary,
+    '--' + 'boundary',
     'Content-Type: text/html; charset="UTF-8"',
     'Content-Transfer-Encoding: 7biy',
-    'Content-Disposition: attachment; filename="message.html"',
+    'Content-Disposition: attachment; filename="message.eml"',
     '',
-    Base64.encodeToBase64(htmlContent),
-    '--' + boundary + '--',
+    thread.textHtml,
+    '--' + 'boundary' + '--',
   ]
 
   const email = emailParts.join('\n')
