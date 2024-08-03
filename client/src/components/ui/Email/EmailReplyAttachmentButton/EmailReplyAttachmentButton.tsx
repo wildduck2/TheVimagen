@@ -4,6 +4,7 @@ import { EmailReplyAttachmentButtonProps } from './EmailReplyAttachmentButton.ty
 import { NotionMinimalTextEditorToolbarPick, ToggleToolTipButtonWrapper } from '../../Notion'
 import { Icon } from '@/assets'
 import { Card, CardDescription, CardHeader, CardTitle, ScrollArea } from '../../ShadCnUi'
+import { filesize } from 'filesize'
 
 export const EmailReplyAttachmentButton = ({ thread, files }: EmailReplyAttachmentButtonProps) => {
   // const [emails, setEmails] = useState([thread?.from.email])
@@ -37,7 +38,7 @@ export const EmailReplyAttachmentButton = ({ thread, files }: EmailReplyAttachme
                   <Icon.file />
                   <CardHeader>
                     <CardTitle>{'threadMessage.eml'}</CardTitle>
-                    <CardDescription>{file.size}</CardDescription>
+                    <CardDescription>{filesize(+file.size, { round: 0 })}</CardDescription>
                   </CardHeader>
                 </Card>
               ))}

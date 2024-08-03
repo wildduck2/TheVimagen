@@ -25,7 +25,7 @@ export const useSigninWithEmail = ({
       //NOTE: Zod data validation
       const { validEmail, validPassword } = zodCreditValidation(email, password)
 
-      if (!validEmail || !validPassword) return console.log('wild_duck is unvalid')
+      if (!validEmail || !validPassword) return console.log('wild_duck is invalid')
       //NOTE: Making the req to the server with the credentials
       const { data, statusText } = await axios.post(
         `${process.env.ROOT_URL}/auth/signin-email`,

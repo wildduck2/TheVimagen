@@ -145,16 +145,7 @@ const EmailReplyMultiChildrenStates = ({
     data: 'asdfasdfasdlkasjdfklasdjf;asldkfj;',
   })
 
-  const files = [
-    msg.createFileWithMessage(),
-    msg.createFileWithMessage(),
-    msg.createFileWithMessage(),
-    msg.createFileWithMessage(),
-    msg.createFileWithMessage(),
-    msg.createFileWithMessage(),
-    msg.createFileWithMessage(),
-    msg.createFileWithMessage(),
-  ]
+  const files = [msg.createFileWithMessage()]
 
   const replyFormSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()

@@ -16,6 +16,7 @@ import { GMAIL_URL } from '../../constants'
 import { i } from 'vitest/dist/reporters-yx5ZTtEV'
 import { env } from 'config'
 import { prisma } from 'utils'
+import { encode } from 'js-base64'
 
 export class Email {
   constructor() {}
@@ -162,13 +163,42 @@ export class Email {
     encodedMessages
   }: ThreadReplyType) {
     try {
+      const boundary = 'boundary123'
+      const emailParts = [
+        `To: wezonaser50@gmail.com`,
+        `From: wezonaser50@gmail.com`,
+        `Subject: Hello mr duck`,
+        'Content-Type: multipart/mixed; boundary="' + boundary + '"',
+        '',
+        '--' + boundary,
+        'Content-Type: text/plain; charset="UTF-8"',
+        'Content-Transfer-Encoding: 7bit',
+        '',
+        'Hello mr duck what do you want to eat',
+        '',
+        '--' + boundary,
+        'Content-Type: text/html; charset="UTF-8"',
+        'Content-Transfer-Encoding: base64',
+        'Content-Disposition: attachment; filename="message.html"',
+        '',
+        encode('that is my message'),
+        '--' + boundary + '--'
+      ]
+
+      const email = emailParts.join('\n')
+      const raw = Buffer.from(email)
+        .toString('base64')
+        .replace(/\+/g, '-')
+        .replace(/\//g, '_')
+        .replace(/=+$/, '')
+
       const threadsSentAsync = encodedMessages.map(
         async ({ encodedMessage, threadId }) => {
           try {
             const { data } = await axios.post<Promise<ThreadReplyRes>>(
               `${GMAIL_URL}${distnation}`,
               {
-                raw: encodedMessage,
+                raw: raw,
                 threadId
               },
               {

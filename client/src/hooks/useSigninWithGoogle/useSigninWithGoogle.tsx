@@ -4,6 +4,8 @@ import { toast } from 'sonner'
 import axios from 'axios'
 import { z } from 'zod'
 import { useSigninWithGoogleProps } from './useSigninWithGoogle.types'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from '@tanstack/react-router'
 
 export const useSigninWithGoogle = ({ setIsLoading }: useSigninWithGoogleProps) => {
   const dispatch = useDispatch()
@@ -34,7 +36,7 @@ export const useSigninWithGoogle = ({ setIsLoading }: useSigninWithGoogleProps) 
             return setIsLoading(false)
           }
 
-          //NOTE: opening widnow with the url to make perform the signin within popup window
+          //NOTE: opening widow with the url to make perform the signin within popup window
           // const popupWindow: Window | null =
           const popupWindow = window.open(
             data.url,
@@ -47,10 +49,10 @@ export const useSigninWithGoogle = ({ setIsLoading }: useSigninWithGoogleProps) 
           if (data?.user || data.error) return reject(false)
 
           // //NOTE: closing the window and routing with dispatch to the data
-          resolve(true)
-          popupWindow?.close()
+          // resolve(true)
+          // popupWindow?.close()
           // dispatch(getUserData(data.user as User))
-          route({ to: '/email/inbox' })
+          // route({ to: '/email/inbox' })
         } catch (error) {
           setIsLoading(false)
           if (error instanceof z.ZodError) {
