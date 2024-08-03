@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react'
-import { AttachmentFileWrapper } from '../AttachmentFileWrapper'
 import { EmailReplyAttachmentButtonProps } from './EmailReplyAttachmentButton.types'
 import { NotionMinimalTextEditorToolbarPick, ToggleToolTipButtonWrapper } from '../../Notion'
 import { Icon } from '@/assets'
 import { Card, CardDescription, CardHeader, CardTitle, ScrollArea } from '../../ShadCnUi'
 import { filesize } from 'filesize'
+
+import { parseMail } from '@protontech/jsmimeparser'
+
+const hi = parseMail('')
 
 export const EmailReplyAttachmentButton = ({ thread, files }: EmailReplyAttachmentButtonProps) => {
   // const [emails, setEmails] = useState([thread?.from.email])
@@ -13,7 +15,9 @@ export const EmailReplyAttachmentButton = ({ thread, files }: EmailReplyAttachme
   //   // replyToEmails.current = emails
   // }, [emails])
 
-  console.log('files', files)
+  // const file = files?.[0]?.attachmentId
+
+  console.log('files', hi)
 
   return (
     <div className="email__reply__attachment__button">

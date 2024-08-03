@@ -17,6 +17,9 @@ importers:
       '@hookform/resolvers':
         specifier: ^3.9.0
         version: 3.9.0(react-hook-form@7.52.1(react@18.3.1))
+      '@protontech/jsmimeparser':
+        specifier: ^3.0.1
+        version: 3.0.1
       '@radix-ui/react-accordion':
         specifier: ^1.2.0
         version: 1.2.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1377,6 +1380,9 @@ packages:
 
   '@popperjs/core@2.11.8':
     resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
+
+  '@protontech/jsmimeparser@3.0.1':
+    resolution: {integrity: sha512-bi0RBkritKep1cKnQ6U1538++aQ+7XZxG5Uzm4ZivvP7FTE3iaOA5lm0CCFbSoQ5e8KtvjI5KR+Vj6apXhyhXQ==}
 
   '@radix-ui/number@1.1.0':
     resolution: {integrity: sha512-V3gRzhVNU1ldS5XhAPTom1fOIo4ccrjjJgmE+LI2h/WaFpHmx0MQApT+KZHnx8abG6Avtfcz4WoEciMnpFT3HQ==}
@@ -6393,6 +6399,8 @@ snapshots:
     optional: true
 
   '@popperjs/core@2.11.8': {}
+
+  '@protontech/jsmimeparser@3.0.1': {}
 
   '@radix-ui/number@1.1.0': {}
 

@@ -24,32 +24,32 @@ export const encodeMessage = ({ thread, htmlContent, to, replyStatus }: EncodeME
   // })
   //
   // return msg.asEncoded()
-  // const emlContent = Base64.encodeToBase64(htmlContent)
-  // const boundary = 'boundary123'
-  //
-  // let email = [
-  //   `To: ${to}`,
-  //   `From: ${from}`,
-  //   `Subject: ${subject}`,
-  //   'Content-Type: multipart/mixed; boundary="' + boundary + '"',
-  //   '',
-  //   '--' + boundary,
-  //   'Content-Type: text/plain; charset="UTF-8"',
-  //   'Content-Transfer-Encoding: 7bit',
-  //   '',
-  //   'This is a multi-part message in MIME format.',
-  //   '',
-  //   '--' + boundary,
-  //   'Content-Type: text/html; charset="UTF-8"',
-  //   'Content-Transfer-Encoding: base64',
-  //   `Content-Disposition: attachment; filename="message.eml"`,
-  //   '',
-  //   emlContent,
-  //   '--' + boundary + '--',
-  // ].join('\n')
-  //
-  // return Base64.encodeToBase64(email).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
-  //
+
+  const boundary = 'boundary123'
+  const emailParts = [
+    `To: wezonaser50@gmail.com`,
+    `From: wezonaser50@gmail.com`,
+    `Subject: Hello mr duck`,
+    'Content-Type: multipart/mixed; boundary="' + boundary + '"',
+    '',
+    '--' + boundary,
+    'Content-Type: text/plain; charset="UTF-8"',
+    'Content-Transfer-Encoding: 7bit',
+    '',
+    'Hello mr duck what do you want to eat',
+    '',
+    '--' + boundary,
+    'Content-Type: text/html; charset="UTF-8"',
+    'Content-Transfer-Encoding: 7biy',
+    'Content-Disposition: attachment; filename="message.html"',
+    '',
+    Base64.encodeToBase64(htmlContent),
+    '--' + boundary + '--',
+  ]
+
+  const email = emailParts.join('\n')
+  return Base64.encodeToBase64(email)
+
   const rawMessage = [
     `From: wezonaser50@gmail.com`,
     `To: wezonaser50@gmail.com`,
